@@ -24,7 +24,7 @@ public final class Shader {
         }
 
         fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-        glShaderSource(fragmentShader, readFile(vertexPath));
+        glShaderSource(fragmentShader, readFile(fragmentPath));
         glCompileShader(fragmentShader);
         if (glGetShaderi(fragmentShader, GL_COMPILE_STATUS) != 1) {
             System.err.println(glGetShaderInfoLog(fragmentShader));
@@ -34,8 +34,6 @@ public final class Shader {
         glAttachShader(program, fragmentShader);
 
         glBindAttribLocation(program, 0, "vertices");
-        glBindAttribLocation(program, 1, "vertices");
-        glBindAttribLocation(program, 2, "vertices");
 
         glLinkProgram(program);
         if (glGetProgrami(program, GL_LINK_STATUS) != 1) {
