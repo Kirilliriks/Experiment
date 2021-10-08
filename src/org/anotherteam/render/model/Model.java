@@ -6,34 +6,40 @@ import org.lwjgl.system.MemoryUtil;
 
 import java.nio.FloatBuffer;
 
-public final class Model {
+public abstract class Model {
 
-    private final static short TEX_COORDS_NUM = 2;
-    private final static short AXIS_NUM = 2;
+    protected final static short TEX_COORDS_NUM = 2;
+    protected final static short AXIS_NUM = 2;
 
-    private final float[] vertices;
-    private final float[] uv;
-    private final int[] indices;
+    protected float[] vertices;
+    protected float[] uv;
+    protected int[] indices;
 
-    private final int vao;
-    private final int pbo;
-    private final int ibo;
+    protected int vao;
+    protected int pbo;
+    protected int tbo;
+    protected int ibo;
+
+    public Model() { }
 
     public Model(float[] vertices, float[] uv, int[] indices) {
         this.vertices = vertices;
         this.uv = uv;
         this.indices = indices;
+    }
 
+    protected void generate() {
         vao = glGenVertexArrays();
         glBindVertexArray(vao);
 
         pbo = storeBuffer(createBuffer(vertices), 0, AXIS_NUM);
 
+        tbo = storeBuffer(createBuffer(uv), 1, TEX_COORDS_NUM);
+
         ibo = glGenBuffers();
         val buffer = MemoryUtil.memAllocInt(indices.length);
         buffer.put(indices);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-        glVertexAttribPointer(1, TEX_COORDS_NUM, GL_FLOAT, false, 0, 0);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer.flip(), GL_STATIC_DRAW);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
@@ -41,25 +47,26 @@ public final class Model {
     public void destroy() {
         glDeleteVertexArrays(vao);
         glDeleteBuffers(pbo);
+        glDeleteBuffers(tbo);
         glDeleteBuffers(ibo);
     }
 
     public void render() {
         glBindVertexArray(vao);
         glEnableVertexAttribArray(0);
-        //glEnableVertexAttribArray(1);
+        glEnableVertexAttribArray(1);
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
         glDrawElements(GL_TRIANGLES, indices.length, GL_UNSIGNED_INT, 0);
-
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
         glDisableVertexAttribArray(0);
-        //glDisableVertexAttribArray(1);
+        glDisableVertexAttribArray(1);
         glBindVertexArray(0);
     }
 
-    private static int storeBuffer(FloatBuffer buffer, int index, int size) {
-        int bufferID = glGenBuffers();
+    private int storeBuffer(FloatBuffer buffer, int index, int size) {
+        val bufferID = glGenBuffers();
         glBindBuffer(GL_ARRAY_BUFFER, bufferID);
         glBufferData(GL_ARRAY_BUFFER, buffer, GL_STATIC_DRAW);
         glVertexAttribPointer(index, size, GL_FLOAT, false, 0, 0);

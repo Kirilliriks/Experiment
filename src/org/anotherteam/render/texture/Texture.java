@@ -2,6 +2,7 @@ package org.anotherteam.render.texture;
 import static org.lwjgl.opengl.GL42.*;
 
 import lombok.val;
+import org.jetbrains.annotations.NotNull;
 import org.lwjgl.BufferUtils;
 
 import javax.imageio.ImageIO;
@@ -53,9 +54,26 @@ public final class Texture {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
     }
 
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    @NotNull
+    public ByteBuffer getPixels() {
+        return pixels;
+    }
+
     public void bind(int sampler) {
         if (sampler < 0 || sampler > 31) return;
         glActiveTexture(GL_TEXTURE0 + sampler);
         glBindTexture(GL_TEXTURE_2D, id);
+    }
+
+    public void destroy() {
+        glDeleteTextures(id);
     }
 }

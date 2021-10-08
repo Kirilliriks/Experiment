@@ -1,7 +1,12 @@
 package org.anotherteam.render.shader;
 import static org.lwjgl.opengl.GL42.*;
 
+import org.anotherteam.math.Matrix4f;
+import org.anotherteam.math.Vector2i;
 import org.anotherteam.util.FileUtils;
+import org.lwjgl.system.MemoryUtil;
+
+import java.nio.FloatBuffer;
 
 public final class Shader {
 
@@ -42,11 +47,30 @@ public final class Shader {
         }
     }
 
+    public int getUniformLocation(String name) {
+        return glGetUniformLocation(programId, name);
+    }
+
+    public void setUniform(String name, float value) {
+        glUniform1f(getUniformLocation(name), value);
+    }
+
     public void setUniform(String name, int value) {
-        int location = glGetUniformLocation(programId, name);
-        if (location != -1) {
-            glUniform1i(location, value);
-        }
+        glUniform1i(getUniformLocation(name), value);
+    }
+
+    public void setUniform(String name, boolean value) {
+        glUniform1i(getUniformLocation(name), value ? GL_TRUE : GL_FALSE);
+    }
+
+    public void setUniform(String name, Vector2i value) {
+        glUniform2f(getUniformLocation(name), value.getX(), value.getY());
+    }
+
+    public void setUniform(String name, Matrix4f value) {
+        FloatBuffer matrix = MemoryUtil.memAllocFloat(Matrix4f.SIZE * Matrix4f.SIZE);
+        matrix.put(value.getAll()).flip();
+        glUniformMatrix4fv(getUniformLocation(name), true, matrix);
     }
 
     public void bind() {

@@ -31,6 +31,7 @@ public final class Experimental implements Runnable {
 
         glEnable(GL_TEXTURE_2D);
         while (!window.shouldClose()) {
+            window.update();
             game.update();
             game.render();
             window.swapBuffers();
@@ -48,12 +49,12 @@ public final class Experimental implements Runnable {
 
         window = new Window(Screen.WIDTH, Screen.HEIGHT, "Experimental");
         window.create();
-        window.setFullscreen(true);
     }
 
     private void end() {
+        game.destroy();
         window.destroy();
-        glfwSetErrorCallback(null).free();
+        //glfwSetErrorCallback(null).free();
     }
 
     public static void main(String[] args) {

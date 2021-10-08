@@ -84,6 +84,13 @@ public final class Window {
         glfwSetMouseButtonCallback(handler, input.getMouseButton());
     }
 
+    public void update() {
+        if (isResized) {
+            glViewport(0, 0, width, height);
+            isResized = false;
+        }
+    }
+
     public void create() {
         glfwDefaultWindowHints();
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
@@ -115,5 +122,7 @@ public final class Window {
 
         // Make the window visible
         glfwShowWindow(handler);
+
+        setFullscreen(fullscreen);
     }
 }

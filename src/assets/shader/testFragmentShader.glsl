@@ -1,4 +1,5 @@
 #version 420 core
+
 in vec2 tex_coord;
 uniform sampler2D sampler;
 
