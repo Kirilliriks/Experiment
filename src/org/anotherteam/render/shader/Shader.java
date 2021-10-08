@@ -1,68 +1,63 @@
 package org.anotherteam.render.shader;
 import static org.lwjgl.opengl.GL42.*;
 
-import lombok.val;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import org.anotherteam.util.FileUtils;
 
 public final class Shader {
 
-    private final int program;
-    private final int vertexShader;
-    private final int fragmentShader;
+    private final int programId;
+    private final int vertexShaderId;
+    private final int fragmentShaderId;
 
     public Shader(String vertexPath, String fragmentPath) {
-        program = glCreateProgram();
+        programId = glCreateProgram();
 
-        vertexShader = glCreateShader(GL_VERTEX_SHADER);
-        glShaderSource(vertexShader, readFile(vertexPath));
-        glCompileShader(vertexShader);
-        if (glGetShaderi(vertexShader, GL_COMPILE_STATUS) != 1) {
-            System.err.println(glGetShaderInfoLog(vertexShader));
+        vertexShaderId = glCreateShader(GL_VERTEX_SHADER);
+        glShaderSource(vertexShaderId, FileUtils.loadAsString(vertexPath));
+        glCompileShader(vertexShaderId);
+        if (glGetShaderi(vertexShaderId, GL_COMPILE_STATUS) == GL_FALSE) {
+            System.err.println(glGetShaderInfoLog(vertexShaderId));
         }
 
-        fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-        glShaderSource(fragmentShader, readFile(fragmentPath));
-        glCompileShader(fragmentShader);
-        if (glGetShaderi(fragmentShader, GL_COMPILE_STATUS) != 1) {
-            System.err.println(glGetShaderInfoLog(fragmentShader));
+        fragmentShaderId = glCreateShader(GL_FRAGMENT_SHADER);
+        glShaderSource(fragmentShaderId, FileUtils.loadAsString(fragmentPath));
+        glCompileShader(fragmentShaderId);
+        if (glGetShaderi(fragmentShaderId, GL_COMPILE_STATUS) == GL_FALSE) {
+            System.err.println(glGetShaderInfoLog(fragmentShaderId));
         }
 
-        glAttachShader(program, vertexShader);
-        glAttachShader(program, fragmentShader);
+        glAttachShader(programId, vertexShaderId);
+        glAttachShader(programId, fragmentShaderId);
 
-        glBindAttribLocation(program, 0, "vertices");
+        glBindAttribLocation(programId, 0, "vertices");
+        glBindAttribLocation(programId, 1, "textures");
 
-        glLinkProgram(program);
-        if (glGetProgrami(program, GL_LINK_STATUS) != 1) {
-            System.err.println(glGetProgramInfoLog(program));
+        glLinkProgram(programId);
+        if (glGetProgrami(programId, GL_LINK_STATUS) == GL_FALSE) {
+            System.err.println(glGetProgramInfoLog(programId));
         }
-        glValidateProgram(program);
-        if (glGetProgrami(program, GL_VALIDATE_STATUS) != 1) {
-            System.err.println(glGetProgramInfoLog(program));
+        glValidateProgram(programId);
+        if (glGetProgrami(programId, GL_VALIDATE_STATUS) == GL_FALSE) {
+            System.err.println(glGetProgramInfoLog(programId));
+        }
+    }
+
+    public void setUniform(String name, int value) {
+        int location = glGetUniformLocation(programId, name);
+        if (location != -1) {
+            glUniform1i(location, value);
         }
     }
 
     public void bind() {
-        glUseProgram(program);
+        glUseProgram(programId);
     }
 
-    private String readFile(String fileName) {
-        val builder = new StringBuilder();
-        BufferedReader reader;
-        try {
-            reader = new BufferedReader(new FileReader(fileName));
-            String line;
-            while((line = reader.readLine()) != null) {
-                builder.append(line);
-                builder.append("\n");
-            }
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return builder.toString();
+    public void unbind() {
+        glUseProgram(0);
+    }
+
+    public void destroy() {
+        glDeleteProgram(programId);
     }
 }

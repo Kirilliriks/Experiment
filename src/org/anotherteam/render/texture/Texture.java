@@ -53,7 +53,9 @@ public final class Texture {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
     }
 
-    public void bind() {
+    public void bind(int sampler) {
+        if (sampler < 0 || sampler > 31) return;
+        glActiveTexture(GL_TEXTURE0 + sampler);
         glBindTexture(GL_TEXTURE_2D, id);
     }
 }

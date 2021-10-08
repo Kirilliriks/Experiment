@@ -1,96 +1,62 @@
 package org.anotherteam;
 
+import org.anotherteam.game.Game;
+import org.anotherteam.game.Input;
+import org.anotherteam.render.window.Screen;
+import org.anotherteam.render.window.Window;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
-import org.lwjgl.system.*;
-import org.anotherteam.render.Screen;
 
-import java.nio.*;
-
-import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.system.MemoryStack.*;
-import static org.lwjgl.system.MemoryUtil.*;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.glEnable;
 
-public final class Experimental {
+public final class Experimental implements Runnable {
 
-    // The window handle number
-    private long window;
+    private Thread thread;
     private Game game;
+    private Window window;
 
+    public void start() {
+        thread = new Thread(this, "thread");
+        thread.start();
+    }
+
+    @Override
     public void run() {
-
         init();
-        start();
+        GL.createCapabilities(); // CRITICAL
 
-        glfwFreeCallbacks(window);
-        glfwDestroyWindow(window);
+        game = new Game();
 
-        glfwTerminate();
-        glfwSetErrorCallback(null).free();
+        glEnable(GL_TEXTURE_2D);
+        while (!window.shouldClose()) {
+            game.update();
+            game.render();
+            window.swapBuffers();
+            glfwPollEvents();
+            if (Input.isKeyDown(GLFW_KEY_ESCAPE)) return;
+        }
+        end();
     }
 
     private void init() {
         GLFWErrorCallback.createPrint(System.err).set();
 
-        if ( !glfwInit() )
+        if (!glfwInit())
             throw new IllegalStateException("Unable to initialize GLFW");
 
-        glfwDefaultWindowHints();
-        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
-        glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
-
-        window = glfwCreateWindow(Screen.WIDTH, Screen.HEIGHT, "Don't touch red button!", NULL, NULL);
-        if ( window == NULL )
-            throw new RuntimeException("Failed to create the GLFW window");
-
-        glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
-            if ( key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE )
-                glfwSetWindowShouldClose(window, true);
-        });
-
-        // Get the thread stack and push a new frame
-        try ( MemoryStack stack = stackPush() ) {
-            IntBuffer pWidth = stack.mallocInt(1); // int*
-            IntBuffer pHeight = stack.mallocInt(1); // int*
-
-            // Get the window size passed to glfwCreateWindow
-            glfwGetWindowSize(window, pWidth, pHeight);
-
-            // Get the resolution of the primary monitor
-            GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-
-            // Center the window
-            glfwSetWindowPos(
-                    window,
-                    (vidmode.width() - pWidth.get(0)) / 2,
-                    (vidmode.height() - pHeight.get(0)) / 2
-            );
-        } // the stack frame is popped automatically
-
-        // Make the OpenGL context current
-        glfwMakeContextCurrent(window);
-        // Enable v-sync
-        glfwSwapInterval(1);
-
-        // Make the window visible
-        glfwShowWindow(window);
+        window = new Window(Screen.WIDTH, Screen.HEIGHT, "Experimental");
+        window.create();
+        window.setFullscreen(true);
     }
 
-    private void start() {
-        GL.createCapabilities(); // CRITICAL
-
-        game = new Game();
-
-        while ( !glfwWindowShouldClose(window) ) {
-            game.update();
-            game.draw();
-            glfwSwapBuffers(window);
-            glfwPollEvents();
-        }
+    private void end() {
+        window.destroy();
+        glfwSetErrorCallback(null).free();
     }
 
     public static void main(String[] args) {
-        new Experimental().run();
+        new Experimental().start();
     }
 }

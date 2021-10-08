@@ -1,4 +1,4 @@
-package org.anotherteam.render;
+package org.anotherteam.render.window;
 
 public final class Screen {
     public static final int WIDTH = 1600;

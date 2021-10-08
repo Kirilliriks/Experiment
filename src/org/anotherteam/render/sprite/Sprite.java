@@ -7,7 +7,7 @@ import org.anotherteam.render.model.Model;
 public final class Sprite {
 
     private final Model model;
-    //private Texture texture;
+    private final Texture texture;
 
     public Sprite(String texturePath) {
         float[] vertices = new float[] {
@@ -29,11 +29,11 @@ public final class Sprite {
                 2, 3, 0
         };
         model = new Model(vertices, uv, indices);
-        //texture = new Texture(texturePath);
+        texture = new Texture(texturePath);
     }
 
     public void draw() {
-        //texture.bind();
+        texture.bind(0);
         model.render();
     }
 }
