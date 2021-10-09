@@ -5,7 +5,6 @@ import lombok.val;
 import org.anotherteam.render.screen.Camera;
 import org.anotherteam.render.shader.Shader;
 import org.anotherteam.render.texture.Texture;
-import org.anotherteam.util.exception.RenderException;
 import org.joml.Vector2i;
 
 public final class RenderBatch {
@@ -26,14 +25,13 @@ public final class RenderBatch {
     private static final short VERTEX_SIZE = 4;
     private static final short VERTEX_SIZE_BYTES = VERTEX_SIZE * Float.BYTES;
 
-    private final Camera camera;
-
     private final int batchSize;
     private final float[] vertices;
 
     private final int vaoID, vboID, iboID;
     private final Shader shader;
 
+    private Camera camera;
     private Texture lastTexture;
     private int numQuads;
 
@@ -64,6 +62,10 @@ public final class RenderBatch {
 
         this.shader = shader;
         numQuads = 0;
+    }
+
+    public void setCamera(Camera camera) {
+        this.camera = camera;
     }
 
     public void begin() {
@@ -115,8 +117,6 @@ public final class RenderBatch {
     }
 
     private void generateTextureQuad(Vector2i position, Texture texture, int index) {
-        int offset = index * QUAD_POS_SIZE * VERTEX_SIZE;
-
         val offsets = new Vector2i[] {
                 new Vector2i(0, 1),
                 new Vector2i(1, 1),
@@ -124,15 +124,18 @@ public final class RenderBatch {
                 new Vector2i(0, 0)
         };
 
-        for (int i = 0; i < QUAD_POS_SIZE; i++) {
+        val textureCoords = texture.getTextureCoords();
+
+        int offset = index * QUAD_POS_SIZE * VERTEX_SIZE;
+        for (short i = 0; i < QUAD_POS_SIZE; i++) {
 
             // Load position
             vertices[offset] = position.x + offsets[i].x * texture.getWidth();
             vertices[offset + 1] = position.y + offsets[i].y  * texture.getHeight();
 
             // Load texture coords
-            vertices[offset + 2] = Texture.QUAD_COORDS[i].x;
-            vertices[offset + 3] = Texture.QUAD_COORDS[i].y;
+            vertices[offset + 2] = textureCoords[i].x;
+            vertices[offset + 3] = textureCoords[i].y;
 
             offset += VERTEX_SIZE;
         }

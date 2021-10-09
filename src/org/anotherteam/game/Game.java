@@ -1,33 +1,39 @@
 package org.anotherteam.game;
+import static org.lwjgl.opengl.GL42.*;
 
 import lombok.val;
 import org.anotherteam.render.RenderBatch;
+import org.anotherteam.render.framebuffer.Framebuffer;
 import org.anotherteam.render.screen.Camera;
 import org.anotherteam.render.screen.Screen;
 import org.anotherteam.render.shader.Shader;
 import org.anotherteam.render.sprite.Sprite;
 import org.anotherteam.render.window.Window;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector2i;
 
 import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.opengl.GL11.*;
 
 public final class Game {
 
     private final Window window;
     private final Camera camera;
+    private final Camera testCamera;
 
     private final Sprite testSprite;
 
+    private final Framebuffer framebuffer;
     private final RenderBatch renderBatch;
 
     public Game(@NotNull Window window) {
         this.window = window;
         camera = new Camera(0, 0);
+        testCamera = new Camera(0, 0);
         testSprite = new Sprite("../assets/testTestRoom.png");
         testSprite.setPosition(Screen.WIDTH / 2, Screen.HEIGHT / 2);
         val shader = new Shader("../assets/shader/testVertexShader.glsl", "../assets/shader/testFragmentShader.glsl");
         renderBatch = new RenderBatch(shader, camera);
+        framebuffer = new Framebuffer(Screen.WIDTH, Screen.HEIGHT);
         init();
     }
 
@@ -54,10 +60,18 @@ public final class Game {
     }
 
     public void render(float dt) {
+        framebuffer.begin();
+        renderBatch.begin();
+        renderBatch.setCamera(camera);
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        renderBatch.begin();
         renderBatch.drawTexture(testSprite.getPosition(), testSprite.getTexture());
+        renderBatch.end();
+        framebuffer.end();
+
+        renderBatch.begin();
+        renderBatch.setCamera(testCamera);
+        renderBatch.drawTexture(new Vector2i(0, 0), framebuffer.getTexture());
         renderBatch.end();
     }
 
