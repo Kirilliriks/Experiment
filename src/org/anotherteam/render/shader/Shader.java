@@ -1,12 +1,11 @@
 package org.anotherteam.render.shader;
 import static org.lwjgl.opengl.GL42.*;
 
-import org.anotherteam.math.Matrix4f;
-import org.anotherteam.math.Vector2i;
+import lombok.val;
 import org.anotherteam.util.FileUtils;
+import org.joml.Matrix4f;
+import org.joml.Vector2i;
 import org.lwjgl.system.MemoryUtil;
-
-import java.nio.FloatBuffer;
 
 public final class Shader {
 
@@ -64,13 +63,13 @@ public final class Shader {
     }
 
     public void setUniform(String name, Vector2i value) {
-        glUniform2f(getUniformLocation(name), value.getX(), value.getY());
+        glUniform2f(getUniformLocation(name), value.x, value.y);
     }
 
     public void setUniform(String name, Matrix4f value) {
-        FloatBuffer matrix = MemoryUtil.memAllocFloat(Matrix4f.SIZE * Matrix4f.SIZE);
-        matrix.put(value.getAll()).flip();
-        glUniformMatrix4fv(getUniformLocation(name), true, matrix);
+        val matrix = MemoryUtil.memAllocFloat(16);
+        value.get(matrix);
+        glUniformMatrix4fv(getUniformLocation(name), false, matrix);
     }
 
     public void bind() {

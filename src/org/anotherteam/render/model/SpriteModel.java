@@ -4,10 +4,10 @@ public final class SpriteModel extends Model {
     public SpriteModel() {
         super();
         vertices = new float[] {
-                -0.5f, 0.5f,
-                0.5f, 0.5f,
-                0.5f, -0.5f,
-                -0.5f, -0.5f,
+                0, 16,
+                16, 16,
+                16, 0,
+                0, 0,
         };
 
         uv = new float[] {

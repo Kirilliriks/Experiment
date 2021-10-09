@@ -2,7 +2,7 @@ package org.anotherteam;
 
 import org.anotherteam.game.Game;
 import org.anotherteam.game.Input;
-import org.anotherteam.render.window.Screen;
+import org.anotherteam.render.screen.Screen;
 import org.anotherteam.render.window.Window;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;

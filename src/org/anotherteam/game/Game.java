@@ -1,12 +1,16 @@
 package org.anotherteam.game;
 
-import org.anotherteam.math.Matrix4f;
+import org.anotherteam.render.screen.Camera;
+import org.anotherteam.render.screen.Screen;
 import org.anotherteam.render.shader.Shader;
 import org.anotherteam.render.sprite.Sprite;
 
+import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
 public final class Game {
+
+    private final Camera camera;
 
     private final Sprite testSprite;
     private final Shader testShader;
@@ -17,7 +21,9 @@ public final class Game {
     private float temp;
 
     public Game() {
-        testSprite = new Sprite("../assets/testPlayerAtlas.png");
+        camera = new Camera(0, 0);
+        testSprite = new Sprite("../assets/testRoom.png");
+        testSprite.setPosition(Screen.WIDTH / 2, Screen.HEIGHT / 2);
         testShader = new Shader("../assets/shader/testVertexShader.glsl", "../assets/shader/testFragmentShader.glsl");
         init();
         temp = 0;
@@ -28,8 +34,21 @@ public final class Game {
     }
 
     public void update() {
-        temp += 0.0005f;
-        testSprite.setPosition((int) temp, 0);
+        if (Input.isKeyDown(GLFW_KEY_W)) {
+            camera.addPosition(0, 1);
+        }
+
+        if (Input.isKeyDown(GLFW_KEY_S)) {
+            camera.addPosition(0, -1);
+        }
+
+        if (Input.isKeyDown(GLFW_KEY_D)) {
+            camera.addPosition(1, 0);
+        }
+
+        if (Input.isKeyDown(GLFW_KEY_A)) {
+            camera.addPosition(-1, 0);
+        }
     }
 
     public void render() {
@@ -44,7 +63,8 @@ public final class Game {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         testShader.bind();
         testShader.setUniform("sampler", 0);
-        testShader.setUniform("model", Matrix4f.transform(testSprite.getPosition()));
+        testShader.setUniform("projection", camera.getProjection());
+        testShader.setUniform("view", camera.getViewMatrix());
         testSprite.draw();
         testShader.unbind();
     }

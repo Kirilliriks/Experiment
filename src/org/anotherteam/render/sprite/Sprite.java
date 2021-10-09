@@ -1,10 +1,9 @@
 package org.anotherteam.render.sprite;
 
-
-import org.anotherteam.math.Vector2i;
 import org.anotherteam.render.model.SpriteModel;
 import org.anotherteam.render.texture.Texture;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector2i;
 
 public final class Sprite {
 

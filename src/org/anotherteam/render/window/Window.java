@@ -6,7 +6,6 @@ import org.anotherteam.game.Input;
 import org.anotherteam.util.exception.RenderException;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWVidMode;
-import org.lwjgl.glfw.GLFWWindowSizeCallback;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.glfw.GLFW.glfwShowWindow;
@@ -18,14 +17,11 @@ public final class Window {
 
     private long handler;
 
-    private GLFWWindowSizeCallback sizeCallback;
-
     private int width;
     private int height;
     private String title;
 
     private boolean vSync;
-    private boolean isResized;
     private boolean fullscreen;
 
     private int[] windowX = new int[1], windowY = new int[1];
@@ -40,7 +36,6 @@ public final class Window {
 
     public void destroy() {
         input.destroy();
-        sizeCallback.free();
         glfwSetWindowShouldClose(handler, true);
         glfwFreeCallbacks(handler);
         glfwDestroyWindow(handler);
@@ -57,7 +52,6 @@ public final class Window {
 
     public void setFullscreen(boolean isFullscreen) {
         this.fullscreen = isFullscreen;
-        isResized = true;
         if (isFullscreen) {
             GLFW.glfwGetWindowPos(handler, windowX, windowY);
             GLFW.glfwSetWindowMonitor(handler, GLFW.glfwGetPrimaryMonitor(), 0, 0, width, height, 0);
@@ -71,25 +65,12 @@ public final class Window {
     }
 
     private void createCallbacks() {
-        sizeCallback = new GLFWWindowSizeCallback() {
-            public void invoke(long window, int w, int h) {
-                width = w;
-                height = h;
-                isResized = true;
-            }
-        };
-
         glfwSetKeyCallback(handler, input.getKeyboard());
         glfwSetCursorPosCallback(handler, input.getMouseMove());
         glfwSetMouseButtonCallback(handler, input.getMouseButton());
     }
 
-    public void update() {
-        if (isResized) {
-            glViewport(0, 0, width, height);
-            isResized = false;
-        }
-    }
+    public void update() { }
 
     public void create() {
         glfwDefaultWindowHints();
