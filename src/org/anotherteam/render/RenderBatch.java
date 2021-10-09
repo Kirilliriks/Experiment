@@ -106,17 +106,26 @@ public final class RenderBatch {
         numQuads = 0;
     }
 
+    public void clear() {
+        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    }
+
     public void drawTexture(Vector2i position, Texture texture) {
+        drawTexture(position, texture, texture.getWidth(), texture.getHeight());
+    }
+
+    public void drawTexture(Vector2i position, Texture texture, int width, int height) {
         if (lastTexture != texture) {
             lastTexture = texture;
             render();
         } else if (numQuads + 1 > batchSize) render();
 
-        generateTextureQuad(position, texture, numQuads);
+        generateTextureQuad(position, texture, numQuads, width, height);
         numQuads++;
     }
 
-    private void generateTextureQuad(Vector2i position, Texture texture, int index) {
+    private void generateTextureQuad(Vector2i position, Texture texture, int index, int width, int height) {
         val offsets = new Vector2i[] {
                 new Vector2i(0, 1),
                 new Vector2i(1, 1),
@@ -130,8 +139,8 @@ public final class RenderBatch {
         for (short i = 0; i < QUAD_POS_SIZE; i++) {
 
             // Load position
-            vertices[offset] = position.x + offsets[i].x * texture.getWidth();
-            vertices[offset + 1] = position.y + offsets[i].y  * texture.getHeight();
+            vertices[offset] = position.x + offsets[i].x * width;
+            vertices[offset + 1] = position.y + offsets[i].y  * height;
 
             // Load texture coords
             vertices[offset + 2] = textureCoords[i].x;

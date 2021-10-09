@@ -109,4 +109,12 @@ public final class Window {
 
         setFullscreen(fullscreen);
     }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
 }

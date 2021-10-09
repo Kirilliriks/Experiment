@@ -1,5 +1,4 @@
 package org.anotherteam.game;
-import static org.lwjgl.opengl.GL42.*;
 
 import lombok.val;
 import org.anotherteam.render.RenderBatch;
@@ -17,8 +16,8 @@ import static org.lwjgl.glfw.GLFW.*;
 public final class Game {
 
     private final Window window;
-    private final Camera camera;
-    private final Camera testCamera;
+    private final Camera gameCamera;
+    private final Camera bufferCamera;
 
     private final Sprite testSprite;
 
@@ -27,12 +26,12 @@ public final class Game {
 
     public Game(@NotNull Window window) {
         this.window = window;
-        camera = new Camera(0, 0);
-        testCamera = new Camera(0, 0);
+        gameCamera = new Camera(0, 0, window.getWidth(), window.getHeight());
+        bufferCamera = new Camera(0, 0, Screen.WIDTH, Screen.HEIGHT);
         testSprite = new Sprite("../assets/testTestRoom.png");
-        testSprite.setPosition(Screen.WIDTH / 2, Screen.HEIGHT / 2);
+        testSprite.setPosition(0, 0);
         val shader = new Shader("../assets/shader/testVertexShader.glsl", "../assets/shader/testFragmentShader.glsl");
-        renderBatch = new RenderBatch(shader, camera);
+        renderBatch = new RenderBatch(shader, gameCamera);
         framebuffer = new Framebuffer(Screen.WIDTH, Screen.HEIGHT);
         init();
     }
@@ -43,39 +42,37 @@ public final class Game {
 
         val speed = 100;
         if (Input.isKeyDown(GLFW_KEY_W)) {
-            camera.addPosition(0, speed * dt);
+            gameCamera.addPosition(0, speed * dt);
         }
 
         if (Input.isKeyDown(GLFW_KEY_S)) {
-            camera.addPosition(0, speed * -dt);
+            gameCamera.addPosition(0, speed * -dt);
         }
 
         if (Input.isKeyDown(GLFW_KEY_D)) {
-            camera.addPosition(speed * dt, 0);
+            gameCamera.addPosition(speed * dt, 0);
         }
 
         if (Input.isKeyDown(GLFW_KEY_A)) {
-            camera.addPosition(speed * -dt, 0);
+            gameCamera.addPosition(speed * -dt, 0);
         }
     }
 
     public void render(float dt) {
         framebuffer.begin();
         renderBatch.begin();
-        renderBatch.setCamera(camera);
-        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        renderBatch.setCamera(gameCamera);
+        renderBatch.clear();
         renderBatch.drawTexture(testSprite.getPosition(), testSprite.getTexture());
         renderBatch.end();
         framebuffer.end();
 
         renderBatch.begin();
-        renderBatch.setCamera(testCamera);
+        renderBatch.setCamera(bufferCamera);
         renderBatch.drawTexture(new Vector2i(0, 0), framebuffer.getTexture());
         renderBatch.end();
     }
 
-    public void destroy() {
 
-    }
+    public void destroy() { }
 }

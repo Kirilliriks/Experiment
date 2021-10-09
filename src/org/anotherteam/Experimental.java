@@ -68,7 +68,7 @@ public final class Experimental implements Runnable {
         if (!glfwInit())
             throw new IllegalStateException("Unable to initialize GLFW");
 
-        window = new Window(Screen.WIDTH, Screen.HEIGHT, "Experimental");
+        window = new Window(600, 400, "Experimental");
         window.create();
     }
 

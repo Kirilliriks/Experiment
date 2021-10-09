@@ -12,12 +12,12 @@ public final class Camera {
     private final Matrix4f projection;
     private final Matrix4f view;
 
-    public Camera(int x, int y) {
+    public Camera(int x, int y, int width, int height) {
         position = new Vector3f(x, y, 0.0f);
         projection = new Matrix4f();
         projection.setOrtho2D(
-                0.0f, Screen.WIDTH,
-                0.0f, Screen.HEIGHT);
+                0.0f, width,
+                0.0f, height);
         view = new Matrix4f();
     }
 
