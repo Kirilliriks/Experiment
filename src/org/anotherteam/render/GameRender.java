@@ -21,6 +21,8 @@ public final class GameRender {
     private final RenderBatch renderBatch;
     private final RenderBatch raycastBatch;
 
+    private final RenderBatch finalBatch;
+
     public final TextureFrame textureFrame;
     public final HeightFrame heightFrame;
     public final LightFrame lightFrame;
@@ -34,8 +36,9 @@ public final class GameRender {
         this.level = level;
         defaultShader = new Shader("shader/defaultVertexShader.glsl", "shader/defaultFragmentShader.glsl");
         raycastShader = new Shader("shader/vsInvert.glsl", "shader/fsInvert.glsl");
-        renderBatch = new RenderBatch(defaultShader, screen.camera);
-        raycastBatch = new RenderBatch(raycastShader, screen.camera);
+        renderBatch = new RenderBatch(defaultShader, screen.gameCamera);
+        raycastBatch = new RenderBatch(raycastShader, screen.gameCamera);
+        finalBatch = new RenderBatch(defaultShader, screen.renderCamera);
 
         textureFrame = new TextureFrame(this);
         heightFrame = new HeightFrame(this);
@@ -55,32 +58,30 @@ public final class GameRender {
         drawTextureLevel();
         textureFrame.end();
 
-        raycastShader.bind();
-        raycastShader.setUniform("player_pos",
-                new Vector2i(EntityManager.player.getPosition().x, EntityManager.player.getPosition().y + 15));
-        raycastShader.setUniform("u_texture1", 1);
-        heightFrame.texture.bind(1);
-        raycastShader.setUniform("u_texture", 0);
-        finalFrame.texture.bind(0);
+//        raycastShader.bind();
+//        raycastShader.setUniform("player_pos",
+//                new Vector2i(EntityManager.player.getPosition().x, EntityManager.player.getPosition().y + 15));
+//        raycastShader.setUniform("u_texture1", 1);
+//        heightFrame.texture.bind(1);
+//        raycastShader.setUniform("u_texture", 0);
+//        finalFrame.texture.bind(0);
+//
+//        finalFrame.begin();
+//        raycastBatch.begin();
+//        raycastBatch.draw(
+//                textureFrame.texture, 0, 0);
+//        raycastBatch.end();
+//        finalFrame.end();
 
-        finalFrame.begin();
-        raycastBatch.begin();
-        raycastBatch.draw(
-                textureFrame.texture, 0, 0);
-        raycastBatch.end();
-        finalFrame.end();
-
-        renderBatch.begin();
+        finalBatch.begin();
         glClearColor(0, 0, 0, 0);
         glClear(GL_COLOR_BUFFER_BIT);
         if (!Game.DebugMode) {
-            renderBatch.draw(
-                    finalFrame.texture, 0, 0);
-            renderBatch.end();
+            finalBatch.draw(
+                    textureFrame.texture, 0, 0, false, true);
+            finalBatch.end();
             return;
         }
-
-        renderBatch.end();
 
         for (val object : level.getGameObjects()) {
             object.getCollider().debugRender(this);
