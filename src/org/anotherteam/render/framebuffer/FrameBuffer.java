@@ -5,12 +5,12 @@ import org.jetbrains.annotations.NotNull;
 
 import static org.lwjgl.opengl.GL42.*;
 
-public final class Framebuffer {
+public final class FrameBuffer {
 
     private final int fboId;
     private final Texture texture;
 
-    public Framebuffer(int width, int height) {
+    public FrameBuffer(int width, int height) {
         fboId = glGenFramebuffers();
         glBindFramebuffer(GL_FRAMEBUFFER, fboId);
 

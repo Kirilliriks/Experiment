@@ -1,4 +1,4 @@
-package org.anotherteam.game;
+package org.anotherteam;
 
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;

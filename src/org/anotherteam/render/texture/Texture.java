@@ -20,24 +20,15 @@ public final class Texture {
                 new Vector2i(0, 1)
     };
 
-    public static final Vector2i[] FRAMEBUFFER_COORDS = new Vector2i[] {
-            new Vector2i(0, 1),
-            new Vector2i(1, 1),
-            new Vector2i(1, 0),
-            new Vector2i(0, 0)
-    };
-
     private final int id;
     private final int width;
     private final int height;
 
-    private final Vector2i[] textureCoords;
     private final Pixmap pixmap;
 
     public Texture(int width, int height) {
         this.width = width;
         this.height = height;
-        textureCoords = FRAMEBUFFER_COORDS;
         pixmap = new Pixmap(width, height);
         id = glGenTextures();
 
@@ -58,7 +49,6 @@ public final class Texture {
         }
         width = image.getWidth();
         height = image.getHeight();
-        textureCoords = DEFAULT_COORDS;
 
         // Gen buffer
         val buffer = BufferUtils.createByteBuffer(width * height * 4);
@@ -85,11 +75,6 @@ public final class Texture {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixmap.getPixels());
     }
 
-    @NotNull
-    public Vector2i[] getTextureCoords() {
-        return textureCoords;
-    }
-
     public int getId() {
         return id;
     }
@@ -105,6 +90,11 @@ public final class Texture {
     @NotNull
     public Pixmap getPixmap() {
         return pixmap;
+    }
+
+    public void bind(int offset) {
+        glActiveTexture(GL_TEXTURE0 + offset);
+        glBindTexture(GL_TEXTURE_2D, id);
     }
 
     public void bind() {

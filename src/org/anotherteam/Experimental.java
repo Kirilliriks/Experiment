@@ -1,8 +1,5 @@
 package org.anotherteam;
 
-import org.anotherteam.game.Game;
-import org.anotherteam.game.Input;
-import org.anotherteam.render.screen.Screen;
 import org.anotherteam.render.window.Window;
 import org.anotherteam.util.Time;
 import org.lwjgl.glfw.*;

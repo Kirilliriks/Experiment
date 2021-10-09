@@ -5,6 +5,7 @@ import lombok.val;
 import org.anotherteam.render.screen.Camera;
 import org.anotherteam.render.shader.Shader;
 import org.anotherteam.render.texture.Texture;
+import org.joml.Vector2f;
 import org.joml.Vector2i;
 
 public final class RenderBatch {
@@ -111,21 +112,56 @@ public final class RenderBatch {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
-    public void drawTexture(Vector2i position, Texture texture) {
-        drawTexture(position, texture, texture.getWidth(), texture.getHeight());
+    public void draw(Texture texture, Vector2i position) {
+        draw(texture, position.x, position.y);
     }
 
-    public void drawTexture(Vector2i position, Texture texture, int width, int height) {
+    public void draw(Texture texture, Vector2i position, boolean flipX) {
+        draw(texture, position.x, position.y, flipX);
+    }
+
+    public void draw(Texture texture, Vector2i position, boolean flipX, boolean flipY) {
+        draw(texture, position.x, position.y, flipX, flipY);
+    }
+
+    public void draw(Texture texture, float x, float y) {
+        draw(texture, x, y, false);
+    }
+
+    public void draw(Texture texture, float x, float y, boolean flipX) {
+        draw(texture, x, y, texture.getWidth(), texture.getHeight(),
+                0, 0, texture.getWidth(), texture.getHeight(), flipX, false);
+    }
+
+    public void draw(Texture texture, float x, float y, boolean flipX, boolean flipY) {
+        draw(texture, x, y, texture.getWidth(), texture.getHeight(),
+                0, 0, texture.getWidth(), texture.getHeight(), flipX, flipY);
+    }
+
+    public void draw(Texture texture,
+                     float x, float y,
+                     int width, int height,
+                     float xTex, float yTex,
+                     int texWidth, int texHeight,
+                     boolean flipX, boolean flipY) {
         if (lastTexture != texture) {
             lastTexture = texture;
             render();
         } else if (numQuads + 1 > batchSize) render();
 
-        generateTextureQuad(position, texture, numQuads, width, height);
+        genQuad(texture, x, y, width, height, xTex, yTex,
+                texWidth, texHeight,
+                flipX, flipY, numQuads);
         numQuads++;
     }
 
-    private void generateTextureQuad(Vector2i position, Texture texture, int index, int width, int height) {
+    private void genQuad(Texture texture,
+                         float x, float y,
+                         int width, int height,
+                         float xTex, float yTex,
+                         int texWidth, int texHeight,
+                         boolean flipX, boolean flipY,
+                         int index) {
         val offsets = new Vector2i[] {
                 new Vector2i(0, 1),
                 new Vector2i(1, 1),
@@ -133,18 +169,33 @@ public final class RenderBatch {
                 new Vector2i(0, 0)
         };
 
-        val textureCoords = texture.getTextureCoords();
+        val textureCoords = Texture.DEFAULT_COORDS;
+        val xU = flipX ? 1 : 0;
+        val yU = flipY ? 1 : 0;
+        val uv = new Vector2f[] {
+                new Vector2f(((xTex + textureCoords[0].x + xU) * texWidth) / texture.getWidth(),
+                             ((yTex + textureCoords[0].y + yU) * texHeight) / texture.getHeight()),
+
+                new Vector2f(((xTex + textureCoords[1].x - xU) * texWidth) / texture.getWidth(),
+                             ((yTex + textureCoords[1].y + yU) * texHeight) / texture.getHeight()),
+
+                new Vector2f(((xTex + textureCoords[2].x - xU) * texWidth) / texture.getWidth(),
+                             ((yTex + textureCoords[2].y - yU) * texHeight) / texture.getHeight()),
+
+                new Vector2f(((xTex + textureCoords[3].x + xU) * texWidth) / texture.getWidth(),
+                             ((yTex + textureCoords[3].y - yU) * texHeight) / texture.getHeight())
+        };
 
         int offset = index * QUAD_POS_SIZE * VERTEX_SIZE;
         for (short i = 0; i < QUAD_POS_SIZE; i++) {
 
             // Load position
-            vertices[offset] = position.x + offsets[i].x * width;
-            vertices[offset + 1] = position.y + offsets[i].y  * height;
+            vertices[offset] = x + offsets[i].x * width;
+            vertices[offset + 1] = y + offsets[i].y  * height;
 
             // Load texture coords
-            vertices[offset + 2] = textureCoords[i].x;
-            vertices[offset + 3] = textureCoords[i].y;
+            vertices[offset + 2] = uv[i].x;
+            vertices[offset + 3] = uv[i].y;
 
             offset += VERTEX_SIZE;
         }
