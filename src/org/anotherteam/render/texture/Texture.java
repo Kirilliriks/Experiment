@@ -3,6 +3,7 @@ import static org.lwjgl.opengl.GL42.*;
 
 import lombok.val;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector2i;
 import org.lwjgl.BufferUtils;
 
 import javax.imageio.ImageIO;
@@ -12,6 +13,13 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 
 public final class Texture {
+
+    public static final Vector2i[] QUAD_COORDS = new Vector2i[] {
+                new Vector2i(0, 0),
+                new Vector2i(1, 0),
+                new Vector2i(1, 1),
+                new Vector2i(0, 1)
+    };
 
     private final int id;
     private final int width;
@@ -54,6 +62,10 @@ public final class Texture {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
     }
 
+    public int getId() {
+        return id;
+    }
+
     public int getWidth() {
         return width;
     }
@@ -67,9 +79,7 @@ public final class Texture {
         return pixels;
     }
 
-    public void bind(int sampler) {
-        if (sampler < 0 || sampler > 31) return;
-        glActiveTexture(GL_TEXTURE0 + sampler);
+    public void bind() {
         glBindTexture(GL_TEXTURE_2D, id);
     }
 

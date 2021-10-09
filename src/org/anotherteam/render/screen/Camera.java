@@ -5,13 +5,12 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
 public final class Camera {
+    private static final Vector3f temp = new Vector3f();
+    private static final Vector3f up = new Vector3f(0.0f, 1.0f, 0.0f);
 
     private final Vector3f position;
     private final Matrix4f projection;
     private final Matrix4f view;
-
-    private final Vector3f temp = new Vector3f();
-    private final Vector3f up = new Vector3f(0.0f, 1.0f, 0.0f);
 
     public Camera(int x, int y) {
         position = new Vector3f(x, y, 0.0f);
@@ -22,11 +21,11 @@ public final class Camera {
         view = new Matrix4f();
     }
 
-    public void setPosition(int x, int y){
+    public void setPosition(float x, float y){
         position.set(x, y, 0.0f);
     }
 
-    public void addPosition(int x, int y){
+    public void addPosition(float x, float y){
         position.add(x, y, 0.0f);
     }
 

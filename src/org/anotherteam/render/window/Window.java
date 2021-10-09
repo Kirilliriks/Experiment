@@ -60,6 +60,10 @@ public final class Window {
         }
     }
 
+    public void setTitle(String title) {
+        glfwSetWindowTitle(handler, title);
+    }
+
     public boolean shouldClose() {
         return GLFW.glfwWindowShouldClose(handler);
     }
@@ -79,14 +83,13 @@ public final class Window {
 
         handler = glfwCreateWindow(width, height, title, fullscreen ? GLFW.glfwGetPrimaryMonitor() : 0, NULL);
         if (handler == NULL)
-            throw new RuntimeException("Failed to create the GLFW window");
+            throw new RenderException("Failed to create the GLFW window");
 
         createCallbacks();
 
         GLFWVidMode videoMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-        if (videoMode == null) {
+        if (videoMode == null)
             throw new RenderException("Error with get video mode");
-        }
 
         windowX[0] = (videoMode.width() - width) / 2;
         windowY[0] = (videoMode.height() - height) / 2;

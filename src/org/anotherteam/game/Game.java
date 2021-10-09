@@ -1,76 +1,67 @@
 package org.anotherteam.game;
 
+import lombok.val;
+import org.anotherteam.render.RenderBatch;
 import org.anotherteam.render.screen.Camera;
 import org.anotherteam.render.screen.Screen;
 import org.anotherteam.render.shader.Shader;
 import org.anotherteam.render.sprite.Sprite;
+import org.anotherteam.render.window.Window;
+import org.jetbrains.annotations.NotNull;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
 public final class Game {
 
+    private final Window window;
     private final Camera camera;
 
     private final Sprite testSprite;
-    private final Shader testShader;
 
-    public int frames;
-    public static long time;
+    private final RenderBatch renderBatch;
 
-    private float temp;
-
-    public Game() {
+    public Game(@NotNull Window window) {
+        this.window = window;
         camera = new Camera(0, 0);
-        testSprite = new Sprite("../assets/testRoom.png");
+        testSprite = new Sprite("../assets/testTestRoom.png");
         testSprite.setPosition(Screen.WIDTH / 2, Screen.HEIGHT / 2);
-        testShader = new Shader("../assets/shader/testVertexShader.glsl", "../assets/shader/testFragmentShader.glsl");
+        val shader = new Shader("../assets/shader/testVertexShader.glsl", "../assets/shader/testFragmentShader.glsl");
+        renderBatch = new RenderBatch(shader, camera);
         init();
-        temp = 0;
     }
 
-    public void init() {
-        time = System.currentTimeMillis();
-    }
+    public void init() { }
 
-    public void update() {
+    public void update(float dt) {
+
+        val speed = 100;
         if (Input.isKeyDown(GLFW_KEY_W)) {
-            camera.addPosition(0, 1);
+            camera.addPosition(0, speed * dt);
         }
 
         if (Input.isKeyDown(GLFW_KEY_S)) {
-            camera.addPosition(0, -1);
+            camera.addPosition(0, speed * -dt);
         }
 
         if (Input.isKeyDown(GLFW_KEY_D)) {
-            camera.addPosition(1, 0);
+            camera.addPosition(speed * dt, 0);
         }
 
         if (Input.isKeyDown(GLFW_KEY_A)) {
-            camera.addPosition(-1, 0);
+            camera.addPosition(speed * -dt, 0);
         }
     }
 
-    public void render() {
-        frames++;
-        if (System.currentTimeMillis() > time + 1000) {
-            System.out.println("Frames: " + frames);
-            time = System.currentTimeMillis();
-            frames = 0;
-        }
-
+    public void render(float dt) {
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        testShader.bind();
-        testShader.setUniform("sampler", 0);
-        testShader.setUniform("projection", camera.getProjection());
-        testShader.setUniform("view", camera.getViewMatrix());
-        testSprite.draw();
-        testShader.unbind();
+        renderBatch.begin();
+        renderBatch.drawTexture(testSprite.getPosition(), testSprite.getTexture());
+        renderBatch.end();
     }
 
     public void destroy() {
-        testSprite.destroy();
-        testShader.destroy();
+
     }
 }

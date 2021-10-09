@@ -1,8 +1,8 @@
 package org.anotherteam.render.model;
 
+@Deprecated
 public final class SpriteModel extends Model {
     public SpriteModel() {
-        super();
         vertices = new float[] {
                 0, 16,
                 16, 16,

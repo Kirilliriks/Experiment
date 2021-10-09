@@ -4,12 +4,11 @@ import org.anotherteam.game.Game;
 import org.anotherteam.game.Input;
 import org.anotherteam.render.screen.Screen;
 import org.anotherteam.render.window.Window;
+import org.anotherteam.util.Time;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
 
 import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
-import static org.lwjgl.opengl.GL11.glEnable;
 
 public final class Experimental implements Runnable {
 
@@ -27,15 +26,37 @@ public final class Experimental implements Runnable {
         init();
         GL.createCapabilities(); // CRITICAL
 
-        game = new Game();
+        game = new Game(window);
 
-        glEnable(GL_TEXTURE_2D);
+        double beginTime = Time.getTime();
+        double endTime;
+        float dt = 0;
+        float timeCount = 0;
+        int frames = 0;
+        int updates = 0;
         while (!window.shouldClose()) {
             window.update();
-            game.update();
-            game.render();
+
+            game.update(dt);
+            updates++;
+
+            game.render(dt);
+            frames++;
+
+            if (timeCount > 1f) {
+                window.setTitle("FPS: " + frames);
+                frames = 0;
+                updates = 0;
+                timeCount -= 1.0f;
+            }
             window.swapBuffers();
             glfwPollEvents();
+
+            endTime = Time.getTime();
+            dt = (float)(endTime - beginTime);
+            beginTime = endTime;
+            timeCount += dt;
+
             if (Input.isKeyDown(GLFW_KEY_ESCAPE)) return;
         }
         end();
@@ -54,7 +75,7 @@ public final class Experimental implements Runnable {
     private void end() {
         game.destroy();
         window.destroy();
-        //glfwSetErrorCallback(null).free();
+        glfwSetErrorCallback(null).free();
     }
 
     public static void main(String[] args) {

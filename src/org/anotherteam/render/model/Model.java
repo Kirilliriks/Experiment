@@ -6,57 +6,50 @@ import org.lwjgl.system.MemoryUtil;
 
 import java.nio.FloatBuffer;
 
+@Deprecated
 public abstract class Model {
 
-    protected final static short TEX_COORDS_NUM = 2;
-    protected final static short AXIS_NUM = 2;
+    protected final static short TEX_COORDS_SIZE = 2;
+    protected final static short POS_SIZE = 2;
 
     protected float[] vertices;
     protected float[] uv;
     protected int[] indices;
 
-    protected int vao;
-    protected int pbo;
-    protected int tbo;
-    protected int ibo;
-
-    public Model() { }
-
-    public Model(float[] vertices, float[] uv, int[] indices) {
-        this.vertices = vertices;
-        this.uv = uv;
-        this.indices = indices;
-    }
+    protected int vaoID;
+    protected int pboID;
+    protected int tboID;
+    protected int iboID;
 
     protected void generate() {
-        vao = glGenVertexArrays();
-        glBindVertexArray(vao);
+        vaoID = glGenVertexArrays();
+        glBindVertexArray(vaoID);
 
-        pbo = storeBuffer(createBuffer(vertices), 0, AXIS_NUM);
+        pboID = storeBuffer(createBuffer(vertices), 0, POS_SIZE);
 
-        tbo = storeBuffer(createBuffer(uv), 1, TEX_COORDS_NUM);
+        tboID = storeBuffer(createBuffer(uv), 1, TEX_COORDS_SIZE);
 
-        ibo = glGenBuffers();
+        iboID = glGenBuffers();
         val buffer = MemoryUtil.memAllocInt(indices.length);
         buffer.put(indices);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboID);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer.flip(), GL_STATIC_DRAW);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
     public void destroy() {
-        glDeleteVertexArrays(vao);
-        glDeleteBuffers(pbo);
-        glDeleteBuffers(tbo);
-        glDeleteBuffers(ibo);
+        glDeleteVertexArrays(vaoID);
+        glDeleteBuffers(pboID);
+        glDeleteBuffers(tboID);
+        glDeleteBuffers(iboID);
     }
 
     public void render() {
-        glBindVertexArray(vao);
+        glBindVertexArray(vaoID);
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
 
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboID);
         glDrawElements(GL_TRIANGLES, indices.length, GL_UNSIGNED_INT, 0);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
