@@ -2,6 +2,7 @@ package org.anotherteam.render.frame;
 
 import org.anotherteam.object.type.entity.manager.EntityManager;
 import org.anotherteam.render.GameRender;
+import org.anotherteam.render.RenderBatch;
 import org.jetbrains.annotations.NotNull;
 
 public final class LightFrame extends AbstractFrame {
@@ -9,8 +10,8 @@ public final class LightFrame extends AbstractFrame {
     @NotNull
     private final HeightFrame heightFrame;
 
-    public LightFrame(@NotNull GameRender gameRender) {
-        super(gameRender);
+    public LightFrame(@NotNull GameRender gameRender, @NotNull RenderBatch renderBatch) {
+        super(gameRender, renderBatch);
         heightFrame = gameRender.heightFrame;
     }
 

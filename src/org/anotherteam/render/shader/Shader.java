@@ -33,8 +33,8 @@ public final class Shader {
         glAttachShader(programId, vertexShaderId);
         glAttachShader(programId, fragmentShaderId);
 
-        glBindAttribLocation(programId, 0, "vertices");
-        glBindAttribLocation(programId, 1, "textures");
+        glBindAttribLocation(programId, 0, "vertex_pos");
+        glBindAttribLocation(programId, 1, "in_tex_coord");
 
         glLinkProgram(programId);
         if (glGetProgrami(programId, GL_LINK_STATUS) == GL_FALSE) {

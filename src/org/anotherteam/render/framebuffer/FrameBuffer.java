@@ -35,7 +35,7 @@ public final class FrameBuffer {
 
     public void begin() {
         glEnable(GL_BLEND);
-        glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+        glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE_MINUS_DST_ALPHA, GL_ONE);
         glBindFramebuffer(GL_FRAMEBUFFER, fboId);
     }
 

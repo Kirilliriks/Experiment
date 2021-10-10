@@ -1,5 +1,4 @@
 package org.anotherteam.render;
-import static org.lwjgl.opengl.GL42.*;
 
 import lombok.val;
 import org.anotherteam.Game;
@@ -26,7 +25,7 @@ public final class GameRender {
     public final TextureFrame textureFrame;
     public final HeightFrame heightFrame;
     public final LightFrame lightFrame;
-    public final FinalFrame finalFrame;
+    public final FinalFrame raycastFrame;
 
     private final Shader defaultShader;
     private final Shader raycastShader;
@@ -36,15 +35,15 @@ public final class GameRender {
         this.level = level;
         defaultShader = new Shader("shader/defaultVertexShader.glsl", "shader/defaultFragmentShader.glsl");
         raycastShader = new Shader("shader/vsInvert.glsl", "shader/fsInvert.glsl");
+
         renderBatch = new RenderBatch(defaultShader, screen.gameCamera);
         raycastBatch = new RenderBatch(raycastShader, screen.gameCamera);
-
         finalBatch = new RenderBatch(defaultShader, screen.renderCamera);
 
-        textureFrame = new TextureFrame(this);
-        heightFrame = new HeightFrame(this);
-        lightFrame = new LightFrame(this);
-        finalFrame = new FinalFrame(this);
+        textureFrame = new TextureFrame(this, renderBatch);
+        heightFrame = new HeightFrame(this, renderBatch);
+        lightFrame = new LightFrame(this, raycastBatch);
+        raycastFrame = new FinalFrame(this, raycastBatch);
     }
 
     public void render() {
@@ -62,19 +61,17 @@ public final class GameRender {
         raycastShader.setUniform("u_texture1", 1);
         heightFrame.texture.bind(1);
         raycastShader.setUniform("u_texture", 0);
-        finalFrame.texture.bind(0);
+        raycastFrame.texture.bind(0);
 
-        finalFrame.begin();
-        raycastBatch.begin();
+        raycastFrame.begin();
         raycastBatch.draw(
-                textureFrame.texture, 0, 0);
-        raycastBatch.end();
-        finalFrame.end();
+                textureFrame.texture, 0, 0, false, true);
+        raycastFrame.end();
 
         finalBatch.begin();
         if (!Game.DebugMode) {
             finalBatch.draw(
-                    textureFrame.texture, 0, 0, false, true);
+                    raycastFrame.texture, 0, 0, false, true);
             finalBatch.end();
             return;
         } else {

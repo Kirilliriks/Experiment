@@ -72,6 +72,7 @@ public final class RenderBatch {
 
     public void begin() {
         clear();
+        shader.bind();
     }
 
     public void end() {
@@ -79,6 +80,7 @@ public final class RenderBatch {
             render();
 
         lastTexture = null;
+        shader.unbind();
     }
 
     private void changeTexture(Texture texture) {
@@ -90,10 +92,10 @@ public final class RenderBatch {
         if (numQuads == 0) return;
 
         glEnable(GL_BLEND);
+        glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE_MINUS_DST_ALPHA, GL_ONE);
         glBindBuffer(GL_ARRAY_BUFFER, vboID);
         glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
 
-        shader.bind();
         shader.setUniform("projection", camera.getProjection());
         shader.setUniform("view", camera.getViewMatrix());
         lastTexture.bind();
@@ -110,7 +112,6 @@ public final class RenderBatch {
 
         glBindTexture(GL_TEXTURE_2D, 0);
         glDisable(GL_BLEND);
-        shader.unbind();
 
         numQuads = 0;
     }

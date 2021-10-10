@@ -21,10 +21,10 @@ public abstract class AbstractFrame {
     public final Pixmap pixmap;
     public final ByteBuffer buffer;
 
-    public AbstractFrame(@NotNull GameRender gameRender) {
+    public AbstractFrame(@NotNull GameRender gameRender, @NotNull RenderBatch renderBatch) {
         this.gameRender = gameRender;
-        gameScreen = gameRender.getGameScreen();
-        renderBatch = gameRender.getRenderBatch();
+        this.gameScreen = gameRender.getGameScreen();
+        this.renderBatch = renderBatch;
 
         frameBuffer = new FrameBuffer(GameScreen.WIDTH, GameScreen.HEIGHT);
         texture = frameBuffer.getTexture();
@@ -35,7 +35,6 @@ public abstract class AbstractFrame {
     public void begin() {
         frameBuffer.begin();
         renderBatch.begin();
-        renderBatch.clear();
     }
 
     public void end() {
