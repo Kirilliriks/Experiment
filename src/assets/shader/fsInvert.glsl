@@ -51,8 +51,6 @@ void main() {
         hidePower -= 0.01;
 
         vec4 currentColor = imageLoad(u_texture1, ivec2(rayCoord));
-        if (currentColor.g != 0 && rayCoord == endPosition)
-            color = currentColor;
         float currentHeight = currentColor.g;
         if (currentHeight != 0.0) {
             if (lastHeight != currentHeight) {
@@ -63,15 +61,14 @@ void main() {
                 power -= lastHeight / 10.0;
             }
         }
-        if (false) {
+        if (hidePower <= 0) {
             break;
         }
         if (endPosition == integerRayVector) {
-//            color.r *= power;
-//            color.g *= power;
-//            color.b *= power;
-//            color.a = 1.0;
-
+            color.r *= power;
+            color.g *= power;
+            color.b *= power;
+            color.a = 1.0;
             break;
         }
     }
