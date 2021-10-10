@@ -8,7 +8,6 @@ import org.anotherteam.object.state.State;
 import org.anotherteam.object.state.StateController;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
-import org.joml.Vector2ic;
 
 public abstract class EntityObject extends GameObject {
 

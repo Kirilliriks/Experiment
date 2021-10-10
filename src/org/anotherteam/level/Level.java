@@ -59,7 +59,6 @@ public abstract class Level {
         for (val object : gameObjects){
             object.update(delta);
         }
-        entityManager.update(delta);
     }
 
     public void render() {

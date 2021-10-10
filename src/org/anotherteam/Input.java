@@ -6,20 +6,54 @@ import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWKeyCallback;
 import org.lwjgl.glfw.GLFWMouseButtonCallback;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public final class Input {
-    private final static boolean[] keys = new boolean[GLFW.GLFW_KEY_LAST];
     private final static boolean[] buttons = new boolean[GLFW.GLFW_MOUSE_BUTTON_LAST];
     private static double mouseX, mouseY;
+
+    public static Map<Integer, Key> keys = new HashMap<>();
+
+    public static Key KEY_W = new Key(GLFW.GLFW_KEY_W);
+    public static Key KEY_A = new Key(GLFW.GLFW_KEY_A);
+    public static Key KEY_S = new Key(GLFW.GLFW_KEY_S);
+    public static Key KEY_D = new Key(GLFW.GLFW_KEY_D);
+    public static Key KEY_E = new Key(GLFW.GLFW_KEY_E);
+
+    public static Key KEY_ESCAPE = new Key(GLFW.GLFW_KEY_ESCAPE);
+    public static Key KEY_SPACE = new Key(GLFW.GLFW_KEY_SPACE);
+    public static Key KEY_SHIFT = new Key(GLFW.GLFW_KEY_LEFT_SHIFT);
 
     private final GLFWKeyCallback keyboard;
     private final GLFWCursorPosCallback mouseMove;
     private final GLFWMouseButtonCallback mouseButton;
 
+    public static boolean isKeyDown(Key key) {
+        return key.down;
+    }
+
+    public static boolean isKeyPressed(Key key) {
+        return key.pressed;
+    }
+
+    public static boolean isButtonDown(int key) {
+        return buttons[key];
+    }
+
+    public static double getMouseX() {
+        return mouseX;
+    }
+
+    public static double getMouseY() {
+        return mouseY;
+    }
+
     public Input() {
         keyboard = new GLFWKeyCallback() {
             @Override
             public void invoke(long window, int key, int scancode, int action, int mods) {
-                keys[key] = (action != GLFW.GLFW_RELEASE);
+                keys.get(key).toggle(action == GLFW.GLFW_PRESS);
             }
         };
 
@@ -45,21 +79,6 @@ public final class Input {
         mouseButton.free();
     }
 
-    public static boolean isKeyDown(int key) {
-        return keys[key];
-    }
-
-    public static boolean isButtonDown(int key) {
-        return buttons[key];
-    }
-
-    public static double getMouseX() {
-        return mouseX;
-    }
-
-    public static double getMouseY() {
-        return mouseY;
-    }
 
     @NotNull
     public GLFWKeyCallback getKeyboard() {
@@ -74,5 +93,32 @@ public final class Input {
     @NotNull
     public GLFWMouseButtonCallback getMouseButton() {
         return mouseButton;
+    }
+
+    public void tick() {
+        for (Key key : keys.values()) {
+            key.tick();
+        }
+    }
+
+    public static class Key {
+
+        public int keycode;
+        public boolean down = false, pressed = false;
+        private boolean wasDown = false;
+
+        public Key(int code) {
+            keycode = code;
+            keys.put(code, this);
+        }
+
+        public void toggle(boolean bool) {
+            down = bool;
+        }
+
+        public void tick() {
+            pressed = !wasDown && down;
+            wasDown = down;
+        }
     }
 }

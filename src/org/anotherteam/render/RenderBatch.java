@@ -71,7 +71,7 @@ public final class RenderBatch {
     }
 
     public void begin() {
-
+        clear();
     }
 
     public void end() {

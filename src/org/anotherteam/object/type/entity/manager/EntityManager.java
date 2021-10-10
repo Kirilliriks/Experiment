@@ -30,11 +30,7 @@ public final class EntityManager extends GameManager {
     }
 
     @Override
-    public void update(float delta) {
-        for(val entity : entities) {
-            entity.update(delta);
-        }
-    }
+    public void update(float delta) { }
 
     @Override
     public void clear() {

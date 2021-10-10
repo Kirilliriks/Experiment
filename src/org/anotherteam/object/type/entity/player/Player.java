@@ -1,6 +1,7 @@
 package org.anotherteam.object.type.entity.player;
 
 import lombok.NonNull;
+import org.anotherteam.Game;
 import org.anotherteam.Input;
 import org.anotherteam.level.Level;
 import org.anotherteam.object.type.entity.EntityObject;
@@ -36,27 +37,29 @@ public class Player extends EntityObject {
         super.update(delta);
         float newMove = 0;
 
-        if (Input.isKeyDown(GLFW.GLFW_KEY_W))
+        if (Input.isKeyDown(Input.KEY_W))
             position.y += 1;
-        if (Input.isKeyDown(GLFW.GLFW_KEY_S))
+        if (Input.isKeyDown(Input.KEY_S))
             position.y -= 1;
 
-        if (Input.isKeyDown(GLFW.GLFW_KEY_A)) {
+        if (Input.isKeyDown(Input.KEY_A)) {
             newMove -= speed * delta;
         }
-        if (Input.isKeyDown(GLFW.GLFW_KEY_D)) {
+        if (Input.isKeyDown(Input.KEY_D)) {
             newMove += speed * delta;
         }
-        if (Input.isKeyDown(GLFW.GLFW_KEY_E)) {
+        if (Input.isKeyDown(Input.KEY_E)) {
             level.checkInteract(this);
         }
         if (newMove != 0) {
-            moveImpulse.add(newMove, 0);
+            moveImpulse.add(newMove * 2, 0);
         } else moveImpulse.set(0, 0);
 
-
-
-        if (Input.isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT)) moveImpulse.x *= 2;
+        if (Input.isKeyDown(Input.KEY_SHIFT)) moveImpulse.x *= 2;
         if (move()) setState(PlayerState.WALK);
+
+        if (Input.isKeyPressed(Input.KEY_SPACE)) {
+            Game.DebugMode = !Game.DebugMode;
+        }
     }
 }

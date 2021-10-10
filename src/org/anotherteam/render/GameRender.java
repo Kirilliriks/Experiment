@@ -4,6 +4,7 @@ import static org.lwjgl.opengl.GL42.*;
 import lombok.val;
 import org.anotherteam.Game;
 import org.anotherteam.level.Level;
+import org.anotherteam.object.type.entity.manager.EntityManager;
 import org.anotherteam.render.frame.FinalFrame;
 import org.anotherteam.render.frame.HeightFrame;
 import org.anotherteam.render.frame.LightFrame;
@@ -11,6 +12,7 @@ import org.anotherteam.render.frame.TextureFrame;
 import org.anotherteam.render.shader.Shader;
 import org.anotherteam.screen.GameScreen;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector2i;
 
 public final class GameRender {
     private final GameScreen gameScreen;
@@ -36,6 +38,7 @@ public final class GameRender {
         raycastShader = new Shader("shader/vsInvert.glsl", "shader/fsInvert.glsl");
         renderBatch = new RenderBatch(defaultShader, screen.gameCamera);
         raycastBatch = new RenderBatch(raycastShader, screen.gameCamera);
+
         finalBatch = new RenderBatch(defaultShader, screen.renderCamera);
 
         textureFrame = new TextureFrame(this);
@@ -45,39 +48,39 @@ public final class GameRender {
     }
 
     public void render() {
-        //heightFrame.begin();
-        //drawHeightLevel();
-        //heightFrame.end();
-
-        //lightFrame.generateLightMap();
-        //lightFrame.test();
+        heightFrame.begin();
+        drawHeightLevel();
+        heightFrame.end();
 
         textureFrame.begin();
         drawTextureLevel();
         textureFrame.end();
 
-//        raycastShader.bind();
-//        raycastShader.setUniform("player_pos",
-//                new Vector2i(EntityManager.player.getPosition().x, EntityManager.player.getPosition().y + 15));
-//        raycastShader.setUniform("u_texture1", 1);
-//        heightFrame.texture.bind(1);
-//        raycastShader.setUniform("u_texture", 0);
-//        finalFrame.texture.bind(0);
-//
-//        finalFrame.begin();
-//        raycastBatch.begin();
-//        raycastBatch.draw(
-//                textureFrame.texture, 0, 0);
-//        raycastBatch.end();
-//        finalFrame.end();
+        raycastShader.bind();
+        raycastShader.setUniform("player_pos",
+                new Vector2i(EntityManager.player.getPosition().x, EntityManager.player.getPosition().y + 15));
+        raycastShader.setUniform("u_texture1", 1);
+        heightFrame.texture.bind(1);
+        raycastShader.setUniform("u_texture", 0);
+        finalFrame.texture.bind(0);
+
+        finalFrame.begin();
+        raycastBatch.begin();
+        raycastBatch.draw(
+                textureFrame.texture, 0, 0);
+        raycastBatch.end();
+        finalFrame.end();
 
         finalBatch.begin();
-        finalBatch.clear();
         if (!Game.DebugMode) {
             finalBatch.draw(
                     textureFrame.texture, 0, 0, false, true);
             finalBatch.end();
             return;
+        } else {
+            finalBatch.draw(
+                    heightFrame.texture, 0, 0, false, true);
+            finalBatch.end();
         }
 
         for (val object : level.getGameObjects()) {

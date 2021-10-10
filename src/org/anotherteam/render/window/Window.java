@@ -74,7 +74,10 @@ public final class Window {
         glfwSetMouseButtonCallback(handler, input.getMouseButton());
     }
 
-    public void update() { }
+    public void update() {
+        input.tick();
+        glfwPollEvents();
+    }
 
     public void create() {
         glfwDefaultWindowHints();

@@ -47,14 +47,13 @@ public final class Experimental implements Runnable {
                 timeCount -= 1.0f;
             }
             window.swapBuffers();
-            glfwPollEvents();
 
             endTime = Time.getTime();
             dt = (float)(endTime - beginTime);
             beginTime = endTime;
             timeCount += dt;
 
-            if (Input.isKeyDown(GLFW_KEY_ESCAPE)) return;
+            if (Input.isKeyDown(Input.KEY_ESCAPE)) return;
         }
         end();
     }
