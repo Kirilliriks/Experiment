@@ -6,6 +6,7 @@ import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
 
 import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL11.glViewport;
 
 public final class Experimental implements Runnable {
 
@@ -31,6 +32,8 @@ public final class Experimental implements Runnable {
         float timeCount = 0;
         int frames = 0;
         int updates = 0;
+
+        glViewport(0, 0, window.getWidth(), window.getHeight());
         while (!window.shouldClose()) {
             window.update();
 
@@ -64,7 +67,7 @@ public final class Experimental implements Runnable {
         if (!glfwInit())
             throw new IllegalStateException("Unable to initialize GLFW");
 
-        window = new Window(1200, 800, "Experimental");
+        window = new Window(1920, 1080, "Experimental");
         window.create();
         window.setFullscreen(true);
     }
