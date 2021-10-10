@@ -73,14 +73,15 @@ public final class Pixmap {
     }
 
     public void drawPixmap(@NotNull Pixmap pix, int xOwner, int yOwner, int xPix, int yPix, int frameWidth, int frameHeight) {
-        val buffer = pix.getPixels();
-        for (int yD = yOwner; yD < height; yD++, xPix++) {
-            if (yD >= pix.height || xPix >= frameHeight) break;
-            for (int xD = xOwner; xD < width; xD++, yPix++) {
-                if (xD >= pix.width || yPix >= frameWidth) break;
-                val drawIndex = (xPix + yPix * pix.width) * 4;
-                val ownerIndex = (xOwner + yOwner * width) * 4;
-                this.buffer.put(ownerIndex, buffer.get(drawIndex));
+        val pixBuffer = pix.getPixels();
+
+        for (int yP = 0; yP < frameHeight; yP++) {
+            for (int xP = 0; xP < frameWidth; xP++) {
+                val drawIndex = (xPix + xP + (yPix + yP) * pix.width) * 4;
+                if (drawIndex >= pixBuffer.limit() || drawIndex < 0) break;
+                val ownerIndex = (xOwner + xP + (yOwner + yP) * width) * 4;
+                if (ownerIndex >= buffer.limit() || ownerIndex < 0) break;
+                buffer.putInt(ownerIndex, pixBuffer.getInt(drawIndex));
             }
         }
     }

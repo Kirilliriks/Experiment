@@ -91,7 +91,7 @@ public final class GameRender {
         }
 
         for (val gameObject : level.getGameObjects()) {
-            //gameObject.drawTexture(renderBatch);
+            gameObject.drawTexture(renderBatch);
         }
     }
 

@@ -81,7 +81,7 @@ public final class Texture {
 
     public void drawPixmap(@NotNull Pixmap drawPixmap, int x, int y) {
         bind();
-        glTexSubImage2D(id, 0, x, y, drawPixmap.getWidth(), drawPixmap.getHeight(), GL_RGBA, GL_UNSIGNED_BYTE,
+        glTexSubImage2D(GL_TEXTURE_2D, 0, x, y, drawPixmap.getWidth(), drawPixmap.getHeight(), GL_RGBA, GL_UNSIGNED_BYTE,
                 drawPixmap.getPixels());
         glBindTexture(GL_TEXTURE_2D, 0);
     }

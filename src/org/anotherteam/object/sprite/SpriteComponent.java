@@ -6,6 +6,7 @@ import org.anotherteam.object.GameObject;
 import org.anotherteam.object.sprite.animation.AnimationData;
 import org.anotherteam.object.sprite.animation.AnimationTimer;
 import org.anotherteam.render.RenderBatch;
+import org.anotherteam.render.texture.Pixmap;
 import org.anotherteam.render.texture.Texture;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
@@ -49,7 +50,11 @@ public final class SpriteComponent {
     }
 
     public void loadSprite(String texturePath) {
-        this.texture = new Texture(texturePath);
+        Pixmap pixmap = new Pixmap(texturePath);
+        this.texture = new Texture(pixmap.getWidth(), pixmap.getHeight());
+        Pixmap lol = new Pixmap(pixmap.getWidth(), pixmap.getHeight());
+        lol.drawPixmap(pixmap, 0, 0);
+        texture.drawPixmap(lol, 0 , 0);
         setFrameSize(texture.getHeight(), texture.getWidth());
     }
 
