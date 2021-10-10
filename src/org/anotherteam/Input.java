@@ -53,6 +53,9 @@ public final class Input {
         keyboard = new GLFWKeyCallback() {
             @Override
             public void invoke(long window, int key, int scancode, int action, int mods) {
+                if (!keys.containsKey(key))
+                    return;
+
                 keys.get(key).toggle(action != GLFW.GLFW_RELEASE);
             }
         };

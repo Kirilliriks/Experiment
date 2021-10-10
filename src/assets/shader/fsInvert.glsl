@@ -25,8 +25,7 @@ void main() {
     ivec2 integerRayVector;
     //
 
-    directionVector = endPosition - startPosition;
-    directionVector = normalize(directionVector);
+    directionVector = normalize(endPosition - startPosition);
     rayVector = startPosition;
 
     float power = 1.0;
@@ -38,13 +37,12 @@ void main() {
             color.a = 1;
             break;
         }
-
         rayVector.x += directionVector.x;
         rayVector.y += directionVector.y;
 
-        //Integer
-        integerRayVector.x = int(sign(rayVector.x) * floor(abs(rayVector.x) + 0.5));
-        integerRayVector.y = int(sign(rayVector.y) * floor(abs(rayVector.y) + 0.5));
+        //Integer ray vector
+        integerRayVector.x = int(round(rayVector.x));
+        integerRayVector.y = int(round(rayVector.y));
         //
 
         power -= 0.01;
@@ -55,13 +53,13 @@ void main() {
         if (currentHeight != 0.0) {
             if (lastHeight != currentHeight) {
                 lastHeight = currentHeight;
-                hidePower -= lastHeight;
+                if (currentHeight == 1.0f)
+                    hidePower = 0;
             } else {
-                hidePower -= lastHeight / 10.0;
                 power -= lastHeight / 10.0;
             }
         }
-        if (hidePower <= 0) {
+        if (hidePower <= 0 || power <= 0) {
             break;
         }
         if (endPosition == integerRayVector) {
