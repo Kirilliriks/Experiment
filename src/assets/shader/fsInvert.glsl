@@ -1,7 +1,8 @@
 #version 460 core
 in vec2 tex_coord;
+in vec2 tex_positions;
 uniform sampler2D u_texture;
-uniform sampler2D u_texture1;
+layout (binding = 1, rgba8ui) uniform readonly uimage2D u_texture1;
 uniform vec2 player_pos;
 
 void main() {
@@ -9,19 +10,17 @@ void main() {
     vec2 endPosition;
     vec2 startPosition;
 
-    endPosition.x = round(tex_coord.x * 160.0);
-    endPosition.y = round(tex_coord.y * 90.0);
+    endPosition.x = round(tex_positions.x);
+    endPosition.y = round(tex_positions.y);
 
     startPosition.x = round(player_pos.x);
     startPosition.y = round(player_pos.y);
     //
     vec4 color = texture2D(u_texture, tex_coord);
-    vec4 height = texture2D(u_texture1, tex_coord);
-
 
     // Float;
     vec2 directionVector, rayVector;
-    vec2 rayCoord;
+    ivec2 rayCoord;
     //
 
     //Integer
@@ -45,13 +44,16 @@ void main() {
         integerRayVector.y = round(rayVector.y);
         //
 
-        rayCoord.x = integerRayVector.x / 160;
-        rayCoord.y = integerRayVector.y / 90;
+        rayCoord.x = int(integerRayVector.x);
+        rayCoord.y = int(integerRayVector.y);
 
         power -= 0.01;
         hidePower -= 0.01;
 
-        float currentHeight = texture2D(u_texture1, rayCoord).g;
+        vec4 currentColor = imageLoad(u_texture1, ivec2(rayCoord));
+        if (currentColor.g != 0 && rayCoord == endPosition)
+            color = currentColor;
+        float currentHeight = currentColor.g;
         if (currentHeight != 0.0) {
             if (lastHeight != currentHeight) {
                 lastHeight = currentHeight;
@@ -61,17 +63,17 @@ void main() {
                 power -= lastHeight / 10.0;
             }
         }
-        if (hidePower <= 0.0) {
+        if (false) {
             break;
         }
         if (endPosition == integerRayVector) {
-            color.r *= power;
-            color.g *= power;
-            color.b *= power;
-            color.a = 1.0;
+//            color.r *= power;
+//            color.g *= power;
+//            color.b *= power;
+//            color.a = 1.0;
+
             break;
         }
     }
-    vec4 suka = vec4(color.a, color.g, color.b, 1);
     gl_FragColor = color;
 }

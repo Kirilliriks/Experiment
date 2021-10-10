@@ -8,7 +8,6 @@ import org.anotherteam.object.type.entity.EntityObject;
 import org.anotherteam.object.type.entity.EntityState;
 import org.anotherteam.util.exception.LifeException;
 import org.joml.Vector2i;
-import org.lwjgl.glfw.GLFW;
 
 public class Player extends EntityObject {
 
@@ -37,9 +36,9 @@ public class Player extends EntityObject {
         super.update(delta);
         float newMove = 0;
 
-        if (Input.isKeyDown(Input.KEY_W))
+        if (Input.isKeyPressed(Input.KEY_W))
             position.y += 1;
-        if (Input.isKeyDown(Input.KEY_S))
+        if (Input.isKeyPressed(Input.KEY_S))
             position.y -= 1;
 
         if (Input.isKeyDown(Input.KEY_A)) {

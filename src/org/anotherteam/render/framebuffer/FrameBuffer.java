@@ -1,9 +1,9 @@
 package org.anotherteam.render.framebuffer;
+import static org.lwjgl.opengl.GL42.*;
+
 import org.anotherteam.render.texture.Texture;
 import org.anotherteam.util.exception.RenderException;
 import org.jetbrains.annotations.NotNull;
-
-import static org.lwjgl.opengl.GL42.*;
 
 public final class FrameBuffer {
 

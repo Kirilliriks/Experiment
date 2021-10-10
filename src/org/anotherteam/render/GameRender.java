@@ -1,4 +1,5 @@
 package org.anotherteam.render;
+import static org.lwjgl.opengl.GL42.*;
 
 import lombok.val;
 import org.anotherteam.Game;
@@ -56,10 +57,10 @@ public final class GameRender {
         textureFrame.end();
 
         raycastShader.bind();
+
         raycastShader.setUniform("player_pos",
                 new Vector2i(EntityManager.player.getPosition().x, EntityManager.player.getPosition().y + 15));
-        raycastShader.setUniform("u_texture1", 1);
-        heightFrame.texture.bind(1);
+        glBindImageTexture(1, heightFrame.texture.getId(), 0, false, 0, GL_READ_ONLY, GL_RGBA8);
         raycastShader.setUniform("u_texture", 0);
         raycastFrame.texture.bind(0);
 
