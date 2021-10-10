@@ -2,7 +2,7 @@
 in vec2 tex_coord;
 in vec2 tex_positions;
 uniform sampler2D u_texture;
-layout (binding = 1, rgba8ui) uniform readonly uimage2D u_texture1;
+layout (binding = 1, rgba8) uniform readonly image2D u_texture1;
 uniform vec2 player_pos;
 
 void main() {
@@ -10,21 +10,19 @@ void main() {
     vec2 endPosition;
     vec2 startPosition;
 
-    endPosition.x = round(tex_positions.x);
-    endPosition.y = round(tex_positions.y);
+    endPosition.x = int(tex_positions.x);
+    endPosition.y = int(tex_positions.y);
 
-    startPosition.x = round(player_pos.x);
-    startPosition.y = round(player_pos.y);
+    startPosition.x = int(player_pos.x);
+    startPosition.y = int(player_pos.y);
     //
     vec4 color = texture2D(u_texture, tex_coord);
 
     // Float;
     vec2 directionVector, rayVector;
-    ivec2 rayCoord;
-    //
 
     //Integer
-    vec2 integerRayVector;
+    ivec2 integerRayVector;
     //
 
     directionVector = endPosition - startPosition;
@@ -36,21 +34,23 @@ void main() {
     float lastHeight = 0.0;
     color.a = 0.0;
     for (int i = 0; i < 100; i++) {
+        if(startPosition == endPosition) {
+            color.a = 1;
+            break;
+        }
+
         rayVector.x += directionVector.x;
         rayVector.y += directionVector.y;
 
         //Integer
-        integerRayVector.x = round(rayVector.x);
-        integerRayVector.y = round(rayVector.y);
+        integerRayVector.x = int(sign(rayVector.x) * floor(abs(rayVector.x) + 0.5));
+        integerRayVector.y = int(sign(rayVector.y) * floor(abs(rayVector.y) + 0.5));
         //
-
-        rayCoord.x = int(integerRayVector.x);
-        rayCoord.y = int(integerRayVector.y);
 
         power -= 0.01;
         hidePower -= 0.01;
 
-        vec4 currentColor = imageLoad(u_texture1, ivec2(rayCoord));
+        vec4 currentColor = imageLoad(u_texture1, integerRayVector);
         float currentHeight = currentColor.g;
         if (currentHeight != 0.0) {
             if (lastHeight != currentHeight) {
