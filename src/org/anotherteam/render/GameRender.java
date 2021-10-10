@@ -4,7 +4,6 @@ import static org.lwjgl.opengl.GL42.*;
 import lombok.val;
 import org.anotherteam.Game;
 import org.anotherteam.level.Level;
-import org.anotherteam.object.type.entity.manager.EntityManager;
 import org.anotherteam.render.frame.FinalFrame;
 import org.anotherteam.render.frame.HeightFrame;
 import org.anotherteam.render.frame.LightFrame;
@@ -12,7 +11,6 @@ import org.anotherteam.render.frame.TextureFrame;
 import org.anotherteam.render.shader.Shader;
 import org.anotherteam.screen.GameScreen;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector2i;
 
 public final class GameRender {
     private final GameScreen gameScreen;
@@ -47,9 +45,9 @@ public final class GameRender {
     }
 
     public void render() {
-        heightFrame.begin();
-        drawHeightLevel();
-        heightFrame.end();
+        //heightFrame.begin();
+        //drawHeightLevel();
+        //heightFrame.end();
 
         //lightFrame.generateLightMap();
         //lightFrame.test();
@@ -74,8 +72,7 @@ public final class GameRender {
 //        finalFrame.end();
 
         finalBatch.begin();
-        glClearColor(0, 0, 0, 0);
-        glClear(GL_COLOR_BUFFER_BIT);
+        finalBatch.clear();
         if (!Game.DebugMode) {
             finalBatch.draw(
                     textureFrame.texture, 0, 0, false, true);
@@ -94,7 +91,7 @@ public final class GameRender {
         }
 
         for (val gameObject : level.getGameObjects()) {
-            gameObject.drawTexture(renderBatch);
+            //gameObject.drawTexture(renderBatch);
         }
     }
 

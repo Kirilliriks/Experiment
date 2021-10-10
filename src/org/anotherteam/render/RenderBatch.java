@@ -7,6 +7,7 @@ import org.anotherteam.render.shader.Shader;
 import org.anotherteam.render.texture.Texture;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
+import org.w3c.dom.Text;
 
 public final class RenderBatch {
     // Vertex offset
@@ -80,7 +81,14 @@ public final class RenderBatch {
         lastTexture = null;
     }
 
+    private void changeTexture(Texture texture) {
+        render();
+        lastTexture = texture;
+    }
+
     public void render() {
+        if (numQuads == 0) return;
+
         glEnable(GL_BLEND);
         glBindBuffer(GL_ARRAY_BUFFER, vboID);
         glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
@@ -145,8 +153,7 @@ public final class RenderBatch {
                      int texWidth, int texHeight,
                      boolean flipX, boolean flipY) {
         if (lastTexture != texture) {
-            lastTexture = texture;
-            render();
+            changeTexture(texture); // Before changeTexture calls - render()
         } else if (numQuads + 1 > batchSize) render();
 
         genQuad(texture, x, y, width, height, xTex, yTex,

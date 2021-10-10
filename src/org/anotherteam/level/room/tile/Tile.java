@@ -9,13 +9,13 @@ public final class Tile {
     public final static Vector2i SIZE = new Vector2i(16, 16);
 
     private final Pixmap ownerPixmap;
-    private final int u, v, textureAreaSize;
+    private final int u, v, heightOffset;
 
-    public Tile(int u, int v, int textureAreaSize, @NotNull Pixmap ownerPixmap) {
+    public Tile(int u, int v, int heightOffset, @NotNull Pixmap ownerPixmap) {
         this.ownerPixmap = ownerPixmap;
         this.u = u;
         this.v = v;
-        this.textureAreaSize = textureAreaSize;
+        this.heightOffset = heightOffset;
     }
 
     public Pixmap getTexturePixmap() {
@@ -26,7 +26,7 @@ public final class Tile {
 
     public Pixmap getHeightPixmap() {
         val result = new Pixmap(SIZE.x, SIZE.y);
-        result.drawPixmap(ownerPixmap, 0, 0, u * SIZE.x, textureAreaSize + v * SIZE.y, SIZE.x, SIZE.y);
+        result.drawPixmap(ownerPixmap, 0, 0, u * SIZE.x, heightOffset + v * SIZE.y, SIZE.x, SIZE.y);
         return result;
     }
 }

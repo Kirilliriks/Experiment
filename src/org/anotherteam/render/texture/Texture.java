@@ -1,15 +1,9 @@
 package org.anotherteam.render.texture;
 import static org.lwjgl.opengl.GL42.*;
 
-import lombok.val;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
-import org.lwjgl.BufferUtils;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 public final class Texture {
 
@@ -37,33 +31,17 @@ public final class Texture {
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixmap.getPixels());
     }
 
     public Texture(String filename) {
-        BufferedImage image = null;
-        try {
-            image = ImageIO.read(new File(filename));
-        } catch (IOException error) {
-            error.printStackTrace();
-        }
-        width = image.getWidth();
-        height = image.getHeight();
+        this(new Pixmap(filename));
+    }
 
-        // Gen buffer
-        val buffer = BufferUtils.createByteBuffer(width * height * 4);
-        val pixels = image.getRGB(0, 0, width, height,
-                null, 0, width);
-        for (int y = 0; y < height; y++)
-            for (int x = 0; x < width; x++) {
-                val pixel = pixels[x + y * width];
-                buffer.put((byte)((pixel >> 16) & 0xFF)); //Red
-                buffer.put((byte)((pixel >> 8) & 0xFF));  //Green
-                buffer.put((byte)(pixel & 0xFF));         //Blue
-                buffer.put((byte)((pixel >> 24) & 0xFF)); //Alpha
-            }
-        pixmap = new Pixmap(buffer.flip(), width, height);
-        //
+    public Texture(Pixmap pixmap) {
+        this.pixmap = pixmap;
+        width = pixmap.getWidth();
+        height = pixmap.getHeight();
 
         id = glGenTextures();
 

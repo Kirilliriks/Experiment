@@ -1,5 +1,6 @@
 package org.anotherteam.level.room;
 
+import org.anotherteam.data.AssetPixmap;
 import org.anotherteam.level.room.tile.Tile;
 import org.anotherteam.render.RenderBatch;
 import org.anotherteam.render.texture.Texture;
@@ -23,6 +24,7 @@ public final class Room {
         this.tiles = new Vector<>();
         tiles.setSize(size.x * size.y);
         this.roomTexture = new Texture(size.x * Tile.SIZE.x, size.y * Tile.SIZE.y);
+        roomTexture.getPixmap().clear();
         this.heightTexture = new Texture(size.x * Tile.SIZE.x, size.y * Tile.SIZE.y);
     }
 

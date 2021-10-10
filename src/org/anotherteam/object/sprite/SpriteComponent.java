@@ -10,7 +10,7 @@ import org.anotherteam.render.texture.Texture;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
 
-public final class ObjectSprite {
+public final class SpriteComponent {
 
     private final GameObject gameObject;
 
@@ -33,7 +33,7 @@ public final class ObjectSprite {
 
     private boolean flip;
 
-    public ObjectSprite(@NonNull GameObject gameObject) {
+    public SpriteComponent(@NonNull GameObject gameObject) {
         this.gameObject = gameObject;
         this.defaultUV = new Vector2i(0, 0);
         this.UV = new Vector2i(0, 0);

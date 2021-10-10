@@ -1,5 +1,4 @@
 package org.anotherteam.render.frame;
-import static org.lwjgl.opengl.GL42.*;
 
 import org.anotherteam.render.GameRender;
 import org.anotherteam.render.RenderBatch;
@@ -36,8 +35,7 @@ public abstract class AbstractFrame {
     public void begin() {
         frameBuffer.begin();
         renderBatch.begin();
-        glClearColor(0, 0, 0, 0);
-        glClear(GL_COLOR_BUFFER_BIT);
+        renderBatch.clear();
     }
 
     public void end() {

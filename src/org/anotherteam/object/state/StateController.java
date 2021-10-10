@@ -2,16 +2,16 @@ package org.anotherteam.object.state;
 
 import lombok.NonNull;
 import org.anotherteam.object.GameObject;
-import org.anotherteam.object.sprite.ObjectSprite;
+import org.anotherteam.object.sprite.SpriteComponent;
 
 public class StateController {
 
     protected final GameObject gameObject;
-    protected final ObjectSprite sprite;
+    protected final SpriteComponent sprite;
     protected State state;
     protected State lastState;
 
-    public StateController(@NonNull GameObject gameObject, @NonNull ObjectSprite sprite, @NonNull State state){
+    public StateController(@NonNull GameObject gameObject, @NonNull SpriteComponent sprite, @NonNull State state){
         this.gameObject = gameObject;
         this.sprite = sprite;
         setState(state);
@@ -39,7 +39,7 @@ public class StateController {
     }
 
     @NonNull
-    public ObjectSprite getSprite() {
+    public SpriteComponent getSprite() {
         return sprite;
     }
 

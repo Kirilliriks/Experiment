@@ -1,7 +1,7 @@
 package org.anotherteam.object;
 
 import org.anotherteam.level.Level;
-import org.anotherteam.object.sprite.ObjectSprite;
+import org.anotherteam.object.sprite.SpriteComponent;
 import org.anotherteam.physic.Collider;
 import org.anotherteam.render.RenderBatch;
 import org.jetbrains.annotations.NotNull;
@@ -11,7 +11,7 @@ public abstract class GameObject {
 
     protected Level level;
 
-    protected final ObjectSprite sprite;
+    protected final SpriteComponent sprite;
     protected final Collider collider;
     protected final Vector2i position;
 
@@ -26,7 +26,7 @@ public abstract class GameObject {
         this.position = position;
         this.drawPriority = 0;
 
-        this.sprite = new ObjectSprite(this);
+        this.sprite = new SpriteComponent(this);
         this.collider = new Collider(position, this);
     }
 
@@ -45,7 +45,7 @@ public abstract class GameObject {
     }
 
     @NotNull
-    public ObjectSprite getSprite() {
+    public SpriteComponent getSprite() {
         return sprite;
     }
 
