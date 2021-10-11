@@ -49,11 +49,11 @@ public final class GameRender {
 
     public void render() {
         heightFrame.begin();
-        drawHeightLevel();
+        drawHeightMap();
         heightFrame.end();
 
         textureFrame.begin();
-        drawTextureLevel();
+        drawTextures();
         textureFrame.end();
 
         raycastShader.bind();
@@ -80,23 +80,19 @@ public final class GameRender {
                     heightFrame.texture, 0, 0, false, true);
             finalBatch.end();
         }
-
-        for (val object : level.getGameObjects()) {
-            object.getCollider().debugRender(this);
-        }
     }
 
-    private void drawTextureLevel() {
+    private void drawTextures() {
         for (val room : level.getRooms()) {
             room.drawTexture(renderBatch);
         }
 
         for (val gameObject : level.getGameObjects()) {
-            gameObject.drawTexture(renderBatch);
+            gameObject.render(renderBatch);
         }
     }
 
-    private void drawHeightLevel() {
+    private void drawHeightMap() {
         for (val room : level.getRooms()) {
             room.drawHeight(renderBatch);
         }

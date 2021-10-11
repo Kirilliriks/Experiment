@@ -3,32 +3,21 @@ package org.anotherteam.object.type.entity.player;
 import lombok.NonNull;
 import org.anotherteam.Game;
 import org.anotherteam.Input;
+import org.anotherteam.data.AssetsData;
 import org.anotherteam.level.Level;
+import org.anotherteam.object.component.state.player.PlayerState;
 import org.anotherteam.object.type.entity.EntityObject;
-import org.anotherteam.object.type.entity.EntityState;
-import org.anotherteam.util.exception.LifeException;
 import org.joml.Vector2i;
 
 public class Player extends EntityObject {
 
     public Player(@NonNull Vector2i position, @NonNull Level level) {
-        super(position, level, "testPlayerAtlas.png", PlayerState.IDLE);
+        super(position, level, AssetsData.getTexture("testPlayerAtlas.png"), PlayerState.IDLE);
         collider.setBounds(-7, 32, 6, 32);
         collider.setInteractBounds(0, 32, 16, 32);
         sprite.setFrameSize(32, 32);
-        speed = 25;
-        checkFlip();
-    }
-
-    @Override
-    public void setDefaultState() {
-        setState(PlayerState.IDLE);
-    }
-
-    @Override
-    public boolean isCanWalk() {
-        if (!(stateController.getState() instanceof EntityState)) throw new LifeException("Player holds unknown state");
-        return ((EntityState)stateController.getState()).isCanWalk();
+        transform.speed = 25;
+        transform.checkFlip();
     }
 
     @Override
@@ -42,20 +31,20 @@ public class Player extends EntityObject {
             position.y -= 1;
 
         if (Input.isKeyDown(Input.KEY_A)) {
-            newMove -= speed * delta;
+            newMove -= transform.speed * delta;
         }
         if (Input.isKeyDown(Input.KEY_D)) {
-            newMove += speed * delta;
+            newMove += transform.speed * delta;
         }
         if (Input.isKeyDown(Input.KEY_E)) {
-            level.checkInteract(this);
+            collider.checkInteract();
         }
         if (newMove != 0) {
-            moveImpulse.add(newMove * 2, 0);
-        } else moveImpulse.set(0, 0);
+            transform.moveImpulse.add(newMove * 2, 0);
+        } else transform.moveImpulse.set(0, 0);
 
-        if (Input.isKeyDown(Input.KEY_SHIFT)) moveImpulse.x *= 2;
-        if (move()) setState(PlayerState.WALK);
+        if (Input.isKeyDown(Input.KEY_SHIFT)) transform.moveImpulse.x *= 2;
+        if (transform.isMoving()) stateController.setState(PlayerState.WALK);
 
         if (Input.isKeyPressed(Input.KEY_SPACE)) {
             Game.DebugMode = !Game.DebugMode;

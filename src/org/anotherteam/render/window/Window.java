@@ -23,6 +23,7 @@ public final class Window {
 
     private boolean vSync;
     private boolean fullscreen;
+    private int windowFPSRate;
     public int fpsMax = 120;
     public boolean fpsLocked = true;
 
@@ -56,9 +57,9 @@ public final class Window {
         this.fullscreen = isFullscreen;
         if (isFullscreen) {
             GLFW.glfwGetWindowPos(handler, windowX, windowY);
-            GLFW.glfwSetWindowMonitor(handler, GLFW.glfwGetPrimaryMonitor(), 0, 0, width, height, 0);
+            GLFW.glfwSetWindowMonitor(handler, GLFW.glfwGetPrimaryMonitor(), 0, 0, width, height, windowFPSRate);
         } else {
-            GLFW.glfwSetWindowMonitor(handler, 0, windowX[0], windowY[0], width, height, 0);
+            GLFW.glfwSetWindowMonitor(handler, 0, windowX[0], windowY[0], width, height, windowFPSRate);
         }
     }
 
@@ -95,6 +96,12 @@ public final class Window {
         GLFWVidMode videoMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
         if (videoMode == null)
             throw new RenderException("Error with get video mode");
+
+        windowFPSRate = videoMode.refreshRate();
+        glfwWindowHint(GLFW_RED_BITS, videoMode.redBits());
+        glfwWindowHint(GLFW_GREEN_BITS, videoMode.greenBits());
+        glfwWindowHint(GLFW_BLUE_BITS, videoMode.blueBits());
+        glfwWindowHint(GLFW_REFRESH_RATE, videoMode.refreshRate());
 
         windowX[0] = (videoMode.width() - width) / 2;
         windowY[0] = (videoMode.height() - height) / 2;

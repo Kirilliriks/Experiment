@@ -1,5 +1,6 @@
 package org.anotherteam;
 
+import org.anotherteam.editor.ImGuiEditor;
 import org.anotherteam.level.Level;
 import org.anotherteam.level.TestLevel;
 import org.anotherteam.render.window.Window;
@@ -9,18 +10,21 @@ import org.jetbrains.annotations.NotNull;
 public final class Game {
     public static boolean DebugMode;
 
-    private GameState gameState;
-    private GameScreen gameScreen;
+    private final GameScreen gameScreen;
+    private final ImGuiEditor imGuiEditor;
 
+    private GameState gameState;
     public Level currentLevel;
 
     public Game(@NotNull Window window) {
-        this.gameScreen = new GameScreen(window.getWidth(), window.getHeight());
+        this.gameScreen = new GameScreen(window);
+        this.imGuiEditor = new ImGuiEditor(this, window);
 
         this.gameState = GameState.ON_LEVEL;
         this.currentLevel = new TestLevel(this);
         DebugMode = false;
         init();
+        imGuiEditor.init();
     }
 
     public void init() { }
@@ -29,8 +33,10 @@ public final class Game {
         currentLevel.update(dt);
     }
 
-    public void render() {
+
+    public void render(float dt) {
         currentLevel.render();
+        imGuiEditor.update(dt);
     }
 
     @NotNull

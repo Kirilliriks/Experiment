@@ -1,37 +1,27 @@
 package org.anotherteam.object;
 
+import lombok.val;
 import org.anotherteam.level.Level;
-import org.anotherteam.object.sprite.SpriteComponent;
-import org.anotherteam.physic.Collider;
+import org.anotherteam.object.component.Component;
+import org.anotherteam.object.component.sprite.SpriteComponent;
 import org.anotherteam.render.RenderBatch;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class GameObject {
 
     protected Level level;
 
-    protected final SpriteComponent sprite;
-    protected final Collider collider;
+    protected final Map<Class<? extends Component>, Component> components;
     protected final Vector2i position;
 
-    protected int drawPriority;
-
-    // Object size multiplier
-    protected float scale;
-
     public GameObject(@NotNull Vector2i position, @NotNull Level level){
-        this.scale = 1;
         this.level = level;
         this.position = position;
-        this.drawPriority = 0;
-
-        this.sprite = new SpriteComponent(this);
-        this.collider = new Collider(position, this);
-    }
-
-    public int getDrawPriority() {
-        return drawPriority;
+        components = new HashMap<>();
     }
 
     @NotNull
@@ -39,27 +29,49 @@ public abstract class GameObject {
         return position;
     }
 
-    @NotNull
-    public Collider getCollider() {
-        return collider;
+    public Level getLevel() {
+        return level;
     }
 
-    @NotNull
-    public SpriteComponent getSprite() {
-        return sprite;
+    public <T extends Component> T getComponent(Class<T> componentClass) {
+        if (!components.containsKey(componentClass)) return null;
+        return componentClass.cast(components.get(componentClass));
     }
 
-    public float getScale() {
-        return scale;
+    public <T extends Component> void removeComponent(Class<T> componentClass) {
+        components.remove(componentClass);
+    }
+
+    public <T extends Component> void addComponent(T component) {
+        this.components.put(component.getClass(), component);
+        component.setOwnerObject(this);
+        setComponentsRequirements();
+    }
+
+    private void setComponentsRequirements() {
+        for (val component : components.values()) {
+            component.setDependencies();
+        }
     }
 
     public void update(float delta) {
-        sprite.update(delta);
+        for (val component : components.values()) {
+            component.update(delta);
+        }
     }
 
-    public void drawTexture(@NotNull RenderBatch renderBatch) {
-        sprite.draw(position, renderBatch);
+    public void render(@NotNull RenderBatch renderBatch) {
+        val spriteComponent = getComponent(SpriteComponent.class);
+        if (spriteComponent == null) return;
+        spriteComponent.draw(position, renderBatch);
     }
 
     public void onAnimationEnd() { }
+
+    //TODO make another method
+
+    public int getRenderPriority() {
+        if (getComponent(SpriteComponent.class) == null) return -1;
+        return getComponent(SpriteComponent.class).getRenderPriority();
+    }
 }

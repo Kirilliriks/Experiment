@@ -1,23 +1,21 @@
-package org.anotherteam.physic;
+package org.anotherteam.object.component.collider;
 
 import lombok.NonNull;
 import lombok.val;
 import org.anotherteam.object.GameObject;
+import org.anotherteam.object.component.Component;
 import org.anotherteam.render.GameRender;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 
-public abstract class AABB {
-
-    protected final GameObject gameObject;
+public abstract class AABB extends Component {
 
     protected final Vector2i position;
     protected final Vector2i offSet;
     protected final Vector2i firstBound;
     protected final Vector2i secondBound;
 
-    public AABB(@NonNull Vector2i position, @NonNull GameObject gameObject) {
-        this.gameObject = gameObject;
+    public AABB(@NonNull Vector2i position) {
         this.position = position;
         this.offSet = new Vector2i(0, 0);
         this.firstBound = new Vector2i(0, 0);
@@ -30,11 +28,11 @@ public abstract class AABB {
     }
 
     public void setFirstBound(int x, int y) {
-        this.firstBound.set((int)(x * gameObject.getScale()), (int)(y * gameObject.getScale()));
+        this.firstBound.set(x, y);
     }
 
     public void setSecondBound(int x, int y) {
-        this.secondBound.set((int)(x * gameObject.getScale()), (int)(y * gameObject.getScale()));
+        this.secondBound.set(x, y);
     }
 
     public void setOffSet(int x, int y) {
@@ -62,7 +60,7 @@ public abstract class AABB {
     /**
      * @return вернёт true если коллайдеры пересекаются
      */
-    public boolean isIntersect(@NonNull Collider aabb){
+    public boolean isIntersect(@NonNull ColliderComponent aabb){
         if ((aabb.getPosition().x + aabb.getSecondBound().x) < position.x + firstBound.x ||
                 (position.x + secondBound.x) < aabb.getPosition().x  + aabb.getFirstBound().x) return false;
         return true;

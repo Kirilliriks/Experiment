@@ -1,16 +1,13 @@
 package org.anotherteam.level;
 
-import lombok.NonNull;
 import lombok.val;
 import org.anotherteam.Game;
 import org.anotherteam.level.room.Room;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.type.entity.EntityObject;
 import org.anotherteam.object.type.entity.manager.EntityManager;
-import org.anotherteam.object.type.level.InteractiveObject;
 import org.anotherteam.render.GameRender;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector2f;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -47,7 +44,7 @@ public abstract class Level {
     public void addObject(@NotNull GameObject object) {
         if (object instanceof EntityObject entity) entityManager.addEntity(entity);
         gameObjects.add(object);
-        gameObjects.sort(Comparator.comparingInt(GameObject::getDrawPriority));
+        gameObjects.sort(Comparator.comparingInt(GameObject::getRenderPriority));
     }
 
     public void rewoveObject(@NotNull GameObject object) {
@@ -63,22 +60,6 @@ public abstract class Level {
 
     public void render() {
         gameRender.render();
-    }
-
-    public void checkInteract(@NonNull EntityObject entityObject) {
-        for (val object : gameObjects) {
-            if (!(object instanceof InteractiveObject)) continue;
-            if (!entityObject.getCollider().isCanInteract(object.getCollider())) continue;
-            ((InteractiveObject)object).interact(entityObject);
-        }
-    }
-
-    public boolean checkCollide(@NonNull GameObject gameObject, @NonNull Vector2f moveVector) {
-        for (val object : gameObjects) {
-            if (!gameObject.getCollider().isCollide(object.getCollider(), moveVector)) continue;
-            return true;
-        }
-        return false;
     }
 
     @NotNull

@@ -1,4 +1,4 @@
-package org.anotherteam.object.sprite.animation;
+package org.anotherteam.object.component.sprite.animation;
 
 import lombok.AccessLevel;
 import lombok.Getter;

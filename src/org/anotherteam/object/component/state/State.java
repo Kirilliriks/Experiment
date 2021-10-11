@@ -1,7 +1,7 @@
-package org.anotherteam.object.state;
+package org.anotherteam.object.component.state;
 
 import lombok.NonNull;
-import org.anotherteam.object.sprite.animation.AnimationData;
+import org.anotherteam.object.component.sprite.animation.AnimationData;
 
 public abstract class State {
 

@@ -1,7 +1,7 @@
 package org.anotherteam.object.type.entity;
 
-import org.anotherteam.object.sprite.animation.AnimationData;
-import org.anotherteam.object.state.State;
+import org.anotherteam.object.component.sprite.animation.AnimationData;
+import org.anotherteam.object.component.state.State;
 
 
 public abstract class EntityState extends State {

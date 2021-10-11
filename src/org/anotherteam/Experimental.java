@@ -55,7 +55,7 @@ public final class Experimental implements Runnable {
             }
 
             if (canRender) {
-                game.render();
+                game.render((float) frameRateDelta);
                 frames++;
 
                 glfwSwapBuffers(window.handler);

@@ -1,6 +1,5 @@
 package org.anotherteam.level.room;
 
-import org.anotherteam.data.AssetPixmap;
 import org.anotherteam.level.room.tile.Tile;
 import org.anotherteam.render.RenderBatch;
 import org.anotherteam.render.texture.Texture;

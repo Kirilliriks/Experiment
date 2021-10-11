@@ -1,4 +1,4 @@
-package org.anotherteam.object.sprite.animation;
+package org.anotherteam.object.component.sprite.animation;
 
 public final class AnimationTimer {
 

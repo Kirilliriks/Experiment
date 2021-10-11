@@ -1,29 +1,28 @@
-package org.anotherteam.object.sprite;
+package org.anotherteam.object.component.sprite;
 
 import lombok.NonNull;
 import lombok.val;
-import org.anotherteam.object.GameObject;
-import org.anotherteam.object.sprite.animation.AnimationData;
-import org.anotherteam.object.sprite.animation.AnimationTimer;
+import org.anotherteam.object.component.Component;
+import org.anotherteam.object.component.sprite.animation.AnimationData;
+import org.anotherteam.object.component.sprite.animation.AnimationTimer;
 import org.anotherteam.render.RenderBatch;
-import org.anotherteam.render.texture.Pixmap;
 import org.anotherteam.render.texture.Texture;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
 
-public final class SpriteComponent {
-
-    private final GameObject gameObject;
+public final class SpriteComponent extends Component {
 
     private final Vector2i defaultUV;
     private final Vector2i UV;
 
-    private Texture texture;
     private final Vector2i frameSize;
     private final Vector2i textureSize;
 
     private final Vector2i offSet;
 
+    private final int drawPriority;
+
+    private Texture texture;
     private AnimationData animation;
     private AnimationTimer animationTimer;
 
@@ -34,13 +33,13 @@ public final class SpriteComponent {
 
     private boolean flip;
 
-    public SpriteComponent(@NonNull GameObject gameObject) {
-        this.gameObject = gameObject;
+    public SpriteComponent(int drawPriority) {
         this.defaultUV = new Vector2i(0, 0);
         this.UV = new Vector2i(0, 0);
         this.textureSize = new Vector2i(0, 0);
         this.frameSize = new Vector2i(0, 0);
         this.offSet = new Vector2i(0, 0);
+        this.drawPriority = drawPriority;
 
         this.animation = null;
         this.animationTimer = null;
@@ -49,12 +48,8 @@ public final class SpriteComponent {
         this.flip = false;
     }
 
-    public void loadSprite(String texturePath) {
-        Pixmap pixmap = new Pixmap(texturePath);
-        this.texture = new Texture(pixmap.getWidth(), pixmap.getHeight());
-        Pixmap lol = new Pixmap(pixmap.getWidth(), pixmap.getHeight());
-        lol.drawPixmap(pixmap, 0, 0);
-        texture.drawPixmap(lol, 0 , 0);
+    public void setTexture(Texture texture) {
+        this.texture = texture;
         setFrameSize(texture.getHeight(), texture.getWidth());
     }
 
@@ -64,7 +59,7 @@ public final class SpriteComponent {
             !animationTimer.tick(delta)) return;
 
         if (UV.x >= animation.getEndFrame()) {
-            gameObject.onAnimationEnd();
+            ownerObject.onAnimationEnd();
             animationTimer.cancel();
             if (!animation.isCancelOnEnd()) {
                 repeatAnimation(); // Again call animation
@@ -86,18 +81,14 @@ public final class SpriteComponent {
                 flip, false);
     }
 
+    public int getRenderPriority() {
+        return drawPriority;
+    }
+
     public void setFrame(int u, int v) {
         UV.set(u, v);
     }
 
-    public void setTextureSize(int x, int y) {
-        val scale = gameObject.getScale();
-        textureSize.set((int)(x * scale), (int)(y * scale));
-    }
-
-    public void setCenter(boolean center) {
-        this.center = center;
-    }
     public void setFlip(boolean flip) {
         this.flip = flip;
     }
@@ -131,5 +122,9 @@ public final class SpriteComponent {
         setFrame(animation.getStartFrame(), animation.getYTexture());
 
         animationTimer = new AnimationTimer(animation.getAnimSpeed(), (animation.getEndFrame() - animation.getStartFrame() + 1));
+    }
+
+    private void setTextureSize(int x, int y) {
+        textureSize.set(x, y);
     }
 }
