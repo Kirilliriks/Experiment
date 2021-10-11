@@ -33,7 +33,9 @@ public final class FrameBuffer {
         return texture;
     }
 
+
     public void begin() {
+        glViewport(0, 0, texture.getWidth(), texture.getHeight());
         glEnable(GL_BLEND);
         glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE_MINUS_DST_ALPHA, GL_ONE);
         glBindFramebuffer(GL_FRAMEBUFFER, fboId);

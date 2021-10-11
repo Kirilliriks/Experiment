@@ -88,7 +88,7 @@ public final class ImGuiEditor {
         // ------------------------------------------------------------
         // GLFW callbacks to handle user input
 
-        glfwSetKeyCallback(window.handler, (w, key, scancode, action, mods) -> {
+        glfwSetKeyCallback(window.getHandler(), (w, key, scancode, action, mods) -> {
             if (action == GLFW_PRESS) {
                 io.setKeysDown(key, true);
             } else if (action == GLFW_RELEASE) {
@@ -101,13 +101,13 @@ public final class ImGuiEditor {
             io.setKeySuper(io.getKeysDown(GLFW_KEY_LEFT_SUPER) || io.getKeysDown(GLFW_KEY_RIGHT_SUPER));
         });
 
-        glfwSetCharCallback(window.handler, (w, c) -> {
+        glfwSetCharCallback(window.getHandler(), (w, c) -> {
             if (c != GLFW_KEY_DELETE) {
                 io.addInputCharacter(c);
             }
         });
 
-        glfwSetMouseButtonCallback(window.handler, (w, button, action, mods) -> {
+        glfwSetMouseButtonCallback(window.getHandler(), (w, button, action, mods) -> {
             final boolean[] mouseDown = new boolean[5];
 
             mouseDown[0] = button == GLFW_MOUSE_BUTTON_1 && action != GLFW_RELEASE;
@@ -123,7 +123,7 @@ public final class ImGuiEditor {
             }
         });
 
-        glfwSetScrollCallback(window.handler, (w, xOffset, yOffset) -> {
+        glfwSetScrollCallback(window.getHandler(), (w, xOffset, yOffset) -> {
             io.setMouseWheelH(io.getMouseWheelH() + (float) xOffset);
             io.setMouseWheel(io.getMouseWheel() + (float) yOffset);
         });
@@ -131,14 +131,14 @@ public final class ImGuiEditor {
         io.setSetClipboardTextFn(new ImStrConsumer() {
             @Override
             public void accept(final String s) {
-                glfwSetClipboardString(window.handler, s);
+                glfwSetClipboardString(window.getHandler(), s);
             }
         });
 
         io.setGetClipboardTextFn(new ImStrSupplier() {
             @Override
             public String get() {
-                final String clipboardString = glfwGetClipboardString(window.handler);
+                final String clipboardString = glfwGetClipboardString(window.getHandler());
                 return Objects.requireNonNullElse(clipboardString, "");
             }
         });
@@ -170,7 +170,13 @@ public final class ImGuiEditor {
 
         // Any Dear ImGui code SHOULD go between ImGui.newFrame()/ImGui.render() methods
         ImGui.newFrame();
-        ImGui.showDemoWindow();
+
+        ImGui.begin("TestWindow!");
+        ImGui.setWindowPos(0, 0);
+        //ImGui.setWindowSize(100, 100);
+        ImGui.labelText("AHAHA", "HA?");
+        ImGui.end();
+
         ImGui.render();
 
         endFrame();
@@ -181,7 +187,7 @@ public final class ImGuiEditor {
         final float[] winHeight = {window.getHeight()};
         final double[] mousePosX = {0};
         final double[] mousePosY = {0};
-        glfwGetCursorPos(window.handler, mousePosX, mousePosY);
+        glfwGetCursorPos(window.getHandler(), mousePosX, mousePosY);
 
         // We SHOULD call those methods to update Dear ImGui state for the current frame
         val io = ImGui.getIO();
@@ -191,8 +197,8 @@ public final class ImGuiEditor {
         io.setDeltaTime(deltaTime);
 
         val imguiCursor = ImGui.getMouseCursor();
-        glfwSetCursor(window.handler, mouseCursors[imguiCursor]);
-        glfwSetInputMode(window.handler, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        glfwSetCursor(window.getHandler(), mouseCursors[imguiCursor]);
+        glfwSetInputMode(window.getHandler(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     }
 
     private void endFrame() {

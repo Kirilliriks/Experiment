@@ -26,7 +26,7 @@ public final class Experimental implements Runnable {
 
         game = new Game(window);
 
-        double frameRateDelta = 1.0f / window.fpsMax;
+        double frameRateDelta = 1.0f / window.getFpsMax();
 
         double beginTime = Time.getTime();
         double endTime;
@@ -41,7 +41,7 @@ public final class Experimental implements Runnable {
 
         glViewport(0, 0, window.getWidth(), window.getHeight());
         while (!window.shouldClose()) {
-            canRender = !window.fpsLocked;
+            canRender = !window.isFpsLocked();
 
             while (unprocessedTime >= frameRateDelta) {
                 unprocessedTime -= frameRateDelta;
@@ -51,19 +51,19 @@ public final class Experimental implements Runnable {
                 updates++;
 
                 canRender = true;
-                if (!window.fpsLocked) break;
+                if (!window.isFpsLocked()) break;
             }
 
             if (canRender) {
                 game.render((float) frameRateDelta);
                 frames++;
 
-                glfwSwapBuffers(window.handler);
+                glfwSwapBuffers(window.getHandler());
             }
 
             if (timeCount > 1f) {
                 window.setTitle("FPS: " + frames);
-                if (!window.fpsLocked)
+                if (!window.isFpsLocked())
                     frameRateDelta = 1.0f / frames;
                 frames = 0;
                 updates = 0;

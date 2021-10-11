@@ -39,7 +39,7 @@ public final class GameRender {
 
         renderBatch = new RenderBatch(defaultShader, screen.gameCamera);
         raycastBatch = new RenderBatch(raycastShader, screen.gameCamera);
-        finalBatch = new RenderBatch(defaultShader, screen.renderCamera);
+        finalBatch = new RenderBatch(defaultShader, screen.gameCamera);
 
         textureFrame = new TextureFrame(this, renderBatch);
         heightFrame = new HeightFrame(this, renderBatch);
@@ -48,6 +48,8 @@ public final class GameRender {
     }
 
     public void render() {
+
+        // Start frames
         heightFrame.begin();
         drawHeightMap();
         heightFrame.end();
@@ -57,7 +59,6 @@ public final class GameRender {
         textureFrame.end();
 
         raycastShader.bind();
-
         raycastShader.setUniform("player_pos",
                 new Vector2i(EntityManager.player.getPosition().x, EntityManager.player.getPosition().y + 15));
         glBindImageTexture(1, heightFrame.texture.getId(), 0, false, 0, GL_READ_ONLY, GL_RGBA8);
@@ -68,13 +69,15 @@ public final class GameRender {
         raycastBatch.draw(
                 textureFrame.texture, 0, 0, false, true);
         raycastFrame.end();
+        //Finish frames
 
+        glViewport(0, 0, gameScreen.window.getWidth(), gameScreen.window.getHeight());
         finalBatch.begin();
         if (!Game.DebugMode) {
+
             finalBatch.draw(
                     raycastFrame.texture, 0, 0, false, true);
             finalBatch.end();
-            return;
         } else {
             finalBatch.draw(
                     heightFrame.texture, 0, 0, false, true);

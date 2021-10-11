@@ -15,7 +15,7 @@ public final class Window {
 
     private final Input input;
 
-    public long handler;
+    private long handler;
 
     private int width;
     private int height;
@@ -24,8 +24,8 @@ public final class Window {
     private boolean vSync;
     private boolean fullscreen;
     private int windowFPSRate;
-    public int fpsMax = 120;
-    public boolean fpsLocked = true;
+    private int fpsMax = 120;
+    private boolean fpsLocked = true;
 
     private int[] windowX = new int[1], windowY = new int[1];
 
@@ -122,11 +122,23 @@ public final class Window {
         setFullscreen(fullscreen);
     }
 
+    public long getHandler() {
+        return handler;
+    }
+
     public int getWidth() {
         return width;
     }
 
     public int getHeight() {
         return height;
+    }
+
+    public int getFpsMax() {
+        return fpsMax;
+    }
+
+    public boolean isFpsLocked() {
+        return fpsLocked;
     }
 }

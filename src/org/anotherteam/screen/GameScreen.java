@@ -9,16 +9,14 @@ public class GameScreen {
     public static final int WIDTH = 160;
     public static final int HEIGHT = 90;
 
-    private final Window window;
+    public final Window window;
 
     public final Camera gameCamera;
-    public final Camera renderCamera;
     public final Vector3f cursorPosition;
 
     public GameScreen(@NotNull Window window) {
         this.window = window;
-        this.gameCamera = new Camera(0, 0, window.getWidth(), window.getHeight());
-        this.renderCamera = new Camera(0, 0, WIDTH, HEIGHT);
+        this.gameCamera = new Camera(0, 0, WIDTH, HEIGHT);
         this.cursorPosition = new Vector3f(0, 0, 0);
     }
 
