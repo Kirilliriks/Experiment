@@ -28,9 +28,9 @@ void main() {
     directionVector = normalize(endPosition - startPosition);
     rayVector = startPosition;
 
-    float power = 1.0;
-    float hidePower = 1.0;
-    float lastHeight = 0.0;
+    float lastPower = 1.0;
+    float nextPower = 1.0; //
+    float hidePower = 1.0; // if zero pixel not visible, else visible
     color.a = 0.0;
     for (int i = 0; i < 100; i++) {
         if(startPosition == endPosition) {
@@ -45,30 +45,27 @@ void main() {
         integerRayVector.y = int(round(rayVector.y));
         //
 
-        power -= 0.01;
+        nextPower -= 0.01;
         hidePower -= 0.01;
 
         vec4 currentColor = imageLoad(u_texture1, integerRayVector);
         float currentHeight = currentColor.g;
         if (currentHeight != 0.0) {
-            if (lastHeight != currentHeight) {
-                lastHeight = currentHeight;
-                if (currentHeight == 1.0f)
-                    hidePower = 0;
-            } else {
-                power -= lastHeight / 10.0;
-            }
+            if (currentHeight == 1.0f)
+                hidePower = 0;
+            nextPower -= currentHeight / 20.0;
         }
-        if (hidePower <= 0 || power <= 0) {
+        if (hidePower <= 0 || nextPower <= 0) {
             break;
         }
         if (endPosition == integerRayVector) {
-            color.r *= power;
-            color.g *= power;
-            color.b *= power;
+            color.r *= lastPower;
+            color.g *= lastPower;
+            color.b *= lastPower;
             color.a = 1.0;
             break;
         }
+        lastPower = nextPower;
     }
     gl_FragColor = color;
 }

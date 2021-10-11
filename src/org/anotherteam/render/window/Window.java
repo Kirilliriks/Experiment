@@ -15,7 +15,7 @@ public final class Window {
 
     private final Input input;
 
-    private long handler;
+    public long handler;
 
     private int width;
     private int height;
@@ -23,6 +23,8 @@ public final class Window {
 
     private boolean vSync;
     private boolean fullscreen;
+    public int fpsMax = 120;
+    public boolean fpsLocked = true;
 
     private int[] windowX = new int[1], windowY = new int[1];
 

@@ -29,7 +29,7 @@ public final class Game {
         currentLevel.update(dt);
     }
 
-    public void render(float dt) {
+    public void render() {
         currentLevel.render();
     }
 

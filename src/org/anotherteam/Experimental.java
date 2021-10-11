@@ -26,35 +26,53 @@ public final class Experimental implements Runnable {
 
         game = new Game(window);
 
+        double frameRate = 1.0f / window.fpsMax;
+
         double beginTime = Time.getTime();
         double endTime;
-        float dt = 0;
-        float timeCount = 0;
+        float dt;
+        float timeCount = 0.0f;
+        double unprocessedTime = 0.0f;
+
         int frames = 0;
         int updates = 0;
 
         glViewport(0, 0, window.getWidth(), window.getHeight());
         while (!window.shouldClose()) {
-            window.update();
+            boolean canRender = !window.fpsLocked;
 
-            game.update(dt);
-            updates++;
+            while (unprocessedTime >= frameRate) {
+                unprocessedTime -= frameRate;
 
-            game.render(dt);
-            frames++;
+                window.update();
+                game.update((float) frameRate);
+                updates++;
+
+                canRender = true;
+                if (!window.fpsLocked) break;
+            }
+
+            if (canRender) {
+                game.render();
+                frames++;
+
+                glfwSwapBuffers(window.handler);
+            }
 
             if (timeCount > 1f) {
                 window.setTitle("FPS: " + frames);
+                if (!window.fpsLocked)
+                    frameRate = 1.0f / frames;
                 frames = 0;
                 updates = 0;
                 timeCount -= 1.0f;
             }
-            window.swapBuffers();
 
             endTime = Time.getTime();
             dt = (float)(endTime - beginTime);
             beginTime = endTime;
             timeCount += dt;
+            unprocessedTime += dt;
 
             if (Input.isKeyDown(Input.KEY_ESCAPE)) return;
         }
