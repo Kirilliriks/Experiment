@@ -48,12 +48,12 @@ void main() {
         nextPower -= 0.01;
         hidePower -= 0.01;
 
-        vec4 currentColor = imageLoad(u_texture1, integerRayVector);
-        float currentHeight = currentColor.g;
-        if (currentHeight != 0.0) {
-            if (currentHeight == 1.0f)
+        vec4 heightColor = imageLoad(u_texture1, integerRayVector);
+        float height = heightColor.g;
+        if (height != 0.0) {
+            if (height == 1.0f)
                 hidePower = 0;
-            nextPower -= currentHeight / 20.0;
+            nextPower -= height / 20.0;
         }
         if (hidePower <= 0 || nextPower <= 0) {
             break;
