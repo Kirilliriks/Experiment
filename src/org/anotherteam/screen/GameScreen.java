@@ -12,15 +12,13 @@ public class GameScreen {
     public final Window window;
 
     public final Camera gameCamera;
+    public final Camera windowCamera;
     public final Vector3f cursorPosition;
 
     public GameScreen(@NotNull Window window) {
         this.window = window;
         this.gameCamera = new Camera(0, 0, WIDTH, HEIGHT);
+        this.windowCamera = new Camera(0, 0, window.getWidth(), window.getHeight());
         this.cursorPosition = new Vector3f(0, 0, 0);
-    }
-
-    public Camera getGameCamera() {
-        return gameCamera;
     }
 }

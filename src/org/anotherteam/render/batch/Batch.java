@@ -10,14 +10,14 @@ public abstract class Batch {
     // Vertex offset
     // ------
     // Pos              tex coords      color
-    // float, float     float, float    float, float, float, float
+    // float, float     float, float    float, float, float
 
     protected static final short QUAD_POS_SIZE = 4;
     protected static final short INDICES_PRE_QUAD = 6;
 
     protected static final short POS_SIZE = 2; // x, y
     protected static final short TEX_COORDS_SIZE = 2; // u, v
-    protected static final short COLOR_SIZE = 4; // r, g, b, a
+    protected static final short COLOR_SIZE = 3; // r, g, b
 
     protected static final short POS_OFFSET = 0;
 
@@ -29,8 +29,8 @@ public abstract class Batch {
 
     protected final int vaoID, vboID, iboID;
     protected final Shader shader;
+    protected final Camera camera;
 
-    protected Camera camera;
     protected Texture lastTexture;
     protected int numQuads;
 
@@ -61,10 +61,6 @@ public abstract class Batch {
 
         glVertexAttribPointer(0, POS_SIZE, GL_FLOAT, false, vertexSizeBytes, POS_OFFSET);
         glEnableVertexAttribArray(0);
-    }
-
-    public void setCamera(Camera camera) {
-        this.camera = camera;
     }
 
     public void begin() {

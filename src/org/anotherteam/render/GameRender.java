@@ -11,6 +11,7 @@ import org.anotherteam.render.frame.HeightFrame;
 import org.anotherteam.render.frame.LightFrame;
 import org.anotherteam.render.frame.TextureFrame;
 import org.anotherteam.render.shader.Shader;
+import org.anotherteam.render.text.Font;
 import org.anotherteam.screen.GameScreen;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
@@ -22,7 +23,7 @@ public final class GameRender {
     private final RenderBatch renderBatch;
     private final RenderBatch raycastBatch;
 
-    private final RenderBatch finalBatch;
+    private final RenderBatch textBatch;
 
     public final TextureFrame textureFrame;
     public final HeightFrame heightFrame;
@@ -32,6 +33,8 @@ public final class GameRender {
     private final Shader defaultShader;
     private final Shader raycastShader;
 
+    private final Font font;
+
     public GameRender(@NotNull GameScreen screen, @NotNull Level level) {
         this.gameScreen = screen;
         this.level = level;
@@ -40,12 +43,15 @@ public final class GameRender {
 
         renderBatch = new RenderBatch(defaultShader, screen.gameCamera);
         raycastBatch = new RenderBatch(raycastShader, screen.gameCamera);
-        finalBatch = new RenderBatch(defaultShader, screen.gameCamera);
+
+        textBatch = new RenderBatch(defaultShader, screen.windowCamera);
 
         textureFrame = new TextureFrame(this, renderBatch);
         heightFrame = new HeightFrame(this, renderBatch);
         lightFrame = new LightFrame(this, raycastBatch);
         raycastFrame = new FinalFrame(this, raycastBatch);
+
+        font = new Font("E:/VT323-Regular.ttf", 64);
     }
 
     public void render() {
@@ -73,17 +79,21 @@ public final class GameRender {
         //Finish frames
 
         glViewport(0, 0, gameScreen.window.getWidth(), gameScreen.window.getHeight());
-        finalBatch.begin();
+        renderBatch.begin();
         if (!Game.DebugMode) {
 
-            finalBatch.draw(
+            renderBatch.draw(
                     raycastFrame.texture, 0, 0, false, true);
-            finalBatch.end();
+            renderBatch.end();
         } else {
-            finalBatch.draw(
+            renderBatch.draw(
                     heightFrame.texture, 0, 0, false, true);
-            finalBatch.end();
+            renderBatch.end();
         }
+
+        textBatch.begin();
+        font.drawText(textBatch, "HELLO WORLD", 1, 400,1, 0xFF00AB0);
+        textBatch.end();
     }
 
     private void drawTextures() {

@@ -19,13 +19,16 @@ public final class RenderBatch extends Batch {
     };
 
     private static final short TEX_COORDS_OFFSET = POS_OFFSET + POS_SIZE * Float.BYTES;
+    private static final short COLOR_COORDS_OFFSET = TEX_COORDS_OFFSET + TEX_COORDS_SIZE * Float.BYTES;
 
-    private static final short VERTEX_SIZE = 4;
+    private static final short VERTEX_SIZE = 8;
 
     public RenderBatch(Shader shader, Camera camera) {
         super(shader, camera, VERTEX_SIZE);
         glVertexAttribPointer(1, TEX_COORDS_SIZE, GL_FLOAT, false, vertexSizeBytes, TEX_COORDS_OFFSET);
         glEnableVertexAttribArray(1);
+        glVertexAttribPointer(2, COLOR_SIZE, GL_FLOAT, false, vertexSizeBytes, COLOR_COORDS_OFFSET);
+        glEnableVertexAttribArray(2);
     }
 
     @Override
@@ -63,11 +66,13 @@ public final class RenderBatch extends Batch {
         glBindVertexArray(vaoID);
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
+        glEnableVertexAttribArray(2);
 
         glDrawElements(GL_TRIANGLES, numQuads * INDICES_PRE_QUAD, GL_UNSIGNED_INT, 0);
 
         glDisableVertexAttribArray(0);
         glDisableVertexAttribArray(1);
+        glDisableVertexAttribArray(2);
         glBindVertexArray(0);
 
         glBindTexture(GL_TEXTURE_2D, 0);
@@ -79,8 +84,8 @@ public final class RenderBatch extends Batch {
     public void draw(Sprite sprite, float x, float y) {
         draw(sprite.getTexture(), x, y, sprite.getWidth(),
                 sprite.getHeight(),
-                sprite.isFlipX(), false
-                , sprite.getTextCoords());
+                sprite.isFlipX(), false,
+                0, sprite.getTextCoords());
     }
 
     public void draw(Texture texture, Vector2i position) {
@@ -105,19 +110,20 @@ public final class RenderBatch extends Batch {
                      boolean flipX, boolean flipY) {
         val textureCoords = Texture.DEFAULT_COORDS;
 
-        draw(texture, x, y, width, height, flipX, flipY, textureCoords);
+        draw(texture, x, y, width, height, flipX, flipY, 0, textureCoords);
     }
 
     public void draw(Texture texture,
                      float x, float y,
                      int width, int height,
                      boolean flipX, boolean flipY,
+                     int rgb,
                      Vector2f[] texCoords) {
         if (lastTexture != texture) {
             changeTexture(texture); // Before changeTexture calls - render()
         } else if (numQuads + 1 > batchSize) render();
 
-        genQuad(x, y, width, height, texCoords, flipX, flipY, numQuads);
+        genQuad(x, y, width, height, texCoords, flipX, flipY, rgb, numQuads);
         numQuads++;
     }
 
@@ -125,6 +131,7 @@ public final class RenderBatch extends Batch {
                          int width, int height,
                          Vector2f[] texCoords,
                          boolean flipX, boolean flipY,
+                         int rgb,
                          int index) {
 
         int offset = index * QUAD_POS_SIZE * VERTEX_SIZE;
@@ -134,6 +141,10 @@ public final class RenderBatch extends Batch {
         val y0 = flipY ? texCoords[2].y : texCoords[1].y;
         val y1 = flipY ? texCoords[1].y : texCoords[2].y;
 
+        float r = (float)((rgb >> 16) & 0xFF) / 255.0f;
+        float g = (float)((rgb >> 8) & 0xFF) / 255.0f;
+        float b = (float)((rgb >> 0) & 0xFF) / 255.0f;
+
         // Load position
         vertices[offset] = x + QUAD_OFFSET[0].x * width;
         vertices[offset + 1] = y + QUAD_OFFSET[0].y  * height;
@@ -141,23 +152,37 @@ public final class RenderBatch extends Batch {
         // Load texture coords
         vertices[offset + 2] = x0;
         vertices[offset + 3] = y0;
+
+        // Load color
+        vertices[offset + 4] = r;
+        vertices[offset + 5] = g;
+        vertices[offset + 6] = b;
         offset += VERTEX_SIZE;
 
         vertices[offset] = x + QUAD_OFFSET[1].x * width;
         vertices[offset + 1] = y + QUAD_OFFSET[1].y  * height;
         vertices[offset + 2] = x1;
         vertices[offset + 3] = y0;
+        vertices[offset + 4] = r;
+        vertices[offset + 5] = g;
+        vertices[offset + 6] = b;
         offset += VERTEX_SIZE;
 
         vertices[offset] = x + QUAD_OFFSET[2].x * width;
         vertices[offset + 1] = y + QUAD_OFFSET[2].y  * height;
         vertices[offset + 2] = x1;
         vertices[offset + 3] = y1;
+        vertices[offset + 4] = r;
+        vertices[offset + 5] = g;
+        vertices[offset + 6] = b;
         offset += VERTEX_SIZE;
 
         vertices[offset] = x + QUAD_OFFSET[3].x * width;
         vertices[offset + 1] = y + QUAD_OFFSET[3].y  * height;
         vertices[offset + 2] = x0;
         vertices[offset + 3] = y1;
+        vertices[offset + 4] = r;
+        vertices[offset + 5] = g;
+        vertices[offset + 6] = b;
     }
 }
