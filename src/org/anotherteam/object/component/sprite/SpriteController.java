@@ -5,24 +5,16 @@ import lombok.val;
 import org.anotherteam.object.component.Component;
 import org.anotherteam.object.component.sprite.animation.AnimationData;
 import org.anotherteam.object.component.sprite.animation.AnimationTimer;
-import org.anotherteam.render.RenderBatch;
-import org.anotherteam.render.texture.Texture;
+import org.anotherteam.render.batch.RenderBatch;
+import org.anotherteam.render.sprite.Sprite;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
 
-public final class SpriteComponent extends Component {
-
-    private final Vector2i defaultUV;
-    private final Vector2i UV;
-
-    private final Vector2i frameSize;
-    private final Vector2i textureSize;
-
-    private final Vector2i offSet;
+public final class SpriteController extends Component {
 
     private final int drawPriority;
 
-    private Texture texture;
+    private Sprite sprite;
     private AnimationData animation;
     private AnimationTimer animationTimer;
 
@@ -31,26 +23,17 @@ public final class SpriteComponent extends Component {
      */
     private boolean center;
 
-    private boolean flip;
-
-    public SpriteComponent(int drawPriority) {
-        this.defaultUV = new Vector2i(0, 0);
-        this.UV = new Vector2i(0, 0);
-        this.textureSize = new Vector2i(0, 0);
-        this.frameSize = new Vector2i(0, 0);
-        this.offSet = new Vector2i(0, 0);
+    public SpriteController(int drawPriority) {
         this.drawPriority = drawPriority;
 
         this.animation = null;
         this.animationTimer = null;
 
         this.center = true;
-        this.flip = false;
     }
 
-    public void setTexture(Texture texture) {
-        this.texture = texture;
-        setFrameSize(texture.getHeight(), texture.getWidth());
+    public void setSprite(Sprite sprite) {
+        this.sprite = sprite;
     }
 
     public void update(float delta) {
@@ -58,7 +41,7 @@ public final class SpriteComponent extends Component {
             animationTimer.isFinish() ||
             !animationTimer.tick(delta)) return;
 
-        if (UV.x >= animation.getEndFrame()) {
+        if (sprite.currentFrame() >= animation.getEndFrame()) {
             ownerObject.onAnimationEnd();
             animationTimer.cancel();
             if (!animation.isCancelOnEnd()) {
@@ -66,46 +49,25 @@ public final class SpriteComponent extends Component {
             } else stopAnimation();
             return;
         }
-        setFrame(UV.x + 1, UV.y);
+        sprite.nextFrame();
     }
 
     public void draw(@NotNull Vector2i position, @NonNull RenderBatch batch) {
-        if (texture == null) return;
+        if (sprite == null) return;
 
-        val centerOffset = center ? (int)(textureSize.x / 2f) : 0;
-        batch.draw(texture,
-                position.x + offSet.x - centerOffset, position.y + offSet.y,
-                textureSize.x, textureSize.y,
-                UV.x, UV.y,
-                frameSize.x, frameSize.y,
-                flip, false);
+        val centerOffset = center ? (int)(sprite.getWidth() / 2f) : 0;
+        batch.draw(sprite,
+                position.x - centerOffset, position.y);
     }
 
     public int getRenderPriority() {
         return drawPriority;
     }
 
-    public void setFrame(int u, int v) {
-        UV.set(u, v);
-    }
-
-    public void setFlip(boolean flip) {
-        this.flip = flip;
-    }
-
-    /**
-     * Set frame size and rendering size
-     */
-    public void setFrameSize(int x, int y) {
-        frameSize.set(x, y);
-        setTextureSize(x, y);
-    }
-
     public void stopAnimation() {
         if (animationTimer != null) animationTimer.cancel();
         animation = null;
         animationTimer = null;
-        setFrame(defaultUV.x, defaultUV.y);
     }
 
     private void repeatAnimation() {
@@ -119,12 +81,13 @@ public final class SpriteComponent extends Component {
         if (animationTimer != null) animationTimer.cancel();
 
         this.animation = newAnimation;
-        setFrame(animation.getStartFrame(), animation.getYTexture());
+        sprite.setFramePos(animation.getStartFrame(), animation.getYTexture());
 
         animationTimer = new AnimationTimer(animation.getAnimSpeed(), (animation.getEndFrame() - animation.getStartFrame() + 1));
     }
 
-    private void setTextureSize(int x, int y) {
-        textureSize.set(x, y);
+    @NotNull
+    public Sprite getSprite() {
+        return sprite;
     }
 }

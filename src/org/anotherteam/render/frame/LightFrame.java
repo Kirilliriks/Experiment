@@ -3,7 +3,7 @@ package org.anotherteam.render.frame;
 import lombok.val;
 import org.anotherteam.object.type.entity.manager.EntityManager;
 import org.anotherteam.render.GameRender;
-import org.anotherteam.render.RenderBatch;
+import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.Color;
 import org.anotherteam.util.GameMath;

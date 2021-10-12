@@ -3,8 +3,8 @@ package org.anotherteam.object;
 import lombok.val;
 import org.anotherteam.level.Level;
 import org.anotherteam.object.component.Component;
-import org.anotherteam.object.component.sprite.SpriteComponent;
-import org.anotherteam.render.RenderBatch;
+import org.anotherteam.object.component.sprite.SpriteController;
+import org.anotherteam.render.batch.RenderBatch;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
 
@@ -61,7 +61,7 @@ public abstract class GameObject {
     }
 
     public void render(@NotNull RenderBatch renderBatch) {
-        val spriteComponent = getComponent(SpriteComponent.class);
+        val spriteComponent = getComponent(SpriteController.class);
         if (spriteComponent == null) return;
         spriteComponent.draw(position, renderBatch);
     }
@@ -71,7 +71,7 @@ public abstract class GameObject {
     //TODO make another method
 
     public int getRenderPriority() {
-        if (getComponent(SpriteComponent.class) == null) return -1;
-        return getComponent(SpriteComponent.class).getRenderPriority();
+        if (getComponent(SpriteController.class) == null) return -1;
+        return getComponent(SpriteController.class).getRenderPriority();
     }
 }

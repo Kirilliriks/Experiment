@@ -2,7 +2,6 @@ package org.anotherteam.object.component.collider;
 
 import lombok.NonNull;
 import lombok.val;
-import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.Component;
 import org.anotherteam.render.GameRender;
 import org.joml.Vector2f;
@@ -60,7 +59,7 @@ public abstract class AABB extends Component {
     /**
      * @return вернёт true если коллайдеры пересекаются
      */
-    public boolean isIntersect(@NonNull ColliderComponent aabb){
+    public boolean isIntersect(@NonNull Collider aabb){
         if ((aabb.getPosition().x + aabb.getSecondBound().x) < position.x + firstBound.x ||
                 (position.x + secondBound.x) < aabb.getPosition().x  + aabb.getFirstBound().x) return false;
         return true;

@@ -2,14 +2,14 @@ package org.anotherteam.object.component.state;
 
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.Component;
-import org.anotherteam.object.component.sprite.SpriteComponent;
+import org.anotherteam.object.component.sprite.SpriteController;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public final class StateController extends Component {
 
     private final State defaultState;
-    private SpriteComponent sprite;
+    private SpriteController sprite;
     private State state;
     private State lastState;
 
@@ -27,7 +27,7 @@ public final class StateController extends Component {
     @Override
     public void setDependencies() {
         if (sprite != null) return;
-        sprite = getDependsComponent(SpriteComponent.class);
+        sprite = getDependsComponent(SpriteController.class);
     }
 
     public void setState(@NotNull State state) {
@@ -50,7 +50,7 @@ public final class StateController extends Component {
     }
 
     @NotNull
-    public SpriteComponent getSprite() {
+    public SpriteController getSprite() {
         return sprite;
     }
 
@@ -63,6 +63,4 @@ public final class StateController extends Component {
     public State getLastState() {
         return lastState;
     }
-
-
 }

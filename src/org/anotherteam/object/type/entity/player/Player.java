@@ -7,15 +7,18 @@ import org.anotherteam.data.AssetsData;
 import org.anotherteam.level.Level;
 import org.anotherteam.object.component.state.player.PlayerState;
 import org.anotherteam.object.type.entity.EntityObject;
+import org.anotherteam.render.sprite.Sprite;
 import org.joml.Vector2i;
 
 public class Player extends EntityObject {
 
     public Player(@NonNull Vector2i position, @NonNull Level level) {
-        super(position, level, AssetsData.getTexture("testPlayerAtlas.png"), PlayerState.IDLE);
+        super(position, level,
+                new Sprite(AssetsData.getTexture("testPlayerAtlas.png"),
+                        0, 0, 32, 32),
+                PlayerState.IDLE);
         collider.setBounds(-7, 32, 6, 32);
         collider.setInteractBounds(0, 32, 16, 32);
-        sprite.setFrameSize(32, 32);
         transform.speed = 25;
         transform.checkFlip();
     }

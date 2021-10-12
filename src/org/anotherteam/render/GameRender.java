@@ -5,6 +5,7 @@ import lombok.val;
 import org.anotherteam.Game;
 import org.anotherteam.level.Level;
 import org.anotherteam.object.type.entity.manager.EntityManager;
+import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.frame.FinalFrame;
 import org.anotherteam.render.frame.HeightFrame;
 import org.anotherteam.render.frame.LightFrame;

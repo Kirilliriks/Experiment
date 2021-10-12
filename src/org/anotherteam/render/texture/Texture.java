@@ -2,16 +2,18 @@ package org.anotherteam.render.texture;
 import static org.lwjgl.opengl.GL42.*;
 
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector2i;
+import org.joml.Vector2f;
+
+import java.nio.ByteBuffer;
 
 
 public final class Texture {
 
-    public static final Vector2i[] DEFAULT_COORDS = new Vector2i[] {
-                new Vector2i(0, 0),
-                new Vector2i(1, 0),
-                new Vector2i(1, 1),
-                new Vector2i(0, 1)
+    public static final Vector2f[] DEFAULT_COORDS = new Vector2f[] {
+                new Vector2f(0, 0),
+                new Vector2f(1, 0),
+                new Vector2f(1, 1),
+                new Vector2f(0, 1)
     };
 
     private final int id;
@@ -36,6 +38,10 @@ public final class Texture {
 
     public Texture(String filename) {
         this(new Pixmap(filename));
+    }
+
+    public Texture(ByteBuffer byteBuffer, int width, int height) {
+        this(new Pixmap(byteBuffer, width, height));
     }
 
     public Texture(Pixmap pixmap) {
@@ -90,5 +96,6 @@ public final class Texture {
 
     public void destroy() {
         glDeleteTextures(id);
+        pixmap.destroy();
     }
 }

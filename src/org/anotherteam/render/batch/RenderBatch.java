@@ -1,0 +1,163 @@
+package org.anotherteam.render.batch;
+import static org.lwjgl.opengl.GL42.*;
+
+import lombok.val;
+import org.anotherteam.render.screen.Camera;
+import org.anotherteam.render.shader.Shader;
+import org.anotherteam.render.sprite.Sprite;
+import org.anotherteam.render.texture.Texture;
+import org.joml.Vector2f;
+import org.joml.Vector2i;
+
+public final class RenderBatch extends Batch {
+
+    private static final Vector2i[] QUAD_OFFSET = new Vector2i[] {
+            new Vector2i(0, 1),
+            new Vector2i(1, 1),
+            new Vector2i(1, 0),
+            new Vector2i(0, 0)
+    };
+
+    private static final short TEX_COORDS_OFFSET = POS_OFFSET + POS_SIZE * Float.BYTES;
+
+    private static final short VERTEX_SIZE = 4;
+
+    public RenderBatch(Shader shader, Camera camera) {
+        super(shader, camera, VERTEX_SIZE);
+        glVertexAttribPointer(1, TEX_COORDS_SIZE, GL_FLOAT, false, vertexSizeBytes, TEX_COORDS_OFFSET);
+        glEnableVertexAttribArray(1);
+    }
+
+    @Override
+    public void begin() {
+        clear();
+        shader.bind();
+    }
+
+    @Override
+    public void end() {
+        if (numQuads > 0)
+            render();
+
+        lastTexture = null;
+        shader.unbind();
+    }
+
+    private void changeTexture(Texture texture) {
+        render();
+        lastTexture = texture;
+    }
+
+    public void render() {
+        if (numQuads == 0) return;
+
+        glEnable(GL_BLEND);
+        glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE_MINUS_DST_ALPHA, GL_ONE);
+        glBindBuffer(GL_ARRAY_BUFFER, vboID);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
+
+        shader.setUniform("projection", camera.getProjection());
+        shader.setUniform("view", camera.getViewMatrix());
+        lastTexture.bind();
+
+        glBindVertexArray(vaoID);
+        glEnableVertexAttribArray(0);
+        glEnableVertexAttribArray(1);
+
+        glDrawElements(GL_TRIANGLES, numQuads * INDICES_PRE_QUAD, GL_UNSIGNED_INT, 0);
+
+        glDisableVertexAttribArray(0);
+        glDisableVertexAttribArray(1);
+        glBindVertexArray(0);
+
+        glBindTexture(GL_TEXTURE_2D, 0);
+        glDisable(GL_BLEND);
+
+        numQuads = 0;
+    }
+
+    public void draw(Sprite sprite, float x, float y) {
+        draw(sprite.getTexture(), x, y, sprite.getWidth(),
+                sprite.getHeight(),
+                sprite.isFlipX(), false
+                , sprite.getTextCoords());
+    }
+
+    public void draw(Texture texture, Vector2i position) {
+        draw(texture, position.x, position.y);
+    }
+
+    public void draw(Texture texture, float x, float y) {
+        draw(texture, x, y, false);
+    }
+
+    public void draw(Texture texture, float x, float y, boolean flipX) {
+        draw(texture, x, y, texture.getWidth(), texture.getHeight(), flipX, false);
+    }
+
+    public void draw(Texture texture, float x, float y, boolean flipX, boolean flipY) {
+        draw(texture, x, y, texture.getWidth(), texture.getHeight(), flipX, flipY);
+    }
+
+    public void draw(Texture texture,
+                     float x, float y,
+                     int width, int height,
+                     boolean flipX, boolean flipY) {
+        val textureCoords = Texture.DEFAULT_COORDS;
+
+        draw(texture, x, y, width, height, flipX, flipY, textureCoords);
+    }
+
+    public void draw(Texture texture,
+                     float x, float y,
+                     int width, int height,
+                     boolean flipX, boolean flipY,
+                     Vector2f[] texCoords) {
+        if (lastTexture != texture) {
+            changeTexture(texture); // Before changeTexture calls - render()
+        } else if (numQuads + 1 > batchSize) render();
+
+        genQuad(x, y, width, height, texCoords, flipX, flipY, numQuads);
+        numQuads++;
+    }
+
+    private void genQuad(float x, float y,
+                         int width, int height,
+                         Vector2f[] texCoords,
+                         boolean flipX, boolean flipY,
+                         int index) {
+
+        int offset = index * QUAD_POS_SIZE * VERTEX_SIZE;
+
+        val x0 = flipX ? texCoords[1].x : texCoords[0].x;
+        val x1 = flipX ? texCoords[0].x : texCoords[1].x;
+        val y0 = flipY ? texCoords[2].y : texCoords[1].y;
+        val y1 = flipY ? texCoords[1].y : texCoords[2].y;
+
+        // Load position
+        vertices[offset] = x + QUAD_OFFSET[0].x * width;
+        vertices[offset + 1] = y + QUAD_OFFSET[0].y  * height;
+
+        // Load texture coords
+        vertices[offset + 2] = x0;
+        vertices[offset + 3] = y0;
+        offset += VERTEX_SIZE;
+
+        vertices[offset] = x + QUAD_OFFSET[1].x * width;
+        vertices[offset + 1] = y + QUAD_OFFSET[1].y  * height;
+        vertices[offset + 2] = x1;
+        vertices[offset + 3] = y0;
+        offset += VERTEX_SIZE;
+
+        vertices[offset] = x + QUAD_OFFSET[2].x * width;
+        vertices[offset + 1] = y + QUAD_OFFSET[2].y  * height;
+        vertices[offset + 2] = x1;
+        vertices[offset + 3] = y1;
+        offset += VERTEX_SIZE;
+
+        vertices[offset] = x + QUAD_OFFSET[3].x * width;
+        vertices[offset + 1] = y + QUAD_OFFSET[3].y  * height;
+        vertices[offset + 2] = x0;
+        vertices[offset + 3] = y1;
+    }
+}

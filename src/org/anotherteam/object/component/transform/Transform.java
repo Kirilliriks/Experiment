@@ -2,21 +2,21 @@ package org.anotherteam.object.component.transform;
 
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.Component;
-import org.anotherteam.object.component.collider.ColliderComponent;
-import org.anotherteam.object.component.sprite.SpriteComponent;
+import org.anotherteam.object.component.collider.Collider;
+import org.anotherteam.object.component.sprite.SpriteController;
 import org.anotherteam.object.component.state.StateController;
 import org.anotherteam.object.type.entity.EntityState;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 
-public final class TransformComponent extends Component {
+public final class Transform extends Component {
 
     private final int maxSpeed;
 
     private StateController stateController;
-    private ColliderComponent collider;
-    private SpriteComponent sprite;
+    private Collider collider;
+    private SpriteController sprite;
 
     public final Vector2f moveImpulse;
 
@@ -25,7 +25,7 @@ public final class TransformComponent extends Component {
 
     private boolean moving;
 
-    public TransformComponent(int maxSpeed) {
+    public Transform(int maxSpeed) {
         this.maxSpeed = maxSpeed;
         moveImpulse = new Vector2f(0.0f, 0.0f);
         speed = maxSpeed;
@@ -46,9 +46,9 @@ public final class TransformComponent extends Component {
     @Override
     public void setDependencies() {
         if (sprite != null && collider != null && stateController != null) return;
-        collider = getDependsComponent(ColliderComponent.class);
+        collider = getDependsComponent(Collider.class);
         stateController = getDependsComponent(StateController.class);
-        sprite = getDependsComponent(SpriteComponent.class);
+        sprite = getDependsComponent(SpriteController.class);
     }
 
     public boolean move() {
@@ -71,7 +71,7 @@ public final class TransformComponent extends Component {
 
     public void checkFlip() {
         boolean flip = (moveImpulse.x < 0);
-        sprite.setFlip(flip);
+        sprite.getSprite().setFlipX(flip);
         collider.setFlip(flip);
     }
 

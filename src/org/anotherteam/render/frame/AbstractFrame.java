@@ -1,7 +1,7 @@
 package org.anotherteam.render.frame;
 
 import org.anotherteam.render.GameRender;
-import org.anotherteam.render.RenderBatch;
+import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.framebuffer.FrameBuffer;
 import org.anotherteam.render.texture.Pixmap;
 import org.anotherteam.render.texture.Texture;

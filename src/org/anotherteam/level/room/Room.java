@@ -1,7 +1,7 @@
 package org.anotherteam.level.room;
 
 import org.anotherteam.level.room.tile.Tile;
-import org.anotherteam.render.RenderBatch;
+import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.texture.Texture;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
