@@ -75,6 +75,10 @@ public final class Window {
         glfwSetKeyCallback(handler, input.getKeyboard());
         glfwSetCursorPosCallback(handler, input.getMouseMove());
         glfwSetMouseButtonCallback(handler, input.getMouseButton());
+        glfwSetWindowSizeCallback(handler, (w, newWidth, newHeight) -> {
+            width = newWidth;
+            height = newHeight;
+        });
     }
 
     public void update() {
