@@ -7,10 +7,11 @@ import org.anotherteam.Input;
 import org.anotherteam.level.Level;
 import org.anotherteam.object.type.entity.manager.EntityManager;
 import org.anotherteam.render.batch.RenderBatch;
-import org.anotherteam.render.frame.FinalFrame;
+import org.anotherteam.render.frame.EffectFrame;
 import org.anotherteam.render.frame.HeightFrame;
 import org.anotherteam.render.frame.ResizeFrame;
 import org.anotherteam.render.frame.TextureFrame;
+import org.anotherteam.render.screen.Camera;
 import org.anotherteam.render.shader.Shader;
 import org.anotherteam.render.text.Font;
 import org.anotherteam.screen.GameScreen;
@@ -20,10 +21,12 @@ import org.joml.Vector2i;
 
 public final class GameRender {
     private final GameScreen gameScreen;
-    private final Level level;
+
+    private final Camera renderCamera;
+    private int width, height;
 
     private final RenderBatch textureBatch;
-    private final RenderBatch finalBatch;
+    private final RenderBatch effectBatch;
 
     /**
      * Render to player's window
@@ -32,30 +35,37 @@ public final class GameRender {
 
     public final TextureFrame textureFrame;
     public final HeightFrame heightFrame;
-    public final FinalFrame finalFrame;
+    public final EffectFrame effectFrame;
     public final ResizeFrame resizeFrame;
 
     private final Shader defaultShader;
     private final Shader raycastShader;
 
-    private final Font font;
+    private final Font debugFont;
+
+    private final Level level;
 
     public GameRender(@NotNull GameScreen screen, @NotNull Level level) {
         this.gameScreen = screen;
         this.level = level;
+        width = 1920;
+        height = 1080;
+        renderCamera = new Camera(0, 0, width, height);
+
         defaultShader = new Shader("shader/defaultVertexShader.glsl", "shader/defaultFragmentShader.glsl");
         raycastShader = new Shader("shader/vsInvert.glsl", "shader/fsInvert.glsl");
 
         textureBatch = new RenderBatch(defaultShader, screen.gameCamera);
-        finalBatch = new RenderBatch(raycastShader, screen.gameCamera);
-        renderBatch = new RenderBatch(defaultShader, screen.gameCamera);
+        effectBatch = new RenderBatch(raycastShader, screen.gameCamera);
+
+        renderBatch = new RenderBatch(defaultShader, renderCamera);
 
         textureFrame = new TextureFrame(textureBatch);
         heightFrame = new HeightFrame(textureBatch);
-        finalFrame = new FinalFrame(finalBatch);
-        resizeFrame = new ResizeFrame(renderBatch, screen.window.getWidth(), screen.window.getHeight());
+        effectFrame = new EffectFrame(effectBatch);
+        resizeFrame = new ResizeFrame(textureBatch, width, height);
 
-        font = new Font("font/Code 8x8.ttf", 16);
+        debugFont = new Font("font/font.ttf", 16);
     }
 
     public void render() {
@@ -73,26 +83,24 @@ public final class GameRender {
                 new Vector2i(EntityManager.player.getPosition().x, EntityManager.player.getPosition().y + 15));
         glBindImageTexture(1, heightFrame.texture.getId(), 0, false, 0, GL_READ_ONLY, GL_RGBA8);
         raycastShader.setUniform("u_texture", 0);
-        finalFrame.texture.bind(0);
+        effectFrame.texture.bind(0);
 
-        finalFrame.begin();
-        finalBatch.draw(
+        effectFrame.begin();
+        effectBatch.draw(
                 textureFrame.texture, 0, 0, false, true);
-        finalFrame.end();
+        effectFrame.end();
 
         resizeFrame.begin();
-        renderBatch.setCamera(gameScreen.gameCamera);
-        renderBatch.draw(
-                finalFrame.texture, 0, 0, false, true);
+        textureBatch.draw(
+                effectFrame.texture, 0, 0, false, true);
         resizeFrame.end();
         //Finish frames
 
         renderBatch.begin();
-        renderBatch.setCamera(gameScreen.windowCamera);
         renderBatch.draw(
                 resizeFrame.texture, 0, 0, false, true);
         if (Game.DebugMode) {
-            font.drawText(renderBatch, "Pos " + gameScreen.getMouseX() + " " + gameScreen.getMouseY(),
+            debugFont.drawText(renderBatch, "Pos; " + gameScreen.getMouseX() + " " + gameScreen.getMouseY(),
                     (int) Input.getMousePos().x, (int) Input.getMousePos().y - 40, 1.0f, new Color(255, 255, 255, 255));
         }
         renderBatch.end();

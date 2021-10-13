@@ -18,6 +18,7 @@ import java.util.Objects;
 
 import static org.lwjgl.glfw.GLFW.*;
 
+@Deprecated
 public final class ImGuiEditor {
 
     private final Game game;
