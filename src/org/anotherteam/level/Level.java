@@ -7,6 +7,7 @@ import org.anotherteam.object.GameObject;
 import org.anotherteam.object.type.entity.EntityObject;
 import org.anotherteam.object.type.entity.manager.EntityManager;
 import org.anotherteam.render.GameRender;
+import org.anotherteam.render.batch.RenderBatch;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -58,8 +59,8 @@ public abstract class Level {
         }
     }
 
-    public void render() {
-        gameRender.render(this);
+    public void render(@NotNull RenderBatch windowBatch) {
+        gameRender.render(windowBatch, this);
     }
 
     @NotNull

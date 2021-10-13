@@ -27,6 +27,6 @@ public abstract class GUIElement {
     }
 
     public void render(@NotNull EditorBatch editorBatch) {
-        editorBatch.draw(AssetsData.EDITOR_TEXTURE, pos.x + offset.x, pos.y + offset.y);
+        editorBatch.draw(AssetsData.EDITOR_TEXTURE, pos.x + offset.x, pos.y + offset.y, width, height, false, false);
     }
 }

@@ -49,9 +49,6 @@ dependencies {
 
     implementation "org.joml:joml:1.10.2"
 
-    implementation "io.imgui.java:binding:$imguiVersion"
-    implementation "io.imgui.java:lwjgl3:$imguiVersion"
-
     // Include all available natives, but it's likely that you want something specific
     runtimeOnly "io.imgui.java:natives-windows:$imguiVersion"
     runtimeOnly "io.imgui.java:natives-windows-x86:$imguiVersion"

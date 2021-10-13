@@ -41,8 +41,9 @@ public final class Game {
 
 
     public void render(float dt) {
-        editor.render();
-        currentLevel.render();
+        currentLevel.render(GameScreen.windowBatch);
+
+        editor.render(GameScreen.windowBatch);
     }
 
     @NotNull

@@ -29,11 +29,6 @@ public final class GameRender {
     private final RenderBatch effectBatch;
     private final RenderBatch resizeBatch;
 
-    /**
-     * Render to player's window
-     */
-    private final RenderBatch windowBatch;
-
     public final TextureFrame textureFrame;
     public final HeightFrame heightFrame;
     public final EffectFrame effectFrame;
@@ -56,8 +51,6 @@ public final class GameRender {
 
         resizeBatch = new RenderBatch(AssetsData.DEFAULT_SHADER, screen.gameCamera);
 
-        windowBatch = new RenderBatch(AssetsData.DEFAULT_SHADER, screen.windowCamera);
-
         textureFrame = new TextureFrame(textureBatch);
         heightFrame = new HeightFrame(textureBatch);
         effectFrame = new EffectFrame(effectBatch);
@@ -75,7 +68,7 @@ public final class GameRender {
         this.height = height;
     }
 
-    public void render(@NotNull Level level) {
+    public void render(@NotNull RenderBatch windowBatch, @NotNull Level level) {
         // Start frames
         heightFrame.begin();
         drawHeightMap(level);
