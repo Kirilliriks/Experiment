@@ -29,9 +29,20 @@ public final class Camera {
         position.add(x, y, 0.0f);
     }
 
+    public void setProjection(int width, int height) {
+        projection.setOrtho2D(
+                0.0f, width,
+                0.0f, height);
+    }
+
     @NotNull
     public Matrix4f getProjection() {
         return projection;
+    }
+
+    @NotNull
+    public Vector3f getPosition() {
+        return position;
     }
 
     @NotNull

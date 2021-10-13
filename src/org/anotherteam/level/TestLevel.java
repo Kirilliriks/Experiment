@@ -21,7 +21,7 @@ public final class TestLevel extends Level {
         val testRoom = new Room(new Vector2i(10, 20), new Vector2i(9,4));
         for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 4; y++) {
-                testRoom.addTile(x,y, new Tile(x, y, 64, AssetsData.TEST_TEXTURE));
+                testRoom.addTile(x,y, new Tile(x, y, 64, AssetsData.TEST_ROOM_TEXTURE));
             }
         }
         addRoom(testRoom);

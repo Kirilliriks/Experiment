@@ -5,12 +5,15 @@ import lombok.val;
 import org.anotherteam.render.screen.Camera;
 import org.anotherteam.render.shader.Shader;
 import org.anotherteam.render.sprite.Sprite;
+import org.anotherteam.render.text.Font;
 import org.anotherteam.render.texture.Texture;
 import org.anotherteam.util.Color;
+import org.anotherteam.util.exception.LifeException;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 
-public final class RenderBatch extends Batch {
+public class RenderBatch extends Batch {
 
     private static final Vector2i[] QUAD_OFFSET = new Vector2i[] {
             new Vector2i(0, 1),
@@ -22,14 +25,17 @@ public final class RenderBatch extends Batch {
     private static final short TEX_COORDS_OFFSET = POS_OFFSET + POS_SIZE * Float.BYTES;
     private static final short COLOR_COORDS_OFFSET = TEX_COORDS_OFFSET + TEX_COORDS_SIZE * Float.BYTES;
 
-    private static final short VERTEX_SIZE = 8;
+    private static final short VERTEX_SIZE = 7;
 
-    public RenderBatch(Shader shader, Camera camera) {
+    public boolean blend;
+
+    public RenderBatch(@NotNull Shader shader, @NotNull Camera camera) {
         super(shader, camera, VERTEX_SIZE);
         glVertexAttribPointer(1, TEX_COORDS_SIZE, GL_FLOAT, false, vertexSizeBytes, TEX_COORDS_OFFSET);
         glEnableVertexAttribArray(1);
         glVertexAttribPointer(2, COLOR_SIZE, GL_FLOAT, false, vertexSizeBytes, COLOR_COORDS_OFFSET);
         glEnableVertexAttribArray(2);
+        blend = true;
     }
 
     @Override
@@ -47,6 +53,10 @@ public final class RenderBatch extends Batch {
         shader.unbind();
     }
 
+    public void setBlend(boolean blend) {
+        this.blend = blend;
+    }
+
     private void changeTexture(Texture texture) {
         render();
         lastTexture = texture;
@@ -55,8 +65,12 @@ public final class RenderBatch extends Batch {
     public void render() {
         if (numQuads == 0) return;
 
-        glEnable(GL_BLEND);
-        glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE_MINUS_DST_ALPHA, GL_ONE);
+        if (blend) {
+            glEnable(GL_BLEND);
+            glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE_MINUS_DST_ALPHA, GL_ONE);
+        } else {
+            glDisable(GL_BLEND);
+        }
         glBindBuffer(GL_ARRAY_BUFFER, vboID);
         glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
 
@@ -77,7 +91,9 @@ public final class RenderBatch extends Batch {
         glBindVertexArray(0);
 
         glBindTexture(GL_TEXTURE_2D, 0);
-        glDisable(GL_BLEND);
+        if (blend) {
+            glDisable(GL_BLEND);
+        }
 
         numQuads = 0;
     }
@@ -185,5 +201,20 @@ public final class RenderBatch extends Batch {
         vertices[offset + 4] = r;
         vertices[offset + 5] = g;
         vertices[offset + 6] = b;
+    }
+
+    public void drawText(Font font, String text, int x, int y, float scale, Color color) {
+        for (int i = 0; i < text.length(); i++) {
+            val charInfo = font.getCharacter(text.charAt(i));
+            if (charInfo.width == 0)
+                throw new LifeException("Unknown font character " + text.charAt(i));
+
+            draw(font.texture, x, y,
+                    (int)(charInfo.width * scale), (int)(charInfo.height * scale),
+                    false, false,
+                    color,
+                    charInfo.texCoords);
+            x += charInfo.width * scale;
+        }
     }
 }

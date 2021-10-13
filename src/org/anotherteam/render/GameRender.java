@@ -4,6 +4,7 @@ import static org.lwjgl.opengl.GL42.*;
 import lombok.val;
 import org.anotherteam.Game;
 import org.anotherteam.Input;
+import org.anotherteam.data.AssetsData;
 import org.anotherteam.level.Level;
 import org.anotherteam.object.type.entity.manager.EntityManager;
 import org.anotherteam.render.batch.RenderBatch;
@@ -11,7 +12,6 @@ import org.anotherteam.render.frame.EffectFrame;
 import org.anotherteam.render.frame.HeightFrame;
 import org.anotherteam.render.frame.ResizeFrame;
 import org.anotherteam.render.frame.TextureFrame;
-import org.anotherteam.render.screen.Camera;
 import org.anotherteam.render.shader.Shader;
 import org.anotherteam.render.text.Font;
 import org.anotherteam.screen.GameScreen;
@@ -22,60 +22,67 @@ import org.joml.Vector2i;
 public final class GameRender {
     private final GameScreen gameScreen;
 
-    private final Camera renderCamera;
+    private final Vector2i position;
     private int width, height;
 
     private final RenderBatch textureBatch;
     private final RenderBatch effectBatch;
+    private final RenderBatch resizeBatch;
 
     /**
      * Render to player's window
      */
-    private final RenderBatch renderBatch;
+    private final RenderBatch windowBatch;
 
     public final TextureFrame textureFrame;
     public final HeightFrame heightFrame;
     public final EffectFrame effectFrame;
     public final ResizeFrame resizeFrame;
 
-    private final Shader defaultShader;
     private final Shader raycastShader;
 
     private final Font debugFont;
 
-    private final Level level;
-
-    public GameRender(@NotNull GameScreen screen, @NotNull Level level) {
+    public GameRender(@NotNull GameScreen screen) {
         this.gameScreen = screen;
-        this.level = level;
-        width = 1920;
-        height = 1080;
-        renderCamera = new Camera(0, 0, width, height);
+        this.position = new Vector2i(0, 0);
+        width = screen.window.getWidth();
+        height = screen.window.getHeight();
 
-        defaultShader = new Shader("shader/defaultVertexShader.glsl", "shader/defaultFragmentShader.glsl");
         raycastShader = new Shader("shader/vsInvert.glsl", "shader/fsInvert.glsl");
 
-        textureBatch = new RenderBatch(defaultShader, screen.gameCamera);
+        textureBatch = new RenderBatch(AssetsData.DEFAULT_SHADER, screen.gameCamera);
         effectBatch = new RenderBatch(raycastShader, screen.gameCamera);
 
-        renderBatch = new RenderBatch(defaultShader, renderCamera);
+        resizeBatch = new RenderBatch(AssetsData.DEFAULT_SHADER, screen.gameCamera);
+
+        windowBatch = new RenderBatch(AssetsData.DEFAULT_SHADER, screen.windowCamera);
 
         textureFrame = new TextureFrame(textureBatch);
         heightFrame = new HeightFrame(textureBatch);
         effectFrame = new EffectFrame(effectBatch);
-        resizeFrame = new ResizeFrame(textureBatch, width, height);
+        resizeFrame = new ResizeFrame(resizeBatch, screen.window.getWidth(), screen.window.getHeight());
 
         debugFont = new Font("font/font.ttf", 16);
     }
 
-    public void render() {
+    public void setPosition(int x, int y) {
+        position.set(x, y);
+    }
+
+    public void setSize(int width, int height) {
+        this.width = width;
+        this.height = height;
+    }
+
+    public void render(@NotNull Level level) {
         // Start frames
         heightFrame.begin();
-        drawHeightMap();
+        drawHeightMap(level);
         heightFrame.end();
 
         textureFrame.begin();
-        drawTextures();
+        drawTextures(level);
         textureFrame.end();
 
         raycastShader.bind();
@@ -91,22 +98,25 @@ public final class GameRender {
         effectFrame.end();
 
         resizeFrame.begin();
-        textureBatch.draw(
+        resizeBatch.setCamera(gameScreen.gameCamera);
+        resizeBatch.draw(
                 effectFrame.texture, 0, 0, false, true);
+        if (Game.DebugMode) {
+            resizeBatch.setCamera(gameScreen.windowCamera);
+            resizeBatch.drawText(debugFont, "Pos; " + gameScreen.getMouseX() + " " + gameScreen.getMouseY(),
+                    (int) Input.getMousePos().x, (int) Input.getMousePos().y - 40, 1.0f, new Color(255, 255, 255, 255));
+        }
         resizeFrame.end();
         //Finish frames
 
-        renderBatch.begin();
-        renderBatch.draw(
-                resizeFrame.texture, 0, 0, false, true);
-        if (Game.DebugMode) {
-            debugFont.drawText(renderBatch, "Pos; " + gameScreen.getMouseX() + " " + gameScreen.getMouseY(),
-                    (int) Input.getMousePos().x, (int) Input.getMousePos().y - 40, 1.0f, new Color(255, 255, 255, 255));
-        }
-        renderBatch.end();
+        glViewport(0, 0, gameScreen.window.getWidth(), gameScreen.window.getHeight());
+        windowBatch.begin();
+        windowBatch.draw(
+                resizeFrame.texture, position.x, position.y, width, height, false, true);
+        windowBatch.end();
     }
 
-    private void drawTextures() {
+    private void drawTextures(@NotNull Level level) {
         for (val room : level.getRooms()) {
             room.drawTexture(textureBatch);
         }
@@ -116,14 +126,9 @@ public final class GameRender {
         }
     }
 
-    private void drawHeightMap() {
+    private void drawHeightMap(@NotNull Level level) {
         for (val room : level.getRooms()) {
             room.drawHeight(textureBatch);
         }
-    }
-
-    @NotNull
-    public GameScreen getGameScreen() {
-        return gameScreen;
     }
 }

@@ -66,6 +66,7 @@ public abstract class Batch {
     }
 
     public void setCamera(@NotNull Camera camera) {
+        render();
         this.camera = camera;
     }
 

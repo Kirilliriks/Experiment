@@ -105,7 +105,7 @@ public class Font {
         val buffer = BufferUtils.createByteBuffer(image.getWidth() * image.getHeight() * 4);
         for (int y = 0; y < image.getHeight(); y++) {
             for (int x = 0; x < image.getWidth(); x++) {
-                val alphaComponent = (byte)((pixels[y * image.getWidth() + x] >> 24) & 0xFF);
+                val alphaComponent = (byte) ((pixels[y * image.getWidth() + x] >> 24) & 0xFF);
                 buffer.put(alphaComponent);
                 buffer.put(alphaComponent);
                 buffer.put(alphaComponent);
@@ -115,20 +115,5 @@ public class Font {
         buffer.flip();
 
         texture = new Texture(buffer, image.getWidth(), image.getHeight());
-    }
-
-    public void drawText(RenderBatch renderBatch, String text, int x, int y, float scale, Color color) {
-        for (int i = 0; i < text.length(); i++) {
-            val charInfo = getCharacter(text.charAt(i));
-            if (charInfo.width == 0)
-                throw new LifeException("Unknown font character " + text.charAt(i));
-
-            renderBatch.draw(texture, x, y,
-                    (int)(charInfo.width * scale), (int)(charInfo.height * scale),
-                    false, false,
-                    color,
-                    charInfo.texCoords);
-            x += charInfo.width * scale;
-        }
     }
 }

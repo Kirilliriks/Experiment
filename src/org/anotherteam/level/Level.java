@@ -28,7 +28,7 @@ public abstract class Level {
 
     public Level(@NotNull Game game){
         this.main = game;
-        this.gameRender = new GameRender(main.getGameScreen(),this);
+        this.gameRender = game.getGameRender();
         this.entityManager = new EntityManager();
         this.rooms = new ArrayList<>();
         this.gameObjects = new ArrayList<>();
@@ -59,7 +59,7 @@ public abstract class Level {
     }
 
     public void render() {
-        gameRender.render();
+        gameRender.render(this);
     }
 
     @NotNull
