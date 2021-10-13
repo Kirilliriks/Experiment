@@ -98,14 +98,8 @@ public final class GameRender {
         effectFrame.end();
 
         resizeFrame.begin();
-        resizeBatch.setCamera(gameScreen.gameCamera);
         resizeBatch.draw(
                 effectFrame.texture, 0, 0, false, true);
-        if (Game.DebugMode) {
-            resizeBatch.setCamera(gameScreen.windowCamera);
-            resizeBatch.drawText(debugFont, "Pos; " + gameScreen.getMouseX() + " " + gameScreen.getMouseY(),
-                    (int) Input.getMousePos().x, (int) Input.getMousePos().y - 40, 1.0f, new Color(255, 255, 255, 255));
-        }
         resizeFrame.end();
         //Finish frames
 
@@ -113,7 +107,20 @@ public final class GameRender {
         windowBatch.begin();
         windowBatch.draw(
                 resizeFrame.texture, position.x, position.y, width, height, false, true);
+        if (Game.DebugMode)
+            windowBatch.drawText(debugFont, "Pos: " + inGameMouseX() + " " + inGameMouseY(),
+                    (int)(Input.getMousePos().x + 15), (int)(Input.getMousePos().y - 25), 1.0f, new Color(255, 255, 255, 255));
         windowBatch.end();
+    }
+
+    private int inGameMouseX() {
+        if (Input.getMousePos().x < position.x || Input.getMousePos().x > position.x + width) return -1;
+        return (int) (((Input.getMousePos().x - position.x) / width) * GameScreen.WIDTH);
+    }
+
+    private int inGameMouseY() {
+        if (Input.getMousePos().x < position.x || Input.getMousePos().y > position.y + height) return -1;
+        return (int) (((Input.getMousePos().y - position.y) / height) * GameScreen.HEIGHT);
     }
 
     private void drawTextures(@NotNull Level level) {

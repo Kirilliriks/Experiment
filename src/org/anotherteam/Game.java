@@ -22,8 +22,8 @@ public final class Game {
     public Game(@NotNull Window window) {
         this.gameScreen = new GameScreen(window);
         this.gameRender = new GameRender(gameScreen);
-        gameRender.setPosition(1000, 500);
-        gameRender.setSize(window.getWidth() - 1000, window.getHeight() - 500);
+        gameRender.setPosition(950, 540);
+        gameRender.setSize(950, 540);
 
         this.gameState = GameState.ON_LEVEL;
         this.currentLevel = new TestLevel(this);

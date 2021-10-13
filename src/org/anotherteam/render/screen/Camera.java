@@ -1,5 +1,6 @@
 package org.anotherteam.render.screen;
 
+import lombok.val;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
@@ -43,6 +44,12 @@ public final class Camera {
     @NotNull
     public Vector3f getPosition() {
         return position;
+    }
+
+    public Matrix4f getMul(){
+        val matr = new Matrix4f();
+        matr.identity();
+        return projection.mul(view, matr);
     }
 
     @NotNull

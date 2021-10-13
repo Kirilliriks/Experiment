@@ -43,6 +43,7 @@ public final class Input {
         return buttons[key];
     }
 
+    @NotNull
     public static Vector2f getMousePos() {
         return mousePos;
     }
