@@ -19,10 +19,22 @@ public class Widget extends GUIElement {
         this.pos = pos;
         this.width = width;
         this.height = height;
-        val title = new Label(titleString, pos, new Vector2f(0, height), 10, 10);
+        val title = new Label(titleString, new Vector2f(0, height), 10);
         childElements = new ArrayList<>();
-        childElements.add(title);
+        addElement(title);
         color = Color.GRAY;
+    }
+
+    public void addElement(@NotNull GUIElement element) {
+        childElements.add(element);
+        element.setOwner(this);
+    }
+
+    @Override
+    public void update(float dt) {
+        for (val element : childElements) {
+            element.update(dt);
+        }
     }
 
     @Override

@@ -14,7 +14,9 @@ public abstract class GUIElement {
     protected Color color;
 
     public GUIElement(int width, int height) {
-        this(new Vector2f(0, 0), width, height);
+        this.offset = new Vector2f(0, 0);
+        this.width = width;
+        this.height = height;
     }
 
     public GUIElement(Vector2f pos, int width, int height) {
@@ -29,6 +31,10 @@ public abstract class GUIElement {
         this.color = color;
     }
 
+    public void setOwner(@NotNull GUIElement ownerElement) {
+        pos = ownerElement.pos;
+    }
+
     public void setOffset(float x, float y) {
         offset.set(x, y);
     }
@@ -36,4 +42,6 @@ public abstract class GUIElement {
     public void render(@NotNull EditorBatch editorBatch) {
         editorBatch.draw(AssetsData.EDITOR_TEXTURE, pos.x + offset.x, pos.y + offset.y, width, height, false, false, color);
     }
+
+    public void update(float dt) { }
 }

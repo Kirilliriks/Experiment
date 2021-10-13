@@ -12,26 +12,27 @@ public class GameScreen {
     public static final int WIDTH = 160;
     public static final int HEIGHT = 90;
 
+    @NotNull
     public static RenderBatch windowBatch;
-
-    public final  Window window;
+    @NotNull
+    public static Window window;
 
     public final Camera gameCamera;
     public final Camera windowCamera;
 
     public GameScreen(@NotNull Window window) {
-        this.window = window;
         this.windowCamera = new Camera(0, 0, window.getWidth(), window.getHeight());
         this.gameCamera = new Camera(0, 0, WIDTH, HEIGHT);
 
+        GameScreen.window = window;
         windowBatch = new RenderBatch(AssetsData.DEFAULT_SHADER, windowCamera);
     }
 
-    public int getMouseX() {
+    public static int inGameMouseX() {
         return (int) (Input.getMousePos().x / window.getWidth() * WIDTH);
     }
 
-    public int getMouseY() {
+    public static int inGameMouseY() {
         return (int) (Input.getMousePos().y / window.getHeight() * HEIGHT);
     }
 }

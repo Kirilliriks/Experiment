@@ -4,6 +4,7 @@ import lombok.NonNull;
 import lombok.val;
 import org.anotherteam.object.component.Component;
 import org.anotherteam.render.GameRender;
+import org.anotherteam.util.Color;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 
@@ -67,7 +68,7 @@ public abstract class AABB extends Component {
 
     public abstract void debugRender(@NonNull GameRender gameRender);
 
-    public void debugRender(@NonNull GameRender gameRender, int TODOcolor){
+    public void debugRender(@NonNull GameRender gameRender, Color color){
         val v1 = new Vector2f(position.x + offSet.x + firstBound.x, position.y + offSet.y);
         val v2 = new Vector2f(position.x + offSet.x + firstBound.x, position.y + offSet.y + firstBound.y);
         val v3 = new Vector2f(position.x + offSet.x + secondBound.x, position.y + offSet.y + secondBound.y);

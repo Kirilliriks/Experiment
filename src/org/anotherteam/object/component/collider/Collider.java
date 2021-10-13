@@ -5,6 +5,7 @@ import lombok.val;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.type.level.InteractiveObject;
 import org.anotherteam.render.GameRender;
+import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
@@ -88,7 +89,7 @@ public final class Collider extends AABB {
     @Override
     public void debugRender(@NonNull GameRender gameRender) {
         interactAABB.debugRender(gameRender);
-        super.debugRender(gameRender, 0);
+        super.debugRender(gameRender, Color.RED);
     }
 
     private static class InteractAABB extends AABB {
@@ -115,7 +116,7 @@ public final class Collider extends AABB {
 
         @Override
         public void debugRender(@NonNull GameRender gameRender) {
-            super.debugRender(gameRender, 0);
+            super.debugRender(gameRender, Color.RED);
         }
     }
 }

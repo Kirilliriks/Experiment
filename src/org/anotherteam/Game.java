@@ -26,7 +26,7 @@ public final class Game {
         gameRender.setPosition((int) (window.getWidth() / 2.0f - (GameScreen.WIDTH * scale) / 2.0f), 0);
         gameRender.setSize(GameScreen.WIDTH * scale, GameScreen.HEIGHT * scale);
 
-        this.gameState = GameState.ON_LEVEL;
+        this.gameState = GameState.ON_EDITOR;
         this.currentLevel = new TestLevel(this);
         DebugMode = false;
         init();
@@ -37,6 +37,8 @@ public final class Game {
     public void init() { }
 
     public void update(float dt) {
+        editor.update(dt);
+        if (gameState == GameState.ON_EDITOR) return;
         currentLevel.update(dt);
     }
 
@@ -44,6 +46,15 @@ public final class Game {
     public void render(float dt) {
         currentLevel.render(GameScreen.windowBatch);
         editor.renderFrame(GameScreen.windowBatch);
+    }
+
+    public void setGameState(@NotNull GameState gameState) {
+        this.gameState = gameState;
+    }
+
+    @NotNull
+    public GameState getGameState() {
+        return gameState;
     }
 
     @NotNull

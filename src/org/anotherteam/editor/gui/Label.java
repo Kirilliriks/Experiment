@@ -8,16 +8,19 @@ import org.joml.Vector2f;
 
 public class Label extends GUIElement {
 
-    private String text;
+    protected String text;
 
-    public Label(String text, @NotNull Vector2f pos, @NotNull Vector2f offset, int width, int height) {
-        super(pos, width, height);
+    public Label(String text, @NotNull Vector2f offset, int height) {
+        super(0, height + 6);
         setOffset(offset.x, offset.y);
         this.text = text;
-        this.pos = pos;
         this.width = Editor.editorFont.getTextWidth(text, 1.0f) + 5;
-        this.height = height + 6;
         color = Color.GRAY;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+        this.width = Editor.editorFont.getTextWidth(text, 1.0f) + 5;
     }
 
     @Override

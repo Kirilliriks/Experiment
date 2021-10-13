@@ -1,8 +1,11 @@
 package org.anotherteam.editor;
 
 import org.anotherteam.Game;
+import org.anotherteam.GameState;
 import org.anotherteam.Input;
 import org.anotherteam.data.AssetsData;
+import org.anotherteam.editor.gui.Button;
+import org.anotherteam.editor.gui.Label;
 import org.anotherteam.editor.gui.Widget;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.render.batch.RenderBatch;
@@ -21,12 +24,31 @@ public final class Editor extends Widget {
     private final EditorBatch editorBatch;
     private final FrameBuffer editorFrame;
 
+    //GUI
+    private static Label logLabel;
+    private final Button switchModeButton;
+
     public Editor(@NotNull Game game, @NotNull GameScreen gameScreen) {
         super("Editor", new Vector2f(10, gameScreen.window.getHeight() / 2.0f), gameScreen.window.getWidth() - 40, gameScreen.window.getHeight() / 2 - 40);
         this.game = game;
         this.gameScreen = gameScreen;
         this.editorBatch = new EditorBatch(AssetsData.DEFAULT_SHADER, gameScreen.windowCamera);
         this.editorFrame = new FrameBuffer(game.getGameScreen().window.getWidth(), gameScreen.window.getHeight());
+        this.switchModeButton = new Button("Switch mode", new Vector2f(width / 2.0f, 15), 10);
+        switchModeButton.setRunnable(() -> {
+            if (game.getGameState() == GameState.ON_EDITOR) {
+                game.setGameState(GameState.ON_LEVEL);
+                return;
+            }
+            game.setGameState(GameState.ON_EDITOR);
+        });
+        addElement(switchModeButton);
+        logLabel = new Label("", new Vector2f(0, 15), 10);
+        addElement(logLabel);
+    }
+
+    public static void setLogText(String text) {
+        logLabel.setText(text);
     }
 
     private void renderGUI() {
@@ -34,7 +56,7 @@ public final class Editor extends Widget {
         editorBatch.begin();
         super.render(editorBatch);
         editorBatch.drawText(editorFont, "Pos: " + Input.getMousePos().x + " " + Input.getMousePos().y,
-                0, 0, 1.0f, new Color(255, 255, 255, 255));
+                15, (int) pos.y + 5, 1.0f, new Color(255, 255, 255, 255));
         editorBatch.end();
         editorFrame.end();
     }

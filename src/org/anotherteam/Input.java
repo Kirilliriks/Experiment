@@ -65,7 +65,7 @@ public final class Input {
         mouseMove = new GLFWCursorPosCallback() {
             @Override
             public void invoke(long window, double xpos, double ypos) {
-                mousePos.set((float)xpos,  ownerWindow.getHeight() - (float)ypos);
+                mousePos.set((float)xpos,  (float) (ownerWindow.getHeight() - ypos));
             }
         };
 
