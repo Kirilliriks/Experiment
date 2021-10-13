@@ -102,7 +102,7 @@ public class RenderBatch extends Batch {
         draw(sprite.getTexture(), x, y, sprite.getWidth(),
                 sprite.getHeight(),
                 sprite.isFlipX(), false,
-                new Color(0, 0, 0, 0), sprite.getTextCoords());
+                Color.WHITE, sprite.getTextCoords());
     }
 
     public void draw(Texture texture, Vector2i position) {
@@ -125,9 +125,17 @@ public class RenderBatch extends Batch {
                      float x, float y,
                      int width, int height,
                      boolean flipX, boolean flipY) {
+        draw(texture, x, y, width, height, flipX, flipY, Color.WHITE);
+    }
+
+    public void draw(Texture texture,
+                     float x, float y,
+                     int width, int height,
+                     boolean flipX, boolean flipY,
+                     Color color) {
         val textureCoords = Texture.DEFAULT_COORDS;
 
-        draw(texture, x, y, width, height, flipX, flipY, new Color(0, 0, 0, 0), textureCoords);
+        draw(texture, x, y, width, height, flipX, flipY, color, textureCoords);
     }
 
     public void draw(Texture texture,

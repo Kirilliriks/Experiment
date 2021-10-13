@@ -116,4 +116,23 @@ public class Font {
 
         texture = new Texture(buffer, image.getWidth(), image.getHeight());
     }
+
+    public int getTextWidth(String text, float scale) {
+        int width = 0;
+        for (int i = 0; i < text.length(); i++) {
+            val charInfo = getCharacter(text.charAt(i));
+            if (charInfo.width == 0)
+                throw new LifeException("Unknown font character " + text.charAt(i));
+
+            width += charInfo.width * scale;
+        }
+        return width;
+    }
+
+    public int getTextHeight(String text, float scale) {
+        val charInfo = getCharacter(text.charAt(text.charAt(0)));
+        if (charInfo.width == 0)
+            throw new LifeException("Unknown font character " + text.charAt(0));
+        return (int)(charInfo.height * scale);
+    }
 }
