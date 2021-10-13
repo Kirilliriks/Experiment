@@ -6,6 +6,7 @@ import org.anotherteam.render.screen.Camera;
 import org.anotherteam.render.shader.Shader;
 import org.anotherteam.render.sprite.Sprite;
 import org.anotherteam.render.texture.Texture;
+import org.anotherteam.util.Color;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 
@@ -85,7 +86,7 @@ public final class RenderBatch extends Batch {
         draw(sprite.getTexture(), x, y, sprite.getWidth(),
                 sprite.getHeight(),
                 sprite.isFlipX(), false,
-                0, sprite.getTextCoords());
+                new Color(0, 0, 0, 0), sprite.getTextCoords());
     }
 
     public void draw(Texture texture, Vector2i position) {
@@ -110,20 +111,20 @@ public final class RenderBatch extends Batch {
                      boolean flipX, boolean flipY) {
         val textureCoords = Texture.DEFAULT_COORDS;
 
-        draw(texture, x, y, width, height, flipX, flipY, 0, textureCoords);
+        draw(texture, x, y, width, height, flipX, flipY, new Color(0, 0, 0, 0), textureCoords);
     }
 
     public void draw(Texture texture,
                      float x, float y,
                      int width, int height,
                      boolean flipX, boolean flipY,
-                     int rgb,
+                     Color color,
                      Vector2f[] texCoords) {
         if (lastTexture != texture) {
             changeTexture(texture); // Before changeTexture calls - render()
         } else if (numQuads + 1 > batchSize) render();
 
-        genQuad(x, y, width, height, texCoords, flipX, flipY, rgb, numQuads);
+        genQuad(x, y, width, height, texCoords, flipX, flipY, color, numQuads);
         numQuads++;
     }
 
@@ -131,7 +132,7 @@ public final class RenderBatch extends Batch {
                          int width, int height,
                          Vector2f[] texCoords,
                          boolean flipX, boolean flipY,
-                         int rgb,
+                         Color color,
                          int index) {
 
         int offset = index * QUAD_POS_SIZE * VERTEX_SIZE;
@@ -141,9 +142,9 @@ public final class RenderBatch extends Batch {
         val y0 = flipY ? texCoords[2].y : texCoords[1].y;
         val y1 = flipY ? texCoords[1].y : texCoords[2].y;
 
-        float r = (float)((rgb >> 16) & 0xFF) / 255.0f;
-        float g = (float)((rgb >> 8) & 0xFF) / 255.0f;
-        float b = (float)((rgb >> 0) & 0xFF) / 255.0f;
+        float r = color.r / 255.0f;
+        float g = color.g / 255.0f;
+        float b = color.b / 255.0f;
 
         // Load position
         vertices[offset] = x + QUAD_OFFSET[0].x * width;

@@ -3,6 +3,7 @@ package org.anotherteam.render.text;
 import lombok.val;
 import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.texture.Texture;
+import org.anotherteam.util.Color;
 import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -85,7 +86,7 @@ public class Font {
         g2d = img.createGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setFont(font);
-        g2d.setColor(Color.WHITE);
+        g2d.setColor(java.awt.Color.WHITE);
         for (int i = 0; i < font.getNumGlyphs(); i++) {
             if (!font.canDisplay(i)) continue;
             val info = characterMap.get(i);
@@ -116,16 +117,16 @@ public class Font {
         texture = new Texture(buffer, image.getWidth(), image.getHeight());
     }
 
-    public void drawText(RenderBatch renderBatch, String text, int x, int y, float scale, int rgb) {
+    public void drawText(RenderBatch renderBatch, String text, int x, int y, float scale, Color color) {
         for (int i = 0; i < text.length(); i++) {
             val charInfo = getCharacter(text.charAt(i));
             if (charInfo.width == 0)
                 throw new LifeException("Unknown font character " + text.charAt(i));
 
             renderBatch.draw(texture, x, y,
-                    charInfo.width, charInfo.height,
+                    (int)(charInfo.width * scale), (int)(charInfo.height * scale),
                     false, false,
-                    rgb,
+                    color,
                     charInfo.texCoords);
             x += charInfo.width * scale;
         }

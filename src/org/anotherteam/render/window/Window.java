@@ -30,7 +30,7 @@ public final class Window {
     private int[] windowX = new int[1], windowY = new int[1];
 
     public Window(int width, int height, String title) {
-        this.input = new Input();
+        this.input = new Input(this);
         this.width = width;
         this.height = height;
         this.title = title;
