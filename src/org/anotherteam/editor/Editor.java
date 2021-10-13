@@ -21,10 +21,10 @@ public final class Editor extends Widget {
     private final EditorBatch editorBatch;
     private final FrameBuffer editorFrame;
 
-    public Editor(@NotNull Game game) {
-        super("Editor", new Vector2f(200, 200), 200, 100);
+    public Editor(@NotNull Game game, @NotNull GameScreen gameScreen) {
+        super("Editor", new Vector2f(10, gameScreen.window.getHeight() / 2.0f), gameScreen.window.getWidth() - 40, gameScreen.window.getHeight() / 2 - 40);
         this.game = game;
-        this.gameScreen = game.getGameScreen();
+        this.gameScreen = gameScreen;
         this.editorBatch = new EditorBatch(AssetsData.DEFAULT_SHADER, gameScreen.windowCamera);
         this.editorFrame = new FrameBuffer(game.getGameScreen().window.getWidth(), gameScreen.window.getHeight());
     }

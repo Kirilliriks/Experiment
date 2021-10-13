@@ -22,15 +22,16 @@ public final class Game {
     public Game(@NotNull Window window) {
         this.gameScreen = new GameScreen(window);
         this.gameRender = new GameRender(gameScreen);
-        gameRender.setPosition(950, 540);
-        gameRender.setSize(950, 540);
+        short scale = 6;
+        gameRender.setPosition((int) (window.getWidth() / 2.0f - (GameScreen.WIDTH * scale) / 2.0f), 0);
+        gameRender.setSize(GameScreen.WIDTH * scale, GameScreen.HEIGHT * scale);
 
         this.gameState = GameState.ON_LEVEL;
         this.currentLevel = new TestLevel(this);
         DebugMode = false;
         init();
 
-        this.editor = new Editor(this);
+        this.editor = new Editor(this, gameScreen);
     }
 
     public void init() { }
