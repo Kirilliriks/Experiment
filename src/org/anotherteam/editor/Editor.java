@@ -29,11 +29,11 @@ public final class Editor extends Widget {
     private final Button switchModeButton;
 
     public Editor(@NotNull Game game, @NotNull GameScreen gameScreen) {
-        super("Editor", new Vector2f(10, gameScreen.window.getHeight() / 2.0f), gameScreen.window.getWidth() - 40, gameScreen.window.getHeight() / 2 - 40);
+        super("Editor", new Vector2f(10, GameScreen.window.getHeight() / 2.0f), GameScreen.window.getWidth() - 10, GameScreen.window.getHeight() / 2 - 40);
         this.game = game;
         this.gameScreen = gameScreen;
         this.editorBatch = new EditorBatch(AssetsData.DEFAULT_SHADER, gameScreen.windowCamera);
-        this.editorFrame = new FrameBuffer(game.getGameScreen().window.getWidth(), gameScreen.window.getHeight());
+        this.editorFrame = new FrameBuffer(GameScreen.window.getWidth(), GameScreen.window.getHeight());
         this.switchModeButton = new Button("Switch mode", new Vector2f(width / 2.0f, 15), 10);
         switchModeButton.setRunnable(() -> {
             if (game.getGameState() == GameState.ON_EDITOR) {
@@ -63,6 +63,6 @@ public final class Editor extends Widget {
 
     public void renderFrame(@NotNull RenderBatch renderBatch) {
         renderGUI();
-        renderBatch.draw(editorFrame.getTexture(), 0, 0, gameScreen.window.getWidth(), gameScreen.window.getHeight(), false, true);
+        renderBatch.draw(editorFrame.getTexture(), 0, 0, GameScreen.window.getWidth(), GameScreen.window.getHeight(), false, true);
     }
 }
