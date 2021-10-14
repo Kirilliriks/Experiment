@@ -15,8 +15,8 @@ public final class Tile {
 
     public Tile(int x, int y, int frameX, int frameY, int heightOffset, @NotNull SpriteAtlas atlas) {
         this.position = new Vector2i(x, y);
-        textureSprite = atlas.getSprite(frameX, frameY);
-        heightSprite = atlas.getSprite(frameX, frameY + heightOffset);
+        textureSprite = atlas.getSprite(frameX, frameY + heightOffset);
+        heightSprite = atlas.getSprite(frameX, frameY);
     }
 
     @NotNull

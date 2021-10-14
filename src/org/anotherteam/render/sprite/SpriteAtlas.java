@@ -26,7 +26,7 @@ public final class SpriteAtlas {
         this.frameHeight = frameHeight;
         this.sizeX = texture.getWidth() / frameWidth;
         this.sizeY = texture.getHeight() / frameHeight;
-        for (int y = 0; y < sizeY; y++)
+        for (int y = sizeY - 1; y >= 0; y--)
             for (int x = 0; x < sizeX; x++) {
                 sprites.add(new Sprite(texture, x, y, frameWidth, frameHeight));
             }

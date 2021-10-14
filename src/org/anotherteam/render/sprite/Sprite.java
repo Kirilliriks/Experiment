@@ -8,7 +8,7 @@ import org.joml.Vector2f;
 public final class Sprite {
 
     private final Texture texture;
-    private final Vector2f[] textCoords;
+    private final Vector2f textCoords[];
     private final int width, height;
 
     private int frameX, frameY;

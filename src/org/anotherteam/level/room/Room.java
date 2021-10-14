@@ -22,14 +22,14 @@ public final class Room {
 
     public void drawTexture(@NotNull RenderBatch renderBatch) {
         for (val tile : tiles) {
-            renderBatch.draw(tile.getTextureSprite(), tile.getPosition().x * Tile.SIZE.x, tile.getPosition().y * Tile.SIZE.y);
+            renderBatch.draw(tile.getTextureSprite(), position.x + tile.getPosition().x * Tile.SIZE.x, position.y + tile.getPosition().y * Tile.SIZE.y);
         }
     }
 
     public void drawHeight(@NotNull RenderBatch renderBatch) {
         int i = 0;
         for (val tile : tiles) {
-            renderBatch.draw(tile.getHeightSprite(), tile.getPosition().x * Tile.SIZE.x, tile.getPosition().y * Tile.SIZE.y);
+            renderBatch.draw(tile.getHeightSprite(), position.x + tile.getPosition().x * Tile.SIZE.x, position.y + tile.getPosition().y * Tile.SIZE.y);
         }
     }
 
