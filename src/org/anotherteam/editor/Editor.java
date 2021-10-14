@@ -17,7 +17,8 @@ import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
 
 public final class Editor extends Widget {
-    public final static Font editorFont = new Font("font/f1.ttf", 8);
+    public static final int DBORDER_SIZE = 10;
+    public static final Font editorFont = new Font("font/f1.ttf", 8);
 
     private static Editor editor;
 
@@ -70,13 +71,17 @@ public final class Editor extends Widget {
         return log;
     }
 
+    public int getRightBorder() {
+        return 20;
+    }
+
     public int getDownBorder() {
         return 60;
     }
 
     @Override
     public void update(float dt) {
-        super.update(dt);
+        updateElements(dt);
         if (Input.isKeyPressed(Input.KEY_TILDA)) {
             log.setVisible(!log.isVisible());
         }

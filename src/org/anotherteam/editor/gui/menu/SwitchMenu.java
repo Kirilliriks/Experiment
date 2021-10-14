@@ -2,14 +2,19 @@ package org.anotherteam.editor.gui.menu;
 
 import lombok.val;
 import org.anotherteam.editor.gui.GUIElement;
+import org.anotherteam.editor.gui.Label;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.util.Color;
+import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector2i;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SwitchMenu extends GUIElement {
+
+    private static final Vector2i maxButtonSize = new Vector2i(200, Label.HEIGHT + 5);
 
     protected final List<SwitchButton> switchButtons;
     protected final Type type;
@@ -44,17 +49,24 @@ public class SwitchMenu extends GUIElement {
                     for (val element : switchButtons)
                         offsetX += element.getWidth();
                 }
-                button.setPos(5 + 5 * index + offsetX, 2);
+                button.setPos(5 + 5 * index + offsetX, 2); // TODO y = 0, don't increase x by 5, use special widget to offset SwitchMenu's buttons, like MenuBar
             }
             case VERTICAL -> {
                 if (index > 0) {
                     for (val element : switchButtons)
                         offsetY += element.getHeight();
                 }
-                button.setPos(5, 5 - 5 * index - offsetY);
+                button.setPos(0, -5 * index - offsetY);
             }
             case DOUBLE -> {
-
+                int maxX = width / maxButtonSize.x;
+                int maxY = height / maxButtonSize.y;
+                if (maxY < 0) maxY *= -1;
+                int x  = index % maxX;
+                int y = (index - x) / maxX;
+                if (x >= maxX) throw new LifeException("Time to create pages =(");
+                if (y >= maxY) throw new LifeException("Error with y calculating");
+                button.setPos(x * maxButtonSize.x, -maxButtonSize.y * y - Label.HEIGHT);
             }
         }
         switchButtons.add(button);
@@ -65,10 +77,10 @@ public class SwitchMenu extends GUIElement {
     public void update(float dt) {
         if (!visible) return;
 
-        super.update(dt);
         for (val element : switchButtons) {
             if (!element.isVisible()) continue;
             element.update(dt);
+            element.updateElements(dt);
         }
     }
 
@@ -86,7 +98,6 @@ public class SwitchMenu extends GUIElement {
         for (val element : switchButtons) {
             element.render(editorBatch);
         }
-
     }
 
     public enum Type {

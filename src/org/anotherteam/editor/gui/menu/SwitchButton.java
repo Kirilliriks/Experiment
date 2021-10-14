@@ -1,6 +1,7 @@
 package org.anotherteam.editor.gui.menu;
 
 import org.anotherteam.Input;
+import org.anotherteam.editor.Editor;
 import org.anotherteam.editor.gui.Button;
 import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.util.exception.LifeException;
@@ -37,6 +38,8 @@ public class SwitchButton extends Button {
 
     @Override
     public void update(float dt) {
+        if (!visible) return;
+
         if (clicked) return;
         color.r = 0;
         if (!mouseOnWidget()) return;
@@ -44,6 +47,7 @@ public class SwitchButton extends Button {
         switchMenu.setClicked(this);
         clicked = true;
         color.r = 255;
+        Editor.sendLogMessage("Clicked " + text);
         if (runnable != null) runnable.run();
     }
 }

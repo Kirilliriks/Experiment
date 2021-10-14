@@ -29,6 +29,8 @@ public class Button extends Label {
 
     @Override
     public void update(float dt) {
+        if (!visible) return;
+
         if (timeToRelease > 0.0f) {
             timeToRelease -=dt;
             return;

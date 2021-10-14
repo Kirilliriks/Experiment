@@ -9,7 +9,7 @@ public final class EditorMenu extends SwitchMenu {
 
     public EditorMenu(float x, float y, int width, int height) {
         super(x, y, width, height, Type.HORIZONTAL);
-        this.levelMenu = new LevelMenu(0, -height);
+        this.levelMenu = new LevelMenu(5, -height);
         levelMenu.setVisible(false);
         addElement(levelMenu);
 

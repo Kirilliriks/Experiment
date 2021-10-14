@@ -96,11 +96,16 @@ public abstract class GUIElement {
     }
 
     public void update(float dt) {
+
+    }
+
+    public void updateElements(float dt) {
         if (!visible) return;
 
         for (val element : childElements) {
             if (!element.visible) continue;
             element.update(dt);
+            element.updateElements(dt);
         }
     }
 
