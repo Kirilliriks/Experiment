@@ -7,6 +7,7 @@ import org.anotherteam.data.AssetsData;
 import org.anotherteam.editor.gui.Button;
 import org.anotherteam.editor.gui.Log;
 import org.anotherteam.editor.gui.Widget;
+import org.anotherteam.editor.gui.barmenu.SwitchMenu;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.framebuffer.FrameBuffer;
@@ -25,11 +26,11 @@ public final class Editor extends Widget {
 
     //GUI
     private static Log log;
-
+    private final SwitchMenu switchMenu;
     private final Button switchModeButton;
 
     public Editor(@NotNull Game game, @NotNull GameScreen gameScreen) {
-        super("Editor GGG",
+        super("Another Editor",
                 10, GameScreen.window.getHeight() / 2.0f,
                 GameScreen.window.getWidth() - 10, GameScreen.window.getHeight() / 2 - 40);
         editorFont.setScale(2.0f);
@@ -40,7 +41,12 @@ public final class Editor extends Widget {
         log = new Log(0,  0 , 200, 200);
         log.setVisible(false);
         addElement(log);
-        this.switchModeButton = new Button("Switch mode", width / 2.0f, 15, 10);
+        this.switchMenu = new SwitchMenu(0, height - 22, width, 22);
+        switchMenu.addButton("Select level", null);
+        switchMenu.addButton("Open log", () -> log.setVisible(true));
+        switchMenu.addButton("Close log", () -> log.setVisible(false));
+        addElement(switchMenu);
+        this.switchModeButton = new Button("Switch mode", width / 2.0f, 15, 12);
         switchModeButton.setRunnable(() -> {
             if (game.getGameState() == GameState.ON_EDITOR) {
                 game.setGameState(GameState.ON_LEVEL);

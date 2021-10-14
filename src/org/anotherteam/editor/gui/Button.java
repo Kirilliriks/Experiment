@@ -2,16 +2,15 @@ package org.anotherteam.editor.gui;
 
 import lombok.val;
 import org.anotherteam.Input;
-import org.anotherteam.editor.Editor;
 import org.anotherteam.util.Color;
 import org.lwjgl.glfw.GLFW;
 
 public class Button extends Label {
 
-    private float releaseTime;
-    private float timeToRelease;
-    private boolean clicked;
-    private Runnable runnable;
+    protected float releaseTime;
+    protected float timeToRelease;
+    protected boolean clicked;
+    protected Runnable runnable;
 
     public Button(String text, float x, float y, int height) {
         super(text, x, y, height);

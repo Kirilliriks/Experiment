@@ -22,7 +22,7 @@ public abstract class GUIElement {
     }
 
     public GUIElement(float x, float y, int width, int height) {
-        this(x, y, width, height, Color.WHITE);
+        this(x, y, width, height, Color.GRAY);
     }
 
     public GUIElement(float x, float y, int width, int height, Color color) {
@@ -57,6 +57,14 @@ public abstract class GUIElement {
     public float getPosY() {
         if (ownerElement == null) return pos.y;
         return pos.y + ownerElement.getPosY();
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
     public void setOwner(@NotNull GUIElement ownerElement) {
