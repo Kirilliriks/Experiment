@@ -4,8 +4,6 @@ import lombok.val;
 import org.anotherteam.Input;
 import org.anotherteam.editor.Editor;
 import org.anotherteam.util.Color;
-import org.jetbrains.annotations.NotNull;
-import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
 
 public class Button extends Label {
@@ -15,8 +13,8 @@ public class Button extends Label {
     private boolean clicked;
     private Runnable runnable;
 
-    public Button(String text, @NotNull Vector2f offset, int height) {
-        super(text, offset, height);
+    public Button(String text, float x, float y, int height) {
+        super(text, x, y, height);
         releaseTime = 1.0f;
         timeToRelease = 0.0f;
         color = new Color(0, 100, 100, 255);
@@ -44,16 +42,14 @@ public class Button extends Label {
         clicked = true;
         if (runnable != null) runnable.run();
         color.r = 255;
+        Editor.sendLogMessage("Mouse! " + Input.getMousePos().x);
     }
 
     public boolean mouseOnWidget() {
-        Editor.setLogText("NULL");
         val mouseX = Input.getMousePos().x;
         val mouseY = Input.getMousePos().y;
-        if (mouseX < pos.x + offset.x || mouseX > pos.x + offset.x + width) return false;
-        if (mouseY < pos.y + offset.y || mouseY > pos.y + offset.y + height) return false;
-        Editor.setLogText("Mouse!");
-        return true;
+        if (mouseX < getPosX() || mouseX > getPosX() + width) return false;
+        return (!(mouseY < getPosY() || mouseY > getPosY() + height));
     }
 
     public boolean isClicked() {

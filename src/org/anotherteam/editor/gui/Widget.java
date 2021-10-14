@@ -1,11 +1,9 @@
 package org.anotherteam.editor.gui;
 
 import lombok.val;
-import org.anotherteam.editor.Editor;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector2f;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,12 +12,17 @@ public class Widget extends GUIElement {
 
     private final List<GUIElement> childElements;
 
-    public Widget(String titleString, @NotNull Vector2f pos, int width, int height) {
-        super(pos, width, height);
-        this.pos = pos;
-        this.width = width;
-        this.height = height;
-        val title = new Label(titleString, new Vector2f(0, height), 10);
+    public Widget(String titleString, int width, int height) {
+        super(width, height);
+        val title = new Label(titleString, 0, height, 10);
+        childElements = new ArrayList<>();
+        addElement(title);
+        color = Color.GRAY;
+    }
+
+    public Widget(String titleString, float x, float y, int width, int height) {
+        super(x, y, width, height);
+        val title = new Label(titleString, 0, height, 10);
         childElements = new ArrayList<>();
         addElement(title);
         color = Color.GRAY;

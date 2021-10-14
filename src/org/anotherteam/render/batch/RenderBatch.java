@@ -212,12 +212,18 @@ public class RenderBatch extends Batch {
     }
 
     public void drawText(Font font, String text, int x, int y, float scale, Color color) {
+       drawText(font, text, x, y, scale, color, false);
+    }
+
+    public void drawText(Font font, String text, int x, int y, float scale, Color color, boolean invertWidth) {
+        int offsetX = 0;
+        if (invertWidth) offsetX -= font.getTextWidth(text, scale);
         for (int i = 0; i < text.length(); i++) {
             val charInfo = font.getCharacter(text.charAt(i));
             if (charInfo.width == 0)
                 throw new LifeException("Unknown font character " + text.charAt(i));
 
-            draw(font.texture, x, y,
+            draw(font.texture, x + offsetX, y,
                     (int)(charInfo.width * scale), (int)(charInfo.height * scale),
                     false, false,
                     color,

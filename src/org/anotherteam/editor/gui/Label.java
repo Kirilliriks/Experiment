@@ -10,9 +10,9 @@ public class Label extends GUIElement {
 
     protected String text;
 
-    public Label(String text, @NotNull Vector2f offset, int height) {
+    public Label(String text, float x, float y, int height) {
         super(0, height + 6);
-        setOffset(offset.x, offset.y);
+        this.pos = new Vector2f(x, y);
         this.text = text;
         this.width = Editor.editorFont.getTextWidth(text, 1.0f) + 5;
         color = Color.GRAY;
@@ -26,6 +26,6 @@ public class Label extends GUIElement {
     @Override
     public void render(@NotNull EditorBatch editorBatch) {
         super.render(editorBatch);
-        editorBatch.drawText(Editor.editorFont, text, (int) (pos.x + 2 + offset.x), (int)(pos.y + 3 + offset.y), 1.0f, Color.BLACK);
+        editorBatch.drawText(Editor.editorFont, text, (int) (getPosX() + 2), (int)(getPosY() + 3), 1.0f, Color.BLACK);
     }
 }
