@@ -3,7 +3,7 @@ package org.anotherteam.level;
 import lombok.val;
 import org.anotherteam.Game;
 import org.anotherteam.data.AssetsData;
-import org.anotherteam.level.global.Wall;
+import org.anotherteam.level.object.Wall;
 import org.anotherteam.level.room.Room;
 import org.anotherteam.level.room.tile.Tile;
 import org.anotherteam.object.type.entity.player.Player;
@@ -21,7 +21,7 @@ public final class TestLevel extends Level {
         val testRoom = new Room(new Vector2i(10, 20), new Vector2i(9,4));
         for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 4; y++) {
-                testRoom.addTile(x,y, new Tile(x, y, 64, AssetsData.TEST_ROOM_TEXTURE));
+                testRoom.addTile(x, y, new Tile(x, y, x, y, 4, AssetsData.TEST_ROOM_TEXTURE));
             }
         }
         addRoom(testRoom);

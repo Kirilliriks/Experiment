@@ -1,27 +1,36 @@
 package org.anotherteam.level.room.tile;
 
-import org.anotherteam.render.texture.Pixmap;
+import org.anotherteam.render.sprite.Sprite;
+import org.anotherteam.render.sprite.SpriteAtlas;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
 
 public final class Tile {
     public final static Vector2i SIZE = new Vector2i(16, 16);
 
-    private final Pixmap texturePixmap;
-    private final Pixmap heightPixmap;
+    private final Sprite textureSprite;
+    private final Sprite heightSprite;
 
-    public Tile(int u, int v, int heightOffset, @NotNull Pixmap ownerPixmap) {
-        texturePixmap = new Pixmap(SIZE.x, SIZE.y);
-        texturePixmap.drawPixmap(ownerPixmap, 0, 0, u * SIZE.x, v * SIZE.y, SIZE.x, SIZE.y);
-        heightPixmap = new Pixmap(SIZE.x, SIZE.y);
-        heightPixmap.drawPixmap(ownerPixmap, 0, 0, u * SIZE.x, heightOffset + v * SIZE.y, SIZE.x, SIZE.y);
+    private final Vector2i position;
+
+    public Tile(int x, int y, int frameX, int frameY, int heightOffset, @NotNull SpriteAtlas atlas) {
+        this.position = new Vector2i(x, y);
+        textureSprite = atlas.getSprite(frameX, frameY);
+        heightSprite = atlas.getSprite(frameX, frameY + heightOffset);
     }
 
-    public Pixmap getTexturePixmap() {
-        return texturePixmap;
+    @NotNull
+    public Vector2i getPosition() {
+        return position;
     }
 
-    public Pixmap getHeightPixmap() {
-        return heightPixmap;
+    @NotNull
+    public Sprite getTextureSprite() {
+        return textureSprite;
+    }
+
+    @NotNull
+    public Sprite getHeightSprite() {
+        return heightSprite;
     }
 }

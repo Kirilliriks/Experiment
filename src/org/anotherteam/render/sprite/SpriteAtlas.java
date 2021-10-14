@@ -15,13 +15,17 @@ public final class SpriteAtlas {
     private final int frameWidth, frameHeight;
     private final int sizeX, sizeY;
 
-    public SpriteAtlas(Texture texture, int frameWidth, int frameHeight, int sizeX, int sizeY) {
+    public SpriteAtlas(String filePath, int frameWidth, int frameHeight) {
+        this(new Texture(filePath), frameWidth, frameHeight);
+    }
+
+    public SpriteAtlas(Texture texture, int frameWidth, int frameHeight) {
         this.texture = texture;
         this.sprites = new ArrayList<>();
         this.frameWidth = frameWidth;
         this.frameHeight = frameHeight;
-        this.sizeX = sizeX;
-        this.sizeY = sizeY;
+        this.sizeX = texture.getWidth() / frameWidth;
+        this.sizeY = texture.getHeight() / frameHeight;
         for (int y = 0; y < sizeY; y++)
             for (int x = 0; x < sizeX; x++) {
                 sprites.add(new Sprite(texture, x, y, frameWidth, frameHeight));
@@ -30,7 +34,7 @@ public final class SpriteAtlas {
 
     @Nullable
     public Sprite getSprite(int x, int y) {
-        if (x + y * sizeY >= sizeY * sizeX) return null;
-        return sprites.get(x + y * sizeY);
+        if (x + y * sizeX >= sizeY * sizeX) return null;
+        return sprites.get(x + y * sizeX);
     }
 }

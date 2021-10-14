@@ -1,4 +1,4 @@
-package org.anotherteam.level.global;
+package org.anotherteam.level.object;
 
 import lombok.NonNull;
 import org.anotherteam.level.Level;
