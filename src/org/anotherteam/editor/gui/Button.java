@@ -12,9 +12,9 @@ public class Button extends Label {
     protected boolean clicked;
     protected Runnable runnable;
 
-    public Button(String text, float x, float y, int height) {
-        super(text, x, y, height);
-        releaseTime = 1.0f;
+    public Button(String text, float x, float y) {
+        super(text, x, y);
+        releaseTime = 0.6f;
         timeToRelease = 0.0f;
         color = new Color(0, 100, 100, 255);
     }

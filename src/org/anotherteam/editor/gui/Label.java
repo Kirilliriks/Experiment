@@ -8,10 +8,12 @@ import org.joml.Vector2f;
 
 public class Label extends GUIElement {
 
+    public static final int HEIGHT = 16;
+
     protected String text;
 
-    public Label(String text, float x, float y, int height) {
-        super(0, height + 6);
+    public Label(String text, float x, float y) {
+        super(0, HEIGHT);
         this.pos = new Vector2f(x, y);
         this.text = text;
         this.width = Editor.editorFont.getTextWidth(text, 1.0f) + 5;

@@ -7,7 +7,7 @@ import org.anotherteam.data.AssetsData;
 import org.anotherteam.editor.gui.Button;
 import org.anotherteam.editor.gui.Log;
 import org.anotherteam.editor.gui.Widget;
-import org.anotherteam.editor.gui.barmenu.SwitchMenu;
+import org.anotherteam.editor.gui.menu.editor.EditorMenu;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.framebuffer.FrameBuffer;
@@ -19,6 +19,8 @@ import org.jetbrains.annotations.NotNull;
 public final class Editor extends Widget {
     public final static Font editorFont = new Font("font/f1.ttf", 8);
 
+    private static Editor editor;
+
     private final Game game;
     private final GameScreen gameScreen;
     private final EditorBatch editorBatch;
@@ -26,27 +28,25 @@ public final class Editor extends Widget {
 
     //GUI
     private static Log log;
-    private final SwitchMenu switchMenu;
+    private final EditorMenu editorMenu;
     private final Button switchModeButton;
 
     public Editor(@NotNull Game game, @NotNull GameScreen gameScreen) {
         super("Another Editor",
                 10, GameScreen.window.getHeight() / 2.0f,
                 GameScreen.window.getWidth() - 10, GameScreen.window.getHeight() / 2 - 40);
+        editor = this;
         editorFont.setScale(2.0f);
         this.game = game;
         this.gameScreen = gameScreen;
         this.editorBatch = new EditorBatch(AssetsData.DEFAULT_SHADER, gameScreen.windowCamera);
         this.editorFrame = new FrameBuffer(GameScreen.window.getWidth(), GameScreen.window.getHeight());
-        log = new Log(0,  0 , 200, 200);
+        log = new Log(0,  -height , 200, 200);
         log.setVisible(false);
         addElement(log);
-        this.switchMenu = new SwitchMenu(0, height - 22, width, 22);
-        switchMenu.addButton("Select level", null);
-        switchMenu.addButton("Open log", () -> log.setVisible(true));
-        switchMenu.addButton("Close log", () -> log.setVisible(false));
-        addElement(switchMenu);
-        this.switchModeButton = new Button("Switch mode", width / 2.0f, 15, 12);
+        this.editorMenu = new EditorMenu(0, height - 22, width, 22);
+        addElement(editorMenu);
+        this.switchModeButton = new Button("Switch mode", width / 2.0f, 10);
         switchModeButton.setRunnable(() -> {
             if (game.getGameState() == GameState.ON_EDITOR) {
                 game.setGameState(GameState.ON_LEVEL);
@@ -56,8 +56,22 @@ public final class Editor extends Widget {
         addElement(switchModeButton);
     }
 
+    @NotNull
+    public static Editor getInstance() {
+        return editor;
+    }
+
     public static void sendLogMessage(String text) {
         log.addMessage(text);
+    }
+
+    @NotNull
+    public static Log getLog() {
+        return log;
+    }
+
+    public int getDownBorder() {
+        return 60;
     }
 
     @Override

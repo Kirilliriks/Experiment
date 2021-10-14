@@ -1,4 +1,4 @@
-package org.anotherteam.editor.gui.barmenu;
+package org.anotherteam.editor.gui.menu;
 
 import org.anotherteam.Input;
 import org.anotherteam.editor.gui.Button;
@@ -10,13 +10,20 @@ import org.lwjgl.glfw.GLFW;
 public class SwitchButton extends Button {
 
     private SwitchMenu switchMenu;
+    private Runnable afterClick;
 
-    public SwitchButton(String text, float x, float y, int height) {
-        super(text, x, y, height);
+    public SwitchButton(String text, float x, float y) {
+        super(text, x, y);
         clicked = false;
     }
 
+    public void setAfterClick(Runnable afterClick) {
+        this.afterClick = afterClick;
+    }
+
     public void setClicked(boolean clicked) {
+        if (!clicked && afterClick != null)
+            afterClick.run();
         this.clicked = clicked;
     }
 

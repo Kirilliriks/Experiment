@@ -16,7 +16,7 @@ public final class Log extends Widget {
         color = new Color(120, 120, 120, 255);
         val stringsCount = height / 12;
         for (int i = 0; i < stringsCount; i++) {
-            val label = new Label("", 2, 2 + i * 12, 10);
+            val label = new Label("", 2, 2 + i * 12);
             label.setColor(color);
             logStrings.add(label);
             addElement(label);
