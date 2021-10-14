@@ -23,6 +23,8 @@ public final class Input {
     public final static Key KEY_D = new Key(GLFW.GLFW_KEY_D);
     public final static Key KEY_E = new Key(GLFW.GLFW_KEY_E);
 
+    public final static Key KEY_TILDA = new Key(GLFW.GLFW_KEY_GRAVE_ACCENT);
+
     public final static Key KEY_ESCAPE = new Key(GLFW.GLFW_KEY_ESCAPE);
     public final static Key KEY_SPACE = new Key(GLFW.GLFW_KEY_SPACE);
     public final static Key KEY_SHIFT = new Key(GLFW.GLFW_KEY_LEFT_SHIFT);

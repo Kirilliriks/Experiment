@@ -16,7 +16,7 @@ import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
 
 public final class Editor extends Widget {
-    public final static Font editorFont = new Font("font/font.ttf", 16);
+    public final static Font editorFont = new Font("font/f1.ttf", 8);
 
     private final Game game;
     private final GameScreen gameScreen;
@@ -25,31 +25,41 @@ public final class Editor extends Widget {
 
     //GUI
     private static Log log;
+
     private final Button switchModeButton;
 
     public Editor(@NotNull Game game, @NotNull GameScreen gameScreen) {
-        super("Editor",
+        super("Editor GGG",
                 10, GameScreen.window.getHeight() / 2.0f,
                 GameScreen.window.getWidth() - 10, GameScreen.window.getHeight() / 2 - 40);
+        editorFont.setScale(2.0f);
         this.game = game;
         this.gameScreen = gameScreen;
         this.editorBatch = new EditorBatch(AssetsData.DEFAULT_SHADER, gameScreen.windowCamera);
         this.editorFrame = new FrameBuffer(GameScreen.window.getWidth(), GameScreen.window.getHeight());
         log = new Log(0,  0 , 200, 200);
+        log.setVisible(false);
         addElement(log);
         this.switchModeButton = new Button("Switch mode", width / 2.0f, 15, 10);
         switchModeButton.setRunnable(() -> {
             if (game.getGameState() == GameState.ON_EDITOR) {
                 game.setGameState(GameState.ON_LEVEL);
-                return;
-            }
-            game.setGameState(GameState.ON_EDITOR);
+            } else game.setGameState(GameState.ON_EDITOR);
+            Editor.sendLogMessage("Current mode: " + game.getGameState());
         });
         addElement(switchModeButton);
     }
 
     public static void sendLogMessage(String text) {
         log.addMessage(text);
+    }
+
+    @Override
+    public void update(float dt) {
+        super.update(dt);
+        if (Input.isKeyPressed(Input.KEY_TILDA)) {
+            log.setVisible(!log.isVisible());
+        }
     }
 
     private void renderGUI() {

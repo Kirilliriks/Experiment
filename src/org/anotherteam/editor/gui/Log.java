@@ -1,6 +1,7 @@
 package org.anotherteam.editor.gui;
 
 import lombok.val;
+import org.anotherteam.util.Color;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +13,11 @@ public final class Log extends Widget {
     public Log(float x, float y, int width, int height) {
         super("Log", x, y, width, height);
         logStrings = new ArrayList<>();
+        color = new Color(120, 120, 120, 255);
         val stringsCount = height / 12;
         for (int i = 0; i < stringsCount; i++) {
-            val label = new Label("TEST", 2, 2 + i * 12, 10);
+            val label = new Label("", 2, 2 + i * 12, 10);
+            label.setColor(color);
             logStrings.add(label);
             addElement(label);
         }

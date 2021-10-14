@@ -25,6 +25,8 @@ public class Label extends GUIElement {
 
     @Override
     public void render(@NotNull EditorBatch editorBatch) {
+        if (!visible) return;
+
         super.render(editorBatch);
         editorBatch.drawText(Editor.editorFont, text, (int) (getPosX() + 2), (int)(getPosY() + 3), 1.0f, Color.BLACK);
     }

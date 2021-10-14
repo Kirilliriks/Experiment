@@ -42,7 +42,6 @@ public class Button extends Label {
         clicked = true;
         if (runnable != null) runnable.run();
         color.r = 255;
-        Editor.sendLogMessage("Mouse! " + Input.getMousePos().x);
     }
 
     public boolean mouseOnWidget() {

@@ -21,14 +21,20 @@ public class Font {
     private final Map<Integer, Glyph> characterMap;
 
     private int width, height, lineHeight;
+    private float scale;
 
     public Texture texture;
 
     public Font(String filepath, int fontSize) {
         this.filepath = filepath;
         this.fontSize = fontSize;
+        this.scale = 1.0f;
         this.characterMap = new HashMap<>();
         generateBitmap();
+    }
+
+    public void setScale(float scale) {
+        this.scale = scale;
     }
 
     @NotNull
@@ -84,7 +90,7 @@ public class Font {
         // Create the real texture
         img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         g2d = img.createGraphics();
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
         g2d.setFont(font);
         g2d.setColor(java.awt.Color.WHITE);
         for (int i = 0; i < font.getNumGlyphs(); i++) {

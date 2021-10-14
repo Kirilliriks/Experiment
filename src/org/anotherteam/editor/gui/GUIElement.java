@@ -13,9 +13,12 @@ public abstract class GUIElement {
     protected int width, height;
     protected Color color;
 
+    protected boolean visible;
+
     public GUIElement(int width, int height) {
         this.width = width;
         this.height = height;
+        visible = true;
     }
 
     public GUIElement(float x, float y, int width, int height) {
@@ -27,10 +30,23 @@ public abstract class GUIElement {
         this.width = width;
         this.height = height;
         this.color = color;
+        visible = true;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
+    public boolean isVisible() {
+        return visible;
     }
 
     public void setPos(float x, float y) {
         this.pos = new Vector2f(x, y);
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 
     public float getPosX() {
@@ -48,6 +64,7 @@ public abstract class GUIElement {
     }
 
     public void render(@NotNull EditorBatch editorBatch) {
+        if (!visible) return;
         editorBatch.draw(AssetsData.EDITOR_TEXTURE, getPosX(), getPosY(), width, height, false, false, color);
     }
 

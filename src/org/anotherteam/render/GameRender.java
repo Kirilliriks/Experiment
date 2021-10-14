@@ -41,8 +41,8 @@ public final class GameRender {
     public GameRender(@NotNull GameScreen screen) {
         this.gameScreen = screen;
         this.position = new Vector2i(0, 0);
-        width = screen.window.getWidth();
-        height = screen.window.getHeight();
+        width = GameScreen.window.getWidth();
+        height = GameScreen.window.getHeight();
 
         raycastShader = new Shader("shader/vsInvert.glsl", "shader/fsInvert.glsl");
 
@@ -54,7 +54,7 @@ public final class GameRender {
         textureFrame = new TextureFrame(textureBatch);
         heightFrame = new HeightFrame(textureBatch);
         effectFrame = new EffectFrame(effectBatch);
-        resizeFrame = new ResizeFrame(resizeBatch, screen.window.getWidth(), screen.window.getHeight());
+        resizeFrame = new ResizeFrame(resizeBatch, GameScreen.window.getWidth(), GameScreen.window.getHeight());
 
         debugFont = new Font("font/font.ttf", 16);
     }
@@ -96,12 +96,12 @@ public final class GameRender {
         resizeFrame.end();
         //Finish frames
 
-        glViewport(0, 0, gameScreen.window.getWidth(), gameScreen.window.getHeight());
+        glViewport(0, 0, GameScreen.window.getWidth(), GameScreen.window.getHeight());
         windowBatch.begin();
         windowBatch.draw(
                 resizeFrame.texture, position.x, position.y, width, height, false, true);
         if (Game.DebugMode)
-            windowBatch.drawText(debugFont, "Pos: " + inGameMouseX() + " " + inGameMouseY(),
+            windowBatch.drawText(debugFont, "Pos : " + inGameMouseX() + " " + inGameMouseY(),
                     (int)(Input.getMousePos().x + 15), (int)(Input.getMousePos().y - 25), 1.0f, new Color(255, 255, 255, 255));
         windowBatch.end();
     }

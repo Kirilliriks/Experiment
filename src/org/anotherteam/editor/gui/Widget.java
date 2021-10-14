@@ -12,17 +12,10 @@ public class Widget extends GUIElement {
 
     private final List<GUIElement> childElements;
 
-    public Widget(String titleString, int width, int height) {
-        super(width, height);
-        val title = new Label(titleString, 0, height, 10);
-        childElements = new ArrayList<>();
-        addElement(title);
-        color = Color.GRAY;
-    }
-
     public Widget(String titleString, float x, float y, int width, int height) {
         super(x, y, width, height);
-        val title = new Label(titleString, 0, height, 10);
+        val title = new Label(titleString, 0, height - 0.1f, 10);
+        title.setColor(new Color(100, 100, 100, 255));
         childElements = new ArrayList<>();
         addElement(title);
         color = Color.GRAY;
@@ -35,13 +28,18 @@ public class Widget extends GUIElement {
 
     @Override
     public void update(float dt) {
+        if (!visible) return;
+
         for (val element : childElements) {
+            if (!element.visible) continue;
             element.update(dt);
         }
     }
 
     @Override
     public void render(@NotNull EditorBatch editorBatch) {
+        if (!visible) return;
+
         super.render(editorBatch);
         for (val element : childElements) {
             element.render(editorBatch);
