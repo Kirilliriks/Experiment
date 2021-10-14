@@ -1,5 +1,6 @@
 package org.anotherteam.level.room.tile;
 
+import org.anotherteam.data.AssetsData;
 import org.anotherteam.render.sprite.Sprite;
 import org.anotherteam.render.sprite.SpriteAtlas;
 import org.jetbrains.annotations.NotNull;
@@ -13,10 +14,26 @@ public final class Tile {
 
     private final Vector2i position;
 
-    public Tile(int x, int y, int frameX, int frameY, int heightOffset, @NotNull SpriteAtlas atlas) {
+    public Tile(int x, int y, int frameX, int frameY, String atlasName) {
+        this(x, y, frameX, frameY, AssetsData.getSpriteAtlas(atlasName));
+    }
+
+    public Tile(int x, int y, int frameX, int frameY, @NotNull SpriteAtlas atlas) {
         this.position = new Vector2i(x, y);
-        textureSprite = atlas.getSprite(frameX, frameY + heightOffset);
+        textureSprite = atlas.getSprite(frameX, frameY + atlas.getTextureOffset());
         heightSprite = atlas.getSprite(frameX, frameY);
+    }
+
+    public int getFrameX() {
+        return textureSprite.getFrameX();
+    }
+
+    public int getFrameY() {
+        return textureSprite.getFrameY();
+    }
+
+    public String getAtlasName() {
+        return textureSprite.getTexture().getName();
     }
 
     @NotNull

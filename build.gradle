@@ -44,10 +44,12 @@ dependencies {
 
     compileOnly 'org.jetbrains:annotations:22.0.0'
 
-    compileOnly 'org.projectlombok:lombok:1.18.20'
-    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+    compileOnly 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
 
     implementation "org.joml:joml:1.10.2"
+
+    implementation 'com.google.code.gson:gson:2.8.5'
 
     // Include all available natives, but it's likely that you want something specific
     runtimeOnly "io.imgui.java:natives-windows:$imguiVersion"

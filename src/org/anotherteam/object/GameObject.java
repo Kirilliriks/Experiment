@@ -69,7 +69,6 @@ public abstract class GameObject {
     public void onAnimationEnd() { }
 
     //TODO make another method
-
     public int getRenderPriority() {
         if (getComponent(SpriteController.class) == null) return -1;
         return getComponent(SpriteController.class).getRenderPriority();

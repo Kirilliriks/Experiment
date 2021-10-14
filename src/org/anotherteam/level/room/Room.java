@@ -27,7 +27,6 @@ public final class Room {
     }
 
     public void drawHeight(@NotNull RenderBatch renderBatch) {
-        int i = 0;
         for (val tile : tiles) {
             renderBatch.draw(tile.getHeightSprite(), position.x + tile.getPosition().x * Tile.SIZE.x, position.y + tile.getPosition().y * Tile.SIZE.y);
         }
@@ -36,6 +35,4 @@ public final class Room {
     public void addTile(int x, int y, @NotNull Tile tile) {
         tiles[x + y * size.x] =  tile;
     }
-
-    public void destroy() { }
 }

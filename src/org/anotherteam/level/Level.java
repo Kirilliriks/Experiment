@@ -14,9 +14,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public abstract class Level {
+public class Level {
 
-    public final Game main;
+    public final Game game;
 
     protected final GameRender gameRender;
 
@@ -28,7 +28,7 @@ public abstract class Level {
     protected final List<GameObject> gameObjects;
 
     public Level(@NotNull Game game){
-        this.main = game;
+        this.game = game;
         this.gameRender = game.getGameRender();
         this.entityManager = new EntityManager();
         this.rooms = new ArrayList<>();
@@ -36,7 +36,7 @@ public abstract class Level {
         load();
     }
 
-    public abstract void load();
+    public void load() { }
 
     public void addRoom(@NotNull Room room) {
         rooms.add(room);
@@ -74,9 +74,6 @@ public abstract class Level {
     }
 
     public void clear() {
-        for (val room : rooms) {
-            room.destroy();
-        }
         rooms.clear();
         gameObjects.clear();
     }
