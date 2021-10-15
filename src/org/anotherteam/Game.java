@@ -43,16 +43,16 @@ public final class Game {
 
         this.gameState = GameState.ON_EDITOR;
 
-        // TestLevel
-        this.gameLevel = Loader.loadLevel("TestLevel");
-        Loader.saveLevel(gameLevel);
-        //
-
-
         DebugMode = false;
         init();
 
         this.editor = new Editor(this, gameScreen);
+
+        // TestLevel
+        this.gameLevel = Loader.loadLevel("TestLevel");
+
+        Loader.saveLevel(gameLevel);
+        //
     }
 
     @NotNull

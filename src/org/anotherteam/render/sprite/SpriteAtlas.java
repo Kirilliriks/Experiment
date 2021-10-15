@@ -1,5 +1,6 @@
 package org.anotherteam.render.sprite;
 
+import lombok.val;
 import org.anotherteam.data.AssetsData;
 import org.anotherteam.render.texture.Texture;
 import org.jetbrains.annotations.NotNull;
@@ -35,9 +36,9 @@ public final class SpriteAtlas {
         this.sizeX = texture.getWidth() / frameWidth;
         this.sizeY = texture.getHeight() / frameHeight;
         this.heightOffset = heightOffset;
-        for (int y = sizeY - 1; y >= 0; y--)
+        for (int y = 0; y < sizeY; y++)
             for (int x = 0; x < sizeX; x++) {
-                sprites.add(new Sprite(texture, x, y, frameWidth, frameHeight));
+                sprites.add(new Sprite(this, x, y, frameWidth, frameHeight));
             }
     }
 
@@ -46,17 +47,27 @@ public final class SpriteAtlas {
         return new SpriteAtlas(texture, frameWidth, frameHeight, heightOffset);
     }
 
+    public int getSizeY() {
+        return sizeY;
+    }
+
     public String getName() {
         return texture.getName();
     }
 
-    public int getTextureOffset() {
+    public int getHeightOffset() {
         return heightOffset;
     }
 
     @Nullable
     public Sprite getSprite(int x, int y) {
-        if (x + y * sizeX >= sizeY * sizeX) return null;
-        return sprites.get(x + y * sizeX);
+        val index = x + (y * sizeX);
+        if (index >= sizeY * sizeX) return null;
+        return sprites.get(index);
+    }
+
+    @NotNull
+    public Texture getTexture() {
+        return texture;
     }
 }
