@@ -5,7 +5,6 @@ import org.anotherteam.Input;
 import org.anotherteam.data.AssetsData;
 import org.anotherteam.object.component.state.player.PlayerState;
 import org.anotherteam.object.type.entity.EntityObject;
-import org.anotherteam.render.sprite.Sprite;
 
 
 public class Player extends EntityObject {
@@ -14,8 +13,7 @@ public class Player extends EntityObject {
 
     public Player(int x, int y) {
         super(x, y,
-                new Sprite(AssetsData.getTexture("testPlayerAtlas.png"),
-                        0, 0, 32, 32),
+                AssetsData.TEST_PLAYER_ATLAS,
                 PlayerState.IDLE);
         player = this;
         collider.setBounds(-7, 32, 6, 32);

@@ -7,6 +7,7 @@ import org.anotherteam.object.component.sprite.animation.AnimationData;
 import org.anotherteam.object.component.sprite.animation.AnimationTimer;
 import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.sprite.Sprite;
+import org.anotherteam.render.sprite.SpriteAtlas;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
 
@@ -14,26 +15,31 @@ public final class SpriteController extends Component {
 
     private final int drawPriority;
 
+    private SpriteAtlas spriteAtlas;
     private Sprite sprite;
     private AnimationData animation;
     private AnimationTimer animationTimer;
 
+    private int frameX, frameY;
+    private boolean flipX;
+
     /**
      * Draw object from center of sprite or edge
      */
-    private boolean center;
+    private final boolean center;
 
     public SpriteController(int drawPriority) {
         this.drawPriority = drawPriority;
 
+        this.sprite = null;
         this.animation = null;
         this.animationTimer = null;
 
         this.center = true;
     }
 
-    public void setSprite(Sprite sprite) {
-        this.sprite = sprite;
+    public void setSpriteAtlas(SpriteAtlas spriteAtlas) {
+        this.spriteAtlas = spriteAtlas;
     }
 
     public void update(float delta) {
@@ -41,7 +47,7 @@ public final class SpriteController extends Component {
             animationTimer.isFinish() ||
             !animationTimer.tick(delta)) return;
 
-        if (sprite.currentFrame() >= animation.getEndFrame()) {
+        if (frameX >= animation.getEndFrame()) {
             ownerObject.onAnimationEnd();
             animationTimer.cancel();
             if (!animation.isCancelOnEnd()) {
@@ -49,7 +55,8 @@ public final class SpriteController extends Component {
             } else stopAnimation();
             return;
         }
-        sprite.nextFrame();
+        frameX++;
+        sprite = spriteAtlas.getSprite(frameX, frameY);
     }
 
     public void draw(@NotNull Vector2i position, @NonNull RenderBatch batch) {
@@ -57,7 +64,7 @@ public final class SpriteController extends Component {
 
         val centerOffset = center ? (int)(sprite.getWidth() / 2f) : 0;
         batch.draw(sprite,
-                position.x - centerOffset, position.y);
+                position.x - centerOffset, position.y, flipX);
     }
 
     public int getRenderPriority() {
@@ -81,7 +88,9 @@ public final class SpriteController extends Component {
         if (animationTimer != null) animationTimer.cancel();
 
         this.animation = newAnimation;
-        sprite.setFramePos(animation.getStartFrame(), animation.getYTexture());
+        frameX = animation.getStartFrame();
+        frameY = animation.getFramePosY();
+        sprite = spriteAtlas.getSprite(animation.getStartFrame(), animation.getFramePosY());
 
         animationTimer = new AnimationTimer(animation.getAnimSpeed(), (animation.getEndFrame() - animation.getStartFrame() + 1));
     }
@@ -89,5 +98,9 @@ public final class SpriteController extends Component {
     @NotNull
     public Sprite getSprite() {
         return sprite;
+    }
+
+    public void setFlipX(boolean flipX) {
+        this.flipX = flipX;
     }
 }

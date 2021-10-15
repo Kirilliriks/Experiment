@@ -2,6 +2,7 @@ package org.anotherteam.data.level.gameobject;
 
 import com.google.gson.*;
 import lombok.val;
+import org.anotherteam.data.level.SerializerUtil;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.type.entity.player.Player;
 import org.anotherteam.util.exception.LifeException;
@@ -20,18 +21,14 @@ public class GameObjectDeserializer implements JsonDeserializer<GameObject>, Jso
     public JsonElement serialize(GameObject gameObject, Type typeOfSrc, JsonSerializationContext context) {
         val result = new JsonObject();
         result.add("type", new JsonPrimitive(gameObject.getClass().getSimpleName()));
-        result.add("posX", new JsonPrimitive(gameObject.getPosition().x));
-        result.add("posY", new JsonPrimitive(gameObject.getPosition().y));
+        result.add("pos", SerializerUtil.serialize(gameObject.getPosition()));
         return result;
     }
 
-    protected static class GameObjectFabric {
+    private static class GameObjectFabric {
 
         public static GameObject buildGameObject(@NotNull JsonObject jsonObject) {
-            val fullType = jsonObject.get("type").getAsString();
-            val typeArray = jsonObject.get("type").getAsString().split("\\.");
-            val simpleTypeName = typeArray[typeArray.length - 1];
-            switch (simpleTypeName) {
+            switch (jsonObject.get("type").getAsString()) {
                 case "Player" -> {
                     return buildPlayer(jsonObject);
                 }
@@ -43,15 +40,13 @@ public class GameObjectDeserializer implements JsonDeserializer<GameObject>, Jso
         }
 
         private static Player buildPlayer(@NotNull JsonObject playerObject) {
-            val posX = playerObject.get("posX").getAsInt();
-            val posY = playerObject.get("posY").getAsInt();
-            return new Player(posX, posY);
+            val pos = SerializerUtil.deserialize(playerObject.getAsJsonObject("pos"));
+            return new Player(pos.x, pos.y);
         }
 
         private static GameObject buildObject(@NotNull JsonObject playerObject) {
-            val posX = playerObject.get("posX").getAsInt();
-            val posY = playerObject.get("posY").getAsInt();
-            return new GameObject(posX, posY);
+            val pos = SerializerUtil.deserialize(playerObject.getAsJsonObject("pos"));
+            return new Player(pos.x, pos.y);
         }
     }
 }

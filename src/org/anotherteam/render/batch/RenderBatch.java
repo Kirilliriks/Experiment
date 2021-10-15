@@ -101,7 +101,14 @@ public class RenderBatch extends Batch {
     public void draw(Sprite sprite, float x, float y) {
         draw(sprite.getTexture(), x, y, sprite.getWidth(),
                 sprite.getHeight(),
-                sprite.isFlipX(), false,
+                false, false,
+                Color.WHITE, sprite.getTextCoords());
+    }
+
+    public void draw(Sprite sprite, float x, float y, boolean flipX) {
+        draw(sprite.getTexture(), x, y, sprite.getWidth(),
+                sprite.getHeight(),
+                flipX, false,
                 Color.WHITE, sprite.getTextCoords());
     }
 

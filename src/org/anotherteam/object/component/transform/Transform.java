@@ -71,8 +71,8 @@ public final class Transform extends Component {
 
     public void checkFlip() {
         boolean flip = (moveImpulse.x < 0);
-        sprite.getSprite().setFlipX(flip);
-        collider.setFlip(flip);
+        sprite.setFlipX(flip);
+        collider.setFlipX(flip);
     }
 
     public boolean isMoving() {

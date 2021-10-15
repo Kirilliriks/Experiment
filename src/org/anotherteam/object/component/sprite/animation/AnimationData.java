@@ -16,7 +16,7 @@ public final class AnimationData {
     int endFrame;
     boolean cancelOnEnd;
 
-    public int getYTexture() {
+    public int getFramePosY() {
         return yTexture;
     }
 

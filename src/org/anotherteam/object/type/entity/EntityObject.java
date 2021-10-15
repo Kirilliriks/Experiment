@@ -8,7 +8,7 @@ import org.anotherteam.object.component.sprite.SpriteController;
 import org.anotherteam.object.component.state.State;
 import org.anotherteam.object.component.state.StateController;
 import org.anotherteam.object.component.transform.Transform;
-import org.anotherteam.render.sprite.Sprite;
+import org.anotherteam.render.sprite.SpriteAtlas;
 
 public abstract class EntityObject extends GameObject {
 
@@ -19,16 +19,18 @@ public abstract class EntityObject extends GameObject {
     protected final Collider collider;
     protected final SpriteController spriteController;
 
-    public EntityObject(int x, int y, @NonNull Sprite sprite, @NonNull State startState) {
+    public EntityObject(int x, int y, @NonNull SpriteAtlas spriteAtlas, @NonNull State defaultState) {
         super(x, y);
         spriteController = new SpriteController( 1);
-        spriteController.setSprite(sprite);
+        spriteController.setSpriteAtlas(spriteAtlas);
         addComponent(spriteController);
-        collider = new Collider(position);
+        collider = new Collider();
         addComponent(collider);
-        stateController = new StateController(startState);
+        stateController = new StateController(defaultState);
         addComponent(stateController);
         transform = new Transform(DEFAULT_SPEED);
         addComponent(transform);
+
+        stateController.setDefaultState();
     }
 }

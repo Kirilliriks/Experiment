@@ -15,10 +15,10 @@ public final class Collider extends AABB {
     private final InteractAABB interactAABB;
 
     private boolean solid;
-    private boolean interact;
+    private boolean interactive;
 
-    public Collider(@NonNull Vector2i position){
-        super(position);
+    public Collider() {
+        super();
         solid = false;
         interactAABB = new InteractAABB(this);
     }
@@ -26,6 +26,7 @@ public final class Collider extends AABB {
     @Override
     public void setOwnerObject(@NotNull GameObject ownerObject) {
         super.setOwnerObject(ownerObject);
+        interactAABB.objectPosition = ownerObject.getPosition();
         ownerObject.addComponent(interactAABB);
     }
 
@@ -33,8 +34,8 @@ public final class Collider extends AABB {
         this.solid = solid;
     }
 
-    public void setInteract(boolean interact) {
-        this.interact = interact;
+    public void setInteractive(boolean interactive) {
+        this.interactive = interactive;
     }
 
     public void setInteractBounds(int firstX, int firstY, int secondX, int secondY) {
@@ -42,7 +43,7 @@ public final class Collider extends AABB {
     }
 
     @NotNull
-    private InteractAABB getInteractAABB() {
+    public InteractAABB getInteractAABB() {
         return interactAABB;
     }
 
@@ -50,15 +51,18 @@ public final class Collider extends AABB {
         return solid;
     }
 
+    public boolean isInteractive() {
+        return interactive;
+    }
+
     public boolean isCollide(@NonNull Collider aabb, @NonNull Vector2f moveVector){
         if (!aabb.isSolid()) return false;
-        if ((aabb.getPosition().x + aabb.getSecondBound().x) < position.x + firstBound.x + moveVector.x ||
-                (position.x + secondBound.x + moveVector.x) < aabb.getPosition().x  + aabb.getFirstBound().x) return false;
-        return true;
+        return  (!((aabb.getPosition().x + aabb.getSecondBound().x) < objectPosition.x + firstBound.x + moveVector.x ||
+                (objectPosition.x + secondBound.x + moveVector.x) < aabb.getPosition().x  + aabb.getFirstBound().x));
     }
 
     public boolean isCanInteract(@NonNull Collider collider){
-        if (!interact) return false;
+        if (!interactive) return false;
         return interactAABB.isInteract(collider);
     }
 
@@ -82,7 +86,7 @@ public final class Collider extends AABB {
         return false;
     }
 
-    public void setFlip(boolean flip) {
+    public void setFlipX(boolean flip) {
         interactAABB.flip(flip);
     }
 
@@ -97,16 +101,15 @@ public final class Collider extends AABB {
         private final Collider ownerCollider;
 
         public InteractAABB(@NonNull Collider ownerCollider){
-            super(ownerCollider.position);
+            super();
             this.ownerCollider = ownerCollider;
             setBounds(ownerCollider.firstBound.x, ownerCollider.firstBound.y, ownerCollider.secondBound.x, ownerCollider.secondBound.y);
         }
 
         public boolean isInteract(@NonNull Collider otherCollider){
-            val otherInteractAABB = otherCollider.getInteractAABB();
-            if ((otherCollider.position.x + otherCollider.secondBound.x) < otherInteractAABB.position.x + otherInteractAABB.offSet.x + firstBound.x ||
-                    (otherInteractAABB.position.x + otherInteractAABB.offSet.x + otherInteractAABB.secondBound.x) < otherCollider.position.x  + otherCollider.firstBound.x) return false;
-            return true;
+            val otherInteractAABB = otherCollider.interactAABB;
+            return  (!((otherCollider.objectPosition.x + otherCollider.secondBound.x) < otherInteractAABB.objectPosition.x + otherInteractAABB.offSet.x + firstBound.x ||
+                    (otherInteractAABB.objectPosition.x + otherInteractAABB.offSet.x + otherInteractAABB.secondBound.x) < otherCollider.objectPosition.x  + otherCollider.firstBound.x));
         }
 
         public void flip(boolean flip) {
