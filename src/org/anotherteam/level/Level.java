@@ -9,23 +9,22 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Level {
+public final class Level {
+    private final String name;
+    private final GameRender gameRender;
+    private final List<Room> rooms;
 
-    public final Game game;
+    private Room currentRoom;
 
-    protected final GameRender gameRender;
-
-    @NotNull
-    protected final List<Room> rooms;
-
-    protected Room currentRoom;
-
-    public Level(@NotNull Game game){
-        this.game = game;
-        this.gameRender = game.getGameRender();
+    public Level(String name) {
+        this.name = name;
+        this.gameRender = Game.getInstance().getGameRender();
         this.rooms = new ArrayList<>();
         currentRoom = null;
-        load();
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void load() { }

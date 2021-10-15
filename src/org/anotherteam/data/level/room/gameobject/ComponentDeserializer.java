@@ -1,8 +1,8 @@
-package org.anotherteam.data.level.gameobject;
+package org.anotherteam.data.level.room.gameobject;
 
 import com.google.gson.*;
 import lombok.val;
-import org.anotherteam.data.level.SerializerUtil;
+import org.anotherteam.util.SerializerUtil;
 import org.anotherteam.object.component.Component;
 import org.anotherteam.object.component.collider.AABB;
 import org.anotherteam.object.component.collider.Collider;

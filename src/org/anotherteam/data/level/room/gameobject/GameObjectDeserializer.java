@@ -1,12 +1,10 @@
-package org.anotherteam.data.level.gameobject;
+package org.anotherteam.data.level.room.gameobject;
 
 import com.google.gson.*;
 import lombok.val;
-import org.anotherteam.data.level.SerializerUtil;
+import org.anotherteam.util.SerializerUtil;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.Component;
-import org.anotherteam.object.component.collider.Collider;
-import org.anotherteam.object.component.transform.Transform;
 import org.anotherteam.object.type.entity.player.Player;
 import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;

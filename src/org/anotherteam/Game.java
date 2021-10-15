@@ -3,14 +3,14 @@ package org.anotherteam;
 import com.google.gson.Gson;
 import lombok.val;
 import org.anotherteam.data.AssetsData;
-import org.anotherteam.data.level.RoomDeserializer;
-import org.anotherteam.data.level.TileDeserializer;
-import org.anotherteam.data.level.gameobject.ComponentDeserializer;
-import org.anotherteam.data.level.gameobject.GameObjectDeserializer;
+import org.anotherteam.data.level.LevelDeserializer;
+import org.anotherteam.data.level.room.RoomDeserializer;
+import org.anotherteam.data.level.room.tile.TileDeserializer;
+import org.anotherteam.data.level.room.gameobject.ComponentDeserializer;
+import org.anotherteam.data.level.room.gameobject.GameObjectDeserializer;
 import org.anotherteam.editor.Editor;
 import org.anotherteam.level.Level;
 import org.anotherteam.level.room.Room;
-import org.anotherteam.level.room.object.Wall;
 import org.anotherteam.level.room.tile.Tile;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.Component;
@@ -19,9 +19,9 @@ import org.anotherteam.render.GameRender;
 import org.anotherteam.render.window.Window;
 import org.anotherteam.screen.GameScreen;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector2i;
 
 public final class Game {
+    private static Game game;
     public static boolean DebugMode;
 
     private final Editor editor;
@@ -33,6 +33,7 @@ public final class Game {
     public Level gameLevel;
 
     public Game(@NotNull Window window) {
+        game = this;
         this.gameScreen = new GameScreen(window);
         this.gameRender = new GameRender(gameScreen);
         short scale = 6;
@@ -42,26 +43,27 @@ public final class Game {
         this.gameState = GameState.ON_EDITOR;
 
         // TestLevel
-        this.gameLevel = new Level(this);
-        val testRoom = new Room(9,4, "testRoom");
+        this.gameLevel = new Level("TestLevel");
+        val testRoom = new Room(9,4, "TestRoom");
         for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 4; y++) {
                 testRoom.addTile(new Tile(x, y, x, y, AssetsData.TEST_ROOM_ATLAS));
             }
         }
-        Gson gson = new Gson()
+        val gson = new Gson()
                 .newBuilder()
                 .registerTypeAdapter(Tile.class, new TileDeserializer())
                 .registerTypeAdapter(Component.class, new ComponentDeserializer())
                 .registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
                 .registerTypeAdapter(Room.class, new RoomDeserializer())
+                .registerTypeAdapter(Level.class, new LevelDeserializer())
                 .create();
 
         testRoom.addObject(new Player(26, 29));
         //testRoom.addObject(new Wall(6, 29));
         //testRoom.addObject(new Wall(150, 29));
-        System.out.println("Room " + gson.toJson(testRoom));
         gameLevel.addRoom(testRoom);
+        System.out.println("Level " + gson.toJson(gameLevel));
         //
 
 
@@ -69,6 +71,11 @@ public final class Game {
         init();
 
         this.editor = new Editor(this, gameScreen);
+    }
+
+    @NotNull
+    public static Game getInstance() {
+        return game;
     }
 
     public void init() { }

@@ -1,4 +1,4 @@
-package org.anotherteam.data.level;
+package org.anotherteam.util;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
