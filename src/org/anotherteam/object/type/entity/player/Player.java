@@ -4,7 +4,7 @@ import lombok.NonNull;
 import org.anotherteam.Game;
 import org.anotherteam.Input;
 import org.anotherteam.data.AssetsData;
-import org.anotherteam.level.Level;
+import org.anotherteam.level.room.Room;
 import org.anotherteam.object.component.state.player.PlayerState;
 import org.anotherteam.object.type.entity.EntityObject;
 import org.anotherteam.render.sprite.Sprite;
@@ -12,11 +12,14 @@ import org.joml.Vector2i;
 
 public class Player extends EntityObject {
 
-    public Player(@NonNull Vector2i position, @NonNull Level level) {
-        super(position, level,
+    public static Player player;
+
+    public Player(@NonNull Vector2i position, @NonNull Room room) {
+        super(position, room,
                 new Sprite(AssetsData.getTexture("testPlayerAtlas.png"),
                         0, 0, 32, 32),
                 PlayerState.IDLE);
+        player = this;
         collider.setBounds(-7, 32, 6, 32);
         collider.setInteractBounds(0, 32, 16, 32);
         transform.speed = 25;

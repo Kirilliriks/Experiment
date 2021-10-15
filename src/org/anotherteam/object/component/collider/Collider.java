@@ -63,7 +63,7 @@ public final class Collider extends AABB {
     }
 
     public void checkInteract() {
-        for (val object : ownerObject.getLevel().getGameObjects()) {
+        for (val object : ownerObject.getRoom().getGameObjects()) {
             if (!(object instanceof InteractiveObject)) continue;
             val collider = object.getComponent(Collider.class);
             if (collider == null) continue;
@@ -73,7 +73,7 @@ public final class Collider extends AABB {
     }
 
     public boolean checkCollide(@NonNull Vector2f moveVector) {
-        for (val object : ownerObject.getLevel().getGameObjects()) {
+        for (val object : ownerObject.getRoom().getGameObjects()) {
             val collider = object.getComponent(Collider.class);
             if (collider == null) continue;
             if (!isCollide(collider, moveVector)) continue;

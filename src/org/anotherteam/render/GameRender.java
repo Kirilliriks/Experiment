@@ -6,7 +6,7 @@ import org.anotherteam.Game;
 import org.anotherteam.Input;
 import org.anotherteam.data.AssetsData;
 import org.anotherteam.level.Level;
-import org.anotherteam.object.type.entity.manager.EntityManager;
+import org.anotherteam.object.type.entity.player.Player;
 import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.frame.EffectFrame;
 import org.anotherteam.render.frame.HeightFrame;
@@ -80,7 +80,7 @@ public final class GameRender {
 
         raycastShader.bind();
         raycastShader.setUniform("player_pos",
-                new Vector2i(EntityManager.player.getPosition().x, EntityManager.player.getPosition().y + 15));
+                new Vector2i(Player.player.getPosition().x, Player.player.getPosition().y + 15));
         glBindImageTexture(1, heightFrame.texture.getId(), 0, false, 0, GL_READ_ONLY, GL_RGBA8);
         raycastShader.setUniform("u_texture", 0);
         effectFrame.texture.bind(0);
@@ -119,10 +119,6 @@ public final class GameRender {
     private void drawTextures(@NotNull Level level) {
         for (val room : level.getRooms()) {
             room.drawTexture(textureBatch);
-        }
-
-        for (val gameObject : level.getGameObjects()) {
-            gameObject.render(textureBatch);
         }
     }
 

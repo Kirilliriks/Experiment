@@ -47,7 +47,6 @@ public class SwitchButton extends Button {
         switchMenu.setClicked(this);
         clicked = true;
         color.r = 255;
-        Editor.sendLogMessage("Clicked " + text);
         if (runnable != null) runnable.run();
     }
 }

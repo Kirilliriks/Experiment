@@ -1,7 +1,7 @@
 package org.anotherteam.object;
 
 import lombok.val;
-import org.anotherteam.level.Level;
+import org.anotherteam.level.room.Room;
 import org.anotherteam.object.component.Component;
 import org.anotherteam.object.component.sprite.SpriteController;
 import org.anotherteam.render.batch.RenderBatch;
@@ -13,13 +13,13 @@ import java.util.Map;
 
 public abstract class GameObject {
 
-    protected Level level;
+    protected Room room;
 
     protected final Map<Class<? extends Component>, Component> components;
     protected final Vector2i position;
 
-    public GameObject(@NotNull Vector2i position, @NotNull Level level){
-        this.level = level;
+    public GameObject(@NotNull Vector2i position, @NotNull Room room){
+        this.room = room;
         this.position = position;
         components = new HashMap<>();
     }
@@ -29,8 +29,9 @@ public abstract class GameObject {
         return position;
     }
 
-    public Level getLevel() {
-        return level;
+    @NotNull
+    public Room getRoom() {
+        return room;
     }
 
     public <T extends Component> T getComponent(Class<T> componentClass) {
