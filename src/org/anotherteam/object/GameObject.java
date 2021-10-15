@@ -8,6 +8,7 @@ import org.anotherteam.render.batch.RenderBatch;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,12 +44,21 @@ public class GameObject {
         return componentClass.cast(components.get(componentClass));
     }
 
+    @NotNull
+    public Map<Class<? extends Component>, Component> getComponents() {
+        return Collections.unmodifiableMap(components);
+    }
+
     public <T extends Component> void removeComponent(Class<T> componentClass) {
         components.remove(componentClass);
     }
 
     public <T extends Component> void addComponent(T component) {
-        this.components.put(component.getClass(), component);
+        if (components.containsKey(component.getClass())) {
+            components.get(component.getClass()).initBy(component);
+            return;
+        }
+        components.put(component.getClass(), component);
         component.setOwnerObject(this);
         setComponentsRequirements();
     }

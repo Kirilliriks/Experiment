@@ -18,7 +18,7 @@ public class Player extends EntityObject {
         player = this;
         collider.setBounds(-7, 32, 6, 32);
         collider.setInteractBounds(0, 32, 16, 32);
-        transform.speed = 25;
+        transform.setSpeed(25);
         transform.checkFlip();
     }
 
@@ -33,10 +33,10 @@ public class Player extends EntityObject {
             position.y -= 1;
 
         if (Input.isKeyDown(Input.KEY_A)) {
-            newMove -= transform.speed * delta;
+            newMove -= transform.getSpeed() * delta;
         }
         if (Input.isKeyDown(Input.KEY_D)) {
-            newMove += transform.speed * delta;
+            newMove += transform.getSpeed() * delta;
         }
         if (Input.isKeyDown(Input.KEY_E)) {
             collider.checkInteract();

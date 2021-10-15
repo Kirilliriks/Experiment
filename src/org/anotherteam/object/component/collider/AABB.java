@@ -22,7 +22,14 @@ public abstract class AABB extends Component {
         this.firstBound = new Vector2i(0, 0);
         this.secondBound = new Vector2i(0, 0);
         this.offSet = new Vector2i(0, 0);
-        this.objectPosition = null;
+        objectPosition = null;
+    }
+
+    @Override
+    public void initBy(Component component) {
+        val col = (Collider) component;
+        firstBound.set(col.getFirstBound());
+        secondBound.set(col.getSecondBound());
     }
 
     @Override

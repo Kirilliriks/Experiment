@@ -3,12 +3,12 @@ package org.anotherteam.object.component.collider;
 import lombok.NonNull;
 import lombok.val;
 import org.anotherteam.object.GameObject;
+import org.anotherteam.object.component.Component;
 import org.anotherteam.object.type.level.InteractiveObject;
 import org.anotherteam.render.GameRender;
 import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
-import org.joml.Vector2i;
 
 public final class Collider extends AABB {
 
@@ -21,12 +21,22 @@ public final class Collider extends AABB {
         super();
         solid = false;
         interactAABB = new InteractAABB(this);
+        serializable = true;
+    }
+
+    @Override
+    public void initBy(Component component) {
+        super.initBy(component);
+        val collider = ((Collider)component);
+        solid = collider.solid;
+        interactive = collider.interactive;
+        val intAABB = collider.getInteractAABB();
+        interactAABB.setBounds(intAABB.firstBound.x, intAABB.firstBound.y, intAABB.secondBound.x, intAABB.secondBound.y);
     }
 
     @Override
     public void setOwnerObject(@NotNull GameObject ownerObject) {
         super.setOwnerObject(ownerObject);
-        interactAABB.objectPosition = ownerObject.getPosition();
         ownerObject.addComponent(interactAABB);
     }
 
@@ -104,6 +114,7 @@ public final class Collider extends AABB {
             super();
             this.ownerCollider = ownerCollider;
             setBounds(ownerCollider.firstBound.x, ownerCollider.firstBound.y, ownerCollider.secondBound.x, ownerCollider.secondBound.y);
+            serializable = false;
         }
 
         public boolean isInteract(@NonNull Collider otherCollider){

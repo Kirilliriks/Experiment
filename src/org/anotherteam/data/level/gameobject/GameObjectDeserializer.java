@@ -4,6 +4,9 @@ import com.google.gson.*;
 import lombok.val;
 import org.anotherteam.data.level.SerializerUtil;
 import org.anotherteam.object.GameObject;
+import org.anotherteam.object.component.Component;
+import org.anotherteam.object.component.collider.Collider;
+import org.anotherteam.object.component.transform.Transform;
 import org.anotherteam.object.type.entity.player.Player;
 import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
@@ -14,7 +17,7 @@ public class GameObjectDeserializer implements JsonDeserializer<GameObject>, Jso
 
     @Override
     public GameObject deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        return GameObjectFabric.buildGameObject(json.getAsJsonObject());
+        return GameObjectFabric.deserialize(json.getAsJsonObject(), context);
     }
 
     @Override
@@ -22,31 +25,45 @@ public class GameObjectDeserializer implements JsonDeserializer<GameObject>, Jso
         val result = new JsonObject();
         result.add("type", new JsonPrimitive(gameObject.getClass().getSimpleName()));
         result.add("pos", SerializerUtil.serialize(gameObject.getPosition()));
+        val components = new JsonArray(gameObject.getComponents().values().size());
+        for (val component : gameObject.getComponents().values()) {
+            if (!component.isSerializable()) continue;
+            components.add(context.serialize(component, Component.class));
+        }
+        result.add("components", components);
         return result;
     }
 
     private static class GameObjectFabric {
 
-        public static GameObject buildGameObject(@NotNull JsonObject jsonObject) {
+        public static GameObject deserialize(@NotNull JsonObject jsonObject, JsonDeserializationContext context) {
             switch (jsonObject.get("type").getAsString()) {
                 case "Player" -> {
-                    return buildPlayer(jsonObject);
+                    return deserializePlayer(jsonObject, context);
                 }
                 case "GameObject" -> {
-                    return buildObject(jsonObject);
+                    return deserializeGameObject(jsonObject, context);
                 }
             }
             throw new LifeException("Load unknown entity " + jsonObject.get("type").getAsString());
         }
 
-        private static Player buildPlayer(@NotNull JsonObject playerObject) {
-            val pos = SerializerUtil.deserialize(playerObject.getAsJsonObject("pos"));
-            return new Player(pos.x, pos.y);
+        private static Player deserializePlayer(@NotNull JsonObject object, JsonDeserializationContext context) {
+            val pos = SerializerUtil.deserialize(object.getAsJsonObject("pos"));
+            val player = new Player(pos.x, pos.y);
+            for (val componentJSON : object.getAsJsonArray("components")) {
+                player.addComponent(context.deserialize(componentJSON, Component.class));
+            }
+            return player;
         }
 
-        private static GameObject buildObject(@NotNull JsonObject playerObject) {
-            val pos = SerializerUtil.deserialize(playerObject.getAsJsonObject("pos"));
-            return new Player(pos.x, pos.y);
+        private static GameObject deserializeGameObject(@NotNull JsonObject object, JsonDeserializationContext context) {
+            val pos = SerializerUtil.deserialize(object.getAsJsonObject("pos"));
+            val gameObject = new GameObject(pos.x, pos.y);
+            for (val componentJSON : object.getAsJsonArray("components")) {
+                gameObject.addComponent(context.deserialize(componentJSON, Component.class));
+            }
+            return gameObject;
         }
     }
 }

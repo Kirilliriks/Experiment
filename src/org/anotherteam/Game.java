@@ -5,6 +5,7 @@ import lombok.val;
 import org.anotherteam.data.AssetsData;
 import org.anotherteam.data.level.RoomDeserializer;
 import org.anotherteam.data.level.TileDeserializer;
+import org.anotherteam.data.level.gameobject.ComponentDeserializer;
 import org.anotherteam.data.level.gameobject.GameObjectDeserializer;
 import org.anotherteam.editor.Editor;
 import org.anotherteam.level.Level;
@@ -12,6 +13,7 @@ import org.anotherteam.level.room.Room;
 import org.anotherteam.level.room.object.Wall;
 import org.anotherteam.level.room.tile.Tile;
 import org.anotherteam.object.GameObject;
+import org.anotherteam.object.component.Component;
 import org.anotherteam.object.type.entity.player.Player;
 import org.anotherteam.render.GameRender;
 import org.anotherteam.render.window.Window;
@@ -50,6 +52,7 @@ public final class Game {
         Gson gson = new Gson()
                 .newBuilder()
                 .registerTypeAdapter(Tile.class, new TileDeserializer())
+                .registerTypeAdapter(Component.class, new ComponentDeserializer())
                 .registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
                 .registerTypeAdapter(Room.class, new RoomDeserializer())
                 .create();

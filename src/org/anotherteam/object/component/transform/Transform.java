@@ -1,5 +1,6 @@
 package org.anotherteam.object.component.transform;
 
+import lombok.val;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.Component;
 import org.anotherteam.object.component.collider.Collider;
@@ -21,7 +22,7 @@ public final class Transform extends Component {
     public final Vector2f moveImpulse;
 
     private Vector2i ownerPosition;
-    public int speed;
+    private int speed;
 
     private boolean moving;
 
@@ -30,6 +31,13 @@ public final class Transform extends Component {
         moveImpulse = new Vector2f(0.0f, 0.0f);
         speed = maxSpeed;
         moving = false;
+        serializable = true;
+    }
+
+    @Override
+    public void initBy(Component component) {
+        val transform = (Transform) component;
+        speed = transform.speed;
     }
 
     @Override
@@ -69,8 +77,20 @@ public final class Transform extends Component {
         return true;
     }
 
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public int getMaxSpeed() {
+        return maxSpeed;
+    }
+
     public void checkFlip() {
-        boolean flip = (moveImpulse.x < 0);
+        val flip = (moveImpulse.x < 0);
         sprite.setFlipX(flip);
         collider.setFlipX(flip);
     }

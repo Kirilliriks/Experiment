@@ -35,7 +35,7 @@ public final class RoomDeserializer implements JsonDeserializer<Room>, JsonSeria
 
         val tiles = new JsonArray(room.getTiles().length);
         for (val tile : room.getTiles()) {
-            tiles.add(context.serialize(tile));
+            tiles.add(context.serialize(tile, Tile.class));
         }
         result.add("tiles", tiles);
 

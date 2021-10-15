@@ -7,10 +7,13 @@ import org.jetbrains.annotations.Nullable;
 public abstract class Component {
 
     protected GameObject ownerObject;
+    protected boolean serializable = false;
 
     public Component() {
         ownerObject = null;
     }
+
+    public void initBy(Component component) { }
 
     public void setOwnerObject(@NotNull GameObject ownerObject) {
         this.ownerObject = ownerObject;
@@ -24,6 +27,10 @@ public abstract class Component {
     public void setDependencies() { }
 
     public void update(float dt) { }
+
+    public boolean isSerializable() {
+        return serializable;
+    }
 
     @Nullable
     protected <T extends Component> T getDependsComponent(Class<T> clazz) {

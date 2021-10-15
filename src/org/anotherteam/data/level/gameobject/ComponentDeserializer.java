@@ -6,6 +6,7 @@ import org.anotherteam.data.level.SerializerUtil;
 import org.anotherteam.object.component.Component;
 import org.anotherteam.object.component.collider.AABB;
 import org.anotherteam.object.component.collider.Collider;
+import org.anotherteam.object.component.transform.Transform;
 import org.anotherteam.util.exception.LifeException;
 
 import java.lang.reflect.Type;
@@ -14,7 +15,7 @@ public final class ComponentDeserializer implements JsonDeserializer<Component>,
 
     @Override
     public Component deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        return null;
+        return ComponentFabric.deserialize(json);
     }
 
     @Override
@@ -28,7 +29,10 @@ public final class ComponentDeserializer implements JsonDeserializer<Component>,
             val object = json.getAsJsonObject();
             switch (object.get("type").getAsString()) {
                 case "Collider" -> {
-                   return deserialize(object);
+                   return deserializeCollider(object);
+                }
+                case "Transform" -> {
+                    return deserializeTransform(object);
                 }
             }
             throw new LifeException("Unknown component " + object.get("type").getAsString());
@@ -41,8 +45,25 @@ public final class ComponentDeserializer implements JsonDeserializer<Component>,
                 case "Collider" -> {
                     return serialize(result, (Collider) component);
                 }
+                case "Transform" -> {
+                    return serialize(result, (Transform) component);
+                }
             }
             throw new LifeException("Unknown component " + result.get("type").getAsString());
+        }
+
+
+        public static Collider deserializeCollider(JsonObject object) {
+            val firstBound = SerializerUtil.deserialize(object.get("firstBound").getAsJsonObject());
+            val secondBound = SerializerUtil.deserialize(object.get("secondBound").getAsJsonObject());
+            val interactFirstBound = SerializerUtil.deserialize(object.get("interactFirstBound").getAsJsonObject());
+            val interactSecondBound = SerializerUtil.deserialize(object.get("interactSecondBound").getAsJsonObject());
+            val collider = new Collider();
+            collider.setBounds(firstBound.x, firstBound.y, secondBound.x, secondBound.y);
+            collider.setInteractBounds(interactFirstBound.x, interactFirstBound.y, interactSecondBound.x, interactSecondBound.y);
+            collider.setSolid(object.get("solid").getAsBoolean());
+            collider.setInteractive(object.get("interactive").getAsBoolean());
+            return collider;
         }
 
         public static JsonElement serialize(JsonObject result, Collider collider) {
@@ -56,17 +77,18 @@ public final class ComponentDeserializer implements JsonDeserializer<Component>,
             return result;
         }
 
-        public static Collider deserialize(JsonObject object) {
-            val firstBound = SerializerUtil.deserialize(object.get("firstBound").getAsJsonObject());
-            val secondBound = SerializerUtil.deserialize(object.get("secondBound").getAsJsonObject());
-            val interactFirstBound = SerializerUtil.deserialize(object.get("interactFirstBound").getAsJsonObject());
-            val interactSecondBound = SerializerUtil.deserialize(object.get("interactSecondBound").getAsJsonObject());
-            val collider = new Collider();
-            collider.setBounds(firstBound.x, firstBound.y, secondBound.x, secondBound.y);
-            collider.setInteractBounds(interactFirstBound.x, interactFirstBound.y, interactSecondBound.x, interactSecondBound.y);
-            collider.setSolid(object.get("solid").getAsBoolean());
-            collider.setInteractive(object.get("interactive").getAsBoolean());
-            return collider;
+        public static Transform deserializeTransform(JsonObject object) {
+            val maxSpeed = object.get("maxSpeed").getAsInt();
+            val speed = object.get("speed").getAsInt();
+            val transform = new Transform(maxSpeed);
+            transform.setSpeed(speed);
+            return transform;
+        }
+
+        public static JsonElement serialize(JsonObject result, Transform transform) {
+            result.add("maxSpeed", new JsonPrimitive(transform.getMaxSpeed()));
+            result.add("speed", new JsonPrimitive(transform.getSpeed()));
+            return result;
         }
     }
 }
