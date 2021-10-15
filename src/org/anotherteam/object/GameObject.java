@@ -11,16 +11,16 @@ import org.joml.Vector2i;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class GameObject {
+public class GameObject {
 
     protected Room room;
 
     protected final Map<Class<? extends Component>, Component> components;
     protected final Vector2i position;
 
-    public GameObject(@NotNull Vector2i position, @NotNull Room room){
-        this.room = room;
-        this.position = position;
+    public GameObject(int x, int y){
+        this.room = null;
+        this.position = new Vector2i(x, y);
         components = new HashMap<>();
     }
 
@@ -32,6 +32,10 @@ public abstract class GameObject {
     @NotNull
     public Room getRoom() {
         return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
     public <T extends Component> T getComponent(Class<T> componentClass) {

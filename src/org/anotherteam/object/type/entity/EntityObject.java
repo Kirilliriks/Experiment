@@ -2,7 +2,6 @@ package org.anotherteam.object.type.entity;
 
 
 import lombok.NonNull;
-import org.anotherteam.level.room.Room;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.collider.Collider;
 import org.anotherteam.object.component.sprite.SpriteController;
@@ -10,7 +9,6 @@ import org.anotherteam.object.component.state.State;
 import org.anotherteam.object.component.state.StateController;
 import org.anotherteam.object.component.transform.Transform;
 import org.anotherteam.render.sprite.Sprite;
-import org.joml.Vector2i;
 
 public abstract class EntityObject extends GameObject {
 
@@ -21,8 +19,8 @@ public abstract class EntityObject extends GameObject {
     protected final Collider collider;
     protected final SpriteController spriteController;
 
-    public EntityObject(@NonNull Vector2i position, @NonNull Room room, @NonNull Sprite sprite, @NonNull State startState) {
-        super(position, room);
+    public EntityObject(int x, int y, @NonNull Sprite sprite, @NonNull State startState) {
+        super(x, y);
         spriteController = new SpriteController( 1);
         spriteController.setSprite(sprite);
         addComponent(spriteController);

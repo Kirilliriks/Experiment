@@ -15,15 +15,16 @@ import java.util.List;
 public final class Room {
     private final static Vector2i DEFAULT_POSITION = new Vector2i(10, 20);
 
-    private final Tile[] tiles;
+    private final String name;
 
-    @NotNull
+    private final Tile[] tiles;
     private final List<GameObject> gameObjects;
 
     private final Vector2i size;
 
-    public Room(@NotNull Vector2i size) {
-        this.size = size;
+    public Room(int x, int y, String name) {
+        this.name = name;
+        this.size = new Vector2i(x, y);
         this.tiles = new Tile[size.x * size.y];
         this.gameObjects = new ArrayList<>();
     }
@@ -57,16 +58,35 @@ public final class Room {
         return gameObjects;
     }
 
-    public void addTile(int x, int y, @NotNull Tile tile) {
-        tiles[x + y * size.x] =  tile;
-    }
-
     public void addObject(@NotNull GameObject object) {
+        object.setRoom(this);
         gameObjects.add(object);
         gameObjects.sort(Comparator.comparingInt(GameObject::getRenderPriority));
     }
 
     public void rewoveObject(@NotNull GameObject object) {
         gameObjects.remove(object);
+        object.setRoom(null);
+    }
+
+    @NotNull
+    public Tile[] getTiles() {
+        return tiles;
+    }
+
+    public void addTile(@NotNull Tile tile) {
+        tiles[tile.getPosition().x + tile.getPosition().y * size.x] =  tile;
+    }
+
+    public int getWidth() {
+        return size.x;
+    }
+
+    public int getHeight() {
+        return size.y;
+    }
+
+    public String getName() {
+        return name;
     }
 }
