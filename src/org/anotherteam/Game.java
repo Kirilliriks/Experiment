@@ -3,6 +3,7 @@ package org.anotherteam;
 import com.google.gson.Gson;
 import lombok.val;
 import org.anotherteam.data.AssetsData;
+import org.anotherteam.data.Loader;
 import org.anotherteam.data.level.LevelDeserializer;
 import org.anotherteam.data.level.room.RoomDeserializer;
 import org.anotherteam.data.level.room.tile.TileDeserializer;
@@ -43,27 +44,8 @@ public final class Game {
         this.gameState = GameState.ON_EDITOR;
 
         // TestLevel
-        this.gameLevel = new Level("TestLevel");
-        val testRoom = new Room(9,4, "TestRoom");
-        for (int x = 0; x < 9; x++) {
-            for (int y = 0; y < 4; y++) {
-                testRoom.addTile(new Tile(x, y, x, y, AssetsData.TEST_ROOM_ATLAS));
-            }
-        }
-        val gson = new Gson()
-                .newBuilder()
-                .registerTypeAdapter(Tile.class, new TileDeserializer())
-                .registerTypeAdapter(Component.class, new ComponentDeserializer())
-                .registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
-                .registerTypeAdapter(Room.class, new RoomDeserializer())
-                .registerTypeAdapter(Level.class, new LevelDeserializer())
-                .create();
-
-        testRoom.addObject(new Player(26, 29));
-        //testRoom.addObject(new Wall(6, 29));
-        //testRoom.addObject(new Wall(150, 29));
-        gameLevel.addRoom(testRoom);
-        System.out.println("Level " + gson.toJson(gameLevel));
+        this.gameLevel = Loader.loadLevel("TestLevel");
+        Loader.saveLevel(gameLevel);
         //
 
 
