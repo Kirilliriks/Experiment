@@ -2,10 +2,9 @@ package org.anotherteam.editor.gui.menu.selector;
 
 import lombok.val;
 import org.anotherteam.Game;
-import org.anotherteam.data.Loader;
+import org.anotherteam.data.FileLoader;
 import org.anotherteam.editor.Editor;
 import org.anotherteam.editor.gui.GUIElement;
-import org.anotherteam.editor.gui.menu.SwitchButton;
 import org.anotherteam.editor.gui.menu.SwitchMenu;
 import org.anotherteam.util.Color;
 import org.anotherteam.util.exception.LifeException;
@@ -31,9 +30,8 @@ public class LevelSelector extends GUIElement {
         if (files == null) throw new LifeException("Level's not found");
 
         for (val file : files) {
-            selector.addButton(file.getName(), ()-> {
-                Game.getInstance().setLevel(Loader.loadLevel(file.getName()));
-            });
+            selector.addButton(file.getName(),
+                    ()-> Game.getInstance().setLevel(FileLoader.loadLevel(file.getName())));
         }
     }
 }

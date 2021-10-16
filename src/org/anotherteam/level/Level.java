@@ -1,7 +1,9 @@
 package org.anotherteam.level;
 
+import lombok.val;
 import org.anotherteam.Game;
 import org.anotherteam.level.room.Room;
+import org.anotherteam.object.type.entity.player.Player;
 import org.anotherteam.render.GameRender;
 import org.anotherteam.render.batch.RenderBatch;
 import org.jetbrains.annotations.NotNull;
@@ -47,5 +49,13 @@ public final class Level {
 
     public void clear() {
         rooms.clear();
+    }
+
+    public static Level createEmpty() {
+        val level = new Level("Empty");
+        val room = new Room(0, 0, "Empty");
+        room.addObject(new Player(0, 0));
+        level.addRoom(room);
+        return level;
     }
 }

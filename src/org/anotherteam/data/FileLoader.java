@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public final class Loader {
+public final class FileLoader {
 
     public static Level loadLevel(String levelName) {
         val gson = new GsonBuilder()

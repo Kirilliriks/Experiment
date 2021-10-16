@@ -1,21 +1,8 @@
 package org.anotherteam;
 
-import com.google.gson.Gson;
-import lombok.val;
-import org.anotherteam.data.AssetsData;
-import org.anotherteam.data.Loader;
-import org.anotherteam.data.level.LevelDeserializer;
-import org.anotherteam.data.level.room.RoomDeserializer;
-import org.anotherteam.data.level.room.tile.TileDeserializer;
-import org.anotherteam.data.level.room.gameobject.ComponentDeserializer;
-import org.anotherteam.data.level.room.gameobject.GameObjectDeserializer;
+import org.anotherteam.data.FileLoader;
 import org.anotherteam.editor.Editor;
 import org.anotherteam.level.Level;
-import org.anotherteam.level.room.Room;
-import org.anotherteam.level.room.tile.Tile;
-import org.anotherteam.object.GameObject;
-import org.anotherteam.object.component.Component;
-import org.anotherteam.object.type.entity.player.Player;
 import org.anotherteam.render.GameRender;
 import org.anotherteam.render.window.Window;
 import org.anotherteam.screen.GameScreen;
@@ -49,8 +36,8 @@ public final class Game {
         this.editor = new Editor(this, gameScreen);
 
         // TestLevel
-        this.gameLevel = Loader.loadLevel("TestLevel");
-        Loader.saveLevel(gameLevel);
+        this.gameLevel = Level.createEmpty();
+        FileLoader.saveLevel(gameLevel);
         //
     }
 
