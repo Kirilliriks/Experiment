@@ -50,9 +50,12 @@ public final class Game {
 
         // TestLevel
         this.gameLevel = Loader.loadLevel("TestLevel");
-
         Loader.saveLevel(gameLevel);
         //
+    }
+
+    public void setLevel(@NotNull Level level) {
+        this.gameLevel = level;
     }
 
     @NotNull

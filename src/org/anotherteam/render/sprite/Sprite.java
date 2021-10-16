@@ -28,7 +28,6 @@ public final class Sprite {
 
     private void changeTextureCoords() {
         val correctFrame = spriteAtlas.getSizeY() - frameY - 1;
-        System.out.println("Correct frame " + correctFrame);
         val x0 = (float)(width * frameX) / texture.getWidth();
         val x1 = (float)(width * (frameX + 1)) / texture.getWidth();
         val y0 = (float)(height * (correctFrame)) / texture.getHeight();

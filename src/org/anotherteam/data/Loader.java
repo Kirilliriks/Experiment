@@ -33,7 +33,8 @@ public final class Loader {
                 .create();
         String inFile = "";
         try {
-             inFile = new String(Files.readAllBytes(Paths.get("levels/" + levelName  + ".hgl")));
+            val finalName = levelName  + (levelName.split("\\.").length > 1 ? "" : ".hgl");
+            inFile = new String(Files.readAllBytes(Paths.get("levels/" + finalName)));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -52,7 +53,7 @@ public final class Loader {
                 .registerTypeAdapter(Level.class, new LevelDeserializer())
                 .create();
         try {
-            FileWriter writer = new FileWriter("levels/" + level.getName() + ".hgl");
+            val writer = new FileWriter("levels/" + level.getName()  + ".hgl");
             writer.write(gson.toJson(level));
             writer.close();
         } catch(IOException e) {
