@@ -13,14 +13,14 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GameObject {
+public abstract class GameObject {
 
     protected Room room;
 
     protected final Map<Class<? extends Component>, Component> components;
     protected final Vector2i position;
 
-    public GameObject(int x, int y){
+    public GameObject(int x, int y) {
         this.room = null;
         this.position = new Vector2i(x, y);
         components = new HashMap<>();
@@ -29,6 +29,10 @@ public class GameObject {
     @NotNull
     public Vector2i getPosition() {
         return position;
+    }
+
+    public void setPosition(int x, int y) {
+        position.set(x, y);
     }
 
     @NotNull

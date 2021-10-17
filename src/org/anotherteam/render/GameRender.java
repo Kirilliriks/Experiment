@@ -5,7 +5,6 @@ import lombok.val;
 import org.anotherteam.Game;
 import org.anotherteam.Input;
 import org.anotherteam.data.AssetsData;
-import org.anotherteam.debug.DebugRender;
 import org.anotherteam.level.Level;
 import org.anotherteam.object.type.entity.player.Player;
 import org.anotherteam.render.batch.RenderBatch;
@@ -78,12 +77,11 @@ public final class GameRender {
 
         textureFrame.begin();
         drawTextures(level);
-        textureBatch.end();
         textureFrame.end();
 
         raycastShader.bind();
         raycastShader.setUniform("player_pos",
-                new Vector2i(Player.player.getPosition().x, Player.player.getPosition().y + 15));
+                Player.player.getPosition().x, Player.player.getPosition().y + 15);
         glBindImageTexture(1, heightFrame.texture.getId(), 0, false, 0, GL_READ_ONLY, GL_RGBA8);
         raycastShader.setUniform("u_texture", 0);
         effectFrame.texture.bind(0);

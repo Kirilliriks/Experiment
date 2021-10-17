@@ -1,4 +1,4 @@
-package org.anotherteam.object.type.entity;
+package org.anotherteam.object.component.state.type;
 
 import org.anotherteam.object.component.sprite.animation.AnimationData;
 import org.anotherteam.object.component.state.State;

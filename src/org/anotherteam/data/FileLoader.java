@@ -1,13 +1,12 @@
 package org.anotherteam.data;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.val;
-import org.anotherteam.data.level.LevelDeserializer;
-import org.anotherteam.data.level.room.RoomDeserializer;
-import org.anotherteam.data.level.room.gameobject.ComponentDeserializer;
-import org.anotherteam.data.level.room.gameobject.GameObjectDeserializer;
-import org.anotherteam.data.level.room.tile.TileDeserializer;
+import org.anotherteam.data.deserialization.LevelDeserializer;
+import org.anotherteam.data.deserialization.room.RoomDeserializer;
+import org.anotherteam.data.deserialization.room.gameobject.ComponentDeserializer;
+import org.anotherteam.data.deserialization.room.gameobject.GameObjectDeserializer;
+import org.anotherteam.data.deserialization.room.tile.TileDeserializer;
 import org.anotherteam.editor.Editor;
 import org.anotherteam.level.Level;
 import org.anotherteam.level.room.Room;

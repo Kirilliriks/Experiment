@@ -5,7 +5,7 @@ import com.google.gson.JsonPrimitive;
 import lombok.val;
 import org.joml.Vector2i;
 
-public final class SerializerUtil {
+public final class SerializeUtil {
 
     public static JsonObject serialize(Vector2i vector2i) {
         val result = new JsonObject();

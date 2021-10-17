@@ -1,4 +1,4 @@
-package org.anotherteam.data.level;
+package org.anotherteam.data.deserialization;
 
 import com.google.gson.*;
 import lombok.val;

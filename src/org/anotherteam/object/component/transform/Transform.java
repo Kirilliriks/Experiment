@@ -6,7 +6,7 @@ import org.anotherteam.object.component.Component;
 import org.anotherteam.object.component.collider.Collider;
 import org.anotherteam.object.component.sprite.SpriteController;
 import org.anotherteam.object.component.state.StateController;
-import org.anotherteam.object.type.entity.EntityState;
+import org.anotherteam.object.component.state.type.EntityState;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
 import org.joml.Vector2i;

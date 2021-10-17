@@ -5,10 +5,12 @@ import org.anotherteam.object.GameObject;
 
 public final class GameObjectMenu extends SwitchMenu {
 
+
     private GameObject selectedObject;
 
     public GameObjectMenu(float x, float y) {
         super(x, y, 0, 0, Type.VERTICAL);
+        addButton("New GameObject", null);
         addButton("GameObject edit", null);
         addButton("Components edit", null);
 

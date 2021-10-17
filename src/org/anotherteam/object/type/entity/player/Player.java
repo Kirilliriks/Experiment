@@ -3,9 +3,8 @@ package org.anotherteam.object.type.entity.player;
 import org.anotherteam.Game;
 import org.anotherteam.Input;
 import org.anotherteam.data.AssetsData;
-import org.anotherteam.object.component.state.player.PlayerState;
+import org.anotherteam.object.component.state.type.PlayerState;
 import org.anotherteam.object.type.entity.EntityObject;
-
 
 public class Player extends EntityObject {
 
