@@ -4,10 +4,10 @@ import org.anotherteam.Game;
 import org.anotherteam.GameState;
 import org.anotherteam.Input;
 import org.anotherteam.data.AssetsData;
+import org.anotherteam.debug.DebugRender;
 import org.anotherteam.editor.gui.Button;
 import org.anotherteam.editor.gui.Log;
 import org.anotherteam.editor.gui.Widget;
-import org.anotherteam.editor.gui.menu.editor.EditorMenu;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.framebuffer.FrameBuffer;
@@ -15,6 +15,7 @@ import org.anotherteam.render.text.Font;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector2f;
 
 public final class Editor extends Widget {
     public static final int DBORDER_SIZE = 10;

@@ -5,6 +5,7 @@ import lombok.val;
 import org.anotherteam.Game;
 import org.anotherteam.Input;
 import org.anotherteam.data.AssetsData;
+import org.anotherteam.debug.DebugRender;
 import org.anotherteam.level.Level;
 import org.anotherteam.object.type.entity.player.Player;
 import org.anotherteam.render.batch.RenderBatch;
@@ -17,6 +18,7 @@ import org.anotherteam.render.text.Font;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector2f;
 import org.joml.Vector2i;
 
 public final class GameRender {
@@ -76,6 +78,7 @@ public final class GameRender {
 
         textureFrame.begin();
         drawTextures(level);
+        textureBatch.end();
         textureFrame.end();
 
         raycastShader.bind();

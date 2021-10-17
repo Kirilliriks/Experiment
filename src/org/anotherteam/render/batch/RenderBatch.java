@@ -27,6 +27,7 @@ public class RenderBatch extends Batch {
 
     private static final short VERTEX_SIZE = 7;
 
+    protected Texture lastTexture;
     public boolean blend;
 
     public RenderBatch(@NotNull Shader shader, @NotNull Camera camera) {
@@ -36,6 +37,7 @@ public class RenderBatch extends Batch {
         glVertexAttribPointer(2, COLOR_SIZE, GL_FLOAT, false, vertexSizeBytes, COLOR_COORDS_OFFSET);
         glEnableVertexAttribArray(2);
         blend = true;
+        lastTexture = null;
     }
 
     @Override

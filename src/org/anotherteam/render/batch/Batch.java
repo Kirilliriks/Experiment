@@ -33,7 +33,6 @@ public abstract class Batch {
 
     @NotNull
     protected Camera camera;
-    protected Texture lastTexture;
     protected int numQuads;
 
     public Batch(@NotNull Shader shader, @NotNull Camera camera, short vertexSize) {
@@ -44,7 +43,6 @@ public abstract class Batch {
 
         this.batchSize = 1000; // default
         vertices = new float[batchSize * QUAD_POS_SIZE * vertexSize];
-        lastTexture = null;
 
         this.shader = shader;
         numQuads = 0;

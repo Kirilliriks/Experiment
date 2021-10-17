@@ -1,8 +1,8 @@
-package org.anotherteam.editor.gui.menu.editor;
+package org.anotherteam.editor.level;
 
 import org.anotherteam.editor.gui.menu.SwitchButton;
 import org.anotherteam.editor.gui.menu.SwitchMenu;
-import org.anotherteam.editor.gui.menu.selector.LevelSelector;
+import org.anotherteam.editor.level.selector.LevelSelector;
 
 public final class LevelMenu extends SwitchMenu {
 

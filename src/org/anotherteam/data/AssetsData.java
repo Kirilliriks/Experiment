@@ -21,6 +21,7 @@ public final class AssetsData {
         public static final SpriteAtlas TEST_PLAYER_ATLAS = loadSpriteAtlas("testPlayerAtlas.png", 32,  32, 0);
 
         public static final Shader DEFAULT_SHADER = new Shader("shader/defaultVertexShader.glsl", "shader/defaultFragmentShader.glsl");
+        public static final Shader DEBUG_SHADER = new Shader("shader/debugVS.glsl", "shader/debugFS.glsl");
 
         @NotNull
         public static Texture getTexture(String textureName) {

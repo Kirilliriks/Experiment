@@ -1,4 +1,4 @@
-package org.anotherteam.editor.gui.menu.selector;
+package org.anotherteam.editor.level.selector;
 
 import lombok.val;
 import org.anotherteam.Game;
@@ -32,11 +32,12 @@ public class LevelSelector extends GUIElement {
 
         downButtons = new SwitchMenu(Editor.DBORDER_SIZE, height + Editor.DBORDER_SIZE, 0, 0, SwitchMenu.Type.HORIZONTAL);
         createEmptyButton = new Button("Create empty level", Editor.DBORDER_SIZE, height + Editor.DBORDER_SIZE);
-        createEmptyButton.setRunnable(()-> selector.addButton("Empty", ()-> Game.getInstance().setLevel(Level.createEmpty())));
-        addElement(createEmptyButton);
+        createEmptyButton.setRunnable(()-> selector.addButton("Empty.hgl", ()-> Game.getInstance().setLevel(Level.createEmpty())));
+        downButtons.addButton(createEmptyButton);
         saveLevelButton = new Button("Save level", Editor.DBORDER_SIZE + 40, height + Editor.DBORDER_SIZE);
         saveLevelButton.setRunnable(()-> FileLoader.saveLevel(Game.getInstance().gameLevel));
-        addElement(saveLevelButton);
+        downButtons.addButton(saveLevelButton);
+        addElement(downButtons);
     }
 
     public void fillButtons() {
