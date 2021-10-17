@@ -8,7 +8,9 @@ import org.anotherteam.object.component.sprite.SpriteController;
 import org.anotherteam.object.component.state.State;
 import org.anotherteam.object.component.state.StateController;
 import org.anotherteam.object.component.transform.Transform;
+import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.sprite.SpriteAtlas;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class EntityObject extends GameObject {
 
@@ -21,7 +23,7 @@ public abstract class EntityObject extends GameObject {
 
     public EntityObject(int x, int y, @NonNull SpriteAtlas spriteAtlas, @NonNull State defaultState) {
         super(x, y);
-        spriteController = new SpriteController( 1);
+        spriteController = new SpriteController(1);
         spriteController.setSpriteAtlas(spriteAtlas);
         addComponent(spriteController);
         collider = new Collider();

@@ -53,6 +53,8 @@ public class RenderBatch extends Batch {
 
         lastTexture = null;
         shader.unbind();
+
+        debugRender.draw();
     }
 
     public void setBlend(boolean blend) {
@@ -93,6 +95,7 @@ public class RenderBatch extends Batch {
         glBindVertexArray(0);
 
         glBindTexture(GL_TEXTURE_2D, 0);
+
         if (blend) {
             glDisable(GL_BLEND);
         }

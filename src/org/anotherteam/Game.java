@@ -37,7 +37,7 @@ public final class Game {
         this.gameState = GameState.ON_EDITOR;
 
         DebugMode = false;
-        DebugRender.start();
+        DebugRender.global = new DebugRender(gameScreen.windowCamera);
         init();
 
         this.editor = new Editor(this, gameScreen);
@@ -67,8 +67,8 @@ public final class Game {
         gameLevel.render(GameScreen.windowBatch);
         editor.renderFrame(GameScreen.windowBatch);
 
-        DebugRender.drawLine(new Vector2f(0, 0), new Vector2f(100, 10), Color.RED);
-        DebugRender.draw(gameScreen.windowCamera);
+        if (gameState != GameState.ON_EDITOR && !DebugMode) return;
+        DebugRender.global.draw();
     }
 
     public void setGameState(@NotNull GameState gameState) {

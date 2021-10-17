@@ -6,6 +6,7 @@ import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.Component;
 import org.anotherteam.object.type.level.InteractiveObject;
 import org.anotherteam.render.GameRender;
+import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
@@ -101,9 +102,9 @@ public final class Collider extends AABB {
     }
 
     @Override
-    public void debugRender(@NonNull GameRender gameRender) {
-        interactAABB.debugRender(gameRender);
-        super.debugRender(gameRender, Color.RED);
+    public void debugRender(@NonNull RenderBatch renderBatch) {
+        interactAABB.debugRender(renderBatch);
+        super.debugRender(renderBatch, Color.RED);
     }
 
     private static class InteractAABB extends AABB {
@@ -129,8 +130,8 @@ public final class Collider extends AABB {
         }
 
         @Override
-        public void debugRender(@NonNull GameRender gameRender) {
-            super.debugRender(gameRender, Color.RED);
+        public void debugRender(@NonNull RenderBatch renderBatch) {
+            super.debugRender(renderBatch, Color.BLUE);
         }
     }
 }

@@ -2,12 +2,16 @@ package org.anotherteam.render.batch;
 import static org.lwjgl.opengl.GL42.*;
 
 import lombok.val;
+import org.anotherteam.debug.DebugRender;
 import org.anotherteam.render.screen.Camera;
 import org.anotherteam.render.shader.Shader;
 import org.anotherteam.render.texture.Texture;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class Batch {
+
+    public final DebugRender debugRender;
+
     // Vertex offset
     // ------
     // Pos              tex coords      color
@@ -36,6 +40,8 @@ public abstract class Batch {
     protected int numQuads;
 
     public Batch(@NotNull Shader shader, @NotNull Camera camera, short vertexSize) {
+        this.debugRender = new DebugRender(camera);
+
         this.vertexSize = vertexSize;
         vertexSizeBytes = (short) (vertexSize * Float.BYTES);
 
@@ -61,6 +67,8 @@ public abstract class Batch {
 
         glVertexAttribPointer(0, POS_SIZE, GL_FLOAT, false, vertexSizeBytes, POS_OFFSET);
         glEnableVertexAttribArray(0);
+
+        debugRender.draw();
     }
 
     public void setCamera(@NotNull Camera camera) {

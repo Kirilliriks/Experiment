@@ -9,24 +9,30 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
 
 
+import java.util.Arrays;
+
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 public class DebugRender {
+    public static DebugRender global = null;
     private static final int VERTEX_SIZE = 5;
-
     private static final int MAX_LINES = 500;
 
-    private static final float[] vertices = new float[MAX_LINES * VERTEX_SIZE * 2];
     private static final Shader shader = AssetsData.DEBUG_SHADER;
 
-    private static int linesCount = 0;
-    private static int vaoID;
-    private static int vboID;
+    private final Camera camera;
 
-    public static void start() {
+    private final int vaoID;
+    private final int vboID;
+    private final float[] vertices = new float[MAX_LINES * VERTEX_SIZE * 2];
+
+    private int linesCount = 0;
+
+    public DebugRender(Camera camera) {
+        this.camera = camera;
         // Generate the vao
         vaoID = glGenVertexArrays();
         glBindVertexArray(vaoID);
@@ -34,7 +40,7 @@ public class DebugRender {
         // Create the vbo and buffer some memory
         vboID = glGenBuffers();
         glBindBuffer(GL_ARRAY_BUFFER, vboID);
-        glBufferData(GL_ARRAY_BUFFER, (long) vertices.length * Float.BYTES, GL_DYNAMIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, (long) vertices.length * Float.BYTES, GL_STATIC_DRAW);
 
         // Enable the vertex array attributes
         glVertexAttribPointer(0, 2, GL_FLOAT, false, VERTEX_SIZE * Float.BYTES, 0);
@@ -46,7 +52,7 @@ public class DebugRender {
         glLineWidth(1.0f);
     }
 
-    public static void draw(@NotNull Camera camera) {
+    public void draw() {
         if (linesCount <= 0) return;
 
         glBindBuffer(GL_ARRAY_BUFFER, vboID);
@@ -63,11 +69,11 @@ public class DebugRender {
         glEnableVertexAttribArray(1);
 
         // Draw the batch
-        glDrawArrays(GL_LINES, 0, linesCount * VERTEX_SIZE * 2);
+        glDrawArrays(GL_LINES, 0, linesCount * 2);
 
         // Disable Location
-        glDisableVertexAttribArray(0);
         glDisableVertexAttribArray(1);
+        glDisableVertexAttribArray(0);
         glBindVertexArray(0);
 
         // Unbind shader
@@ -75,8 +81,10 @@ public class DebugRender {
         linesCount = 0;
     }
 
-    public static void drawLine(@NotNull Vector2f from, @NotNull Vector2f to, @NotNull Color color) {
-        int index = linesCount;
+    public void drawLine(@NotNull Vector2f from, @NotNull Vector2f to, @NotNull Color color) {
+        if (linesCount + 1 >= MAX_LINES) draw();
+
+        int index = linesCount * VERTEX_SIZE * 2;
         for (int i = 0; i < 2; i++) {
             val position = i == 0 ? from : to;
 

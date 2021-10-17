@@ -3,6 +3,7 @@ package org.anotherteam.object;
 import lombok.val;
 import org.anotherteam.level.room.Room;
 import org.anotherteam.object.component.Component;
+import org.anotherteam.object.component.collider.Collider;
 import org.anotherteam.object.component.sprite.SpriteController;
 import org.anotherteam.render.batch.RenderBatch;
 import org.jetbrains.annotations.NotNull;
@@ -79,6 +80,9 @@ public class GameObject {
         val spriteComponent = getComponent(SpriteController.class);
         if (spriteComponent == null) return;
         spriteComponent.draw(position, renderBatch);
+        val collider = getComponent(Collider.class);
+        if (collider == null) return;
+        collider.debugRender(renderBatch);
     }
 
     public void onAnimationEnd() { }
