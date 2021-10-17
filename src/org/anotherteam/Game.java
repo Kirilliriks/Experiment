@@ -37,7 +37,6 @@ public final class Game {
 
         // TestLevel
         this.gameLevel = Level.createEmpty();
-        FileLoader.saveLevel(gameLevel);
         //
     }
 

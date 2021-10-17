@@ -30,7 +30,7 @@ public final class Level {
     }
 
     public void addRoom(@NotNull Room room) {
-        if (rooms.size() == 0) currentRoom = room;
+        if (currentRoom == null) currentRoom = room;
         rooms.add(room);
     }
 
@@ -45,10 +45,6 @@ public final class Level {
     @NotNull
     public List<Room> getRooms() {
         return rooms;
-    }
-
-    public void clear() {
-        rooms.clear();
     }
 
     public static Level createEmpty() {

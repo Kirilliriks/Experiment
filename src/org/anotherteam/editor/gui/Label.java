@@ -25,6 +25,10 @@ public class Label extends GUIElement {
         this.width = Editor.editorFont.getTextWidth(text, 1.0f) + 5;
     }
 
+    public String getText() {
+        return text;
+    }
+
     @Override
     public void render(@NotNull EditorBatch editorBatch) {
         if (!visible) return;
