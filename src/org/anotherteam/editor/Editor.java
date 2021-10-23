@@ -17,7 +17,7 @@ import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
 
 public final class Editor extends Widget {
-    public static final int DBORDER_SIZE = 10;
+    public static final int DEFAULT_BORDER_SIZE = 10;
     public static final Font editorFont = new Font("font/f1.ttf", 8);
 
     private static Editor editor;
@@ -58,32 +58,6 @@ public final class Editor extends Widget {
         });
     }
 
-    @NotNull
-    public static Editor getInstance() {
-        return editor;
-    }
-
-    public static void sendLogMessage(String text) {
-        log.addMessage(text);
-    }
-
-    @NotNull
-    public static Log getLog() {
-        return log;
-    }
-
-    public int getRightBorder() {
-        return 20;
-    }
-
-    public int getUpBorder() {
-        return 60;
-    }
-
-    public int getDownBorder() {
-        return 60;
-    }
-
     @Override
     public void update(float dt) {
         updateElements(dt);
@@ -105,5 +79,35 @@ public final class Editor extends Widget {
     public void renderFrame(@NotNull RenderBatch renderBatch) {
         renderGUI();
         renderBatch.draw(editorFrame.getTexture(), 0, 0, GameScreen.window.getWidth(), GameScreen.window.getHeight(), false, true);
+    }
+
+    @NotNull
+    public static Editor getInstance() {
+        return editor;
+    }
+
+    public static void sendLogMessage(String text) {
+        log.addMessage(text);
+    }
+
+    @NotNull
+    public static Log log() {
+        return log;
+    }
+
+    public static int getRightBorderSize() {
+        return 20;
+    }
+
+    public static int getUpBorderSize() {
+        return 60;
+    }
+
+    public static int getDownBorderSize() {
+        return 60;
+    }
+
+    public static float getDownBorderPos() {
+        return editor.getPosY();
     }
 }

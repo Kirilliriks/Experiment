@@ -16,7 +16,10 @@ public class ButtonMenu extends GUIElement {
 
     public static final int DEFAULT_GUI_HEIGHT = 24;
 
-    private static final Vector2i defaultMaxButtonSize = new Vector2i(200, Label.DEFAULT_HEIGHT + 5);
+    /**
+     * Default offset for {@link org.anotherteam.editor.gui.menu.ButtonMenu.Type HORIZONTAL} ButtonMenu
+     */
+    private static final Vector2i doubleOffset = new Vector2i(200, Label.DEFAULT_HEIGHT + 5);
 
     protected final List<Button> buttons;
     protected final Type type;
@@ -41,11 +44,9 @@ public class ButtonMenu extends GUIElement {
         widestButtonWidth = 0;
     }
 
-    @Override
-    public void setInverted(boolean inverted) {
-        super.setInverted(inverted);
-        for (val btn : buttons)
-            btn.setInverted(inverted);
+    public void addButton(String text) {
+        val button = new Button(text, 0, 0, this);
+        addButton(button);
     }
 
     public void addButton(String text, Runnable runnable) {
@@ -81,23 +82,33 @@ public class ButtonMenu extends GUIElement {
                         child.setPosX(btn.getWidth());
                 }
 
-                int offsetY = 0;
+                int offsetY = buttonHeight; // TODO this work's correct only to inverted Vertical button menu
                 for (val btn : buttons)
                     offsetY += btn.getHeight();
-                button.setPos(0, -buttonHeight * index - offsetY);
+                button.setPos(0, height - (buttonHeight * index + offsetY));
             }
             case DOUBLE -> {
-                int maxX = width / defaultMaxButtonSize.x;
-                int maxY = height / defaultMaxButtonSize.y;
+                int maxX = width / doubleOffset.x;
+                int maxY = height / doubleOffset.y;
                 if (maxY < 0) maxY *= -1;
-                int y = maxY - index % maxX - 1;
+                int y = index % maxX;
                 int x = index / maxX;
                 if (x >= maxX) throw new LifeException("Need create pages mechanic");
                 if (y >= maxY) throw new LifeException("Error with y calculating");
-                button.setPos(x * defaultMaxButtonSize.x, Label.DEFAULT_HEIGHT + defaultMaxButtonSize.y * y);
+                System.out.println(y);
+                button.setPos(x * doubleOffset.x, height - doubleOffset.y * y - Label.DEFAULT_HEIGHT);
             }
         }
         buttons.add(button);
+    }
+
+    @NotNull
+    public Button getButton(int index) {
+        return buttons.get(index);
+    }
+
+    public int getWidestButtonWidth() {
+        return widestButtonWidth;
     }
 
     public boolean contains(String text) {

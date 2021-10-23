@@ -3,7 +3,6 @@ package org.anotherteam.editor.gui.menu;
 import lombok.val;
 import org.anotherteam.editor.gui.GUIElement;
 
-
 public class SwitchMenu extends ButtonMenu {
 
     protected SwitchButton lastClicked;
@@ -17,19 +16,24 @@ public class SwitchMenu extends ButtonMenu {
     }
 
     @Override
-    public void addButton(String text, Runnable runnable) {
+    public void addButton(String text) {
         val button = new SwitchButton(text, 0, 0, this);
-        button.setOnClick(runnable);
         addButton(button);
     }
 
-    public void addButton(String text, Runnable runnable, Runnable afterClick) {
+    @Override
+    public void addButton(String text, Runnable onClick) {
         val button = new SwitchButton(text, 0, 0, this);
-        button.setOnClick(runnable);
+        button.setOnClick(onClick);
+        addButton(button);
+    }
+
+    public void addButton(String text, Runnable onClick, Runnable afterClick) {
+        val button = new SwitchButton(text, 0, 0, this);
+        button.setOnClick(onClick);
         button.setAfterClick(afterClick);
         addButton(button);
     }
-
 
     public void setClicked(SwitchButton switchButton) {
         if (switchButton == lastClicked) return;

@@ -5,8 +5,6 @@ import org.anotherteam.Input;
 import org.anotherteam.util.Color;
 import org.lwjgl.glfw.GLFW;
 
-import java.util.List;
-
 public class Button extends Label {
 
     protected float releaseTime;

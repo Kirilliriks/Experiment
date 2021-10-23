@@ -16,7 +16,7 @@ public abstract class GUIElement {
 
     protected final List<GUIElement> childElements;
     protected final GUIElement ownerElement;
-    protected Vector2f pos; // If (ownerElement != null) pos work's like offset
+    protected final Vector2f pos; // If (ownerElement != null) pos work's like offset
     protected int width, height;
     protected Color color;
 
@@ -62,24 +62,15 @@ public abstract class GUIElement {
     }
 
     public void setPosX(float x) {
-        if (pos == null)
-            pos = new Vector2f(x, 0);
-        else
-            pos.x = x;
+        pos.x = x;
     }
 
     public void setPosY(float y) {
-        if (pos == null)
-            pos = new Vector2f(0, y);
-        else
-            pos.y = y;
+        pos.y = y;
     }
 
     public void setPos(float x, float y) {
-        if (pos == null)
-            pos = new Vector2f(x, y);
-        else
-            pos.set(x, y);
+        pos.set(x, y);
     }
 
     public void setWidth(int width) {

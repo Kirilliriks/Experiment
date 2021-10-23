@@ -14,8 +14,8 @@ public final class NewObjectMenu extends GUIElement {
     public NewObjectMenu(float x, float y, GUIElement ownerElement) {
         super(x, y, ownerElement);
         val editor = Editor.getInstance();
-        width = (int) (editor.getWidth() - x - Editor.getInstance().getRightBorder());
-        height = editor.getHeight() - editor.getUpBorder();
+        width = (int) (editor.getWidth() - x - Editor.getInstance().getRightBorderSize());
+        height = editor.getHeight() - editor.getUpBorderSize();
         inverted = true;
 
         typeMenu = new SwitchMenu(0, height, width, ButtonMenu.Type.HORIZONTAL, this);
