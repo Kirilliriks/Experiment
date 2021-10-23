@@ -12,7 +12,7 @@ public final class EditorMenu extends SwitchMenu {
     private final GameObjectMenu gameObjectMenu;
 
     public EditorMenu(float x, float y, GUIElement ownerElement) {
-        super(x, y, 0, DEFAULT_GUI_HEIGHT, Type.HORIZONTAL, ownerElement);
+        super(x, y, 0, DEFAULT_BUTTON_MENU_HEIGHT, Type.HORIZONTAL, ownerElement);
         this.levelMenu = new LevelMenu(Label.DEFAULT_TEXT_OFFSET, -height - height * 0.4f, this);
         levelMenu.setVisible(false);
 

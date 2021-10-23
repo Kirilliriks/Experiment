@@ -47,7 +47,7 @@ public final class Editor extends Widget {
         // GUI
         log = new Log(0,  -height , 200, 200, this);
         log.setVisible(false);
-        this.editorMenu = new EditorMenu(0, height - ButtonMenu.DEFAULT_GUI_HEIGHT, this);
+        this.editorMenu = new EditorMenu(0, height - ButtonMenu.DEFAULT_BUTTON_MENU_HEIGHT, this);
         editorMenu.setWidth(width);
         this.switchModeButton = new Button("Switch mode", width / 2.0f, 10, this);
         switchModeButton.setOnClick(() -> {

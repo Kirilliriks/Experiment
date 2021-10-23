@@ -8,7 +8,7 @@ public class SwitchMenu extends ButtonMenu {
     protected SwitchButton lastClicked;
 
     public SwitchMenu(float x, float y, int width, Type type, GUIElement ownerElement) {
-        super(x, y, width, DEFAULT_GUI_HEIGHT, type, ownerElement);
+        super(x, y, width, DEFAULT_BUTTON_MENU_HEIGHT, type, ownerElement);
     }
 
     public SwitchMenu(float x, float y, int width, int height, Type type, GUIElement ownerElement) {
