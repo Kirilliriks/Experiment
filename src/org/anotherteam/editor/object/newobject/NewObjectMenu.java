@@ -19,6 +19,6 @@ public final class NewObjectMenu extends GUIElement {
         inverted = true;
 
         typeMenu = new SwitchMenu(0, height - SwitchMenu.DEFAULT_GUI_HEIGHT, width, ButtonMenu.Type.HORIZONTAL, this);
-        typeMenu.setColor(new Color(255, 150, 150, 255));
+        typeMenu.setColor(new Color(100, 100, 100, 255));
     }
 }

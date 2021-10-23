@@ -71,7 +71,7 @@ public class ButtonMenu extends GUIElement {
                 int offsetX = 0;
                 for (val btn : buttons)
                     offsetX += btn.getWidth();
-                button.setPos(5 + 5 * index + offsetX, buttonHeight); // TODO y = 0, don't increase x by 5, use special widget to offset SwitchMenu's buttons, like MenuBar
+                button.setPos(Label.DEFAULT_TEXT_OFFSET * index + offsetX, buttonHeight);
             }
             case VERTICAL -> {
                 if (widestButtonWidth < button.getWidth())

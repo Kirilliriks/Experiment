@@ -8,7 +8,6 @@ import org.anotherteam.editor.object.newobject.NewObjectMenu;
 
 public final class GameObjectMenu extends SwitchMenu {
 
-
     private final NewObjectMenu newObjectMenu;
 
     public GameObjectMenu(float x, float y, GUIElement ownerElement) {

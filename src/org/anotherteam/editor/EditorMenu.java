@@ -1,6 +1,7 @@
 package org.anotherteam.editor;
 
 import org.anotherteam.editor.gui.GUIElement;
+import org.anotherteam.editor.gui.Label;
 import org.anotherteam.editor.level.LevelMenu;
 import org.anotherteam.editor.gui.menu.SwitchMenu;
 import org.anotherteam.editor.object.GameObjectMenu;
@@ -12,10 +13,10 @@ public final class EditorMenu extends SwitchMenu {
 
     public EditorMenu(float x, float y, GUIElement ownerElement) {
         super(x, y, 0, DEFAULT_GUI_HEIGHT, Type.HORIZONTAL, ownerElement);
-        this.levelMenu = new LevelMenu(5, -height - height * 0.4f, this);
+        this.levelMenu = new LevelMenu(Label.DEFAULT_TEXT_OFFSET, -height - height * 0.4f, this);
         levelMenu.setVisible(false);
 
-        this.gameObjectMenu = new GameObjectMenu(5, -height - height * 0.4f, this);
+        this.gameObjectMenu = new GameObjectMenu(Label.DEFAULT_TEXT_OFFSET, -height - height * 0.4f, this);
         gameObjectMenu.setVisible(false);
 
         addButton("Level editor", ()-> levelMenu.setVisible(true), ()-> levelMenu.setVisible(false));
