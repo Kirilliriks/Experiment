@@ -1,5 +1,6 @@
 package org.anotherteam.editor.object;
 
+import lombok.val;
 import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.editor.gui.menu.SwitchButton;
 import org.anotherteam.editor.gui.menu.SwitchMenu;
@@ -12,13 +13,14 @@ public final class GameObjectMenu extends SwitchMenu {
 
     public GameObjectMenu(float x, float y, GUIElement ownerElement) {
         super(x, y, 0, 0, Type.VERTICAL, ownerElement);
-        var button = new SwitchButton("New GameObject", 0, 0, this);
-        this.newObjectMenu = new NewObjectMenu(0, 0, button);
+        addButton("New GameObject");
+        addButton("GameObject edit");
+        addButton("Components edit");
+        val button = (SwitchButton)getButton(0);
+        this.newObjectMenu = new NewObjectMenu(getWidestButtonWidth(), 0, button);
         newObjectMenu.setVisible(false);
         button.setOnClick(()-> newObjectMenu.setVisible(true));
         button.setAfterClick(()-> newObjectMenu.setVisible(false));
-        addButton(button);
-        addButton("GameObject edit", null);
-        addButton("Components edit", null);
+        inverted = true;
     }
 }

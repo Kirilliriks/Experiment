@@ -14,11 +14,11 @@ public final class NewObjectMenu extends GUIElement {
     public NewObjectMenu(float x, float y, GUIElement ownerElement) {
         super(x, y, ownerElement);
         val editor = Editor.getInstance();
-        width = (int) (editor.getWidth() - x - Editor.getInstance().getRightBorderSize());
-        height = editor.getHeight() - editor.getUpBorderSize();
+        width = (int)(editor.getWidth() - getPosX() - Editor.getRightBorderSize());
+        height = (int)(getPosY() - Editor.getDownBorderPos() - Editor.DEFAULT_BORDER_SIZE);
         inverted = true;
 
-        typeMenu = new SwitchMenu(0, height, width, ButtonMenu.Type.HORIZONTAL, this);
+        typeMenu = new SwitchMenu(0, height - SwitchMenu.DEFAULT_GUI_HEIGHT, width, ButtonMenu.Type.HORIZONTAL, this);
         typeMenu.setColor(new Color(255, 150, 150, 255));
     }
 }
