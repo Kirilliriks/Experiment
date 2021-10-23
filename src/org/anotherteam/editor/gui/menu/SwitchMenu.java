@@ -1,26 +1,31 @@
 package org.anotherteam.editor.gui.menu;
 
 import lombok.val;
+import org.anotherteam.editor.gui.GUIElement;
 
 
 public class SwitchMenu extends ButtonMenu {
 
     protected SwitchButton lastClicked;
 
-    public SwitchMenu(float x, float y, int width, int height, Type type) {
-        super(x, y, width, height, type);
+    public SwitchMenu(float x, float y, int width, Type type, GUIElement ownerElement) {
+        super(x, y, width, DEFAULT_GUI_HEIGHT, type, ownerElement);
+    }
+
+    public SwitchMenu(float x, float y, int width, int height, Type type, GUIElement ownerElement) {
+        super(x, y, width, height, type, ownerElement);
     }
 
     @Override
     public void addButton(String text, Runnable runnable) {
-        val button = new SwitchButton(text, 0, 0);
-        button.setRunnable(runnable);
+        val button = new SwitchButton(text, 0, 0, this);
+        button.setOnClick(runnable);
         addButton(button);
     }
 
     public void addButton(String text, Runnable runnable, Runnable afterClick) {
-        val button = new SwitchButton(text, 0, 0);
-        button.setRunnable(runnable);
+        val button = new SwitchButton(text, 0, 0, this);
+        button.setOnClick(runnable);
         button.setAfterClick(afterClick);
         addButton(button);
     }

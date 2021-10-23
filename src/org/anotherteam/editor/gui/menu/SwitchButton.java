@@ -1,7 +1,6 @@
 package org.anotherteam.editor.gui.menu;
 
 import org.anotherteam.Input;
-import org.anotherteam.editor.Editor;
 import org.anotherteam.editor.gui.Button;
 import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.util.exception.LifeException;
@@ -13,9 +12,10 @@ public class SwitchButton extends Button {
     private SwitchMenu switchMenu;
     private Runnable afterClick;
 
-    public SwitchButton(String text, float x, float y) {
-        super(text, x, y);
+    public SwitchButton(String text, float x, float y, GUIElement ownerElement) {
+        super(text, x, y, ownerElement);
         clicked = false;
+        switchMenu = (SwitchMenu) ownerElement;
     }
 
     public void setAfterClick(Runnable afterClick) {
@@ -29,14 +29,6 @@ public class SwitchButton extends Button {
     }
 
     @Override
-    public void setOwner(@NotNull GUIElement ownerElement) {
-        super.setOwner(ownerElement);
-        if (!(ownerElement instanceof SwitchMenu))
-            throw new LifeException("BarButton only for SwitchMenu");
-        switchMenu = (SwitchMenu) ownerElement;
-    }
-
-    @Override
     public void update(float dt) {
         if (!visible) return;
 
@@ -47,6 +39,6 @@ public class SwitchButton extends Button {
         switchMenu.setClicked(this);
         clicked = true;
         color.r = 255;
-        if (runnable != null) runnable.run();
+        if (onClick != null) onClick.run();
     }
 }

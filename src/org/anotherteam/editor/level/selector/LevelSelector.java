@@ -10,6 +10,7 @@ import org.anotherteam.editor.gui.menu.SwitchMenu;
 import org.anotherteam.level.Level;
 import org.anotherteam.util.Color;
 import org.anotherteam.util.exception.LifeException;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 
@@ -21,23 +22,25 @@ public class LevelSelector extends GUIElement {
     private final Button createEmptyButton;
     private final Button saveLevelButton;
 
-    public LevelSelector(float x, float y) {
-        super(x, y, new Color(150, 150, 150, 255));
+    public LevelSelector(float x, float y, GUIElement ownerElement) {
+        super(x, y, ownerElement);
         val editor = Editor.getInstance();
-        width = (int) (editor.getWidth() - x - Editor.getInstance().getRightBorder());
-        height = -editor.getHeight() + editor.getDownBorder();
-        selector = new SwitchMenu(Editor.DBORDER_SIZE, -Editor.DBORDER_SIZE, width - Editor.DBORDER_SIZE, height + Editor.DBORDER_SIZE, SwitchMenu.Type.DOUBLE);
-        fillButtons();
-        addElement(selector);
+        width = editor.getWidth() - Editor.getInstance().getRightBorder();
+        height = editor.getHeight() - editor.getDownBorder();
+        inverted = true;
 
-        downButtons = new SwitchMenu(Editor.DBORDER_SIZE, height + Editor.DBORDER_SIZE, 0, 0, SwitchMenu.Type.HORIZONTAL);
-        createEmptyButton = new Button("Create empty level", Editor.DBORDER_SIZE, height + Editor.DBORDER_SIZE);
-        createEmptyButton.setRunnable(()-> selector.addButton("Empty.hgl", ()-> Game.getInstance().setLevel(Level.createEmpty())));
+        selector = new SwitchMenu(Editor.DBORDER_SIZE, -Editor.DBORDER_SIZE, width - Editor.DBORDER_SIZE, height + Editor.DBORDER_SIZE, SwitchMenu.Type.DOUBLE, this);
+        selector.setInverted(true);
+        selector.setColor(Color.BLUE);
+        fillButtons();
+
+        downButtons = new SwitchMenu(Editor.DBORDER_SIZE, height + Editor.DBORDER_SIZE, 0, 0, SwitchMenu.Type.HORIZONTAL, this);
+        createEmptyButton = new Button("Create empty level", Editor.DBORDER_SIZE, height + Editor.DBORDER_SIZE, this);
+        createEmptyButton.setOnClick(()-> selector.addButton("Empty.hgl", ()-> Game.getInstance().setLevel(Level.createEmpty())));
         downButtons.addButton(createEmptyButton);
-        saveLevelButton = new Button("Save level", Editor.DBORDER_SIZE + 40, height + Editor.DBORDER_SIZE);
-        saveLevelButton.setRunnable(()-> FileLoader.saveLevel(Game.getInstance().gameLevel));
+        saveLevelButton = new Button("Save level", Editor.DBORDER_SIZE + 40, height + Editor.DBORDER_SIZE, this);
+        saveLevelButton.setOnClick(()-> FileLoader.saveLevel(Game.getInstance().gameLevel));
         downButtons.addButton(saveLevelButton);
-        addElement(downButtons);
     }
 
     public void fillButtons() {

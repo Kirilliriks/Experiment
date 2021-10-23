@@ -49,7 +49,7 @@ dependencies {
 
     implementation "org.joml:joml:1.10.2"
 
-    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.code.gson:gson:2.8.8'
 
     // Include all available natives, but it's likely that you want something specific
     runtimeOnly "io.imgui.java:natives-windows:$imguiVersion"

@@ -4,17 +4,15 @@ import org.anotherteam.editor.Editor;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector2f;
 
 public class Label extends GUIElement {
 
-    public static final int HEIGHT = 16;
+    public static final int DEFAULT_HEIGHT = 16;
 
     protected String text;
 
-    public Label(String text, float x, float y) {
-        super(0, HEIGHT);
-        this.pos = new Vector2f(x, y);
+    public Label(String text, float x, float y, GUIElement ownerElement) {
+        super(x, y, 0, DEFAULT_HEIGHT, ownerElement);
         this.text = text;
         this.width = Editor.editorFont.getTextWidth(text, 1.0f) + 5;
         color = Color.GRAY;

@@ -4,10 +4,10 @@ import org.anotherteam.Game;
 import org.anotherteam.GameState;
 import org.anotherteam.Input;
 import org.anotherteam.data.AssetsData;
-import org.anotherteam.debug.DebugRender;
 import org.anotherteam.editor.gui.Button;
 import org.anotherteam.editor.gui.Log;
 import org.anotherteam.editor.gui.Widget;
+import org.anotherteam.editor.gui.menu.ButtonMenu;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.framebuffer.FrameBuffer;
@@ -15,7 +15,6 @@ import org.anotherteam.render.text.Font;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector2f;
 
 public final class Editor extends Widget {
     public static final int DBORDER_SIZE = 10;
@@ -32,30 +31,31 @@ public final class Editor extends Widget {
     private static Log log;
     private final EditorMenu editorMenu;
     private final Button switchModeButton;
+    //
 
     public Editor(@NotNull Game game, @NotNull GameScreen gameScreen) {
         super("Another Editor",
                 10, GameScreen.window.getHeight() / 2.0f,
-                GameScreen.window.getWidth() - 10, GameScreen.window.getHeight() / 2 - 40);
+                GameScreen.window.getWidth() - 10, GameScreen.window.getHeight() / 2 - 40, null);
         editor = this;
         editorFont.setScale(2.0f);
         this.game = game;
         this.gameScreen = gameScreen;
         this.editorBatch = new EditorBatch(AssetsData.DEFAULT_SHADER, gameScreen.windowCamera);
         this.editorFrame = new FrameBuffer(GameScreen.window.getWidth(), GameScreen.window.getHeight());
-        log = new Log(0,  -height , 200, 200);
+
+        // GUI
+        log = new Log(0,  -height , 200, 200, this);
         log.setVisible(false);
-        addElement(log);
-        this.editorMenu = new EditorMenu(0, height - 22, width, 22);
-        addElement(editorMenu);
-        this.switchModeButton = new Button("Switch mode", width / 2.0f, 10);
-        switchModeButton.setRunnable(() -> {
+        this.editorMenu = new EditorMenu(0, height - ButtonMenu.DEFAULT_GUI_HEIGHT, this);
+        editorMenu.setWidth(width);
+        this.switchModeButton = new Button("Switch mode", width / 2.0f, 10, this);
+        switchModeButton.setOnClick(() -> {
             if (game.getGameState() == GameState.ON_EDITOR) {
                 game.setGameState(GameState.ON_LEVEL);
             } else game.setGameState(GameState.ON_EDITOR);
             Editor.sendLogMessage("Current mode: " + game.getGameState());
         });
-        addElement(switchModeButton);
     }
 
     @NotNull
@@ -74,6 +74,10 @@ public final class Editor extends Widget {
 
     public int getRightBorder() {
         return 20;
+    }
+
+    public int getUpBorder() {
+        return 60;
     }
 
     public int getDownBorder() {

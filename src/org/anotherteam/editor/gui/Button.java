@@ -5,15 +5,17 @@ import org.anotherteam.Input;
 import org.anotherteam.util.Color;
 import org.lwjgl.glfw.GLFW;
 
+import java.util.List;
+
 public class Button extends Label {
 
     protected float releaseTime;
     protected float timeToRelease;
     protected boolean clicked;
-    protected Runnable runnable;
+    protected Runnable onClick;
 
-    public Button(String text, float x, float y) {
-        super(text, x, y);
+    public Button(String text, float x, float y, GUIElement ownerElement) {
+        super(text, x, y, ownerElement);
         releaseTime = 0.6f;
         timeToRelease = 0.0f;
         color = new Color(0, 100, 100, 255);
@@ -23,8 +25,8 @@ public class Button extends Label {
         this.releaseTime = releaseTime;
     }
 
-    public void setRunnable(Runnable runnable) {
-        this.runnable = runnable;
+    public void setOnClick(Runnable runnable) {
+        this.onClick = runnable;
     }
 
     @Override
@@ -41,7 +43,7 @@ public class Button extends Label {
         if (!Input.isButtonDown(GLFW.GLFW_MOUSE_BUTTON_LEFT)) return;
         timeToRelease = releaseTime;
         clicked = true;
-        if (runnable != null) runnable.run();
+        if (onClick != null) onClick.run();
         color.r = 255;
     }
 

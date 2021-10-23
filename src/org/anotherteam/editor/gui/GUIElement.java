@@ -12,36 +12,37 @@ import java.util.List;
 
 public abstract class GUIElement {
 
+    public static final Color DEFAULT_COLOR = new Color(150, 150, 150, 255);
+
     protected final List<GUIElement> childElements;
-    protected GUIElement ownerElement;
+    protected final GUIElement ownerElement;
     protected Vector2f pos; // If (ownerElement != null) pos work's like offset
     protected int width, height;
     protected Color color;
 
+    protected boolean inverted;
     protected boolean visible;
 
-    public GUIElement(int width, int height) {
-        this.width = width;
-        this.height = height;
-        visible = true;
-        childElements = new ArrayList<>();
+    public GUIElement(float x, float y, GUIElement ownerElement) {
+        this(x, y, 0, 0, ownerElement);
     }
 
-    public GUIElement(float x, float y, Color color) {
-        this(x, y, 0, 0, color);
+    public GUIElement(float x, float y, int width, int height, GUIElement ownerElement) {
+        this(x, y, width, height, DEFAULT_COLOR, ownerElement);
     }
 
-    public GUIElement(float x, float y, int width, int height) {
-        this(x, y, width, height, Color.GRAY);
-    }
-
-    public GUIElement(float x, float y, int width, int height, Color color) {
+    public GUIElement(float x, float y, int width, int height, Color color, GUIElement ownerElement) {
         this.pos = new Vector2f(x, y);
         this.width = width;
         this.height = height;
         this.color = color;
         visible = true;
+        inverted = false;
         childElements = new ArrayList<>();
+
+        this.ownerElement = ownerElement;
+        if (ownerElement == null) return;
+        ownerElement.childElements.add(this);
     }
 
     public void setVisible(boolean visible) {
@@ -52,8 +53,33 @@ public abstract class GUIElement {
         return visible;
     }
 
+    public void setInverted(boolean inverted) {
+        this.inverted = inverted;
+    }
+
+    public boolean isInverted() {
+        return inverted;
+    }
+
+    public void setPosX(float x) {
+        if (pos == null)
+            pos = new Vector2f(x, 0);
+        else
+            pos.x = x;
+    }
+
+    public void setPosY(float y) {
+        if (pos == null)
+            pos = new Vector2f(0, y);
+        else
+            pos.y = y;
+    }
+
     public void setPos(float x, float y) {
-        this.pos = new Vector2f(x, y);
+        if (pos == null)
+            pos = new Vector2f(x, y);
+        else
+            pos.set(x, y);
     }
 
     public void setWidth(int width) {
@@ -70,12 +96,12 @@ public abstract class GUIElement {
 
     public float getPosX() {
         if (ownerElement == null) return pos.x;
-        return pos.x + ownerElement.getPosX();
+        return ownerElement.getPosX() + pos.x;
     }
 
     public float getPosY() {
         if (ownerElement == null) return pos.y;
-        return pos.y + ownerElement.getPosY();
+        return ownerElement.getPosY() + pos.y + (inverted ? (-height + ownerElement.height) : 0);
     }
 
     public int getWidth() {
@@ -86,18 +112,12 @@ public abstract class GUIElement {
         return height;
     }
 
-    public void setOwner(@NotNull GUIElement ownerElement) {
-        this.ownerElement = ownerElement;
+    @NotNull
+    public List<GUIElement> getChildElements() {
+        return childElements;
     }
 
-    public void addElement(@NotNull GUIElement element) {
-        childElements.add(element);
-        element.setOwner(this);
-    }
-
-    public void update(float dt) {
-
-    }
+    public void update(float dt) { }
 
     public void updateElements(float dt) {
         if (!visible) return;
