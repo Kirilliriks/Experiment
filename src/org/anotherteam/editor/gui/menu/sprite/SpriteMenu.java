@@ -29,17 +29,19 @@ public class SpriteMenu extends GUIElement {
         sizeY = (height + offsetIcon) / ICON_SIZE;
     }
 
-    public void addButton(@NotNull Sprite sprite) {
+    @NotNull
+    public SpriteButton addButton(@NotNull Sprite sprite) {
         val index = buttons.size();
         if (index >= sizeX * sizeY) throw new LifeException("Need create pages mechanic");
 
         val spriteButton = new SpriteButton(sprite, 0, 0, this);
 
-        int y = index % sizeX;
-        int x = index / sizeY;
+        int x = index % sizeX;
+        int y = index / sizeY;
 
         spriteButton.setPos(x * ICON_SIZE                + (x + 1) * offsetIcon,
                             height - (y + 1) * ICON_SIZE - (y + 1) * offsetIcon);
         buttons.add(spriteButton);
+        return spriteButton;
     }
 }

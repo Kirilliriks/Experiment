@@ -19,10 +19,18 @@ public class SwitchButton extends TextButton {
         this.afterClick = afterClick;
     }
 
+    @Override
     public void setClicked(boolean clicked) {
         if (!clicked && afterClick != null)
             afterClick.run();
         this.clicked = clicked;
+
+        if (!clicked) {
+            text.getColor().r = 0;
+            return;
+        }
+        if (onClick != null) onClick.run();
+        text.getColor().r = 255;
     }
 
     @Override
@@ -30,13 +38,8 @@ public class SwitchButton extends TextButton {
         if (!visible) return;
 
         if (clicked) return;
-
-        text.getColor().r = 0;
         if (!mouseOnWidget()) return;
         if (!Input.isButtonDown(GLFW.GLFW_MOUSE_BUTTON_LEFT)) return;
         switchMenu.setClicked(this);
-        clicked = true;
-        if (onClick != null) onClick.run();
-        text.getColor().r = 255;
     }
 }

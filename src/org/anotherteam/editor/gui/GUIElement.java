@@ -114,11 +114,6 @@ public abstract class GUIElement {
         return height;
     }
 
-    @NotNull
-    public List<GUIElement> getChildElements() {
-        return childElements;
-    }
-
     public void update(float dt) { }
 
     public void updateElements(float dt) {

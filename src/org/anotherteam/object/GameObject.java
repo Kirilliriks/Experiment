@@ -6,6 +6,7 @@ import org.anotherteam.object.component.Component;
 import org.anotherteam.object.component.collider.Collider;
 import org.anotherteam.object.component.sprite.SpriteController;
 import org.anotherteam.render.batch.RenderBatch;
+import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
 
@@ -26,6 +27,17 @@ public abstract class GameObject {
         components = new HashMap<>();
     }
 
+    public static <T extends GameObject> T create(int x, int y, @NotNull Class<T> gameObjectClass) {
+        try {
+            return gameObjectClass.cast(gameObjectClass
+                    .getDeclaredConstructor(int.class, int.class)
+                    .newInstance(x, y));
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new LifeException("Unknown GameObject class " + gameObjectClass.getSimpleName());
+        }
+    }
+
     @NotNull
     public Vector2i getPosition() {
         return position;
@@ -42,6 +54,10 @@ public abstract class GameObject {
 
     public void setRoom(Room room) {
         this.room = room;
+    }
+
+    public boolean hasComponent(Class<? extends Component> componentClass) {
+        return components.containsKey(componentClass);
     }
 
     public <T extends Component> T getComponent(Class<T> componentClass) {

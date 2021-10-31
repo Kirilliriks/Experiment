@@ -38,6 +38,17 @@ public class TextButton extends Button {
         text.setHeight(height);
     }
 
+    public void setClicked(boolean clicked) {
+        this.clicked = clicked;
+        if (!clicked) {
+            text.getColor().r = 0;
+            return;
+        }
+        timeToRelease = releaseTime;
+        if (onClick != null) onClick.run();
+        text.getColor().r = 255;
+    }
+
     @Override
     public void update(float dt) {
         if (!visible) return;
@@ -46,14 +57,10 @@ public class TextButton extends Button {
             timeToRelease -=dt;
             return;
         }
-        clicked = false;
-        text.getColor().r = 0;
+        setClicked(false);
         if (!mouseOnWidget()) return;
         if (!Input.isButtonDown(GLFW.GLFW_MOUSE_BUTTON_LEFT)) return;
-        timeToRelease = releaseTime;
-        clicked = true;
-        if (onClick != null) onClick.run();
-        text.getColor().r = 255;
+        setClicked(true);
     }
 
     public String getText() {

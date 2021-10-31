@@ -19,11 +19,11 @@ public class TextMenu extends GUIElement {
     /**
      * Default offset for {@link TextMenu.Type HORIZONTAL} ButtonMenu
      */
-    private static final Vector2i doubleOffset = new Vector2i(200, Label.DEFAULT_HEIGHT + 5);
+    private static final Vector2i DOUBLE_BUTTON_OFFSET = new Vector2i(200, Label.DEFAULT_HEIGHT + 5);
 
     protected final List<TextButton> buttons;
     protected final Type type;
-    protected final Vector2f buttonsOffset;
+    protected final Vector2f startOffset;
 
     protected final int buttonHeight;
 
@@ -35,7 +35,7 @@ public class TextMenu extends GUIElement {
     public TextMenu(float x, float y, int width, int height, Type type, GUIElement ownerElement) {
         super(x, y, width, height, ownerElement);
         this.type = type;
-        this.buttonsOffset = new Vector2f(0, 0);
+        this.startOffset = new Vector2f(0, 0);
         if (type == Type.HORIZONTAL)
             buttonHeight = height / 2 - Label.DEFAULT_HEIGHT / 2;
         else
@@ -46,22 +46,26 @@ public class TextMenu extends GUIElement {
         widestButtonWidth = 0;
     }
 
-    public void setButtonsOffset(float x, float y) {
-        buttonsOffset.set(x, y);
+    public void setStartOffset(float x, float y) {
+        startOffset.set(x, y);
     }
 
-    public void addButton(String text) {
+    @NotNull
+    public TextButton addButton(String text) {
         val button = new TextButton(text, 0, 0, this);
         addButton(button);
+        return button;
     }
 
-    public void addButton(String text, Runnable runnable) {
+    public TextButton addButton(String text, Runnable runnable) {
         val button = new TextButton(text, 0, 0, this);
         button.setOnClick(runnable);
         addButton(button);
+        return button;
     }
 
-    public void addButton(@NotNull TextButton button) {
+    @NotNull
+    public TextButton addButton(@NotNull TextButton button) {
 
         int index = buttons.size();
         if (contains(button.getText())) {
@@ -78,7 +82,7 @@ public class TextMenu extends GUIElement {
                 int offsetX = 0;
                 for (val btn : buttons)
                     offsetX += btn.getWidth();
-                button.setPos(buttonsOffset.x + Label.DEFAULT_TEXT_OFFSET * index + offsetX, buttonHeight);
+                button.setPos(startOffset.x + Label.DEFAULT_TEXT_OFFSET * index + offsetX, buttonHeight);
             }
             case VERTICAL -> {
                 if (widestButtonWidth < button.getWidth()) widestButtonWidth = button.getWidth();
@@ -90,19 +94,22 @@ public class TextMenu extends GUIElement {
                 int offsetY = buttonHeight; // TODO this work's correct only to inverted Vertical button menu
                 for (val btn : buttons)
                     offsetY += btn.getHeight();
-                button.setPos(0, height - (buttonsOffset.y + buttonHeight * index + offsetY));
+                button.setPos(0, height - (startOffset.y + buttonHeight * index + offsetY));
             }
             case DOUBLE -> {
-                int sizeX = width / doubleOffset.x;
-                int sizeY = height / doubleOffset.y;
+                int sizeX = width / DOUBLE_BUTTON_OFFSET.x;
+                int sizeY = height / DOUBLE_BUTTON_OFFSET.y;
                 if (index >= sizeX * sizeY) throw new LifeException("Need create pages mechanic");
 
+                // X and Y are specially swapped
                 int y = index % sizeX;
                 int x = index / sizeY;
-                button.setPos(x * doubleOffset.x, doubleOffset.y * (sizeY - y));
+                button.setPos(x * DOUBLE_BUTTON_OFFSET.x,
+                              height - (y + 1) * DOUBLE_BUTTON_OFFSET.y);
             }
         }
         buttons.add(button);
+        return button;
     }
 
     @NotNull

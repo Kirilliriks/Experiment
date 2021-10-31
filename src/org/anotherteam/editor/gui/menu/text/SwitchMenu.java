@@ -2,6 +2,7 @@ package org.anotherteam.editor.gui.menu.text;
 
 import lombok.val;
 import org.anotherteam.editor.gui.GUIElement;
+import org.jetbrains.annotations.NotNull;
 
 public class SwitchMenu extends TextMenu {
 
@@ -16,28 +17,40 @@ public class SwitchMenu extends TextMenu {
     }
 
     @Override
-    public void addButton(String text) {
+    @NotNull
+    public SwitchButton addButton(String text) {
         val button = new SwitchButton(text, 0, 0, this);
         addButton(button);
+        return button;
     }
 
     @Override
-    public void addButton(String text, Runnable onClick) {
+    @NotNull
+    public SwitchButton addButton(String text, Runnable onClick) {
         val button = new SwitchButton(text, 0, 0, this);
         button.setOnClick(onClick);
         addButton(button);
+        return button;
     }
 
-    public void addButton(String text, Runnable onClick, Runnable afterClick) {
+    @NotNull
+    public SwitchButton addButton(String text, Runnable onClick, Runnable afterClick) {
         val button = new SwitchButton(text, 0, 0, this);
         button.setOnClick(onClick);
         button.setAfterClick(afterClick);
         addButton(button);
+        return button;
+    }
+
+    @Override
+    public @NotNull SwitchButton getButton(int index) {
+        return (SwitchButton) super.getButton(index);
     }
 
     public void setClicked(SwitchButton switchButton) {
         if (switchButton == lastClicked) return;
         if (lastClicked != null) lastClicked.setClicked(false);
+        switchButton.setClicked(true);
         lastClicked = switchButton;
     }
 }

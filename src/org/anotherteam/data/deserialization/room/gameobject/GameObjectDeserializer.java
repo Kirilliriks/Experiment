@@ -6,7 +6,6 @@ import org.anotherteam.util.SerializeUtil;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.Component;
 import org.anotherteam.util.exception.LifeException;
-import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Type;
 
@@ -14,7 +13,19 @@ public class GameObjectDeserializer implements JsonDeserializer<GameObject>, Jso
 
     @Override
     public GameObject deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        return GameObjectFabric.deserializeGameObject(json.getAsJsonObject(), context);
+        val object = json.getAsJsonObject();
+        val pos = SerializeUtil.deserialize(object.getAsJsonObject("pos"));
+        GameObject gameObject;
+        try {
+            gameObject = GameObject.create(pos.x, pos.y, (Class<? extends GameObject>) Class.forName(object.get("type").getAsString()));
+        } catch (ClassNotFoundException e) {
+            throw new LifeException("Unknown GameObject type " + object.get("type").getAsString());
+        }
+        gameObject.setPosition(pos.x, pos.y);
+        for (val componentJSON : object.getAsJsonArray("components")) {
+            gameObject.addComponent(context.deserialize(componentJSON, Component.class));
+        }
+        return gameObject;
     }
 
     @Override
@@ -29,26 +40,5 @@ public class GameObjectDeserializer implements JsonDeserializer<GameObject>, Jso
         }
         result.add("components", components);
         return result;
-    }
-
-    private static class GameObjectFabric {
-
-        private static GameObject deserializeGameObject(@NotNull JsonObject object, JsonDeserializationContext context) {
-            val pos = SerializeUtil.deserialize(object.getAsJsonObject("pos"));
-            GameObject gameObject;
-            try {
-                gameObject = (GameObject) Class.forName(object.get("type").getAsString())
-                        .getDeclaredConstructor(int.class, int.class)
-                        .newInstance(pos.x, pos.y);
-            } catch (Exception e) {
-                e.printStackTrace();
-                throw new LifeException("Unknown object type : " + object.get("type").getAsString());
-            }
-            gameObject.setPosition(pos.x, pos.y);
-            for (val componentJSON : object.getAsJsonArray("components")) {
-                gameObject.addComponent(context.deserialize(componentJSON, Component.class));
-            }
-            return gameObject;
-        }
     }
 }
