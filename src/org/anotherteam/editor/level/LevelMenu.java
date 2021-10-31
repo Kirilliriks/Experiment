@@ -1,8 +1,8 @@
 package org.anotherteam.editor.level;
 
 import org.anotherteam.editor.gui.GUIElement;
-import org.anotherteam.editor.gui.menu.SwitchButton;
-import org.anotherteam.editor.gui.menu.SwitchMenu;
+import org.anotherteam.editor.gui.menu.text.SwitchButton;
+import org.anotherteam.editor.gui.menu.text.SwitchMenu;
 import org.anotherteam.editor.level.selector.LevelSelector;
 
 public final class LevelMenu extends SwitchMenu {
@@ -15,7 +15,7 @@ public final class LevelMenu extends SwitchMenu {
         addButton("Select room");
         addButton("Tile viewer");
         var button = (SwitchButton) getButton(0);
-        levelSelector = new LevelSelector(getWidestButtonWidth(), 0, this);
+        levelSelector = new LevelSelector(getWidestButtonWidth(), 0, button);
         levelSelector.setVisible(false);
         button.setOnClick(()-> levelSelector.setVisible(true));
         button.setAfterClick(()-> levelSelector.setVisible(false));

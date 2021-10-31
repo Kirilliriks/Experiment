@@ -6,8 +6,8 @@ import org.anotherteam.data.FileLoader;
 import org.anotherteam.editor.Editor;
 import org.anotherteam.editor.gui.Button;
 import org.anotherteam.editor.gui.GUIElement;
-import org.anotherteam.editor.gui.Label;
-import org.anotherteam.editor.gui.menu.SwitchMenu;
+import org.anotherteam.editor.gui.menu.text.SwitchMenu;
+import org.anotherteam.editor.gui.menu.text.TextButton;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.level.Level;
 import org.anotherteam.util.Color;
@@ -21,8 +21,8 @@ public class LevelSelector extends GUIElement {
     private final SwitchMenu selector;
 
     private final SwitchMenu downButtons;
-    private final Button createEmptyButton;
-    private final Button saveLevelButton;
+    private final TextButton createEmptyButton;
+    private final TextButton saveLevelButton;
 
     public LevelSelector(float x, float y, GUIElement ownerElement) {
         super(x, y, ownerElement);
@@ -39,10 +39,10 @@ public class LevelSelector extends GUIElement {
         fillButtons();
 
         downButtons = new SwitchMenu(Editor.DEFAULT_BORDER_SIZE, Editor.DEFAULT_BORDER_SIZE, 0, 0, SwitchMenu.Type.HORIZONTAL, this);
-        createEmptyButton = new Button("Create empty level", 0, 0, downButtons);
+        createEmptyButton = new TextButton("Create empty level", 0, 0, downButtons);
         createEmptyButton.setOnClick(()-> selector.addButton("Empty.hgl", ()-> Game.getInstance().setLevel(Level.createEmpty())));
         downButtons.addButton(createEmptyButton);
-        saveLevelButton = new Button("Save level", 40, 0, downButtons);
+        saveLevelButton = new TextButton("Save level", 40, 0, downButtons);
         saveLevelButton.setOnClick(()-> FileLoader.saveLevel(Game.getInstance().gameLevel));
         downButtons.addButton(saveLevelButton);
     }

@@ -1,4 +1,4 @@
-package org.anotherteam.editor.gui.menu;
+package org.anotherteam.editor.gui.menu.text;
 
 import lombok.val;
 import org.anotherteam.editor.gui.Button;
@@ -13,16 +13,16 @@ import org.joml.Vector2i;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ButtonMenu extends GUIElement {
+public class TextMenu extends GUIElement {
 
     public static final int DEFAULT_BUTTON_MENU_HEIGHT = 24;
 
     /**
-     * Default offset for {@link org.anotherteam.editor.gui.menu.ButtonMenu.Type HORIZONTAL} ButtonMenu
+     * Default offset for {@link TextMenu.Type HORIZONTAL} ButtonMenu
      */
     private static final Vector2i doubleOffset = new Vector2i(200, Label.DEFAULT_HEIGHT + 5);
 
-    protected final List<Button> buttons;
+    protected final List<TextButton> buttons;
     protected final Type type;
     protected final Vector2f buttonsOffset;
 
@@ -33,7 +33,7 @@ public class ButtonMenu extends GUIElement {
      */
     protected int widestButtonWidth;
 
-    public ButtonMenu(float x, float y, int width, int height, Type type, GUIElement ownerElement) {
+    public TextMenu(float x, float y, int width, int height, Type type, GUIElement ownerElement) {
         super(x, y, width, height, ownerElement);
         this.type = type;
         this.buttonsOffset = new Vector2f(0, 0);
@@ -41,7 +41,7 @@ public class ButtonMenu extends GUIElement {
             buttonHeight = height / 2 - Label.DEFAULT_HEIGHT / 2;
         else
             buttonHeight = Label.DEFAULT_HEIGHT;
-        color = DEFAULT_COLOR;
+        setColor(DEFAULT_COLOR);
         buttons = new ArrayList<>();
 
         widestButtonWidth = 0;
@@ -52,22 +52,23 @@ public class ButtonMenu extends GUIElement {
     }
 
     public void addButton(String text) {
-        val button = new Button(text, 0, 0, this);
+        val button = new TextButton(text, 0, 0, this);
         addButton(button);
     }
 
     public void addButton(String text, Runnable runnable) {
-        val button = new Button(text, 0, 0, this);
+        val button = new TextButton(text, 0, 0, this);
         button.setOnClick(runnable);
         addButton(button);
     }
 
-    public void addButton(@NotNull Button button) {
+    public void addButton(@NotNull TextButton button) {
 
         int index = buttons.size();
         if (contains(button.getText())) {
             for (val btn : buttons) {
                 if (!button.getText().equals(btn.getText())) continue;
+
                 index = buttons.indexOf(btn);
                 break;
             }
@@ -81,12 +82,10 @@ public class ButtonMenu extends GUIElement {
                 button.setPos(buttonsOffset.x + Label.DEFAULT_TEXT_OFFSET * index + offsetX, buttonHeight);
             }
             case VERTICAL -> {
-                if (widestButtonWidth < button.getWidth())
-                    widestButtonWidth = button.getWidth();
+                if (widestButtonWidth < button.getWidth()) widestButtonWidth = button.getWidth();
+
                 for (val btn : buttons) {
                     btn.setWidth(widestButtonWidth);
-                    for (val child : btn.getChildElements())
-                        child.setPosX(btn.getWidth());
                 }
 
                 int offsetY = buttonHeight; // TODO this work's correct only to inverted Vertical button menu
@@ -102,7 +101,6 @@ public class ButtonMenu extends GUIElement {
                 int x = index / maxX;
                 if (x >= maxX) throw new LifeException("Need create pages mechanic");
                 if (y >= maxY) throw new LifeException("Error with y calculating");
-                System.out.println(y);
                 button.setPos(x * doubleOffset.x, height - doubleOffset.y * y - Label.DEFAULT_HEIGHT);
             }
         }

@@ -13,6 +13,13 @@ public final class Color {
 
     public int r, g, b, a;
 
+    public Color(Color color) {
+        this.r = color.r;
+        this.g = color.g;
+        this.b = color.b;
+        this.a = color.a;
+    }
+
     public Color(int r, int g, int b, int a) {
         this.r = r;
         this.g = g;

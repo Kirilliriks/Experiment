@@ -4,9 +4,8 @@ import lombok.val;
 import org.anotherteam.editor.Editor;
 import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.editor.gui.Label;
-import org.anotherteam.editor.gui.menu.ButtonMenu;
-import org.anotherteam.editor.gui.menu.SwitchMenu;
-import org.anotherteam.util.Color;
+import org.anotherteam.editor.gui.menu.text.TextMenu;
+import org.anotherteam.editor.gui.menu.text.SwitchMenu;
 
 public final class NewObjectMenu extends GUIElement {
 
@@ -19,8 +18,8 @@ public final class NewObjectMenu extends GUIElement {
         height = (int)(getPosY() - Editor.getDownBorderPos() - Editor.DEFAULT_BORDER_SIZE);
         inverted = true;
 
-        typeMenu = new SwitchMenu(0, height - SwitchMenu.DEFAULT_BUTTON_MENU_HEIGHT, width, ButtonMenu.Type.HORIZONTAL, this);
-        typeMenu.setColor(new Color(100, 100, 100, 255));
+        typeMenu = new SwitchMenu(0, height - SwitchMenu.DEFAULT_BUTTON_MENU_HEIGHT, width, TextMenu.Type.HORIZONTAL, this);
+        typeMenu.setColor(100, 100, 100, 255);
         typeMenu.setButtonsOffset(Label.DEFAULT_TEXT_OFFSET, 0);
         typeMenu.addButton("Entity");
         typeMenu.addButton("Item");

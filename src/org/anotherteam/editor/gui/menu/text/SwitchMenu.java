@@ -1,9 +1,9 @@
-package org.anotherteam.editor.gui.menu;
+package org.anotherteam.editor.gui.menu.text;
 
 import lombok.val;
 import org.anotherteam.editor.gui.GUIElement;
 
-public class SwitchMenu extends ButtonMenu {
+public class SwitchMenu extends TextMenu {
 
     protected SwitchButton lastClicked;
 

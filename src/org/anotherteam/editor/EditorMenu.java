@@ -3,7 +3,7 @@ package org.anotherteam.editor;
 import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.editor.gui.Label;
 import org.anotherteam.editor.level.LevelMenu;
-import org.anotherteam.editor.gui.menu.SwitchMenu;
+import org.anotherteam.editor.gui.menu.text.SwitchMenu;
 import org.anotherteam.editor.object.GameObjectMenu;
 
 public final class EditorMenu extends SwitchMenu {

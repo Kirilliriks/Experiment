@@ -18,7 +18,7 @@ public abstract class GUIElement {
     protected final GUIElement ownerElement;
     protected final Vector2f pos; // If (ownerElement != null) pos work's like offset
     protected int width, height;
-    protected Color color;
+    protected final Color color;
 
     protected boolean inverted;
     protected boolean visible;
@@ -28,14 +28,10 @@ public abstract class GUIElement {
     }
 
     public GUIElement(float x, float y, int width, int height, GUIElement ownerElement) {
-        this(x, y, width, height, DEFAULT_COLOR, ownerElement);
-    }
-
-    public GUIElement(float x, float y, int width, int height, Color color, GUIElement ownerElement) {
         this.pos = new Vector2f(x, y);
         this.width = width;
         this.height = height;
-        this.color = color;
+        this.color = new Color(DEFAULT_COLOR);
         visible = true;
         inverted = false;
         childElements = new ArrayList<>();
@@ -81,8 +77,23 @@ public abstract class GUIElement {
         this.height = height;
     }
 
+    public void setColor(int r, int g, int b, int a) {
+        color.r = r;
+        color.g = g;
+        color.b = b;
+        color.a = a;
+    }
+
     public void setColor(Color color) {
-        this.color = color;
+        this.color.r = color.r;
+        this.color.g = color.g;
+        this.color.b = color.b;
+        this.color.a = color.a;
+    }
+
+    @NotNull
+    public Color getColor() {
+        return color;
     }
 
     public float getPosX() {
@@ -123,7 +134,9 @@ public abstract class GUIElement {
     public void render(@NotNull EditorBatch editorBatch) {
         if (!visible) return;
 
-        editorBatch.draw(AssetsData.EDITOR_TEXTURE, getPosX(), getPosY(), width, height, false, false, color);
+        if (width > 0 || height > 0)
+            editorBatch.draw(AssetsData.EDITOR_TEXTURE, getPosX(), getPosY(), width, height, false, false, color);
+
         for (val element : childElements) {
             element.render(editorBatch);
         }

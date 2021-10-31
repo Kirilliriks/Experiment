@@ -13,7 +13,7 @@ public final class Log extends Widget {
     public Log(float x, float y, int width, int height, GUIElement ownerElement) {
         super("Log", x, y, width, height, ownerElement);
         logStrings = new ArrayList<>();
-        color = new Color(120, 120, 120, 255);
+        setColor(120, 120, 120, 255);
         val stringsCount = height / 12;
         for (int i = 0; i < stringsCount; i++) {
             val label = new Label("", 2, 2 + i * 12, this);

@@ -89,7 +89,7 @@ public final class Experimental implements Runnable {
 
         window = new Window(1920, 1080, "Experimental");
         window.create();
-        window.setFullscreen(true);
+        window.setFullscreen(false);
     }
 
     private void end() {

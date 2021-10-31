@@ -1,13 +1,10 @@
-package org.anotherteam.editor.gui.menu;
+package org.anotherteam.editor.gui.menu.text;
 
 import org.anotherteam.Input;
-import org.anotherteam.editor.gui.Button;
 import org.anotherteam.editor.gui.GUIElement;
-import org.anotherteam.util.exception.LifeException;
-import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
-public class SwitchButton extends Button {
+public class SwitchButton extends TextButton {
 
     private SwitchMenu switchMenu;
     private Runnable afterClick;
@@ -33,12 +30,13 @@ public class SwitchButton extends Button {
         if (!visible) return;
 
         if (clicked) return;
-        color.r = 0;
+
+        text.getColor().r = 0;
         if (!mouseOnWidget()) return;
         if (!Input.isButtonDown(GLFW.GLFW_MOUSE_BUTTON_LEFT)) return;
         switchMenu.setClicked(this);
         clicked = true;
-        color.r = 255;
         if (onClick != null) onClick.run();
+        text.getColor().r = 255;
     }
 }

@@ -7,7 +7,8 @@ import org.anotherteam.data.AssetsData;
 import org.anotherteam.editor.gui.Button;
 import org.anotherteam.editor.gui.Log;
 import org.anotherteam.editor.gui.Widget;
-import org.anotherteam.editor.gui.menu.ButtonMenu;
+import org.anotherteam.editor.gui.menu.text.TextMenu;
+import org.anotherteam.editor.gui.menu.text.TextButton;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.framebuffer.FrameBuffer;
@@ -47,14 +48,14 @@ public final class Editor extends Widget {
         // GUI
         log = new Log(0,  -height , 200, 200, this);
         log.setVisible(false);
-        this.editorMenu = new EditorMenu(0, height - ButtonMenu.DEFAULT_BUTTON_MENU_HEIGHT, this);
+        this.editorMenu = new EditorMenu(0, height - TextMenu.DEFAULT_BUTTON_MENU_HEIGHT, this);
         editorMenu.setWidth(width);
-        this.switchModeButton = new Button("Switch mode", width / 2.0f, 10, this);
+        this.switchModeButton = new TextButton("Switch state", width / 2.0f, 10, this);
         switchModeButton.setOnClick(() -> {
             if (game.getGameState() == GameState.ON_EDITOR) {
                 game.setGameState(GameState.ON_LEVEL);
             } else game.setGameState(GameState.ON_EDITOR);
-            Editor.sendLogMessage("Current mode: " + game.getGameState());
+            Editor.sendLogMessage("Current state: " + game.getGameState());
         });
     }
 
@@ -71,7 +72,7 @@ public final class Editor extends Widget {
         editorBatch.begin();
         super.render(editorBatch);
         editorBatch.drawText(editorFont, "Pos: " + Input.getMousePos().x + " " + Input.getMousePos().y,
-                width, (int) pos.y + 5, 1.0f, new Color(255, 255, 255, 255), true);
+                width, (int) pos.y + 5, 1.0f, Color.WHITE, true);
         editorBatch.end();
         editorFrame.end();
     }
