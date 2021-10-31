@@ -2,7 +2,7 @@ package org.anotherteam.object.type.entity.player;
 
 import org.anotherteam.Game;
 import org.anotherteam.Input;
-import org.anotherteam.data.AssetsData;
+import org.anotherteam.data.AssetData;
 import org.anotherteam.object.component.state.type.PlayerState;
 import org.anotherteam.object.type.entity.EntityObject;
 
@@ -12,7 +12,7 @@ public class Player extends EntityObject {
 
     public Player(int x, int y) {
         super(x, y,
-                AssetsData.TEST_PLAYER_ATLAS,
+                AssetData.TEST_PLAYER_ATLAS,
                 PlayerState.IDLE);
         player = this;
         collider.setBounds(-7, 32, 6, 32);

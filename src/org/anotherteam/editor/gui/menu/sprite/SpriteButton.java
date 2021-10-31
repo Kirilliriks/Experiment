@@ -1,11 +1,12 @@
 package org.anotherteam.editor.gui.menu.sprite;
 
+import org.anotherteam.editor.gui.Button;
 import org.anotherteam.editor.gui.GUIElement;
-import org.anotherteam.render.batch.RenderBatch;
+import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.render.sprite.Sprite;
 import org.jetbrains.annotations.NotNull;
 
-public class SpriteButton extends GUIElement {
+public class SpriteButton extends Button {
 
     private final Sprite sprite;
 
@@ -16,7 +17,12 @@ public class SpriteButton extends GUIElement {
         height = sprite.getHeight();
     }
 
-    public void render(@NotNull RenderBatch renderBatch) {
-        renderBatch.draw(sprite, getPosX(), getPosY());
+    @Override
+    public void update(float dt) { }
+
+    @Override
+    public void render(@NotNull EditorBatch editorBatch) {
+        super.render(editorBatch);
+        editorBatch.draw(sprite, getPosX(), getPosY());
     }
 }

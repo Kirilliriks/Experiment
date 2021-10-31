@@ -4,7 +4,6 @@ import lombok.val;
 import org.anotherteam.editor.gui.Button;
 import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.editor.gui.Label;
-import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
@@ -94,14 +93,13 @@ public class TextMenu extends GUIElement {
                 button.setPos(0, height - (buttonsOffset.y + buttonHeight * index + offsetY));
             }
             case DOUBLE -> {
-                int maxX = width / doubleOffset.x;
-                int maxY = height / doubleOffset.y;
-                if (maxY < 0) maxY *= -1;
-                int y = index % maxX;
-                int x = index / maxX;
-                if (x >= maxX) throw new LifeException("Need create pages mechanic");
-                if (y >= maxY) throw new LifeException("Error with y calculating");
-                button.setPos(x * doubleOffset.x, height - doubleOffset.y * y - Label.DEFAULT_HEIGHT);
+                int sizeX = width / doubleOffset.x;
+                int sizeY = height / doubleOffset.y;
+                if (index >= sizeX * sizeY) throw new LifeException("Need create pages mechanic");
+
+                int y = index % sizeX;
+                int x = index / sizeY;
+                button.setPos(x * doubleOffset.x, doubleOffset.y * (sizeY - y));
             }
         }
         buttons.add(button);
@@ -131,16 +129,6 @@ public class TextMenu extends GUIElement {
             if (!element.isVisible()) continue;
             element.update(dt);
             element.updateElements(dt);
-        }
-    }
-
-    @Override
-    public void render(@NotNull EditorBatch editorBatch) {
-        if (!visible) return;
-
-        super.render(editorBatch);
-        for (val element : buttons) {
-            element.render(editorBatch);
         }
     }
 

@@ -1,12 +1,11 @@
 package org.anotherteam.screen;
 
 import org.anotherteam.Input;
-import org.anotherteam.data.AssetsData;
+import org.anotherteam.data.AssetData;
 import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.screen.Camera;
 import org.anotherteam.render.window.Window;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector3f;
 
 public class GameScreen {
     public static final int WIDTH = 160;
@@ -25,7 +24,7 @@ public class GameScreen {
         this.gameCamera = new Camera(0, 0, WIDTH, HEIGHT);
 
         GameScreen.window = window;
-        windowBatch = new RenderBatch(AssetsData.DEFAULT_SHADER, windowCamera);
+        windowBatch = new RenderBatch(AssetData.DEFAULT_SHADER, windowCamera);
     }
 
     public static int inGameMouseX() {

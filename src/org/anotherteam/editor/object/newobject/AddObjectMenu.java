@@ -1,17 +1,21 @@
 package org.anotherteam.editor.object.newobject;
 
 import lombok.val;
+import org.anotherteam.data.AssetData;
 import org.anotherteam.editor.Editor;
 import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.editor.gui.Label;
+import org.anotherteam.editor.gui.menu.sprite.SpriteMenu;
 import org.anotherteam.editor.gui.menu.text.TextMenu;
 import org.anotherteam.editor.gui.menu.text.SwitchMenu;
 
-public final class NewObjectMenu extends GUIElement {
+public final class AddObjectMenu extends GUIElement {
 
     private final SwitchMenu typeMenu;
 
-    public NewObjectMenu(float x, float y, GUIElement ownerElement) {
+    private final SpriteMenu spriteMenu;
+
+    public AddObjectMenu(float x, float y, GUIElement ownerElement) {
         super(x, y, ownerElement);
         val editor = Editor.getInstance();
         width = (int)(editor.getWidth() - getPosX() - Editor.getRightBorderSize());
@@ -25,5 +29,11 @@ public final class NewObjectMenu extends GUIElement {
         typeMenu.addButton("Item");
         typeMenu.addButton("Light");
         typeMenu.addButton("Collider");
+
+        spriteMenu = new SpriteMenu(0, 0, width , height, this);
+        spriteMenu.setOffsetIcon(8);
+        spriteMenu.setInverted(true);
+        for (int i = 0; i < 5; i++)
+            spriteMenu.addButton(AssetData.TEST_PLAYER_ATLAS.getSprite(i, 0));
     }
 }

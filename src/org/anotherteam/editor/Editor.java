@@ -3,7 +3,7 @@ package org.anotherteam.editor;
 import org.anotherteam.Game;
 import org.anotherteam.GameState;
 import org.anotherteam.Input;
-import org.anotherteam.data.AssetsData;
+import org.anotherteam.data.AssetData;
 import org.anotherteam.editor.gui.Button;
 import org.anotherteam.editor.gui.Log;
 import org.anotherteam.editor.gui.Widget;
@@ -42,7 +42,7 @@ public final class Editor extends Widget {
         editorFont.setScale(2.0f);
         this.game = game;
         this.gameScreen = gameScreen;
-        this.editorBatch = new EditorBatch(AssetsData.DEFAULT_SHADER, gameScreen.windowCamera);
+        this.editorBatch = new EditorBatch(AssetData.DEFAULT_SHADER, gameScreen.windowCamera);
         this.editorFrame = new FrameBuffer(GameScreen.window.getWidth(), GameScreen.window.getHeight());
 
         // GUI

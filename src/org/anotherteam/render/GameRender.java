@@ -4,7 +4,7 @@ import static org.lwjgl.opengl.GL42.*;
 import lombok.val;
 import org.anotherteam.Game;
 import org.anotherteam.Input;
-import org.anotherteam.data.AssetsData;
+import org.anotherteam.data.AssetData;
 import org.anotherteam.level.Level;
 import org.anotherteam.object.type.entity.player.Player;
 import org.anotherteam.render.batch.RenderBatch;
@@ -17,7 +17,6 @@ import org.anotherteam.render.text.Font;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector2f;
 import org.joml.Vector2i;
 
 public final class GameRender {
@@ -47,10 +46,10 @@ public final class GameRender {
 
         raycastShader = new Shader("shader/vsInvert.glsl", "shader/fsInvert.glsl");
 
-        textureBatch = new RenderBatch(AssetsData.DEFAULT_SHADER, screen.gameCamera);
+        textureBatch = new RenderBatch(AssetData.DEFAULT_SHADER, screen.gameCamera);
         effectBatch = new RenderBatch(raycastShader, screen.gameCamera);
 
-        resizeBatch = new RenderBatch(AssetsData.DEFAULT_SHADER, screen.gameCamera);
+        resizeBatch = new RenderBatch(AssetData.DEFAULT_SHADER, screen.gameCamera);
 
         textureFrame = new TextureFrame(textureBatch);
         heightFrame = new HeightFrame(textureBatch);

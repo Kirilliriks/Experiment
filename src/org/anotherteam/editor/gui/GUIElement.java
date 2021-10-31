@@ -1,7 +1,7 @@
 package org.anotherteam.editor.gui;
 
 import lombok.val;
-import org.anotherteam.data.AssetsData;
+import org.anotherteam.data.AssetData;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
@@ -135,7 +135,7 @@ public abstract class GUIElement {
         if (!visible) return;
 
         if (width > 0 || height > 0)
-            editorBatch.draw(AssetsData.EDITOR_TEXTURE, getPosX(), getPosY(), width, height, false, false, color);
+            editorBatch.draw(AssetData.EDITOR_TEXTURE, getPosX(), getPosY(), width, height, false, false, color);
 
         for (val element : childElements) {
             element.render(editorBatch);

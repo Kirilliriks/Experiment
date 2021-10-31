@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class AssetsData {
+public final class AssetData {
         public static final Map<String, SpriteAtlas> spriteAtlases = new HashMap<>();
         public static final Map<String, Texture> textures = new HashMap<>();
 

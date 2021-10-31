@@ -1,7 +1,7 @@
 package org.anotherteam.render.sprite;
 
 import lombok.val;
-import org.anotherteam.data.AssetsData;
+import org.anotherteam.data.AssetData;
 import org.anotherteam.render.texture.Texture;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -25,7 +25,7 @@ public final class SpriteAtlas {
     }
 
     public SpriteAtlas(String atlasName, int frameWidth, int frameHeight, int heightOffset) {
-        this(AssetsData.getTexture(atlasName), frameWidth, frameHeight,  heightOffset);
+        this(AssetData.getTexture(atlasName), frameWidth, frameHeight,  heightOffset);
     }
 
     private SpriteAtlas(Texture texture, int frameWidth, int frameHeight, int heightOffset) {

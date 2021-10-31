@@ -9,6 +9,8 @@ import org.lwjgl.glfw.GLFW;
 
 public class TextButton extends Button {
 
+    public static final Color DEFAULT_TEXT_BUTTON_COLOR = new Color(0, 100, 100, 255);
+
     protected float releaseTime;
     protected float timeToRelease;
     protected final Label text;
@@ -16,7 +18,7 @@ public class TextButton extends Button {
     public TextButton(String text, float x, float y, GUIElement ownerElement) {
         super(x, y, ownerElement);
         this.text = new Label(text, 0, 0, this);
-        this.text.setColor(DEFAULT_BUTTON_COLOR);
+        this.text.setColor(DEFAULT_TEXT_BUTTON_COLOR);
         releaseTime = 0.6f;
         timeToRelease = 0.0f;
         setColor(Color.VOID);

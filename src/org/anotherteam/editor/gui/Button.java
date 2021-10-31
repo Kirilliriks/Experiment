@@ -6,14 +6,12 @@ import org.anotherteam.util.Color;
 
 public abstract class Button extends GUIElement {
 
-    public static final Color DEFAULT_BUTTON_COLOR = new Color(0, 100, 100, 255);
-
     protected boolean clicked;
     protected Runnable onClick;
 
     public Button(float x, float y, GUIElement ownerElement) {
         super(x, y, ownerElement);
-        setColor(DEFAULT_BUTTON_COLOR);
+        setColor(Color.VOID);
     }
 
     public void setOnClick(Runnable runnable) {

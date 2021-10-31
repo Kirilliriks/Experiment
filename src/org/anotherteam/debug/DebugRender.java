@@ -1,15 +1,13 @@
 package org.anotherteam.debug;
 
 import lombok.val;
-import org.anotherteam.data.AssetsData;
+import org.anotherteam.data.AssetData;
 import org.anotherteam.render.screen.Camera;
 import org.anotherteam.render.shader.Shader;
 import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
 
-
-import java.util.Arrays;
 
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
@@ -21,7 +19,7 @@ public class DebugRender {
     private static final int VERTEX_SIZE = 5;
     private static final int MAX_LINES = 500;
 
-    private static final Shader shader = AssetsData.DEBUG_SHADER;
+    private static final Shader shader = AssetData.DEBUG_SHADER;
 
     private final Camera camera;
 
