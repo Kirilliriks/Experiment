@@ -1,10 +1,12 @@
 package org.anotherteam.editor.gui.menu.sprite;
 
+import org.anotherteam.Input;
 import org.anotherteam.editor.gui.Button;
 import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.render.sprite.Sprite;
 import org.jetbrains.annotations.NotNull;
+import org.lwjgl.glfw.GLFW;
 
 public class SpriteButton extends Button {
 
@@ -18,7 +20,21 @@ public class SpriteButton extends Button {
     }
 
     @Override
-    public void update(float dt) { }
+    public void setClicked(boolean clicked) {
+        super.setClicked(clicked);
+        if (!clicked) return;
+        if (onClick != null) onClick.run();
+    }
+
+    @Override
+    public void update(float dt) {
+        if (!visible) return;
+
+        setClicked(false);
+        if (!mouseOnWidget()) return;
+        if (!Input.isButtonDown(GLFW.GLFW_MOUSE_BUTTON_LEFT)) return;
+        setClicked(true);
+    }
 
     @Override
     public void render(@NotNull EditorBatch editorBatch) {

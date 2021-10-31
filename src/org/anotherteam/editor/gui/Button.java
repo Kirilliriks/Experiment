@@ -18,6 +18,10 @@ public abstract class Button extends GUIElement {
         this.onClick = runnable;
     }
 
+    public void setClicked(boolean clicked) {
+        this.clicked = clicked;
+    }
+
     @Override
     public abstract void update(float dt);
 

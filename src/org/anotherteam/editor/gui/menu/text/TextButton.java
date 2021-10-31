@@ -38,8 +38,9 @@ public class TextButton extends Button {
         text.setHeight(height);
     }
 
+    @Override
     public void setClicked(boolean clicked) {
-        this.clicked = clicked;
+        super.setClicked(clicked);
         if (!clicked) {
             text.getColor().r = 0;
             return;

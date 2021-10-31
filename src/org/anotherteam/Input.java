@@ -45,6 +45,14 @@ public final class Input {
         return buttons[key];
     }
 
+    public static float getMouseX() {
+        return mousePos.x;
+    }
+
+    public static float getMouseY() {
+        return mousePos.y;
+    }
+
     @NotNull
     public static Vector2f getMousePos() {
         return mousePos;

@@ -1,5 +1,6 @@
 package org.anotherteam.editor;
 
+import lombok.val;
 import org.anotherteam.Game;
 import org.anotherteam.GameState;
 import org.anotherteam.Input;
@@ -31,7 +32,6 @@ public final class Editor extends Widget {
     //GUI
     private static Log log;
     private final EditorMenu editorMenu;
-    private final Button switchModeButton;
     //
 
     public Editor(@NotNull Game game, @NotNull GameScreen gameScreen) {
@@ -50,12 +50,20 @@ public final class Editor extends Widget {
         log.setVisible(false);
         this.editorMenu = new EditorMenu(0, height - TextMenu.DEFAULT_BUTTON_MENU_HEIGHT, this);
         editorMenu.setWidth(width);
-        this.switchModeButton = new TextButton("Switch state", width / 2.0f, 10, this);
-        switchModeButton.setOnClick(() -> {
+        val switchStateButton = new TextButton("Play/Stop", 0, 10, this);
+        switchStateButton.setPosX(width / 2.0f - switchStateButton.getWidth() - DEFAULT_BORDER_SIZE / 2.0f);
+        switchStateButton.setOnClick(() -> {
             if (game.getGameState() == GameState.ON_EDITOR) {
                 game.setGameState(GameState.ON_LEVEL);
             } else game.setGameState(GameState.ON_EDITOR);
             Editor.sendLogMessage("Current state: " + game.getGameState());
+        });
+
+        val debugButton = new TextButton("Debug mode", 0, 10, this);
+        debugButton.setPosX(width / 2.0f + DEFAULT_BORDER_SIZE / 2.0f);
+        debugButton.setOnClick(() -> {
+            Game.DebugMode = !Game.DebugMode;
+            Editor.sendLogMessage("DEBUG: " + Game.DebugMode);
         });
     }
 

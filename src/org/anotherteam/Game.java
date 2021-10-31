@@ -7,9 +7,7 @@ import org.anotherteam.level.Level;
 import org.anotherteam.render.GameRender;
 import org.anotherteam.render.window.Window;
 import org.anotherteam.screen.GameScreen;
-import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector2f;
 
 public final class Game {
     private static Game game;
@@ -28,11 +26,9 @@ public final class Game {
 
     public Game(@NotNull Window window) {
         game = this;
-        this.gameScreen = new GameScreen(window);
-        this.gameRender = new GameRender(gameScreen);
-        short scale = 5;
-        gameRender.setPosition((int) (window.getWidth() / 2.0f - (GameScreen.WIDTH * scale) / 2.0f), 0);
-        gameRender.setSize(GameScreen.WIDTH * scale, GameScreen.HEIGHT * scale);
+        gameScreen = new GameScreen(window);
+        GameScreen.POSITION.set((int) (window.getWidth() / 2.0f - (GameScreen.WIDTH * GameScreen.RENDER_SCALE) / 2.0f), 0);
+        gameRender = new GameRender(gameScreen);
 
         this.gameState = GameState.ON_EDITOR;
 

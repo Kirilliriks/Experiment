@@ -1,6 +1,8 @@
 package org.anotherteam.editor.object.newobject;
 
 import lombok.val;
+import org.anotherteam.Game;
+import org.anotherteam.Input;
 import org.anotherteam.data.AssetData;
 import org.anotherteam.editor.Editor;
 import org.anotherteam.editor.gui.GUIElement;
@@ -9,17 +11,22 @@ import org.anotherteam.editor.gui.menu.sprite.SpriteMenu;
 import org.anotherteam.editor.gui.menu.text.SwitchButton;
 import org.anotherteam.editor.gui.menu.text.TextMenu;
 import org.anotherteam.editor.gui.menu.text.SwitchMenu;
+import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.sprite.SpriteController;
 import org.anotherteam.object.prefab.ColliderPrefab;
 import org.anotherteam.object.prefab.EntityPrefab;
 import org.anotherteam.object.prefab.Prefab;
+import org.anotherteam.render.sprite.Sprite;
+import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
 
 public final class AddObjectMenu extends GUIElement {
 
     private final SwitchMenu typeMenu;
+
+    public static Sprite draggedSprite;
 
     public AddObjectMenu(float x, float y, GUIElement ownerElement) {
         super(x, y, ownerElement);
@@ -39,6 +46,8 @@ public final class AddObjectMenu extends GUIElement {
         generatePrefabMenu(typeMenu.getButton(0), EntityPrefab.values());
         generatePrefabMenu(typeMenu.getButton(3), ColliderPrefab.values());
         typeMenu.setClicked(typeMenu.getButton(0));
+
+        draggedSprite = null;
     }
 
     public void generatePrefabMenu(@NotNull SwitchButton button, Prefab[] prefabs) {
@@ -47,14 +56,25 @@ public final class AddObjectMenu extends GUIElement {
         spriteMenu.setOffsetIcon(8);
         spriteMenu.setInverted(true);
         for (val value : prefabs) {
-            val object = GameObject.create(0, 0, value.getPrefabClass());
-            var sprite = AssetData.EDITOR_NULL_ICON_ATLAS.getSprite(0, 0);
-            if (object.hasComponent(SpriteController.class))
-                sprite = object.getComponent(SpriteController.class).getSprite();
+            val object = GameObject.create(0, 0, value.getPrefabClass()); // TODO delete new game object instancing
+            val sprite = object.hasComponent(SpriteController.class) ?
+                    object.getComponent(SpriteController.class).getSprite() :
+                    AssetData.EDITOR_NULL_ICON_ATLAS.getSprite(0, 0);
             if (sprite == null) throw new LifeException("Prefab " + value.getPrefabClass().getSimpleName() + " don't have sprite");
             val spriteButton = spriteMenu.addButton(sprite);
+            spriteButton.setOnClick(()-> {
+                draggedSprite = sprite;
+                GameScreen.draggedSprite = draggedSprite;
+            });
         }
         button.setOnClick(()-> spriteMenu.setVisible(true));
         button.setAfterClick(()-> spriteMenu.setVisible(false));
+    }
+
+    @Override
+    public void render(@NotNull EditorBatch editorBatch) {
+        super.render(editorBatch);
+        if (draggedSprite != null)
+            editorBatch.draw(draggedSprite, Input.getMouseX(), Input.getMouseY());
     }
 }

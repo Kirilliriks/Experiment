@@ -5,6 +5,7 @@ import lombok.val;
 import org.anotherteam.Game;
 import org.anotherteam.Input;
 import org.anotherteam.data.AssetData;
+import org.anotherteam.editor.object.newobject.AddObjectMenu;
 import org.anotherteam.level.Level;
 import org.anotherteam.object.type.entity.player.Player;
 import org.anotherteam.render.batch.RenderBatch;
@@ -17,13 +18,10 @@ import org.anotherteam.render.text.Font;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector2i;
 
 public final class GameRender {
-    private final GameScreen gameScreen;
 
-    private final Vector2i position;
-    private int width, height;
+    private final GameScreen gameScreen;
 
     private final RenderBatch textureBatch;
     private final RenderBatch effectBatch;
@@ -40,9 +38,6 @@ public final class GameRender {
 
     public GameRender(@NotNull GameScreen screen) {
         this.gameScreen = screen;
-        this.position = new Vector2i(0, 0);
-        width = GameScreen.window.getWidth();
-        height = GameScreen.window.getHeight();
 
         raycastShader = new Shader("shader/vsInvert.glsl", "shader/fsInvert.glsl");
 
@@ -57,15 +52,6 @@ public final class GameRender {
         resizeFrame = new ResizeFrame(resizeBatch, GameScreen.window.getWidth(), GameScreen.window.getHeight());
 
         debugFont = new Font("font/font.ttf", 16);
-    }
-
-    public void setPosition(int x, int y) {
-        position.set(x, y);
-    }
-
-    public void setSize(int width, int height) {
-        this.width = width;
-        this.height = height;
     }
 
     public void render(@NotNull RenderBatch windowBatch, @NotNull Level level) {
@@ -91,34 +77,38 @@ public final class GameRender {
         effectFrame.end();
 
         resizeFrame.begin();
-        resizeBatch.draw(
-                effectFrame.texture, 0, 0, false, true);
+        if (!Game.DebugMode) {
+            resizeBatch.draw(
+                    effectFrame.texture, 0, 0, false, true);
+        } else {
+            resizeBatch.draw(
+                    textureFrame.texture, 0, 0, false, true);
+        }
         resizeFrame.end();
         //Finish frames
 
         glViewport(0, 0, GameScreen.window.getWidth(), GameScreen.window.getHeight());
         windowBatch.begin();
         windowBatch.draw(
-                resizeFrame.texture, position.x, position.y, width, height, false, true);
-        if (Game.DebugMode)
-            windowBatch.drawText(debugFont, "Pos : " + inGameMouseX() + " " + inGameMouseY(),
-                    (int)(Input.getMousePos().x + 15), (int)(Input.getMousePos().y - 25), 1.0f, new Color(255, 255, 255, 255));
+                resizeFrame.texture,
+                GameScreen.POSITION.x, GameScreen.POSITION.y,
+                GameScreen.WIDTH * GameScreen.RENDER_SCALE,
+                GameScreen.HEIGHT * GameScreen.RENDER_SCALE,
+                false, true);
+        if (Game.DebugMode) {
+            windowBatch.drawText(debugFont, "Pos : " + GameScreen.inGameMouseX() + " " + GameScreen.inGameMouseY(),
+                    (int) (Input.getMousePos().x + 15), (int) (Input.getMousePos().y - 25), 1.0f, new Color(255, 255, 255, 255));
+        }
         windowBatch.end();
-    }
-
-    private int inGameMouseX() {
-        if (Input.getMousePos().x < position.x || Input.getMousePos().x > position.x + width) return -1;
-        return (int) (((Input.getMousePos().x - position.x) / width) * GameScreen.WIDTH);
-    }
-
-    private int inGameMouseY() {
-        if (Input.getMousePos().x < position.x || Input.getMousePos().y > position.y + height) return -1;
-        return (int) (((Input.getMousePos().y - position.y) / height) * GameScreen.HEIGHT);
     }
 
     private void drawTextures(@NotNull Level level) {
         for (val room : level.getRooms()) {
             room.drawTexture(textureBatch);
+        }
+        if (GameScreen.draggedSprite != null) {
+            if (GameScreen.inGameMouseX() < 0 || GameScreen.inGameMouseY() < 0) return;
+            textureBatch.draw(GameScreen.draggedSprite, GameScreen.inGameMouseX(), GameScreen.inGameMouseY());
         }
     }
 
