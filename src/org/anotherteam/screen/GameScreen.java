@@ -16,8 +16,7 @@ public class GameScreen {
     public static final int WIDTH = 160;
     public static final int HEIGHT = 90;
 
-    //EDITOR
-    public static Sprite draggedSprite = null;
+    public static DraggedThing draggedThing = null;
 
     public static RenderBatch windowBatch;
 

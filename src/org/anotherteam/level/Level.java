@@ -20,7 +20,7 @@ public final class Level {
 
     public Level(String name) {
         this.name = name;
-        this.gameRender = Game.getInstance().getGameRender();
+        this.gameRender = Game.getGameRender();
         this.rooms = new ArrayList<>();
         currentRoom = null;
     }
@@ -40,6 +40,11 @@ public final class Level {
 
     public void render(@NotNull RenderBatch windowBatch) {
         gameRender.render(windowBatch, this);
+    }
+
+    @NotNull
+    public Room getCurrentRoom() {
+        return currentRoom;
     }
 
     @NotNull

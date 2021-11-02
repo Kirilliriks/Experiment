@@ -1,5 +1,6 @@
 package org.anotherteam;
 
+import lombok.val;
 import org.anotherteam.render.window.Window;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
@@ -12,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class Input {
-    private final static boolean[] buttons = new boolean[GLFW.GLFW_MOUSE_BUTTON_LAST];
+    private final static Map<Integer, MouseButton> buttons = new HashMap<>();
     private final static Vector2f mousePos = new Vector2f(0, 0);
 
     public static Map<Integer, Key> keys = new HashMap<>();
@@ -29,6 +30,9 @@ public final class Input {
     public final static Key KEY_SPACE = new Key(GLFW.GLFW_KEY_SPACE);
     public final static Key KEY_SHIFT = new Key(GLFW.GLFW_KEY_LEFT_SHIFT);
 
+    public final static MouseButton MOUSE_LEFT_BUTTON = new MouseButton(GLFW.GLFW_MOUSE_BUTTON_LEFT);
+    public final static MouseButton MOUSE_RIGHT_BUTTON = new MouseButton(GLFW.GLFW_MOUSE_BUTTON_RIGHT);
+
     private final GLFWKeyCallback keyboard;
     private final GLFWCursorPosCallback mouseMove;
     private final GLFWMouseButtonCallback mouseButton;
@@ -41,8 +45,12 @@ public final class Input {
         return key.pressed;
     }
 
-    public static boolean isButtonDown(int key) {
-        return buttons[key];
+    public static boolean isButtonPressed(MouseButton button) {
+        return button.pressed;
+    }
+
+    public static boolean isButtonDown(MouseButton button) {
+        return button.down;
     }
 
     public static float getMouseX() {
@@ -65,8 +73,7 @@ public final class Input {
         keyboard = new GLFWKeyCallback() {
             @Override
             public void invoke(long window, int key, int scancode, int action, int mods) {
-                if (!keys.containsKey(key))
-                    return;
+                if (!keys.containsKey(key)) return;
 
                 keys.get(key).toggle(action != GLFW.GLFW_RELEASE);
             }
@@ -82,7 +89,9 @@ public final class Input {
         mouseButton = new GLFWMouseButtonCallback() {
             @Override
             public void invoke(long window, int button, int action, int mods) {
-                buttons[button] = (action != GLFW.GLFW_RELEASE);
+                if (!buttons.containsKey(button)) return;
+
+                buttons.get(button).toggle(action != GLFW.GLFW_RELEASE);
             }
         };
     }
@@ -110,8 +119,31 @@ public final class Input {
     }
 
     public void tick() {
-        for (Key key : keys.values()) {
+        for (val key : keys.values()) {
             key.tick();
+        }
+        for (val button : buttons.values()) {
+            button.tick();
+        }
+    }
+
+    public static class MouseButton {
+        public int buttonCode;
+        public boolean down = false, pressed = false;
+        private boolean wasDown = false;
+
+        public MouseButton(int code) {
+            buttonCode = code;
+            buttons.put(code, this);
+        }
+
+        public void toggle(boolean bool) {
+            down = bool;
+        }
+
+        public void tick() {
+            pressed = !wasDown && down;
+            wasDown = down;
         }
     }
 

@@ -12,21 +12,22 @@ import org.anotherteam.editor.gui.menu.text.SwitchButton;
 import org.anotherteam.editor.gui.menu.text.TextMenu;
 import org.anotherteam.editor.gui.menu.text.SwitchMenu;
 import org.anotherteam.editor.render.EditorBatch;
+import org.anotherteam.editor.screen.DraggedGameObject;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.sprite.SpriteController;
 import org.anotherteam.object.prefab.ColliderPrefab;
 import org.anotherteam.object.prefab.EntityPrefab;
 import org.anotherteam.object.prefab.Prefab;
-import org.anotherteam.render.sprite.Sprite;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
+import org.lwjgl.glfw.GLFW;
 
 public final class AddObjectMenu extends GUIElement {
 
     private final SwitchMenu typeMenu;
 
-    public static Sprite draggedSprite;
+    private DraggedGameObject draggedGameObject;
 
     public AddObjectMenu(float x, float y, GUIElement ownerElement) {
         super(x, y, ownerElement);
@@ -46,8 +47,6 @@ public final class AddObjectMenu extends GUIElement {
         generatePrefabMenu(typeMenu.getButton(0), EntityPrefab.values());
         generatePrefabMenu(typeMenu.getButton(3), ColliderPrefab.values());
         typeMenu.setClicked(typeMenu.getButton(0));
-
-        draggedSprite = null;
     }
 
     public void generatePrefabMenu(@NotNull SwitchButton button, Prefab[] prefabs) {
@@ -63,8 +62,8 @@ public final class AddObjectMenu extends GUIElement {
             if (sprite == null) throw new LifeException("Prefab " + value.getPrefabClass().getSimpleName() + " don't have sprite");
             val spriteButton = spriteMenu.addButton(sprite);
             spriteButton.setOnClick(()-> {
-                draggedSprite = sprite;
-                GameScreen.draggedSprite = draggedSprite;
+                draggedGameObject = new DraggedGameObject(sprite, GameObject.create(0, 0, value.getPrefabClass()));;
+                GameScreen.draggedThing = draggedGameObject;
             });
         }
         button.setOnClick(()-> spriteMenu.setVisible(true));
@@ -72,9 +71,24 @@ public final class AddObjectMenu extends GUIElement {
     }
 
     @Override
+    public void update(float dt) {
+        if (Input.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
+            val gameObject = draggedGameObject.getGameObject();
+            gameObject.setPosition(GameScreen.inGameMouseX(), GameScreen.inGameMouseY());
+            Game.game.currentLevel.getCurrentRoom().addObject(gameObject);
+            GameScreen.draggedThing = null;
+            draggedGameObject = null;
+        }
+        if (Input.isButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
+            GameScreen.draggedThing = null;
+            draggedGameObject = null;
+        }
+    }
+
+    @Override
     public void render(@NotNull EditorBatch editorBatch) {
         super.render(editorBatch);
-        if (draggedSprite != null)
-            editorBatch.draw(draggedSprite, Input.getMouseX(), Input.getMouseY());
+        if (draggedGameObject != null)
+            editorBatch.draw(draggedGameObject.getSprite(), Input.getMouseX(), Input.getMouseY());
     }
 }

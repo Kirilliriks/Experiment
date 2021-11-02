@@ -10,7 +10,7 @@ import org.anotherteam.screen.GameScreen;
 import org.jetbrains.annotations.NotNull;
 
 public final class Game {
-    private static Game game;
+    public static Game game;
     public static boolean DebugMode;
 
     private final Editor editor;
@@ -18,8 +18,10 @@ public final class Game {
     private final GameScreen gameScreen;
     private final GameRender gameRender;
 
+    @NotNull
     private GameState gameState;
-    public Level gameLevel;
+    @NotNull
+    public Level currentLevel;
 
     // TODO NewGameData
     private final String startLevelName = "StartLevel";
@@ -36,18 +38,14 @@ public final class Game {
         DebugRender.global = new DebugRender(gameScreen.windowCamera);
         init();
 
-        this.editor = new Editor(this, gameScreen);
+        this.editor = new Editor(gameScreen);
+        currentLevel = Level.createEmpty();
 
         setLevel(FileLoader.loadLevel(startLevelName));
     }
 
     public void setLevel(@NotNull Level level) {
-        this.gameLevel = level;
-    }
-
-    @NotNull
-    public static Game getInstance() {
-        return game;
+        currentLevel = level;
     }
 
     public void init() { }
@@ -55,30 +53,30 @@ public final class Game {
     public void update(float dt) {
         editor.update(dt);
         if (gameState == GameState.ON_EDITOR) return;
-        gameLevel.update(dt);
+        currentLevel.update(dt);
     }
 
 
     public void render(float dt) {
-        gameLevel.render(GameScreen.windowBatch);
+        currentLevel.render(GameScreen.windowBatch);
         editor.renderFrame(GameScreen.windowBatch);
 
         if (gameState != GameState.ON_EDITOR && !DebugMode) return;
         DebugRender.global.draw();
     }
 
-    public void setGameState(@NotNull GameState gameState) {
-        this.gameState = gameState;
+    public static void setGameState(@NotNull GameState gameState) {
+        game.gameState = gameState;
     }
 
     @NotNull
-    public GameState getGameState() {
-        return gameState;
+    public static GameState getGameState() {
+        return game.gameState;
     }
 
     @NotNull
-    public GameRender getGameRender() {
-        return gameRender;
+    public static GameRender getGameRender() {
+        return game.gameRender;
     }
 
     public void destroy() { }

@@ -24,8 +24,6 @@ public final class Editor extends Widget {
 
     private static Editor editor;
 
-    private final Game game;
-    private final GameScreen gameScreen;
     private final EditorBatch editorBatch;
     private final FrameBuffer editorFrame;
 
@@ -34,14 +32,12 @@ public final class Editor extends Widget {
     private final EditorMenu editorMenu;
     //
 
-    public Editor(@NotNull Game game, @NotNull GameScreen gameScreen) {
+    public Editor(@NotNull GameScreen gameScreen) {
         super("Another Editor",
                 10, GameScreen.window.getHeight() / 2.0f,
                 GameScreen.window.getWidth() - 10, GameScreen.window.getHeight() / 2 - 40, null);
         editor = this;
         editorFont.setScale(2.0f);
-        this.game = game;
-        this.gameScreen = gameScreen;
         this.editorBatch = new EditorBatch(AssetData.DEFAULT_SHADER, gameScreen.windowCamera);
         this.editorFrame = new FrameBuffer(GameScreen.window.getWidth(), GameScreen.window.getHeight());
 
@@ -53,10 +49,10 @@ public final class Editor extends Widget {
         val switchStateButton = new TextButton("Play/Stop", 0, 10, this);
         switchStateButton.setPosX(width / 2.0f - switchStateButton.getWidth() - DEFAULT_BORDER_SIZE / 2.0f);
         switchStateButton.setOnClick(() -> {
-            if (game.getGameState() == GameState.ON_EDITOR) {
-                game.setGameState(GameState.ON_LEVEL);
-            } else game.setGameState(GameState.ON_EDITOR);
-            Editor.sendLogMessage("Current state: " + game.getGameState());
+            if (Game.getGameState() == GameState.ON_EDITOR) {
+                Game.setGameState(GameState.ON_LEVEL);
+            } else Game.setGameState(GameState.ON_EDITOR);
+            Editor.sendLogMessage("Current state: " + Game.getGameState());
         });
 
         val debugButton = new TextButton("Debug mode", 0, 10, this);

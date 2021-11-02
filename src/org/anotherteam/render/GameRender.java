@@ -3,9 +3,9 @@ import static org.lwjgl.opengl.GL42.*;
 
 import lombok.val;
 import org.anotherteam.Game;
+import org.anotherteam.GameState;
 import org.anotherteam.Input;
 import org.anotherteam.data.AssetData;
-import org.anotherteam.editor.object.newobject.AddObjectMenu;
 import org.anotherteam.level.Level;
 import org.anotherteam.object.type.entity.player.Player;
 import org.anotherteam.render.batch.RenderBatch;
@@ -77,10 +77,10 @@ public final class GameRender {
         effectFrame.end();
 
         resizeFrame.begin();
-        if (!Game.DebugMode) {
+        if (Game.getGameState() == GameState.ON_LEVEL) {
             resizeBatch.draw(
                     effectFrame.texture, 0, 0, false, true);
-        } else {
+        } else if (Game.getGameState() == GameState.ON_EDITOR) {
             resizeBatch.draw(
                     textureFrame.texture, 0, 0, false, true);
         }
@@ -106,9 +106,11 @@ public final class GameRender {
         for (val room : level.getRooms()) {
             room.drawTexture(textureBatch);
         }
-        if (GameScreen.draggedSprite != null) {
+        if (Game.getGameState() == GameState.ON_LEVEL) return;
+
+        if (GameScreen.draggedThing != null) {
             if (GameScreen.inGameMouseX() < 0 || GameScreen.inGameMouseY() < 0) return;
-            textureBatch.draw(GameScreen.draggedSprite, GameScreen.inGameMouseX(), GameScreen.inGameMouseY());
+            textureBatch.draw(GameScreen.draggedThing.getSprite(), GameScreen.inGameMouseX(), GameScreen.inGameMouseY());
         }
     }
 
