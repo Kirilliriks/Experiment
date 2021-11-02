@@ -60,7 +60,7 @@ public class TextButton extends Button {
         }
         setClicked(false);
         if (!mouseOnWidget()) return;
-        if (!Input.isButtonDown(Input.MOUSE_LEFT_BUTTON)) return;
+        if (!Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) return;
         setClicked(true);
     }
 

@@ -70,6 +70,7 @@ public final class Input {
 
     public Input(@NotNull Window ownerWindow) {
         this.ownerWindow = ownerWindow;
+
         keyboard = new GLFWKeyCallback() {
             @Override
             public void invoke(long window, int key, int scancode, int action, int mods) {
@@ -78,14 +79,12 @@ public final class Input {
                 keys.get(key).toggle(action != GLFW.GLFW_RELEASE);
             }
         };
-
         mouseMove = new GLFWCursorPosCallback() {
             @Override
             public void invoke(long window, double xpos, double ypos) {
                 mousePos.set((float)xpos,  (float) (ownerWindow.getHeight() - ypos));
             }
         };
-
         mouseButton = new GLFWMouseButtonCallback() {
             @Override
             public void invoke(long window, int button, int action, int mods) {

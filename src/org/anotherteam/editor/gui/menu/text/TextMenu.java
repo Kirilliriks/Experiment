@@ -128,17 +128,6 @@ public class TextMenu extends GUIElement {
         return false;
     }
 
-    @Override
-    public void update(float dt) {
-        if (!visible) return;
-
-        for (val element : buttons) {
-            if (!element.isVisible()) continue;
-            element.update(dt);
-            element.updateElements(dt);
-        }
-    }
-
     public enum Type {
         HORIZONTAL,
         VERTICAL,

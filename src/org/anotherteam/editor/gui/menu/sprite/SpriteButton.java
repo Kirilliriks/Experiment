@@ -6,7 +6,6 @@ import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.render.sprite.Sprite;
 import org.jetbrains.annotations.NotNull;
-import org.lwjgl.glfw.GLFW;
 
 public class SpriteButton extends Button {
 
@@ -32,7 +31,7 @@ public class SpriteButton extends Button {
 
         setClicked(false);
         if (!mouseOnWidget()) return;
-        if (!Input.isButtonDown(Input.MOUSE_LEFT_BUTTON)) return;
+        if (!Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) return;
         setClicked(true);
     }
 

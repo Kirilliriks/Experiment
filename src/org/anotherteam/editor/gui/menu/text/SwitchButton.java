@@ -39,7 +39,7 @@ public class SwitchButton extends TextButton {
 
         if (clicked) return;
         if (!mouseOnWidget()) return;
-        if (!Input.isButtonDown(Input.MOUSE_LEFT_BUTTON)) return;
+        if (!Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) return;
         switchMenu.setClicked(this);
     }
 }
