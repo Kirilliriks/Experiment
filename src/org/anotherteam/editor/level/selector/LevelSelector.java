@@ -2,13 +2,11 @@ package org.anotherteam.editor.level.selector;
 
 import lombok.val;
 import org.anotherteam.Game;
-import org.anotherteam.data.FileLoader;
 import org.anotherteam.editor.Editor;
 import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.editor.gui.menu.text.SwitchMenu;
 import org.anotherteam.editor.gui.menu.text.TextButton;
 import org.anotherteam.editor.render.EditorBatch;
-import org.anotherteam.level.Level;
 import org.anotherteam.util.Color;
 import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
@@ -39,10 +37,10 @@ public class LevelSelector extends GUIElement {
 
         downButtons = new SwitchMenu(Editor.DEFAULT_BORDER_SIZE, Editor.DEFAULT_BORDER_SIZE, 0, 0, SwitchMenu.Type.HORIZONTAL, this);
         createEmptyButton = new TextButton("Create empty level", 0, 0, downButtons);
-        createEmptyButton.setOnClick(()-> selector.addButton("Empty.hgl", ()-> Game.game.setLevel(Level.createEmpty())));
+        createEmptyButton.setOnClick(()-> selector.addButton("Empty.hgl", ()-> Game.game.levelManager.setEmptyLevel()));
         downButtons.addButton(createEmptyButton);
         saveLevelButton = new TextButton("Save level", 40, 0, downButtons);
-        saveLevelButton.setOnClick(()-> FileLoader.saveLevel(Game.game.currentLevel));
+        saveLevelButton.setOnClick(()-> Game.game.levelManager.saveEditorLevel());
         downButtons.addButton(saveLevelButton);
     }
 
@@ -52,7 +50,7 @@ public class LevelSelector extends GUIElement {
 
         for (val file : files) {
             selector.addButton(file.getName(),
-                    ()-> Game.game.setLevel(FileLoader.loadLevel(file.getName())));
+                    ()-> Game.game.levelManager.loadLevel(file.getName()));
         }
     }
 

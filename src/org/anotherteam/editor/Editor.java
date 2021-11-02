@@ -49,10 +49,10 @@ public final class Editor extends Widget {
         val switchStateButton = new TextButton("Play/Stop", 0, 10, this);
         switchStateButton.setPosX(width / 2.0f - switchStateButton.getWidth() - DEFAULT_BORDER_SIZE / 2.0f);
         switchStateButton.setOnClick(() -> {
-            if (Game.getGameState() == GameState.ON_EDITOR) {
-                Game.setGameState(GameState.ON_LEVEL);
-            } else Game.setGameState(GameState.ON_EDITOR);
-            Editor.sendLogMessage("Current state: " + Game.getGameState());
+            if (Game.game.getGameState() == GameState.ON_EDITOR) {
+                Game.game.setGameState(GameState.ON_LEVEL);
+            } else Game.game.setGameState(GameState.ON_EDITOR);
+            Editor.sendLogMessage("Current state: " + Game.game.getGameState());
         });
 
         val debugButton = new TextButton("Debug mode", 0, 10, this);

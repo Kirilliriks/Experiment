@@ -21,7 +21,6 @@ import org.anotherteam.object.prefab.Prefab;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
-import org.lwjgl.glfw.GLFW;
 
 public final class AddObjectMenu extends GUIElement {
 
@@ -72,16 +71,22 @@ public final class AddObjectMenu extends GUIElement {
 
     @Override
     public void update(float dt) {
-        if (Input.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
-            val gameObject = draggedGameObject.getGameObject();
-            gameObject.setPosition(GameScreen.inGameMouseX(), GameScreen.inGameMouseY());
-            Game.game.currentLevel.getCurrentRoom().addObject(gameObject);
-            GameScreen.draggedThing = null;
-            draggedGameObject = null;
+        if (draggedGameObject != null) {
+            if (Input.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
+                val gameObject = draggedGameObject.getGameObject();
+                gameObject.setPosition(GameScreen.inGameMouseX(), GameScreen.inGameMouseY());
+                Game.game.getCurrentRoom().addObject(gameObject);
+                GameScreen.draggedThing = null;
+                draggedGameObject = null;
+            }
+            if (Input.isButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
+                GameScreen.draggedThing = null;
+                draggedGameObject = null;
+            }
+            return;
         }
-        if (Input.isButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
+        if (Input.isButtonDown(Input.MOUSE_RIGHT_BUTTON)) { // TODO REMOVE OBJECT FROM ROOM
             GameScreen.draggedThing = null;
-            draggedGameObject = null;
         }
     }
 

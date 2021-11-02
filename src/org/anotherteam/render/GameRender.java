@@ -77,10 +77,10 @@ public final class GameRender {
         effectFrame.end();
 
         resizeFrame.begin();
-        if (Game.getGameState() == GameState.ON_LEVEL) {
+        if (Game.game.getGameState() == GameState.ON_LEVEL) {
             resizeBatch.draw(
                     effectFrame.texture, 0, 0, false, true);
-        } else if (Game.getGameState() == GameState.ON_EDITOR) {
+        } else if (Game.game.getGameState() == GameState.ON_EDITOR) {
             resizeBatch.draw(
                     textureFrame.texture, 0, 0, false, true);
         }
@@ -106,7 +106,7 @@ public final class GameRender {
         for (val room : level.getRooms()) {
             room.drawTexture(textureBatch);
         }
-        if (Game.getGameState() == GameState.ON_LEVEL) return;
+        if (Game.game.getGameState() == GameState.ON_LEVEL) return;
 
         if (GameScreen.draggedThing != null) {
             if (GameScreen.inGameMouseX() < 0 || GameScreen.inGameMouseY() < 0) return;
