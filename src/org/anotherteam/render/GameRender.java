@@ -110,7 +110,7 @@ public final class GameRender {
 
         if (GameScreen.draggedThing != null) {
             if (GameScreen.inGameMouseX() < 0 || GameScreen.inGameMouseY() < 0) return;
-            textureBatch.draw(GameScreen.draggedThing.getSprite(), GameScreen.inGameMouseX(), GameScreen.inGameMouseY());
+            textureBatch.draw(GameScreen.draggedThing.getSprite(), GameScreen.inGameMouseX() - GameScreen.draggedThing.getSprite().getWidth() / 2f, GameScreen.inGameMouseY());
         }
     }
 

@@ -62,12 +62,15 @@ public final class Game {
     }
 
     public void setGameState(@NotNull GameState gameState) {
-        game.gameState = gameState;
+        this.gameState = gameState;
+        if (gameState == GameState.ON_EDITOR) {
+            levelManager.resetLevel();
+        }
     }
 
     @NotNull
     public GameState getGameState() {
-        return game.gameState;
+        return this.gameState;
     }
 
     @NotNull

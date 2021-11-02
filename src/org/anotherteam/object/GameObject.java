@@ -1,6 +1,8 @@
 package org.anotherteam.object;
 
 import lombok.val;
+import org.anotherteam.Game;
+import org.anotherteam.GameState;
 import org.anotherteam.level.room.Room;
 import org.anotherteam.object.component.Component;
 import org.anotherteam.object.component.collider.Collider;
@@ -100,6 +102,8 @@ public abstract class GameObject {
         val spriteComponent = getComponent(SpriteController.class);
         if (spriteComponent == null) return;
         spriteComponent.draw(position, renderBatch);
+
+        if (Game.game.getGameState() != GameState.ON_EDITOR && !Game.DebugMode) return;
         val collider = getComponent(Collider.class);
         if (collider == null) return;
         collider.debugRender(renderBatch);

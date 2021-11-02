@@ -72,20 +72,20 @@ public final class AddObjectMenu extends GUIElement {
     @Override
     public void update(float dt) {
         if (draggedGameObject != null) {
-            if (Input.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
+            if (Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) {
                 val gameObject = draggedGameObject.getGameObject();
                 gameObject.setPosition(GameScreen.inGameMouseX(), GameScreen.inGameMouseY());
                 Game.game.getCurrentRoom().addObject(gameObject);
                 GameScreen.draggedThing = null;
                 draggedGameObject = null;
             }
-            if (Input.isButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
+            if (Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
                 GameScreen.draggedThing = null;
                 draggedGameObject = null;
             }
             return;
         }
-        if (Input.isButtonDown(Input.MOUSE_RIGHT_BUTTON)) { // TODO REMOVE OBJECT FROM ROOM
+        if (Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) { // TODO REMOVE OBJECT FROM ROOM
             GameScreen.draggedThing = null;
         }
     }
@@ -94,6 +94,6 @@ public final class AddObjectMenu extends GUIElement {
     public void render(@NotNull EditorBatch editorBatch) {
         super.render(editorBatch);
         if (draggedGameObject != null)
-            editorBatch.draw(draggedGameObject.getSprite(), Input.getMouseX(), Input.getMouseY());
+            editorBatch.draw(draggedGameObject.getSprite(), Input.getMouseX() - GameScreen.draggedThing.getSprite().getWidth() / 2f, Input.getMouseY());
     }
 }

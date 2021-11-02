@@ -1,0 +1,301 @@
+{
+  "name": "StartLevel",
+  "rooms": [
+    {
+      "name": "TestRoom",
+      "tiles": [
+        {
+          "xPos": 0,
+          "yPos": 0,
+          "frameX": 0,
+          "frameY": 0,
+          "atlasName": "testTestRoom.png"
+        },
+        {
+          "xPos": 1,
+          "yPos": 0,
+          "frameX": 1,
+          "frameY": 0,
+          "atlasName": "testTestRoom.png"
+        },
+        {
+          "xPos": 2,
+          "yPos": 0,
+          "frameX": 2,
+          "frameY": 0,
+          "atlasName": "testTestRoom.png"
+        },
+        {
+          "xPos": 3,
+          "yPos": 0,
+          "frameX": 3,
+          "frameY": 0,
+          "atlasName": "testTestRoom.png"
+        },
+        {
+          "xPos": 4,
+          "yPos": 0,
+          "frameX": 4,
+          "frameY": 0,
+          "atlasName": "testTestRoom.png"
+        },
+        {
+          "xPos": 5,
+          "yPos": 0,
+          "frameX": 5,
+          "frameY": 0,
+          "atlasName": "testTestRoom.png"
+        },
+        {
+          "xPos": 6,
+          "yPos": 0,
+          "frameX": 6,
+          "frameY": 0,
+          "atlasName": "testTestRoom.png"
+        },
+        {
+          "xPos": 7,
+          "yPos": 0,
+          "frameX": 7,
+          "frameY": 0,
+          "atlasName": "testTestRoom.png"
+        },
+        {
+          "xPos": 8,
+          "yPos": 0,
+          "frameX": 8,
+          "frameY": 0,
+          "atlasName": "testTestRoom.png"
+        },
+        {
+          "xPos": 0,
+          "yPos": 1,
+          "frameX": 0,
+          "frameY": 1,
+          "atlasName": "testTestRoom.png"
+        },
+        {
+          "xPos": 1,
+          "yPos": 1,
+          "frameX": 1,
+          "frameY": 1,
+          "atlasName": "testTestRoom.png"
+        },
+        {
+          "xPos": 2,
+          "yPos": 1,
+          "frameX": 2,
+          "frameY": 1,
+          "atlasName": "testTestRoom.png"
+        },
+        {
+          "xPos": 3,
+          "yPos": 1,
+          "frameX": 3,
+          "frameY": 1,
+          "atlasName": "testTestRoom.png"
+        },
+        {
+          "xPos": 4,
+          "yPos": 1,
+          "frameX": 4,
+          "frameY": 1,
+          "atlasName": "testTestRoom.png"
+        },
+        {
+          "xPos": 5,
+          "yPos": 1,
+          "frameX": 5,
+          "frameY": 1,
+          "atlasName": "testTestRoom.png"
+        },
+        {
+          "xPos": 6,
+          "yPos": 1,
+          "frameX": 6,
+          "frameY": 1,
+          "atlasName": "testTestRoom.png"
+        },
+        {
+          "xPos": 7,
+          "yPos": 1,
+          "frameX": 7,
+          "frameY": 1,
+          "atlasName": "testTestRoom.png"
+        },
+        {
+          "xPos": 8,
+          "yPos": 1,
+          "frameX": 8,
+          "frameY": 1,
+          "atlasName": "testTestRoom.png"
+        },
+        {
+          "xPos": 0,
+          "yPos": 2,
+          "frameX": 0,
+          "frameY": 2,
+          "atlasName": "testTestRoom.png"
+        },
+        {
+          "xPos": 1,
+          "yPos": 2,
+          "frameX": 1,
+          "frameY": 2,
+          "atlasName": "testTestRoom.png"
+        },
+        {
+          "xPos": 2,
+          "yPos": 2,
+          "frameX": 2,
+          "frameY": 2,
+          "atlasName": "testTestRoom.png"
+        },
+        {
+          "xPos": 3,
+          "yPos": 2,
+          "frameX": 3,
+          "frameY": 2,
+          "atlasName": "testTestRoom.png"
+        },
+        {
+          "xPos": 4,
+          "yPos": 2,
+          "frameX": 4,
+          "frameY": 2,
+          "atlasName": "testTestRoom.png"
+        },
+        {
+          "xPos": 5,
+          "yPos": 2,
+          "frameX": 5,
+          "frameY": 2,
+          "atlasName": "testTestRoom.png"
+        },
+        {
+          "xPos": 6,
+          "yPos": 2,
+          "frameX": 6,
+          "frameY": 2,
+          "atlasName": "testTestRoom.png"
+        },
+        {
+          "xPos": 7,
+          "yPos": 2,
+          "frameX": 7,
+          "frameY": 2,
+          "atlasName": "testTestRoom.png"
+        },
+        {
+          "xPos": 8,
+          "yPos": 2,
+          "frameX": 8,
+          "frameY": 2,
+          "atlasName": "testTestRoom.png"
+        },
+        {
+          "xPos": 0,
+          "yPos": 3,
+          "frameX": 0,
+          "frameY": 3,
+          "atlasName": "testTestRoom.png"
+        },
+        {
+          "xPos": 1,
+          "yPos": 3,
+          "frameX": 1,
+          "frameY": 3,
+          "atlasName": "testTestRoom.png"
+        },
+        {
+          "xPos": 2,
+          "yPos": 3,
+          "frameX": 2,
+          "frameY": 3,
+          "atlasName": "testTestRoom.png"
+        },
+        {
+          "xPos": 3,
+          "yPos": 3,
+          "frameX": 3,
+          "frameY": 3,
+          "atlasName": "testTestRoom.png"
+        },
+        {
+          "xPos": 4,
+          "yPos": 3,
+          "frameX": 4,
+          "frameY": 3,
+          "atlasName": "testTestRoom.png"
+        },
+        {
+          "xPos": 5,
+          "yPos": 3,
+          "frameX": 5,
+          "frameY": 3,
+          "atlasName": "testTestRoom.png"
+        },
+        {
+          "xPos": 6,
+          "yPos": 3,
+          "frameX": 6,
+          "frameY": 3,
+          "atlasName": "testTestRoom.png"
+        },
+        {
+          "xPos": 7,
+          "yPos": 3,
+          "frameX": 7,
+          "frameY": 3,
+          "atlasName": "testTestRoom.png"
+        },
+        {
+          "xPos": 8,
+          "yPos": 3,
+          "frameX": 8,
+          "frameY": 3,
+          "atlasName": "testTestRoom.png"
+        }
+      ],
+      "gameObjects": [
+        {
+          "type": "org.anotherteam.object.type.entity.player.Player",
+          "pos": {
+            "x": 26,
+            "y": 29
+          },
+          "components": [
+            {
+              "type": "Collider",
+              "firstBound": {
+                "x": -7,
+                "y": 32
+              },
+              "secondBound": {
+                "x": 6,
+                "y": 32
+              },
+              "solid": false,
+              "interactive": false,
+              "interactFirstBound": {
+                "x": 0,
+                "y": 32
+              },
+              "interactSecondBound": {
+                "x": 16,
+                "y": 32
+              }
+            },
+            {
+              "type": "Transform",
+              "maxSpeed": 25,
+              "speed": 25
+            }
+          ]
+        }
+      ],
+      "width": 9,
+      "height": 4
+    }
+  ]
+}
