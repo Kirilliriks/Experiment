@@ -100,8 +100,9 @@ public abstract class GameObject {
 
     public void render(@NotNull RenderBatch renderBatch) {
         val spriteComponent = getComponent(SpriteController.class);
-        if (spriteComponent == null) return;
-        spriteComponent.draw(position, renderBatch);
+        if (spriteComponent != null) {
+            spriteComponent.draw(position, renderBatch);
+        }
 
         if (Game.game.getGameState() != GameState.ON_EDITOR && !Game.DebugMode) return;
         val collider = getComponent(Collider.class);
