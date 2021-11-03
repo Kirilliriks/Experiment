@@ -2,6 +2,7 @@ package org.anotherteam;
 
 import org.anotherteam.debug.DebugRender;
 import org.anotherteam.editor.Editor;
+import org.anotherteam.level.Level;
 import org.anotherteam.level.room.Room;
 import org.anotherteam.manager.LevelManager;
 import org.anotherteam.render.GameRender;
@@ -74,8 +75,13 @@ public final class Game {
     }
 
     @NotNull
+    public Level getCurrenLevel() {
+        return levelManager.getCurrentLevel();
+    }
+
+    @NotNull
     public Room getCurrentRoom() {
-        return levelManager.getCurrentLevel().getCurrentRoom();
+        return getCurrenLevel().getCurrentRoom();
     }
 
     public void destroy() { }

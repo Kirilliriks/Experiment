@@ -269,7 +269,7 @@
               "type": "Collider",
               "firstBound": {
                 "x": -7,
-                "y": 32
+                "y": 0
               },
               "secondBound": {
                 "x": 6,
@@ -279,7 +279,7 @@
               "interactive": false,
               "interactFirstBound": {
                 "x": 0,
-                "y": 32
+                "y": 0
               },
               "interactSecondBound": {
                 "x": 16,

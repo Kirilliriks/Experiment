@@ -73,8 +73,12 @@ public final class AddObjectMenu extends GUIElement {
     public void update(float dt) {
         if (draggedGameObject != null) {
             if (Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) {
+                val x = GameScreen.inGameMouseX();
+                val y = GameScreen.inGameMouseY();
+                if (x < 0 || y < 0) return;
+
                 val gameObject = draggedGameObject.getGameObject();
-                gameObject.setPosition(GameScreen.inGameMouseX(), GameScreen.inGameMouseY());
+                gameObject.setPosition(x, y);
                 Game.game.getCurrentRoom().addObject(gameObject);
                 GameScreen.draggedThing = null;
                 draggedGameObject = null;
@@ -87,6 +91,10 @@ public final class AddObjectMenu extends GUIElement {
         }
         if (Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) { // TODO REMOVE OBJECT FROM ROOM
             GameScreen.draggedThing = null;
+            for (val gameObject : Game.game.getCurrentRoom().getGameObjects()) {
+                if(!gameObject.getCollider().isOnMouse(GameScreen.inGameMouseX(), GameScreen.inGameMouseY())) return;
+                Game.game.getCurrentRoom().rewoveObject(gameObject);
+            }
         }
     }
 

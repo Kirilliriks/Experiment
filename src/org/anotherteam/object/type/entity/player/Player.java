@@ -15,8 +15,8 @@ public class Player extends EntityObject {
                 AssetData.TEST_PLAYER_ATLAS,
                 PlayerState.IDLE);
         player = this;
-        collider.setBounds(-7, 32, 6, 32);
-        collider.setInteractBounds(0, 32, 16, 32);
+        collider.setBounds(-7, 0, 6, 32);
+        collider.setInteractBounds(0, 0, 16, 32);
         transform.setSpeed(25);
         transform.checkFlip();
     }

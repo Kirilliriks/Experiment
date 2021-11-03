@@ -11,14 +11,13 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-
 public final class Room {
     private final static Vector2i DEFAULT_POSITION = new Vector2i(10, 20);
 
     private final String name;
 
     private final Tile[] tiles;
-    private final List<GameObject> gameObjects;
+    private final List<GameObject> gameObjects; // TODO make Nested List to fast DrawPriority sorting
 
     private final Vector2i size;
 
