@@ -3,7 +3,7 @@ package org.anotherteam.level;
 import lombok.val;
 import org.anotherteam.Game;
 import org.anotherteam.level.room.Room;
-import org.anotherteam.object.type.entity.player.Player;
+import org.anotherteam.level.room.object.entity.Player;
 import org.anotherteam.render.GameRender;
 import org.anotherteam.render.batch.RenderBatch;
 import org.jetbrains.annotations.NotNull;

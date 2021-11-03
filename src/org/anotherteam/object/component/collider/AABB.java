@@ -5,9 +5,6 @@ import lombok.val;
 import org.anotherteam.debug.DebugRender;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.Component;
-import org.anotherteam.render.GameRender;
-import org.anotherteam.render.batch.Batch;
-import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
@@ -47,15 +44,15 @@ public abstract class AABB extends Component {
     }
 
     public void setFirstBound(int x, int y) {
-        this.firstBound.set(x, y);
+        firstBound.set(x, y);
     }
 
     public void setSecondBound(int x, int y) {
-        this.secondBound.set(x, y);
+        secondBound.set(x, y);
     }
 
     public void setOffSet(int x, int y) {
-        this.offSet.set(x, y);
+        offSet.set(x, y);
     }
 
     @NonNull

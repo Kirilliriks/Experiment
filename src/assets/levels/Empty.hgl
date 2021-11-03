@@ -6,7 +6,7 @@
       "tiles": [],
       "gameObjects": [
         {
-          "type": "org.anotherteam.object.type.entity.player.Player",
+          "type": "org.anotherteam.level.room.object.entity.Player",
           "pos": {
             "x": 0,
             "y": 0

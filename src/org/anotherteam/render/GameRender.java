@@ -8,7 +8,7 @@ import org.anotherteam.Input;
 import org.anotherteam.data.AssetData;
 import org.anotherteam.editor.screen.DraggedGameObject;
 import org.anotherteam.level.Level;
-import org.anotherteam.object.type.entity.player.Player;
+import org.anotherteam.level.room.object.entity.Player;
 import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.frame.EffectFrame;
 import org.anotherteam.render.frame.HeightFrame;

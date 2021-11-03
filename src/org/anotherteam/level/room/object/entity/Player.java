@@ -1,4 +1,4 @@
-package org.anotherteam.object.type.entity.player;
+package org.anotherteam.level.room.object.entity;
 
 import org.anotherteam.Game;
 import org.anotherteam.Input;

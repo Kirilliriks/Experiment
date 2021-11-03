@@ -1,7 +1,7 @@
 package org.anotherteam.object.prefab;
 
 import org.anotherteam.object.GameObject;
-import org.anotherteam.object.type.entity.player.Player;
+import org.anotherteam.level.room.object.entity.Player;
 
 public enum EntityPrefab implements Prefab {
     PLAYER(Player.class);
