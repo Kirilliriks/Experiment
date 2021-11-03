@@ -67,7 +67,7 @@ public final class GameRender {
 
         raycastShader.bind();
         raycastShader.setUniform("player_pos",
-                Player.player.getPosition().x, Player.player.getPosition().y + 15);
+                Player.PLAYER.getPosition().x, Player.PLAYER.getPosition().y + 15);
         glBindImageTexture(1, heightFrame.texture.getId(), 0, false, 0, GL_READ_ONLY, GL_RGBA8);
         raycastShader.setUniform("u_texture", 0);
         effectFrame.texture.bind(0);

@@ -3,10 +3,10 @@ package org.anotherteam.object.component.collider;
 import lombok.NonNull;
 import lombok.val;
 import org.anotherteam.debug.DebugRender;
-import org.anotherteam.editor.Editor;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.Component;
 import org.anotherteam.object.type.level.InteractiveObject;
+import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
@@ -74,10 +74,9 @@ public final class Collider extends AABB {
 
     public boolean isOnMouse(float x, float y) {
         if (x < 0 || y < 0) return false;
-        boolean tmp = objectPosition.x + firstBound.x < x && x < objectPosition.x + secondBound.x &&
-                objectPosition.y + firstBound.y < y && y < objectPosition.y + secondBound.y;
-        Editor.sendLogMessage(String.valueOf(tmp));
-        return tmp;
+
+        return objectPosition.x + firstBound.x <= x && x < objectPosition.x + secondBound.x &&
+                objectPosition.y + firstBound.y <= y && y < objectPosition.y + secondBound.y;
     }
 
     public boolean isCanInteract(@NonNull Collider collider){
@@ -110,7 +109,9 @@ public final class Collider extends AABB {
     @Override
     public void debugRender(@NonNull DebugRender debugRender) {
         interactAABB.debugRender(debugRender);
-        super.debugRender(debugRender, Color.RED);
+        if (isOnMouse(GameScreen.inGameMouseX(), GameScreen.inGameMouseY()))
+            super.debugRender(debugRender, Color.GREEN);
+        else super.debugRender(debugRender, Color.RED);
     }
 
     private static class InteractAABB extends AABB {

@@ -13,6 +13,7 @@ import org.anotherteam.editor.gui.menu.text.TextMenu;
 import org.anotherteam.editor.gui.menu.text.SwitchMenu;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.editor.screen.DraggedGameObject;
+import org.anotherteam.level.room.object.entity.Player;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.sprite.SpriteController;
 import org.anotherteam.object.prefab.ColliderPrefab;
@@ -82,8 +83,7 @@ public final class AddObjectMenu extends GUIElement {
                 Game.game.getCurrentRoom().addObject(gameObject);
                 GameScreen.draggedThing = null;
                 draggedGameObject = null;
-            }
-            if (Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
+            } else if (Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
                 GameScreen.draggedThing = null;
                 draggedGameObject = null;
             }
@@ -92,8 +92,9 @@ public final class AddObjectMenu extends GUIElement {
         if (Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) { // TODO REMOVE OBJECT FROM ROOM
             GameScreen.draggedThing = null;
             for (val gameObject : Game.game.getCurrentRoom().getGameObjects()) {
-                if(!gameObject.getCollider().isOnMouse(GameScreen.inGameMouseX(), GameScreen.inGameMouseY())) return;
+                if (!gameObject.getCollider().isOnMouse(GameScreen.inGameMouseX(), GameScreen.inGameMouseY())) continue;
                 Game.game.getCurrentRoom().rewoveObject(gameObject);
+                break;
             }
         }
     }

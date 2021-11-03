@@ -35,7 +35,7 @@ public abstract class GameObject {
         this.position = new Vector2i(x, y);
         components = new HashMap<>();
         collider = new Collider();
-        collider.setBounds(-DEFAULT_SIZE.x / 2, 0, DEFAULT_SIZE.x / 2, DEFAULT_SIZE.y);
+        collider.setBounds(0, 0, DEFAULT_SIZE.x, DEFAULT_SIZE.y);
         addComponent(collider);
     }
 
@@ -114,12 +114,12 @@ public abstract class GameObject {
     }
 
     public void render(@NotNull RenderBatch renderBatch) {
-        if (Game.game.getGameState() != GameState.ON_EDITOR && !Game.DebugMode) return;
         val spriteComponent = getComponent(SpriteController.class);
         if (spriteComponent != null) {
             spriteComponent.draw(position, renderBatch);
         }
 
+        if (Game.game.getGameState() != GameState.ON_EDITOR && !Game.DebugMode) return;
         collider.debugRender(renderBatch.debugRender);
     }
 
