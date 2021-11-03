@@ -7,6 +7,7 @@ import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.editor.gui.menu.text.SwitchMenu;
 import org.anotherteam.editor.gui.menu.text.TextButton;
 import org.anotherteam.editor.render.EditorBatch;
+import org.anotherteam.level.room.Room;
 import org.jetbrains.annotations.NotNull;
 
 public class RoomSelector extends GUIElement {
@@ -28,16 +29,18 @@ public class RoomSelector extends GUIElement {
                 width - Editor.DEFAULT_BORDER_SIZE * 2, height - Editor.DEFAULT_BORDER_SIZE * 3,
                 SwitchMenu.Type.DOUBLE, this);
         selector.setInverted(true);
-        fillButtons();
 
         downButtons = new SwitchMenu(Editor.DEFAULT_BORDER_SIZE, Editor.DEFAULT_BORDER_SIZE, 0, 0, SwitchMenu.Type.HORIZONTAL, this);
 
         createEmptyButton = new TextButton("Create empty room", 0, 0, downButtons);
-        createEmptyButton.setOnClick(()-> selector.addButton("EmptyRoom", ()-> { }));
+        createEmptyButton.setOnClick(()-> {
+            Game.game.getCurrenLevel().addRoom(Room.createEmpty());
+            fillButtons();
+        });
         downButtons.addButton(createEmptyButton);
 
-        saveLevelButton = new TextButton("Save editable room", 40, 0, downButtons);
-        saveLevelButton.setOnClick(()-> { });
+        saveLevelButton = new TextButton("Save rooms", 40, 0, downButtons);
+        saveLevelButton.setOnClick(()-> Game.game.levelManager.saveLevel());
         downButtons.addButton(saveLevelButton);
     }
 
@@ -47,7 +50,8 @@ public class RoomSelector extends GUIElement {
 
         for (val room : rooms) {
             val btn = selector.addButton(room.getName(),
-                    ()-> { });
+                    ()-> Game.game.getCurrenLevel().setCurrentRoom(room));
+
             if (Game.game.getCurrentRoom().getName().equals(room.getName()))
                 selector.setClicked(btn);
         }

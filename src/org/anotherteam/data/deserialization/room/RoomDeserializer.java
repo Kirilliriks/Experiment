@@ -14,9 +14,7 @@ public final class RoomDeserializer implements JsonDeserializer<Room>, JsonSeria
     public Room deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         val jsonObject = json.getAsJsonObject();
         val name = jsonObject.get("name").getAsString();
-        val width = jsonObject.get("width").getAsInt();
-        val height = jsonObject.get("height").getAsInt();
-        val room = new Room(width, height, name);
+        val room = new Room(name);
         for (val tileJSON : jsonObject.get("tiles").getAsJsonArray()) {
             val tile = (Tile) context.deserialize(tileJSON, Tile.class);
             room.addTile(tile);
@@ -33,7 +31,7 @@ public final class RoomDeserializer implements JsonDeserializer<Room>, JsonSeria
         val result = new JsonObject();
         result.add("name", new JsonPrimitive(room.getName()));
 
-        val tiles = new JsonArray(room.getTiles().length);
+        val tiles = new JsonArray(room.getTiles().size());
         for (val tile : room.getTiles()) {
             tiles.add(context.serialize(tile, Tile.class));
         }
@@ -44,9 +42,6 @@ public final class RoomDeserializer implements JsonDeserializer<Room>, JsonSeria
             objects.add(context.serialize(object, GameObject.class));
         }
         result.add("gameObjects", objects);
-
-        result.add("width", new JsonPrimitive(room.getWidth()));
-        result.add("height", new JsonPrimitive(room.getHeight()));
         return result;
     }
 }

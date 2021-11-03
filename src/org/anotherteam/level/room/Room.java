@@ -1,6 +1,8 @@
 package org.anotherteam.level.room;
 
 import lombok.val;
+import org.anotherteam.level.Level;
+import org.anotherteam.level.room.object.entity.Player;
 import org.anotherteam.level.room.tile.Tile;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.render.batch.RenderBatch;
@@ -16,15 +18,12 @@ public final class Room {
 
     private final String name;
 
-    private final Tile[] tiles;
+    private final List<Tile> tiles;
     private final List<GameObject> gameObjects; // TODO make Nested List to fast DrawPriority sorting
 
-    private final Vector2i size;
-
-    public Room(int x, int y, String name) {
+    public Room(String name) {
         this.name = name;
-        this.size = new Vector2i(x, y);
-        this.tiles = new Tile[size.x * size.y];
+        this.tiles = new ArrayList<>();
         this.gameObjects = new ArrayList<>();
     }
 
@@ -69,23 +68,22 @@ public final class Room {
     }
 
     @NotNull
-    public Tile[] getTiles() {
+    public List<Tile> getTiles() {
         return tiles;
     }
 
     public void addTile(@NotNull Tile tile) {
-        tiles[tile.getPosition().x + tile.getPosition().y * size.x] =  tile;
-    }
-
-    public int getWidth() {
-        return size.x;
-    }
-
-    public int getHeight() {
-        return size.y;
+        tiles.add(tile);
     }
 
     public String getName() {
         return name;
+    }
+
+    @NotNull
+    public static Room createEmpty() {
+        val room = new Room("EmptyRoom");
+        room.addObject(new Player(0, 0));
+        return room;
     }
 }

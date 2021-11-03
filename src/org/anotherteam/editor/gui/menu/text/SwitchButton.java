@@ -2,7 +2,6 @@ package org.anotherteam.editor.gui.menu.text;
 
 import org.anotherteam.Input;
 import org.anotherteam.editor.gui.GUIElement;
-import org.lwjgl.glfw.GLFW;
 
 public class SwitchButton extends TextButton {
 

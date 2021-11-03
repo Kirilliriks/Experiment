@@ -3,7 +3,6 @@ package org.anotherteam.level;
 import lombok.val;
 import org.anotherteam.Game;
 import org.anotherteam.level.room.Room;
-import org.anotherteam.level.room.object.entity.Player;
 import org.anotherteam.render.GameRender;
 import org.anotherteam.render.batch.RenderBatch;
 import org.jetbrains.annotations.NotNull;
@@ -33,8 +32,12 @@ public final class Level {
     }
 
     public void addRoom(@NotNull Room room) {
-        if (currentRoom == null) currentRoom = room;
+        if (currentRoom == null) currentRoom = room; // TODO Maybe change logic?
         rooms.add(room);
+    }
+
+    public void setCurrentRoom(@NotNull Room currentRoom) {
+        this.currentRoom = currentRoom;
     }
 
     public void update(float dt) {
@@ -42,7 +45,7 @@ public final class Level {
     }
 
     public void render(@NotNull RenderBatch windowBatch) {
-        gameRender.render(windowBatch, this);
+        gameRender.render(windowBatch, currentRoom);
     }
 
     @NotNull
@@ -55,11 +58,10 @@ public final class Level {
         return rooms;
     }
 
+    @NotNull
     public static Level createEmpty() {
         val level = new Level("Empty");
-        val room = new Room(0, 0, "Empty");
-        room.addObject(new Player(0, 0));
-        level.addRoom(room);
+        level.addRoom(Room.createEmpty());
         return level;
     }
 }

@@ -8,6 +8,7 @@ import org.anotherteam.Input;
 import org.anotherteam.data.AssetData;
 import org.anotherteam.editor.screen.DraggedGameObject;
 import org.anotherteam.level.Level;
+import org.anotherteam.level.room.Room;
 import org.anotherteam.level.room.object.entity.Player;
 import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.frame.EffectFrame;
@@ -55,14 +56,14 @@ public final class GameRender {
         debugFont = new Font("font/font.ttf", 16);
     }
 
-    public void render(@NotNull RenderBatch windowBatch, @NotNull Level level) {
+    public void render(@NotNull RenderBatch windowBatch, @NotNull Room room) {
         // Start frames
         heightFrame.begin();
-        drawHeightMap(level);
+        drawHeightMap(room);
         heightFrame.end();
 
         textureFrame.begin();
-        drawTextures(level);
+        drawTextures(room);
         textureFrame.end();
 
         raycastShader.bind();
@@ -103,10 +104,9 @@ public final class GameRender {
         windowBatch.end();
     }
 
-    private void drawTextures(@NotNull Level level) {
-        for (val room : level.getRooms()) {
-            room.drawTexture(textureBatch);
-        }
+    private void drawTextures(@NotNull Room room) {
+        room.drawTexture(textureBatch);
+
         if (Game.game.getGameState() == GameState.ON_LEVEL) return;
 
         if (GameScreen.draggedThing != null) {
@@ -120,9 +120,7 @@ public final class GameRender {
         }
     }
 
-    private void drawHeightMap(@NotNull Level level) {
-        for (val room : level.getRooms()) {
-            room.drawHeight(textureBatch);
-        }
+    private void drawHeightMap(@NotNull Room room) {
+        room.drawHeight(textureBatch);
     }
 }
