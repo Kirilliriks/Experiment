@@ -259,6 +259,66 @@
       ],
       "gameObjects": [
         {
+          "type": "org.anotherteam.level.room.object.Wall",
+          "pos": {
+            "x": 144,
+            "y": 30
+          },
+          "components": [
+            {
+              "type": "Collider",
+              "firstBound": {
+                "x": 0,
+                "y": 0
+              },
+              "secondBound": {
+                "x": 2,
+                "y": 32
+              },
+              "solid": true,
+              "interactive": false,
+              "interactFirstBound": {
+                "x": 0,
+                "y": 0
+              },
+              "interactSecondBound": {
+                "x": 0,
+                "y": 0
+              }
+            }
+          ]
+        },
+        {
+          "type": "org.anotherteam.level.room.object.Wall",
+          "pos": {
+            "x": 14,
+            "y": 29
+          },
+          "components": [
+            {
+              "type": "Collider",
+              "firstBound": {
+                "x": 0,
+                "y": 0
+              },
+              "secondBound": {
+                "x": 2,
+                "y": 32
+              },
+              "solid": true,
+              "interactive": false,
+              "interactFirstBound": {
+                "x": 0,
+                "y": 0
+              },
+              "interactSecondBound": {
+                "x": 0,
+                "y": 0
+              }
+            }
+          ]
+        },
+        {
           "type": "org.anotherteam.level.room.object.entity.Player",
           "pos": {
             "x": 26,
