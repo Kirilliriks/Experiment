@@ -40,7 +40,8 @@ public final class AssetData {
 
         @NotNull
         public static SpriteAtlas loadSpriteAtlas(String atlasName, int frameWidth, int frameHeight) {
-                val atlas = SpriteAtlas.create(getTexture(atlasName), frameWidth, frameHeight, frameHeight / 2 / Tile.SIZE.y);
+                val texture = getTexture(atlasName);
+                val atlas = SpriteAtlas.create(getTexture(atlasName), frameWidth, frameHeight, texture.getWidth() / 2 / Tile.SIZE.y);
                 spriteAtlases.put(atlasName, atlas);
                 return atlas;
         }
