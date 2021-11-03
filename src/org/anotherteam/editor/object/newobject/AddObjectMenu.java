@@ -19,6 +19,7 @@ import org.anotherteam.object.component.sprite.SpriteController;
 import org.anotherteam.object.prefab.ColliderPrefab;
 import org.anotherteam.object.prefab.EntityPrefab;
 import org.anotherteam.object.prefab.Prefab;
+import org.anotherteam.render.sprite.Sprite;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
@@ -56,10 +57,7 @@ public final class AddObjectMenu extends GUIElement {
         spriteMenu.setInverted(true);
         for (val value : prefabs) {
             val object = GameObject.create(0, 0, value.getPrefabClass()); // TODO delete new game object instancing
-            val sprite = object.hasComponent(SpriteController.class) ?
-                    object.getComponent(SpriteController.class).getSprite() :
-                    AssetData.EDITOR_NULL_ICON_ATLAS.getSprite(0, 0);
-            if (sprite == null) throw new LifeException("Prefab " + value.getPrefabClass().getSimpleName() + " don't have sprite");
+            val sprite = getObjectSprite(object);
             val spriteButton = spriteMenu.addButton(sprite);
             spriteButton.setOnClick(()-> {
                 draggedGameObject = new DraggedGameObject(sprite, GameObject.create(0, 0, value.getPrefabClass()));;
@@ -89,14 +87,28 @@ public final class AddObjectMenu extends GUIElement {
             }
             return;
         }
-        if (Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) { // TODO REMOVE OBJECT FROM ROOM
-            GameScreen.draggedThing = null;
+        if (Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON) || Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
             for (val gameObject : Game.game.getCurrentRoom().getGameObjects()) {
                 if (!gameObject.getCollider().isOnMouse(GameScreen.inGameMouseX(), GameScreen.inGameMouseY())) continue;
-                Game.game.getCurrentRoom().rewoveObject(gameObject);
+                if (Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
+                    Game.game.getCurrentRoom().rewoveObject(gameObject);
+                } else if (Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) {
+                    draggedGameObject = new DraggedGameObject(getObjectSprite(gameObject), gameObject);
+                    GameScreen.draggedThing = draggedGameObject;
+                    Game.game.getCurrentRoom().rewoveObject(gameObject);
+                }
                 break;
             }
         }
+    }
+
+    @NotNull
+    public Sprite getObjectSprite(@NotNull GameObject gameObject) {
+        val sprite = gameObject.hasComponent(SpriteController.class) ?
+                gameObject.getComponent(SpriteController.class).getSprite() :
+                AssetData.EDITOR_NULL_ICON_ATLAS.getSprite(0, 0);
+        if (sprite == null) throw new LifeException("Prefab " + gameObject.getClass().getSimpleName() + " don't have sprite");
+        return sprite;
     }
 
     @Override
