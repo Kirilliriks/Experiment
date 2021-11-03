@@ -30,7 +30,6 @@ public final class LevelManager extends AbstractManager {
     }
 
     public void loadLevel(@NotNull String levelName) {
-        System.out.println(levelName);
         currentLevel = FileLoader.loadLevel(levelName);
     }
 
@@ -38,7 +37,6 @@ public final class LevelManager extends AbstractManager {
      * Reset level to first state, only for editor.
      */
     public void resetLevel() {
-        System.out.println(currentLevel.getName());
         currentLevel = FileLoader.loadLevel(currentLevel.getName());
     }
 

@@ -68,15 +68,19 @@ public final class Collider extends AABB {
 
     public boolean isCollide(@NonNull Collider aabb, @NonNull Vector2f moveVector){
         if (!aabb.isSolid()) return false;
-        return  (!((aabb.getPosition().x + aabb.getSecondBound().x) < objectPosition.x + firstBound.x + moveVector.x ||
-                (objectPosition.x + secondBound.x + moveVector.x) < aabb.getPosition().x  + aabb.getFirstBound().x));
+        val collisionX =  objectPosition.x + secondBound.x + moveVector.x >= aabb.getPosition().x  + aabb.getFirstBound().x &&
+                        objectPosition.x + firstBound.x + moveVector.x <= aabb.getPosition().x  + aabb.getSecondBound().x;
+
+        val collisionY =  objectPosition.y + secondBound.y + moveVector.y >= aabb.getPosition().y  + aabb.getFirstBound().y &&
+                objectPosition.y + firstBound.y + moveVector.y <= aabb.getPosition().y  + aabb.getSecondBound().y;
+        return collisionX;
     }
 
     public boolean isOnMouse(float x, float y) {
         if (x < 0 || y < 0) return false;
 
-        return objectPosition.x + firstBound.x <= x && x < objectPosition.x + secondBound.x &&
-                objectPosition.y + firstBound.y <= y && y < objectPosition.y + secondBound.y;
+        return objectPosition.x + firstBound.x <= x && x <= objectPosition.x + secondBound.x &&
+               objectPosition.y + firstBound.y <= y && y <= objectPosition.y + secondBound.y;
     }
 
     public boolean isCanInteract(@NonNull Collider collider){

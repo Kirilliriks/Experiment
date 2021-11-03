@@ -31,7 +31,7 @@ public class GameObjectDeserializer implements JsonDeserializer<GameObject>, Jso
     @Override
     public JsonElement serialize(GameObject gameObject, Type typeOfSrc, JsonSerializationContext context) {
         val result = new JsonObject();
-        result.add("type", new JsonPrimitive(typeOfSrc.getTypeName()));
+        result.add("type", new JsonPrimitive(gameObject.getClass().getCanonicalName()));
         result.add("pos", SerializeUtil.serialize(gameObject.getPosition()));
         val components = new JsonArray(gameObject.getComponents().values().size());
         for (val component : gameObject.getComponents().values()) {
