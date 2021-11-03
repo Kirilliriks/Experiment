@@ -136,4 +136,8 @@ public abstract class GUIElement {
             element.render(editorBatch);
         }
     }
+
+    public void clearChild() {
+        childElements.clear();
+    }
 }

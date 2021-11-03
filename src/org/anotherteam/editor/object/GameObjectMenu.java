@@ -16,7 +16,7 @@ public final class GameObjectMenu extends SwitchMenu {
         addButton("GameObject edit");
         addButton("Components edit");
         val button = (SwitchButton) getButton(0);
-        this.addObjectMenu = new AddObjectMenu(getWidestButtonWidth(), 0, button);
+        this.addObjectMenu = new AddObjectMenu(getWidestButtonWidth(), 0, this);
         addObjectMenu.setVisible(false);
         button.setOnClick(()-> addObjectMenu.setVisible(true));
         button.setAfterClick(()-> addObjectMenu.setVisible(false));

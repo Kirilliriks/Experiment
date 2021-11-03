@@ -45,6 +45,10 @@ public final class Input {
         return key.pressed;
     }
 
+    public static boolean isAnyButtonPressed() {
+        return MOUSE_LEFT_BUTTON.pressed || MOUSE_RIGHT_BUTTON.pressed;
+    }
+
     public static boolean isButtonPressed(MouseButton button) {
         return button.pressed;
     }

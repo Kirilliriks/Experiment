@@ -13,6 +13,8 @@ import java.util.List;
 
 public final class Level {
 
+    public static final String LEVEL_FILE_EXTENSION = "hgl";
+
     private final String name;
     private final GameRender gameRender;
     private final List<Room> rooms;

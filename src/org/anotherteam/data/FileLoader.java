@@ -34,7 +34,7 @@ public final class FileLoader {
     public static Level loadLevel(String levelName) {
         String inFile = "";
         try {
-            val finalName = levelName  + (levelName.split("\\.").length > 1 ? "" : ".hgl");
+            val finalName = levelName  + (levelName.split("\\.").length > 1 ? "" : "." + Level.LEVEL_FILE_EXTENSION);
             inFile = new String(Files.readAllBytes(Paths.get("levels/" + finalName)));
         } catch (IOException e) {
             e.printStackTrace();
@@ -46,7 +46,7 @@ public final class FileLoader {
 
     public static void saveLevel(Level level) {
         try {
-            val writer = new FileWriter("levels/" + level.getName()  + ".hgl");
+            val writer = new FileWriter("levels/" + level.getName()  + "." + Level.LEVEL_FILE_EXTENSION);
             writer.write(LEVEL_GSON.toJson(level));
             writer.close();
         } catch(IOException e) {

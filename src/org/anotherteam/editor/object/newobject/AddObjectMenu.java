@@ -13,7 +13,6 @@ import org.anotherteam.editor.gui.menu.text.TextMenu;
 import org.anotherteam.editor.gui.menu.text.SwitchMenu;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.editor.screen.DraggedGameObject;
-import org.anotherteam.level.room.object.entity.Player;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.sprite.SpriteController;
 import org.anotherteam.object.prefab.ColliderPrefab;
@@ -87,9 +86,11 @@ public final class AddObjectMenu extends GUIElement {
             }
             return;
         }
-        if (Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON) || Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
+
+        if (Input.isAnyButtonPressed()) {
             for (val gameObject : Game.game.getCurrentRoom().getGameObjects()) {
                 if (!gameObject.getCollider().isOnMouse(GameScreen.inGameMouseX(), GameScreen.inGameMouseY())) continue;
+
                 if (Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
                     Game.game.getCurrentRoom().rewoveObject(gameObject);
                 } else if (Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) {
