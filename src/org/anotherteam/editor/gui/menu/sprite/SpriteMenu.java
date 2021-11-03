@@ -11,9 +11,9 @@ import java.util.List;
 
 public class SpriteMenu extends GUIElement {
 
-    private static final int ICON_SIZE = 32;
+    public static final int ICON_SIZE = 32;
 
-    private List<SpriteButton> buttons;
+    private final List<SpriteButton> buttons;
 
     private int offsetIcon;
     private int sizeX, sizeY;
@@ -21,6 +21,9 @@ public class SpriteMenu extends GUIElement {
     public SpriteMenu(float x, float y, int width, int height, GUIElement ownerElement) {
         super(x, y, width, height, ownerElement);
         buttons = new ArrayList<>();
+        offsetIcon = 0;
+        sizeX = (width + offsetIcon) / ICON_SIZE;
+        sizeY = (height + offsetIcon) / ICON_SIZE;
     }
 
     public void setOffsetIcon(int offsetIcon) {
@@ -34,10 +37,16 @@ public class SpriteMenu extends GUIElement {
         val index = buttons.size();
         if (index >= sizeX * sizeY) throw new LifeException("Need create pages mechanic");
 
-        val spriteButton = new SpriteButton(sprite, 0, 0, this);
-
         int x = index % sizeX;
-        int y = index / sizeY;
+        int y = (index - x) / sizeY;
+        return addButton(x, y, sprite);
+    }
+
+    @NotNull
+    public SpriteButton addButton(int x, int y, @NotNull Sprite sprite) {
+        if (x * y >= sizeX * sizeY) throw new LifeException("Need create pages mechanic");
+
+        val spriteButton = new SpriteButton(sprite, 0, 0, this);
 
         spriteButton.setPos(x * ICON_SIZE                + (x + 1) * offsetIcon,
                             height - (y + 1) * ICON_SIZE - (y + 1) * offsetIcon);

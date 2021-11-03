@@ -10,6 +10,7 @@ public final class LevelMenu extends SwitchMenu {
 
     private final LevelSelector levelSelector;
     private final RoomSelector roomSelector;
+    private final TileViewer tileViewer;
 
     public LevelMenu(float x, float y, GUIElement ownerElement) {
         super(x, y, 0, 0, Type.VERTICAL, ownerElement);
@@ -33,6 +34,13 @@ public final class LevelMenu extends SwitchMenu {
             roomSelector.setVisible(true);
         });
         button.setAfterClick(()-> roomSelector.setVisible(false));
+
+        button = getButton(2);
+        tileViewer = new TileViewer(getWidestButtonWidth(), 0, this);
+        tileViewer.setVisible(false);
+        button.setOnClick(()-> tileViewer.setVisible(true));
+        button.setAfterClick(()-> tileViewer.setVisible(false));
+
         inverted = true;
     }
 

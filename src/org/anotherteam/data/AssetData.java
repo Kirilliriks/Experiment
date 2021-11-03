@@ -22,7 +22,7 @@ public final class AssetData {
         public static final Texture EDITOR_TEXTURE = getTexture("editorTexture.png");
         public static final SpriteAtlas EDITOR_NULL_ICON_ATLAS = loadSpriteAtlas("nullIcon.png", 32,  32);
 
-        public static final SpriteAtlas TEST_ROOM_ATLAS = loadRoomAtlas(ROOM_ATLASES_PATH + "testTestRoom.png", Tile.SIZE.x,  Tile.SIZE.y, 4);
+        public static final SpriteAtlas TEST_ROOM_ATLAS = loadSpriteAtlas(ROOM_ATLASES_PATH + "testTestRoom.png", Tile.SIZE.x,  Tile.SIZE.y);
         public static final SpriteAtlas TEST_PLAYER_ATLAS = loadSpriteAtlas(ENTITY_ATLASES_PATH + "testPlayerAtlas.png", 32,  32);
 
         public static final Shader DEFAULT_SHADER = new Shader("shader/defaultVertexShader.glsl", "shader/defaultFragmentShader.glsl");
@@ -40,14 +40,17 @@ public final class AssetData {
 
         @NotNull
         public static SpriteAtlas loadSpriteAtlas(String atlasName, int frameWidth, int frameHeight) {
-                return loadRoomAtlas(atlasName, frameWidth, frameHeight, -1);
+                val atlas = SpriteAtlas.create(getTexture(atlasName), frameWidth, frameHeight, frameHeight / 2 / Tile.SIZE.y);
+                spriteAtlases.put(atlasName, atlas);
+                return atlas;
         }
 
         @NotNull
-        public static SpriteAtlas loadRoomAtlas(String atlasName, int frameWidth, int frameHeight, int heightOffset) {
-                val atlas = SpriteAtlas.create(getTexture(atlasName), frameWidth, frameHeight, heightOffset);
-                spriteAtlases.put(atlasName, atlas);
-                return atlas;
+        public static SpriteAtlas getOrLoadRoomAtlas(String atlasName) {
+                if (!spriteAtlases.containsKey(atlasName)) {
+                        loadSpriteAtlas(atlasName, Tile.SIZE.x, Tile.SIZE.y);
+                }
+                return spriteAtlases.get(atlasName);
         }
 
         @NotNull

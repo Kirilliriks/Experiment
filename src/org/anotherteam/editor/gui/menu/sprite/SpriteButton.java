@@ -5,6 +5,7 @@ import org.anotherteam.editor.gui.Button;
 import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.render.sprite.Sprite;
+import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
 
 public class SpriteButton extends Button {
@@ -14,8 +15,9 @@ public class SpriteButton extends Button {
     public SpriteButton(@NotNull Sprite sprite, float x, float y, GUIElement ownerElement) {
         super(x, y, ownerElement);
         this.sprite = sprite;
-        width = sprite.getWidth();
-        height = sprite.getHeight();
+        width = SpriteMenu.ICON_SIZE;
+        height = SpriteMenu.ICON_SIZE;
+        setColor(Color.BLACK);
     }
 
     @Override
@@ -38,6 +40,6 @@ public class SpriteButton extends Button {
     @Override
     public void render(@NotNull EditorBatch editorBatch) {
         super.render(editorBatch);
-        editorBatch.draw(sprite, getPosX(), getPosY());
+        editorBatch.draw(sprite, getPosX(), getPosY(), SpriteMenu.ICON_SIZE, SpriteMenu.ICON_SIZE);
     }
 }

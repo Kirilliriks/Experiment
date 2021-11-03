@@ -1,4 +1,4 @@
-package org.anotherteam.editor.object.newobject;
+package org.anotherteam.editor.level;
 
 import lombok.val;
 import org.anotherteam.Game;
@@ -12,22 +12,19 @@ import org.anotherteam.editor.gui.menu.text.SwitchButton;
 import org.anotherteam.editor.gui.menu.text.TextMenu;
 import org.anotherteam.editor.gui.menu.text.SwitchMenu;
 import org.anotherteam.editor.render.EditorBatch;
-import org.anotherteam.editor.screen.DraggedGameObject;
-import org.anotherteam.object.GameObject;
-import org.anotherteam.object.component.sprite.SpriteController;
-import org.anotherteam.object.prefab.ColliderPrefab;
-import org.anotherteam.object.prefab.EntityPrefab;
-import org.anotherteam.object.prefab.Prefab;
-import org.anotherteam.render.sprite.Sprite;
+import org.anotherteam.editor.screen.DraggedTile;
+import org.anotherteam.level.room.tile.Tile;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
+
+import java.io.File;
 
 public final class TileViewer extends GUIElement {
 
     private final SwitchMenu typeMenu;
 
-    private DraggedGameObject draggedGameObject;
+    private DraggedTile draggedTile;
 
     public TileViewer(float x, float y, GUIElement ownerElement) {
         super(x, y, ownerElement);
@@ -40,27 +37,35 @@ public final class TileViewer extends GUIElement {
         typeMenu.setInverted(true);
         typeMenu.setColor(100, 100, 100, 255);
         typeMenu.setStartOffset(Label.DEFAULT_TEXT_OFFSET, 0);
-        typeMenu.addButton("Entity");
-        typeMenu.addButton("Item");
-        typeMenu.addButton("Light");
-        typeMenu.addButton("Collider");
-        generatePrefabMenu(typeMenu.getButton(0), EntityPrefab.values());
-        generatePrefabMenu(typeMenu.getButton(3), ColliderPrefab.values());
+        fillAtlasesButtons();
         typeMenu.setClicked(typeMenu.getButton(0));
     }
 
-    public void generatePrefabMenu(@NotNull SwitchButton button, Prefab[] prefabs) {
+    public void fillAtlasesButtons() {
+        val files = new File(AssetData.ROOM_ATLASES_PATH).listFiles();
+        if (files == null) throw new LifeException("Room's atlases not found");
+
+        for (val file : files) {
+            val btn = typeMenu.addButton(file.getName());
+            generateTileMenu(btn, file.getName());
+        }
+    }
+
+    public void generateTileMenu(@NotNull SwitchButton button, @NotNull String fileName) {
+        val spriteAtlas = AssetData.getOrLoadRoomAtlas(AssetData.ROOM_ATLASES_PATH + fileName);
+
         val spriteMenu = new SpriteMenu(0, -typeMenu.getHeight(), width, height - typeMenu.getHeight(), this);
         spriteMenu.setVisible(false);
-        spriteMenu.setOffsetIcon(8);
         spriteMenu.setInverted(true);
-        for (val value : prefabs) {
-            val object = GameObject.create(0, 0, value.getPrefabClass()); // TODO delete new game object instancing
-            val sprite = getObjectSprite(object);
-            val spriteButton = spriteMenu.addButton(sprite);
+        for (val sprite : spriteAtlas.getSprites()) {
+            val y = spriteAtlas.getSizeY() - sprite.getFrameY() - 1;
+            if (y < spriteAtlas.getSizeY() / 2) continue;
+
+            val x = sprite.getFrameX();
+            val spriteButton = spriteMenu.addButton(x, y - spriteAtlas.getSizeY() / 2, sprite);
             spriteButton.setOnClick(()-> {
-                draggedGameObject = new DraggedGameObject(sprite, GameObject.create(0, 0, value.getPrefabClass()));;
-                GameScreen.draggedThing = draggedGameObject;
+                draggedTile = new DraggedTile(x, sprite.getFrameY(), spriteAtlas);
+                GameScreen.draggedThing = draggedTile;
             });
         }
         button.setOnClick(()-> spriteMenu.setVisible(true));
@@ -69,57 +74,32 @@ public final class TileViewer extends GUIElement {
 
     @Override
     public void update(float dt) {
-        if (draggedGameObject != null) {
+        if (draggedTile != null) {
             if (Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) {
-                val x = GameScreen.inGameMouseX();
-                val y = GameScreen.inGameMouseY();
+                val x = GameScreen.inGameMouseX() / Tile.SIZE.x;
+                val y = GameScreen.inGameMouseY() / Tile.SIZE.y;
                 if (x < 0 || y < 0) return;
 
-                val gameObject = draggedGameObject.getGameObject();
-                gameObject.setPosition(x, y);
-                Game.game.getCurrentRoom().addObject(gameObject);
+                val tile = draggedTile.createTile(x, y);
+                Game.game.getCurrentRoom().addTile(tile);
                 GameScreen.draggedThing = null;
-                draggedGameObject = null;
+                draggedTile = null;
             } else if (Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
                 GameScreen.draggedThing = null;
-                draggedGameObject = null;
+                draggedTile = null;
             }
             return;
         }
-
         if (Input.isAnyButtonPressed()) {
-            for (val gameObject : Game.game.getCurrentRoom().getGameObjects()) {
-                if (!gameObject.getCollider().isOnMouse(GameScreen.inGameMouseX(), GameScreen.inGameMouseY())) continue;
 
-                if (Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
-                    Game.game.getCurrentRoom().rewoveObject(gameObject);
-                } else if (Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) {
-                    draggedGameObject = new DraggedGameObject(getObjectSprite(gameObject), gameObject);
-                    GameScreen.draggedThing = draggedGameObject;
-                    Game.game.getCurrentRoom().rewoveObject(gameObject);
-                }
-                break;
-            }
         }
-    }
-
-    @NotNull
-    public Sprite getObjectSprite(@NotNull GameObject gameObject) {
-        val sprite = gameObject.hasComponent(SpriteController.class) ?
-                gameObject.getComponent(SpriteController.class).getSprite() :
-                AssetData.EDITOR_NULL_ICON_ATLAS.getSprite(0, 0);
-        if (sprite == null) throw new LifeException("Prefab " + gameObject.getClass().getSimpleName() + " don't have sprite");
-        return sprite;
     }
 
     @Override
     public void render(@NotNull EditorBatch editorBatch) {
         super.render(editorBatch);
-        if (draggedGameObject != null) {
-            val x  = (int) Input.getMouseX();
-            val y  = (int) Input.getMouseY();
-            draggedGameObject.getGameObject().setPosition(x, y);
-            draggedGameObject.getGameObject().render(editorBatch);
+        if (draggedTile != null) {
+            editorBatch.draw(draggedTile.getSprite(), Input.getMouseX(), Input.getMouseY());
         }
     }
 }

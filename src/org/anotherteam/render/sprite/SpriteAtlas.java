@@ -2,8 +2,8 @@ package org.anotherteam.render.sprite;
 
 import lombok.val;
 import org.anotherteam.render.texture.Texture;
+import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,11 +50,16 @@ public final class SpriteAtlas {
         return heightOffset;
     }
 
-    @Nullable
+    @NotNull
     public Sprite getSprite(int x, int y) {
         val index = x + (y * sizeX);
-        if (index >= sizeY * sizeX) return null;
+        if (index >= sizeY * sizeX) throw new LifeException("Bad sprite index");
         return sprites.get(index);
+    }
+
+    @NotNull
+    public List<Sprite> getSprites() {
+        return sprites;
     }
 
     @NotNull
