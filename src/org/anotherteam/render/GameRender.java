@@ -6,6 +6,7 @@ import org.anotherteam.Game;
 import org.anotherteam.GameState;
 import org.anotherteam.Input;
 import org.anotherteam.data.AssetData;
+import org.anotherteam.editor.screen.DraggedGameObject;
 import org.anotherteam.level.Level;
 import org.anotherteam.object.type.entity.player.Player;
 import org.anotherteam.render.batch.RenderBatch;
@@ -109,8 +110,13 @@ public final class GameRender {
         if (Game.game.getGameState() == GameState.ON_LEVEL) return;
 
         if (GameScreen.draggedThing != null) {
-            if (GameScreen.inGameMouseX() < 0 || GameScreen.inGameMouseY() < 0) return;
-            textureBatch.draw(GameScreen.draggedThing.getSprite(), GameScreen.inGameMouseX() - GameScreen.draggedThing.getSprite().getWidth() / 2f, GameScreen.inGameMouseY());
+            val mouseX = GameScreen.inGameMouseX();
+            val mouseY = GameScreen.inGameMouseY();
+            if (mouseX < 0 || mouseY < 0) return;
+            if (GameScreen.draggedThing instanceof DraggedGameObject draggedGameObject) {
+                draggedGameObject.getGameObject().setPosition(mouseX, mouseY);
+                draggedGameObject.getGameObject().render(textureBatch);
+            } else textureBatch.draw(GameScreen.draggedThing.getSprite(), mouseX, mouseY);
         }
     }
 

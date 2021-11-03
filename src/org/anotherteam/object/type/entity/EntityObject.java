@@ -3,14 +3,11 @@ package org.anotherteam.object.type.entity;
 
 import lombok.NonNull;
 import org.anotherteam.object.GameObject;
-import org.anotherteam.object.component.collider.Collider;
 import org.anotherteam.object.component.sprite.SpriteController;
 import org.anotherteam.object.component.state.State;
 import org.anotherteam.object.component.state.StateController;
 import org.anotherteam.object.component.transform.Transform;
-import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.sprite.SpriteAtlas;
-import org.jetbrains.annotations.NotNull;
 
 public abstract class EntityObject extends GameObject {
 
@@ -18,7 +15,6 @@ public abstract class EntityObject extends GameObject {
 
     protected final Transform transform;
     protected final StateController stateController;
-    protected final Collider collider;
     protected final SpriteController spriteController;
 
     public EntityObject(int x, int y, @NonNull SpriteAtlas spriteAtlas, @NonNull State defaultState) {
@@ -26,8 +22,6 @@ public abstract class EntityObject extends GameObject {
         spriteController = new SpriteController(1);
         spriteController.setSpriteAtlas(spriteAtlas);
         addComponent(spriteController);
-        collider = new Collider();
-        addComponent(collider);
         stateController = new StateController(defaultState);
         addComponent(stateController);
         transform = new Transform(DEFAULT_SPEED);

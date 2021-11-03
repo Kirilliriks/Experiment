@@ -2,10 +2,10 @@ package org.anotherteam.object.component.collider;
 
 import lombok.NonNull;
 import lombok.val;
+import org.anotherteam.debug.DebugRender;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.Component;
 import org.anotherteam.object.type.level.InteractiveObject;
-import org.anotherteam.render.GameRender;
 import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
@@ -80,8 +80,7 @@ public final class Collider extends AABB {
     public void checkInteract() {
         for (val object : ownerObject.getRoom().getGameObjects()) {
             if (!(object instanceof InteractiveObject)) continue;
-            val collider = object.getComponent(Collider.class);
-            if (collider == null) continue;
+            val collider = object.getCollider();
             if (!isCanInteract(collider)) continue;
             ((InteractiveObject)ownerObject).interactBy(object);
         }
@@ -89,8 +88,7 @@ public final class Collider extends AABB {
 
     public boolean checkCollide(@NonNull Vector2f moveVector) {
         for (val object : ownerObject.getRoom().getGameObjects()) {
-            val collider = object.getComponent(Collider.class);
-            if (collider == null) continue;
+            val collider = object.getCollider();
             if (!isCollide(collider, moveVector)) continue;
             return true;
         }
@@ -102,9 +100,9 @@ public final class Collider extends AABB {
     }
 
     @Override
-    public void debugRender(@NonNull RenderBatch renderBatch) {
-        interactAABB.debugRender(renderBatch);
-        super.debugRender(renderBatch, Color.RED);
+    public void debugRender(@NonNull DebugRender debugRender) {
+        interactAABB.debugRender(debugRender);
+        super.debugRender(debugRender, Color.RED);
     }
 
     private static class InteractAABB extends AABB {
@@ -130,8 +128,8 @@ public final class Collider extends AABB {
         }
 
         @Override
-        public void debugRender(@NonNull RenderBatch renderBatch) {
-            super.debugRender(renderBatch, Color.BLUE);
+        public void debugRender(@NonNull DebugRender debugRender) {
+            super.debugRender(debugRender, Color.BLUE);
         }
     }
 }

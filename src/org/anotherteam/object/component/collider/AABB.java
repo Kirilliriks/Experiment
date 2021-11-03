@@ -78,16 +78,16 @@ public abstract class AABB extends Component {
                 (objectPosition.x + secondBound.x) < aabb.getPosition().x  + aabb.getFirstBound().x));
     }
 
-    public abstract void debugRender(@NonNull RenderBatch renderBatch);
+    public abstract void debugRender(@NonNull DebugRender debugRender);
 
-    public void debugRender(@NonNull RenderBatch renderBatch, Color color){
+    public void debugRender(@NonNull DebugRender debugRender, Color color){
         val v1 = new Vector2f(objectPosition.x + offSet.x + firstBound.x, objectPosition.y + offSet.y);
         val v2 = new Vector2f(objectPosition.x + offSet.x + firstBound.x, objectPosition.y + offSet.y + firstBound.y);
         val v3 = new Vector2f(objectPosition.x + offSet.x + secondBound.x, objectPosition.y + offSet.y + secondBound.y);
         val v4 = new Vector2f(objectPosition.x + offSet.x + secondBound.x, objectPosition.y + offSet.y);
-        renderBatch.debugRender.drawLine(v1, v2, color);
-        renderBatch.debugRender.drawLine(v2, v3, color);
-        renderBatch.debugRender.drawLine(v3, v4, color);
-        renderBatch.debugRender.drawLine(v4, v1, color);
+        debugRender.drawLine(v1, v2, color);
+        debugRender.drawLine(v2, v3, color);
+        debugRender.drawLine(v3, v4, color);
+        debugRender.drawLine(v4, v1, color);
     }
 }

@@ -18,15 +18,25 @@ import java.util.Map;
 
 public abstract class GameObject {
 
+    public static final Vector2i DEFAULT_SIZE = new Vector2i(32, 32);
+
     protected Room room;
 
     protected final Map<Class<? extends Component>, Component> components;
     protected final Vector2i position;
 
+    /**
+     * All GameObjects have a Collider component {Default size 32 x 32}
+     */
+    protected final Collider collider;
+
     public GameObject(int x, int y) {
         this.room = null;
         this.position = new Vector2i(x, y);
         components = new HashMap<>();
+        collider = new Collider();
+        collider.setBounds(-DEFAULT_SIZE.x / 2, 0, DEFAULT_SIZE.x / 2, DEFAULT_SIZE.y);
+        addComponent(collider);
     }
 
     public static <T extends GameObject> T create(int x, int y, @NotNull Class<T> gameObjectClass) {
@@ -47,6 +57,11 @@ public abstract class GameObject {
 
     public void setPosition(int x, int y) {
         position.set(x, y);
+    }
+
+    @NotNull
+    public Collider getCollider() {
+        return collider;
     }
 
     @NotNull
@@ -99,15 +114,13 @@ public abstract class GameObject {
     }
 
     public void render(@NotNull RenderBatch renderBatch) {
+        if (Game.game.getGameState() != GameState.ON_EDITOR && !Game.DebugMode) return;
         val spriteComponent = getComponent(SpriteController.class);
         if (spriteComponent != null) {
             spriteComponent.draw(position, renderBatch);
         }
 
-        if (Game.game.getGameState() != GameState.ON_EDITOR && !Game.DebugMode) return;
-        val collider = getComponent(Collider.class);
-        if (collider == null) return;
-        collider.debugRender(renderBatch);
+        collider.debugRender(renderBatch.debugRender);
     }
 
     public void onAnimationEnd() { }

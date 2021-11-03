@@ -93,7 +93,11 @@ public final class AddObjectMenu extends GUIElement {
     @Override
     public void render(@NotNull EditorBatch editorBatch) {
         super.render(editorBatch);
-        if (draggedGameObject != null)
-            editorBatch.draw(draggedGameObject.getSprite(), Input.getMouseX() - GameScreen.draggedThing.getSprite().getWidth() / 2f, Input.getMouseY());
+        if (draggedGameObject != null) {
+            val x  = (int) Input.getMouseX();
+            val y  = (int) Input.getMouseY();
+            draggedGameObject.getGameObject().setPosition(x, y);
+            draggedGameObject.getGameObject().render(editorBatch);
+        }
     }
 }
