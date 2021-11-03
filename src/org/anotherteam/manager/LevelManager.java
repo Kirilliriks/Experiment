@@ -20,13 +20,17 @@ public final class LevelManager extends AbstractManager {
     /**
      * Save only on play, not on editor!
      */
-    public void saveLevel() {
+    public void savePlayableLevel() {
         if (Game.game.getGameState() == GameState.ON_EDITOR) throw new LifeException("Trying save playable level when state is ON_EDITOR!");
+        saveLevel();
+    }
+
+    public void saveLevel() {
         FileLoader.saveLevel(currentLevel);
     }
 
-    public void saveEditorLevel() {
-        FileLoader.saveLevel(currentLevel);
+    public void setLevel(@NotNull Level level) {
+        currentLevel = level;
     }
 
     public void loadLevel(@NotNull String levelName) {

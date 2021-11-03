@@ -1,5 +1,6 @@
 package org.anotherteam.data;
 
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.val;
 import org.anotherteam.data.deserialization.LevelDeserializer;
@@ -21,15 +22,16 @@ import java.nio.file.Paths;
 
 public final class FileLoader {
 
+    public static final Gson LEVEL_GSON = new GsonBuilder()
+            .setPrettyPrinting()
+            .registerTypeAdapter(Tile.class, new TileDeserializer())
+            .registerTypeAdapter(Component.class, new ComponentDeserializer())
+            .registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
+            .registerTypeAdapter(Room.class, new RoomDeserializer())
+            .registerTypeAdapter(Level.class, new LevelDeserializer())
+            .create();
+
     public static Level loadLevel(String levelName) {
-        val gson = new GsonBuilder()
-                .setPrettyPrinting()
-                .registerTypeAdapter(Tile.class, new TileDeserializer())
-                .registerTypeAdapter(Component.class, new ComponentDeserializer())
-                .registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
-                .registerTypeAdapter(Room.class, new RoomDeserializer())
-                .registerTypeAdapter(Level.class, new LevelDeserializer())
-                .create();
         String inFile = "";
         try {
             val finalName = levelName  + (levelName.split("\\.").length > 1 ? "" : ".hgl");
@@ -39,21 +41,13 @@ public final class FileLoader {
         }
         if (inFile.isEmpty()) Editor.sendLogMessage("Level " + levelName + " is empty");
         else Editor.sendLogMessage("Level " + levelName + " loaded");
-        return gson.fromJson(inFile, Level.class);
+        return LEVEL_GSON.fromJson(inFile, Level.class);
     }
 
     public static void saveLevel(Level level) {
-        val gson = new GsonBuilder()
-                .setPrettyPrinting()
-                .registerTypeAdapter(Tile.class, new TileDeserializer())
-                .registerTypeAdapter(Component.class, new ComponentDeserializer())
-                .registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
-                .registerTypeAdapter(Room.class, new RoomDeserializer())
-                .registerTypeAdapter(Level.class, new LevelDeserializer())
-                .create();
         try {
             val writer = new FileWriter("levels/" + level.getName()  + ".hgl");
-            writer.write(gson.toJson(level));
+            writer.write(LEVEL_GSON.toJson(level));
             writer.close();
         } catch(IOException e) {
             e.printStackTrace();

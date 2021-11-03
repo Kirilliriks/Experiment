@@ -64,9 +64,6 @@ public final class Game {
 
     public void setGameState(@NotNull GameState gameState) {
         this.gameState = gameState;
-        if (gameState == GameState.ON_EDITOR) {
-            levelManager.resetLevel();
-        }
     }
 
     @NotNull

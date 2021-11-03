@@ -8,20 +8,15 @@
         {
           "type": "org.anotherteam.level.room.object.entity.Player",
           "pos": {
-            "x": 0,
-            "y": 0
+            "x": 13,
+            "y": 45
           },
           "components": [
             {
-              "type": "Transform",
-              "maxSpeed": 25,
-              "speed": 25
-            },
-            {
               "type": "Collider",
               "firstBound": {
-                "x": -7,
-                "y": 32
+                "x": -6,
+                "y": 0
               },
               "secondBound": {
                 "x": 6,
@@ -31,12 +26,17 @@
               "interactive": false,
               "interactFirstBound": {
                 "x": 0,
-                "y": 32
+                "y": 0
               },
               "interactSecondBound": {
                 "x": 16,
                 "y": 32
               }
+            },
+            {
+              "type": "Transform",
+              "maxSpeed": 25,
+              "speed": 25
             }
           ]
         }

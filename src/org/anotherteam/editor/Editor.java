@@ -5,7 +5,6 @@ import org.anotherteam.Game;
 import org.anotherteam.GameState;
 import org.anotherteam.Input;
 import org.anotherteam.data.AssetData;
-import org.anotherteam.editor.gui.Button;
 import org.anotherteam.editor.gui.Log;
 import org.anotherteam.editor.gui.Widget;
 import org.anotherteam.editor.gui.menu.text.TextMenu;
@@ -51,7 +50,11 @@ public final class Editor extends Widget {
         switchStateButton.setOnClick(() -> {
             if (Game.game.getGameState() == GameState.ON_EDITOR) {
                 Game.game.setGameState(GameState.ON_LEVEL);
-            } else Game.game.setGameState(GameState.ON_EDITOR);
+                editorMenu.getLevelMenu().getLevelSelector().storeEditableLevel();
+            } else {
+                Game.game.setGameState(GameState.ON_EDITOR);
+                editorMenu.getLevelMenu().getLevelSelector().restoreEditableLevel();
+            }
             Editor.sendLogMessage("Current state: " + Game.game.getGameState());
         });
 
@@ -59,7 +62,7 @@ public final class Editor extends Widget {
         debugButton.setPosX(width / 2.0f + DEFAULT_BORDER_SIZE / 2.0f);
         debugButton.setOnClick(() -> {
             Game.DebugMode = !Game.DebugMode;
-            Editor.sendLogMessage("DEBUG: " + Game.DebugMode);
+            Editor.sendLogMessage("Debug mode: " + Game.DebugMode);
         });
     }
 

@@ -5,6 +5,7 @@ import org.anotherteam.editor.gui.Label;
 import org.anotherteam.editor.level.LevelMenu;
 import org.anotherteam.editor.gui.menu.text.SwitchMenu;
 import org.anotherteam.editor.object.GameObjectMenu;
+import org.jetbrains.annotations.NotNull;
 
 public final class EditorMenu extends SwitchMenu {
 
@@ -23,5 +24,10 @@ public final class EditorMenu extends SwitchMenu {
         addButton("GameObject editor", ()-> gameObjectMenu.setVisible(true), ()-> gameObjectMenu.setVisible(false));
         addButton("Open log", () -> Editor.log().setVisible(true));
         addButton("Close log", () -> Editor.log().setVisible(false));
+    }
+
+    @NotNull
+    public LevelMenu getLevelMenu() {
+        return levelMenu;
     }
 }

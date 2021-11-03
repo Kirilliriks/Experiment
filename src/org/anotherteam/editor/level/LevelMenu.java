@@ -4,6 +4,7 @@ import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.editor.gui.menu.text.SwitchButton;
 import org.anotherteam.editor.gui.menu.text.SwitchMenu;
 import org.anotherteam.editor.level.selector.LevelSelector;
+import org.jetbrains.annotations.NotNull;
 
 public final class LevelMenu extends SwitchMenu {
 
@@ -20,5 +21,10 @@ public final class LevelMenu extends SwitchMenu {
         button.setOnClick(()-> levelSelector.setVisible(true));
         button.setAfterClick(()-> levelSelector.setVisible(false));
         inverted = true;
+    }
+
+    @NotNull
+    public LevelSelector getLevelSelector() {
+        return levelSelector;
     }
 }
