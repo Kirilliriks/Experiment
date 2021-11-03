@@ -1,6 +1,5 @@
 package org.anotherteam.data;
 
-
 import lombok.val;
 import org.anotherteam.level.room.tile.Tile;
 import org.anotherteam.render.shader.Shader;
@@ -13,13 +12,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class AssetData {
+        public static final String ASSETS_PATH = "../assets/";
+        public static final String ROOM_ATLASES_PATH = "atlases/room/";
+        public static final String ENTITY_ATLASES_PATH = "atlases/entity/";
+
         public static final Map<String, SpriteAtlas> spriteAtlases = new HashMap<>();
         public static final Map<String, Texture> textures = new HashMap<>();
 
         public static final Texture EDITOR_TEXTURE = getTexture("editorTexture.png");
-        public static final SpriteAtlas TEST_ROOM_ATLAS = loadRoomAtlas("testTestRoom.png", Tile.SIZE.x,  Tile.SIZE.y, 4);
-        public static final SpriteAtlas TEST_PLAYER_ATLAS = loadSpriteAtlas("testPlayerAtlas.png", 32,  32);
         public static final SpriteAtlas EDITOR_NULL_ICON_ATLAS = loadSpriteAtlas("nullIcon.png", 32,  32);
+
+        public static final SpriteAtlas TEST_ROOM_ATLAS = loadRoomAtlas(ROOM_ATLASES_PATH + "testTestRoom.png", Tile.SIZE.x,  Tile.SIZE.y, 4);
+        public static final SpriteAtlas TEST_PLAYER_ATLAS = loadSpriteAtlas(ENTITY_ATLASES_PATH + "testPlayerAtlas.png", 32,  32);
 
         public static final Shader DEFAULT_SHADER = new Shader("shader/defaultVertexShader.glsl", "shader/defaultFragmentShader.glsl");
         public static final Shader DEBUG_SHADER = new Shader("shader/debugVS.glsl", "shader/debugFS.glsl");
@@ -27,7 +31,7 @@ public final class AssetData {
         @NotNull
         public static Texture getTexture(String textureName) {
                 if (textures.containsKey(textureName)) return textures.get(textureName);
-                val path = "../assets/" + textureName;
+                val path = ASSETS_PATH + textureName;
                 val texture = Texture.create(path);
                 texture.setName(textureName);
                 textures.put(textureName, texture);
