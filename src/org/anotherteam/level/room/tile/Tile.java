@@ -15,7 +15,7 @@ public final class Tile {
     private final Vector2i position;
 
     public Tile(int x, int y, int frameX, int frameY, String atlasName) {
-        this(x, y, frameX, frameY, AssetData.getSpriteAtlas(AssetData.ROOM_ATLASES_PATH + atlasName));
+        this(x, y, frameX, frameY, AssetData.getSpriteAtlas(atlasName));
     }
 
     public Tile(int x, int y, @NotNull SpriteAtlas atlas) {

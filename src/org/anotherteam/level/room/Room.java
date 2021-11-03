@@ -1,7 +1,6 @@
 package org.anotherteam.level.room;
 
 import lombok.val;
-import org.anotherteam.level.Level;
 import org.anotherteam.level.room.object.entity.Player;
 import org.anotherteam.level.room.tile.Tile;
 import org.anotherteam.object.GameObject;
@@ -9,25 +8,19 @@ import org.anotherteam.render.batch.RenderBatch;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public final class Room {
-    private final static Vector2i DEFAULT_POSITION = new Vector2i(10, 20);
-
     private final String name;
 
-    private final List<Tile> tiles;
+    private final Map<Vector2i, Tile> tiles;
     private final List<GameObject> gameObjects; // TODO make Nested List to fast DrawPriority sorting
 
     public Room(String name) {
         this.name = name;
-        this.tiles = new ArrayList<>();
+        this.tiles = new HashMap<>();
         this.gameObjects = new ArrayList<>();
     }
-
-    public void load() { }
 
     public void update(float dt) {
         for (val object : gameObjects){
@@ -36,8 +29,8 @@ public final class Room {
     }
 
     public void drawTexture(@NotNull RenderBatch renderBatch) {
-        for (val tile : tiles) {
-            renderBatch.draw(tile.getTextureSprite(), DEFAULT_POSITION.x + tile.getPosition().x * Tile.SIZE.x, DEFAULT_POSITION.y + tile.getPosition().y * Tile.SIZE.y);
+        for (val tile : tiles.values()) {
+            renderBatch.draw(tile.getTextureSprite(), tile.getPosition().x * Tile.SIZE.x, tile.getPosition().y * Tile.SIZE.y);
         }
 
         for (val gameObject : gameObjects) {
@@ -46,8 +39,8 @@ public final class Room {
     }
 
     public void drawHeight(@NotNull RenderBatch renderBatch) {
-        for (val tile : tiles) {
-            renderBatch.draw(tile.getHeightSprite(), DEFAULT_POSITION.x + tile.getPosition().x * Tile.SIZE.x, DEFAULT_POSITION.y + tile.getPosition().y * Tile.SIZE.y);
+        for (val tile : tiles.values()) {
+            renderBatch.draw(tile.getHeightSprite(), tile.getPosition().x * Tile.SIZE.x, tile.getPosition().y * Tile.SIZE.y);
         }
     }
 
@@ -68,12 +61,16 @@ public final class Room {
     }
 
     @NotNull
-    public List<Tile> getTiles() {
-        return tiles;
+    public Collection<Tile> getTiles() {
+        return tiles.values();
     }
 
-    public void addTile(@NotNull Tile tile) {
-        tiles.add(tile);
+    public void setTile(@NotNull Tile tile) {
+        tiles.put(tile.getPosition(), tile);
+    }
+
+    public void removeTile(int x, int y) {
+        tiles.remove(new Vector2i(x, y));
     }
 
     public String getName() {

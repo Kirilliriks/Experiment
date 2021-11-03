@@ -17,7 +17,7 @@ public final class RoomDeserializer implements JsonDeserializer<Room>, JsonSeria
         val room = new Room(name);
         for (val tileJSON : jsonObject.get("tiles").getAsJsonArray()) {
             val tile = (Tile) context.deserialize(tileJSON, Tile.class);
-            room.addTile(tile);
+            room.setTile(tile);
         }
         for (val tileJSON : jsonObject.get("gameObjects").getAsJsonArray()) {
             val gameObject = (GameObject) context.deserialize(tileJSON, GameObject.class);

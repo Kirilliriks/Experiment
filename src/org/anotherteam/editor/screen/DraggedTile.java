@@ -19,6 +19,6 @@ public class DraggedTile extends DraggedThing {
 
     @NotNull
     public Tile createTile(int x, int y) {
-        return new Tile(x, y, x, y, spriteAtlas);
+        return new Tile(x, y, frameX, frameY, spriteAtlas);
     }
 }
