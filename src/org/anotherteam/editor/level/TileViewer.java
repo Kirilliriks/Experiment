@@ -13,6 +13,7 @@ import org.anotherteam.editor.gui.menu.text.TextMenu;
 import org.anotherteam.editor.gui.menu.text.SwitchMenu;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.editor.screen.DraggedTile;
+import org.anotherteam.level.room.tile.Tile;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
@@ -78,28 +79,32 @@ public final class TileViewer extends GUIElement {
     public void setVisible(boolean visible) {
         super.setVisible(visible);
 
-        if (visible)
+        if (visible) {
             GameScreen.draggedThing = highliter;
-        else
-            GameScreen.draggedThing = null;
+        } else {
+            draggedTile = null;
+        }
     }
 
     @Override
     public void update(float dt) {
-        if (draggedTile != null) {
+        if (draggedTile != null && draggedTile != highliter) {
             if (Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) {
-                val x = GameScreen.onMouseTileX();
-                val y = GameScreen.onMouseTileY();
-                if (x < 0 || y < 0) return;
-                Editor.sendLogMessage("added " + x + " " + y);
+                var x = GameScreen.inGameMouseX();
+                var y = GameScreen.inGameMouseY();
+                if (x < 0 ||  y < 0) return;
+
+                x /= Tile.SIZE.x;
+                y /= Tile.SIZE.y;
 
                 val tile = draggedTile.createTile(x, y);
                 Game.game.getCurrentRoom().setTile(tile);
                 GameScreen.draggedThing = highliter;
-                draggedTile = null;
+                draggedTile = highliter;
+                Editor.sendLogMessage("added " + x + " " + y);
             } else if (Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
                 GameScreen.draggedThing = highliter;
-                draggedTile = null;
+                draggedTile = highliter;
             }
             return;
         }
@@ -114,8 +119,10 @@ public final class TileViewer extends GUIElement {
 
     @Override
     public void render(@NotNull EditorBatch editorBatch) {
+        if (!visible) return;
+
         super.render(editorBatch);
-        if (draggedTile != null) {
+        if (GameScreen.draggedThing != null && draggedTile != null && draggedTile != highliter) {
             editorBatch.draw(draggedTile.getSprite(), Input.getMouseX(), Input.getMouseY());
         }
     }

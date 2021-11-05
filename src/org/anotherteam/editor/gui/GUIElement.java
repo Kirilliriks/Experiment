@@ -3,6 +3,7 @@ package org.anotherteam.editor.gui;
 import lombok.val;
 import org.anotherteam.data.AssetData;
 import org.anotherteam.editor.render.EditorBatch;
+import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
@@ -43,6 +44,7 @@ public abstract class GUIElement {
 
     public void setVisible(boolean visible) {
         this.visible = visible;
+        GameScreen.draggedThing = null;
     }
 
     public boolean isVisible() {

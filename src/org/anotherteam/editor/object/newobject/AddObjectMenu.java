@@ -20,7 +20,6 @@ import org.anotherteam.object.prefab.EntityPrefab;
 import org.anotherteam.object.prefab.Prefab;
 import org.anotherteam.render.sprite.Sprite;
 import org.anotherteam.screen.GameScreen;
-import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
 
 public final class AddObjectMenu extends GUIElement {
@@ -68,6 +67,14 @@ public final class AddObjectMenu extends GUIElement {
     }
 
     @Override
+    public void setVisible(boolean visible) {
+        super.setVisible(visible);
+
+        if (!visible)
+            draggedGameObject = null;
+    }
+
+    @Override
     public void update(float dt) {
         if (draggedGameObject != null) {
             if (Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) {
@@ -105,17 +112,17 @@ public final class AddObjectMenu extends GUIElement {
 
     @NotNull
     public Sprite getObjectSprite(@NotNull GameObject gameObject) {
-        val sprite = gameObject.hasComponent(SpriteController.class) ?
+        return gameObject.hasComponent(SpriteController.class) ?
                 gameObject.getComponent(SpriteController.class).getSprite() :
                 AssetData.EDITOR_NULL_ICON_ATLAS.getSprite(0, 0);
-        if (sprite == null) throw new LifeException("Prefab " + gameObject.getClass().getSimpleName() + " don't have sprite");
-        return sprite;
     }
 
     @Override
     public void render(@NotNull EditorBatch editorBatch) {
+        if (!visible) return;
+
         super.render(editorBatch);
-        if (draggedGameObject != null) {
+        if (GameScreen.draggedThing != null && draggedGameObject != null) {
             val x  = (int) Input.getMouseX();
             val y  = (int) Input.getMouseY();
             draggedGameObject.getGameObject().setPosition(x, y);
