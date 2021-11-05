@@ -41,6 +41,8 @@ public class SpriteButton extends Button {
 
     @Override
     public void render(@NotNull EditorBatch editorBatch) {
+        if (!visible) return;
+
         super.render(editorBatch);
         editorBatch.draw(sprite, getPosX(), getPosY(), SpriteMenu.ICON_SIZE, SpriteMenu.ICON_SIZE);
     }

@@ -57,9 +57,9 @@ public class SpriteMenu extends GUIElement {
 
     @Override
     public void render(@NotNull EditorBatch editorBatch) {
-        super.render(editorBatch);
         if (!visible) return;
 
+        super.render(editorBatch);
         for (val bnt : buttons) {
             if (bnt.tryDrawPreview(editorBatch))
                 break;
