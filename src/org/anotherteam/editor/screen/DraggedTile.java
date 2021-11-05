@@ -1,11 +1,13 @@
 package org.anotherteam.editor.screen;
 
+import lombok.val;
 import org.anotherteam.level.room.tile.Tile;
+import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.sprite.SpriteAtlas;
 import org.anotherteam.screen.DraggedThing;
 import org.jetbrains.annotations.NotNull;
 
-public class DraggedTile extends DraggedThing {
+public final class DraggedTile extends DraggedThing {
 
     private final SpriteAtlas spriteAtlas;
     private final int frameX, frameY;
@@ -20,5 +22,12 @@ public class DraggedTile extends DraggedThing {
     @NotNull
     public Tile createTile(int x, int y) {
         return new Tile(x, y, frameX, frameY, spriteAtlas);
+    }
+
+    @Override
+    public void render(int x, int y, @NotNull RenderBatch renderBatch) {
+        val xF = (x / Tile.SIZE.x) * Tile.SIZE.x;
+        val yF = (y / Tile.SIZE.y) * Tile.SIZE.y;
+        renderBatch.draw(sprite, xF, yF, Tile.SIZE.x, Tile.SIZE.y);
     }
 }

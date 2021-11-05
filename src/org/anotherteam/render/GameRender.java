@@ -115,14 +115,8 @@ public final class GameRender {
             val mouseX = GameScreen.inGameMouseX();
             val mouseY = GameScreen.inGameMouseY();
             if (mouseX < 0 || mouseY < 0) return;
-            if (GameScreen.draggedThing instanceof DraggedGameObject draggedGameObject) {
-                draggedGameObject.getGameObject().setPosition(mouseX, mouseY);
-                draggedGameObject.getGameObject().render(textureBatch);
-            } else if (GameScreen.draggedThing instanceof DraggedTile draggedTile){
-                val x = (mouseX / Tile.SIZE.x) * Tile.SIZE.x;
-                val y = (mouseY / Tile.SIZE.y) * Tile.SIZE.y;
-                textureBatch.draw(draggedTile.getSprite(), x, y, Tile.SIZE.x, Tile.SIZE.y);
-            } else textureBatch.draw(GameScreen.draggedThing.getSprite(), mouseX, mouseY);
+
+            GameScreen.draggedThing.render(mouseX, mouseY, textureBatch);
         }
     }
 
