@@ -55,8 +55,4 @@ public class SwitchMenu extends TextMenu {
         switchButton.setClicked(true);
         lastClicked = switchButton;
     }
-
-    public boolean hasLastClicked() {
-        return lastClicked != null;
-    }
 }

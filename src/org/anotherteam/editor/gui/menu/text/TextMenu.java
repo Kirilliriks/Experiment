@@ -73,6 +73,7 @@ public class TextMenu extends GUIElement {
                 if (!button.getText().equals(btn.getText())) continue;
 
                 index = buttons.indexOf(btn);
+                button = btn;
                 break;
             }
         }
@@ -97,19 +98,27 @@ public class TextMenu extends GUIElement {
                 button.setPos(0, height - (startOffset.y + buttonHeight * index + offsetY));
             }
             case DOUBLE -> {
-                int sizeX = width / DOUBLE_BUTTON_OFFSET.x;
-                int sizeY = height / DOUBLE_BUTTON_OFFSET.y;
+                val sizeX = width / DOUBLE_BUTTON_OFFSET.x;
+                val sizeY = height / DOUBLE_BUTTON_OFFSET.y;
                 if (index >= sizeX * sizeY) throw new LifeException("Need create pages mechanic");
 
                 // X and Y are specially swapped
-                int y = index % sizeX;
-                int x = index / sizeY;
+                int y = index % sizeY;
+                int x = (index - y) / sizeX;
                 button.setPos(x * DOUBLE_BUTTON_OFFSET.x,
                               height - (y + 1) * DOUBLE_BUTTON_OFFSET.y);
             }
         }
-        buttons.add(button);
+
+        if (!buttons.contains(button))
+            buttons.add(button);
         return button;
+    }
+
+    @Override
+    public void clearChild() {
+        super.clearChild();
+        buttons.clear();
     }
 
     @NotNull

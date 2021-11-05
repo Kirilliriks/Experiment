@@ -354,6 +354,88 @@
           ]
         }
       ]
+    },
+    {
+      "name": "EmptyFirst",
+      "tiles": [],
+      "gameObjects": [
+        {
+          "type": "org.anotherteam.level.room.object.entity.Player",
+          "pos": {
+            "x": 70,
+            "y": 30
+          },
+          "components": [
+            {
+              "type": "Collider",
+              "firstBound": {
+                "x": -6,
+                "y": 0
+              },
+              "secondBound": {
+                "x": 6,
+                "y": 32
+              },
+              "solid": false,
+              "interactive": false,
+              "interactFirstBound": {
+                "x": 0,
+                "y": 0
+              },
+              "interactSecondBound": {
+                "x": 16,
+                "y": 32
+              }
+            },
+            {
+              "type": "Transform",
+              "maxSpeed": 25,
+              "speed": 25
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "EmptySecond",
+      "tiles": [],
+      "gameObjects": [
+        {
+          "type": "org.anotherteam.level.room.object.entity.Player",
+          "pos": {
+            "x": 123,
+            "y": 43
+          },
+          "components": [
+            {
+              "type": "Collider",
+              "firstBound": {
+                "x": -6,
+                "y": 0
+              },
+              "secondBound": {
+                "x": 6,
+                "y": 32
+              },
+              "solid": false,
+              "interactive": false,
+              "interactFirstBound": {
+                "x": 0,
+                "y": 0
+              },
+              "interactSecondBound": {
+                "x": 16,
+                "y": 32
+              }
+            },
+            {
+              "type": "Transform",
+              "maxSpeed": 25,
+              "speed": 25
+            }
+          ]
+        }
+      ]
     }
   ]
 }
