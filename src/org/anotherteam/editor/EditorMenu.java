@@ -15,15 +15,17 @@ public final class EditorMenu extends SwitchMenu {
     public EditorMenu(float x, float y, GUIElement ownerElement) {
         super(x, y, 0, DEFAULT_BUTTON_MENU_HEIGHT, Type.HORIZONTAL, ownerElement);
         this.levelMenu = new LevelMenu(Label.DEFAULT_TEXT_OFFSET, -height - height * 0.4f, this);
+        levelMenu.setClicked(levelMenu.getButton(0));
         levelMenu.setVisible(false);
 
         this.gameObjectMenu = new GameObjectMenu(Label.DEFAULT_TEXT_OFFSET, -height - height * 0.4f, this);
+        gameObjectMenu.setClicked(gameObjectMenu.getButton(0));
         gameObjectMenu.setVisible(false);
 
         addButton("Level editor", ()-> levelMenu.setVisible(true), ()-> levelMenu.setVisible(false));
         addButton("GameObject editor", ()-> gameObjectMenu.setVisible(true), ()-> gameObjectMenu.setVisible(false));
-        addButton("Open log", () -> Editor.log().setVisible(true));
-        addButton("Close log", () -> Editor.log().setVisible(false));
+        addTextButton("Open log", () -> Editor.log().setVisible(true));
+        addTextButton("Close log", () -> Editor.log().setVisible(false));
     }
 
     @NotNull

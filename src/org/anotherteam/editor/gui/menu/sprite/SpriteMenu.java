@@ -53,4 +53,10 @@ public class SpriteMenu extends GUIElement {
         buttons.add(spriteButton);
         return spriteButton;
     }
+
+    @Override
+    public void clearChild() {
+        super.clearChild();
+        buttons.clear();
+    }
 }

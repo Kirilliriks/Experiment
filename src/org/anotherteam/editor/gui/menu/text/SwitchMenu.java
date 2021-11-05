@@ -18,6 +18,14 @@ public class SwitchMenu extends TextMenu {
         lastClicked = null;
     }
 
+    @NotNull
+    public TextButton addTextButton(String text, Runnable onClick) {
+        val button = new TextButton(text, 0, 0, this);
+        button.setOnClick(onClick);
+        addButton(button);
+        return button;
+    }
+
     @Override
     @NotNull
     public SwitchButton addButton(String text) {
