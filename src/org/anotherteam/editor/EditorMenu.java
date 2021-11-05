@@ -26,6 +26,7 @@ public final class EditorMenu extends SwitchMenu {
         addButton("GameObject editor", ()-> gameObjectMenu.setVisible(true), ()-> gameObjectMenu.setVisible(false));
         addTextButton("Open log", () -> Editor.log().setVisible(true));
         addTextButton("Close log", () -> Editor.log().setVisible(false));
+        setClicked(getButton(0));
     }
 
     @NotNull

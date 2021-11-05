@@ -16,10 +16,13 @@ public final class Room {
     private final Map<Vector2i, Tile> tiles;
     private final List<GameObject> gameObjects; // TODO make Nested List to fast DrawPriority sorting
 
+    private Player player;
+
     public Room(String name) {
         this.name = name;
-        this.tiles = new HashMap<>();
-        this.gameObjects = new ArrayList<>();
+        tiles = new HashMap<>();
+        gameObjects = new ArrayList<>();
+        player = null;
     }
 
     public void update(float dt) {
@@ -50,9 +53,16 @@ public final class Room {
     }
 
     public void addObject(@NotNull GameObject object) {
+        if (object instanceof Player)
+            player = (Player) object;
         object.setRoom(this);
         gameObjects.add(object);
         gameObjects.sort(Comparator.comparingInt(GameObject::getRenderPriority));
+    }
+
+    @NotNull
+    public Player getPlayer() {
+        return player;
     }
 
     public void rewoveObject(@NotNull GameObject object) {

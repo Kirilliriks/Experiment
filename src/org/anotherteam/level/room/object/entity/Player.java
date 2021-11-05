@@ -8,13 +8,10 @@ import org.anotherteam.object.type.entity.EntityObject;
 
 public class Player extends EntityObject {
 
-    public static Player PLAYER;
-
     public Player(int x, int y) {
         super(x, y,
                 AssetData.TEST_PLAYER_ATLAS,
                 PlayerState.IDLE);
-        PLAYER = this;
         collider.setBounds(-6, 0, 6, 32);
         collider.setInteractBounds(0, 0, 16, 32);
         transform.setSpeed(25);
