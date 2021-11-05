@@ -1,6 +1,8 @@
 package org.anotherteam.editor.screen;
 
 import lombok.val;
+import org.anotherteam.data.AssetData;
+import org.anotherteam.editor.gui.menu.sprite.SpriteMenu;
 import org.anotherteam.level.room.tile.Tile;
 import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.sprite.SpriteAtlas;
@@ -29,5 +31,8 @@ public final class DraggedTile extends DraggedThing {
         val xF = (x / Tile.SIZE.x) * Tile.SIZE.x;
         val yF = (y / Tile.SIZE.y) * Tile.SIZE.y;
         renderBatch.draw(sprite, xF, yF, Tile.SIZE.x, Tile.SIZE.y);
+
+        if (spriteAtlas != AssetData.EDITOR_HIGHLITER_ATLAS)
+            renderBatch.draw(AssetData.EDITOR_HIGHLITER_TEXTURE, xF, yF, Tile.SIZE.x, Tile.SIZE.y);
     }
 }

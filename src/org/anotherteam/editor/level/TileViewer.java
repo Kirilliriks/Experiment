@@ -122,8 +122,8 @@ public final class TileViewer extends GUIElement {
         if (!visible) return;
 
         super.render(editorBatch);
-        if (GameScreen.draggedThing != null && draggedTile != null && draggedTile != highliter) {
-            editorBatch.draw(draggedTile.getSprite(), Input.getMouseX(), Input.getMouseY());
-        }
+
+        if (GameScreen.draggedThing == null || draggedTile == null || draggedTile == highliter) return;
+        editorBatch.draw(draggedTile.getSprite(), Input.getMouseX(), Input.getMouseY());
     }
 }
