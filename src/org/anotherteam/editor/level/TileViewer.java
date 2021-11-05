@@ -99,8 +99,6 @@ public final class TileViewer extends GUIElement {
 
                 val tile = draggedTile.createTile(x, y);
                 Game.game.getCurrentRoom().setTile(tile);
-                GameScreen.draggedThing = highliter;
-                draggedTile = highliter;
                 Editor.sendLogMessage("added " + x + " " + y);
             } else if (Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
                 GameScreen.draggedThing = highliter;
@@ -124,6 +122,6 @@ public final class TileViewer extends GUIElement {
         super.render(editorBatch);
 
         if (GameScreen.draggedThing == null || draggedTile == null || draggedTile == highliter) return;
-        editorBatch.draw(draggedTile.getSprite(), Input.getMouseX(), Input.getMouseY());
+        editorBatch.draw(draggedTile.getSprite(), Input.getMouseX(), Input.getMouseY(), SpriteMenu.ICON_SIZE, SpriteMenu.ICON_SIZE);
     }
 }
