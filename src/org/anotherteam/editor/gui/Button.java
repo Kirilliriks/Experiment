@@ -25,7 +25,7 @@ public abstract class Button extends GUIElement {
     @Override
     public abstract void update(float dt);
 
-    public boolean mouseOnWidget() {
+    public boolean isMouseOnWidget() {
         val mouseX = Input.getMousePos().x;
         val mouseY = Input.getMousePos().y;
         if (mouseX < getPosX() || mouseX > getPosX() + width) return false;

@@ -2,6 +2,7 @@ package org.anotherteam.editor.gui.menu.sprite;
 
 import lombok.val;
 import org.anotherteam.editor.gui.GUIElement;
+import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.render.sprite.Sprite;
 import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
@@ -52,6 +53,17 @@ public class SpriteMenu extends GUIElement {
                             height - (y + 1) * ICON_SIZE - (y + 1) * offsetIcon);
         buttons.add(spriteButton);
         return spriteButton;
+    }
+
+    @Override
+    public void render(@NotNull EditorBatch editorBatch) {
+        super.render(editorBatch);
+        if (!visible) return;
+
+        for (val bnt : buttons) {
+            if (bnt.tryDrawPreview(editorBatch))
+                break;
+        }
     }
 
     @Override

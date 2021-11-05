@@ -5,7 +5,6 @@ import org.anotherteam.editor.gui.Button;
 import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.editor.gui.Label;
 import org.anotherteam.util.Color;
-import org.lwjgl.glfw.GLFW;
 
 public class TextButton extends Button {
 
@@ -59,7 +58,7 @@ public class TextButton extends Button {
             return;
         }
         setClicked(false);
-        if (!mouseOnWidget()) return;
+        if (!isMouseOnWidget()) return;
         if (!Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) return;
         setClicked(true);
     }

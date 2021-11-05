@@ -10,6 +10,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class SpriteButton extends Button {
 
+    public static final int PREVIEW_SCALE = 5;
+
     private final Sprite sprite;
 
     public SpriteButton(@NotNull Sprite sprite, float x, float y, GUIElement ownerElement) {
@@ -32,7 +34,7 @@ public class SpriteButton extends Button {
         if (!visible) return;
 
         setClicked(false);
-        if (!mouseOnWidget()) return;
+        if (!isMouseOnWidget()) return;
         if (!Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) return;
         setClicked(true);
     }
@@ -41,5 +43,12 @@ public class SpriteButton extends Button {
     public void render(@NotNull EditorBatch editorBatch) {
         super.render(editorBatch);
         editorBatch.draw(sprite, getPosX(), getPosY(), SpriteMenu.ICON_SIZE, SpriteMenu.ICON_SIZE);
+    }
+
+    public boolean tryDrawPreview(@NotNull EditorBatch editorBatch) {
+        if (!isMouseOnWidget()) return false;
+        editorBatch.draw(sprite, getPosX() + SpriteMenu.ICON_SIZE, getPosY() - SpriteMenu.ICON_SIZE * PREVIEW_SCALE,
+                SpriteMenu.ICON_SIZE * PREVIEW_SCALE, SpriteMenu.ICON_SIZE * PREVIEW_SCALE);
+        return true;
     }
 }
