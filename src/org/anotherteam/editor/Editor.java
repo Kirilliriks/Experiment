@@ -90,6 +90,11 @@ public final class Editor extends Widget {
     }
 
     @NotNull
+    public EditorMenu getEditorMenu() {
+        return editorMenu;
+    }
+
+    @NotNull
     public static Editor getInstance() {
         return editor;
     }

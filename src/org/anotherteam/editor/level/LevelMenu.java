@@ -20,19 +20,13 @@ public final class LevelMenu extends SwitchMenu {
         var button = getButton(0);
         levelSelector = new LevelSelector(getWidestButtonWidth(), 0, this);
         levelSelector.setVisible(false);
-        button.setOnClick(()-> {
-            levelSelector.fillButtons();
-            levelSelector.setVisible(true);
-        });
+        button.setOnClick(()-> levelSelector.setVisible(true));
         button.setAfterClick(()-> levelSelector.setVisible(false));
 
         button = getButton(1);
         roomSelector = new RoomSelector(getWidestButtonWidth(), 0, this);
         roomSelector.setVisible(false);
-        button.setOnClick(()-> {
-            roomSelector.fillButtons();
-            roomSelector.setVisible(true);
-        });
+        button.setOnClick(()-> roomSelector.setVisible(true));
         button.setAfterClick(()-> roomSelector.setVisible(false));
 
         button = getButton(2);

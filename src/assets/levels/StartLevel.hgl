@@ -6,6 +6,20 @@
       "tiles": [
         {
           "xPos": 2,
+          "yPos": 1,
+          "frameX": 2,
+          "frameY": 0,
+          "atlasName": "atlases/room/testTestRoom.png"
+        },
+        {
+          "xPos": 4,
+          "yPos": 3,
+          "frameX": 4,
+          "frameY": 2,
+          "atlasName": "atlases/room/testTestRoom.png"
+        },
+        {
+          "xPos": 2,
           "yPos": 2,
           "frameX": 2,
           "frameY": 1,
@@ -240,20 +254,6 @@
           "yPos": 4,
           "frameX": 6,
           "frameY": 3,
-          "atlasName": "atlases/room/testTestRoom.png"
-        },
-        {
-          "xPos": 2,
-          "yPos": 1,
-          "frameX": 2,
-          "frameY": 0,
-          "atlasName": "atlases/room/testTestRoom.png"
-        },
-        {
-          "xPos": 4,
-          "yPos": 3,
-          "frameX": 4,
-          "frameY": 2,
           "atlasName": "atlases/room/testTestRoom.png"
         }
       ],
@@ -261,8 +261,8 @@
         {
           "type": "org.anotherteam.level.room.object.Wall",
           "pos": {
-            "x": 144,
-            "y": 30
+            "x": 3,
+            "y": 25
           },
           "components": [
             {
@@ -291,8 +291,8 @@
         {
           "type": "org.anotherteam.level.room.object.Wall",
           "pos": {
-            "x": 14,
-            "y": 29
+            "x": 134,
+            "y": 25
           },
           "components": [
             {
@@ -322,7 +322,7 @@
           "type": "org.anotherteam.level.room.object.entity.Player",
           "pos": {
             "x": 26,
-            "y": 29
+            "y": 25
           },
           "components": [
             {

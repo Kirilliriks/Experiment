@@ -44,6 +44,13 @@ public class RoomSelector extends GUIElement {
         downButtons.addButton(saveLevelButton);
     }
 
+    @Override
+    public void setVisible(boolean visible) {
+        super.setVisible(visible);
+        if (visible)
+            fillButtons();
+    }
+
     public void fillButtons() {
         selector.clearChild();
         val rooms  = Game.game.levelManager.getCurrentLevel().getRooms();

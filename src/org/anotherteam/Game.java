@@ -40,9 +40,11 @@ public final class Game {
         DebugRender.global = new DebugRender(gameScreen.windowCamera);
         init();
 
-        this.editor = new Editor(gameScreen);
+        editor = new Editor(gameScreen);
 
         levelManager.loadLevel(startLevelName);
+
+        editor.getEditorMenu().getLevelMenu().getLevelSelector().fillButtons();
     }
 
     public void init() { }
