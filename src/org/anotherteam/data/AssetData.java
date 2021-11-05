@@ -19,8 +19,12 @@ public final class AssetData {
         public static final Map<String, SpriteAtlas> spriteAtlases = new HashMap<>();
         public static final Map<String, Texture> textures = new HashMap<>();
 
+        // Editor textures
         public static final Texture EDITOR_TEXTURE = getTexture("editorTexture.png");
+        public static final Texture EDITOR_HIGHLITER_TEXTURE = getTexture("editor_highliter_texture.png");
+        public static final SpriteAtlas EDITOR_HIGHLITER_ATLAS = loadSpriteAtlas("editor_highliter_texture.png", 16,  16);
         public static final SpriteAtlas EDITOR_NULL_ICON_ATLAS = loadSpriteAtlas("nullIcon.png", 32,  32);
+        //
 
         public static final SpriteAtlas TEST_ROOM_ATLAS = loadSpriteAtlas(ROOM_ATLASES_PATH + "testTestRoom.png", Tile.SIZE.x,  Tile.SIZE.y);
         public static final SpriteAtlas TEST_PLAYER_ATLAS = loadSpriteAtlas(ENTITY_ATLASES_PATH + "testPlayerAtlas.png", 32,  32);
@@ -31,6 +35,7 @@ public final class AssetData {
         @NotNull
         public static Texture getTexture(String textureName) {
                 if (textures.containsKey(textureName)) return textures.get(textureName);
+
                 val path = ASSETS_PATH + textureName;
                 val texture = Texture.create(path);
                 texture.setName(textureName);
@@ -47,16 +52,11 @@ public final class AssetData {
         }
 
         @NotNull
-        public static SpriteAtlas getOrLoadRoomAtlas(String atlasName) {
+        public static SpriteAtlas getSpriteAtlas(String atlasName) {
                 if (!spriteAtlases.containsKey(atlasName)) {
                         loadSpriteAtlas(atlasName, Tile.SIZE.x, Tile.SIZE.y);
                 }
-                return spriteAtlases.get(atlasName);
-        }
-
-        @NotNull
-        public static SpriteAtlas getSpriteAtlas(String atlasName) {
-                if (!spriteAtlases.containsKey(atlasName)) throw new LifeException("Don't found atlas " + atlasName);
+                //throw new LifeException("Don't found atlas " + atlasName);
                 return spriteAtlases.get(atlasName);
         }
 }

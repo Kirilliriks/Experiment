@@ -1,6 +1,7 @@
 package org.anotherteam.editor.gui.menu.sprite;
 
 import org.anotherteam.Input;
+import org.anotherteam.data.AssetData;
 import org.anotherteam.editor.gui.Button;
 import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.editor.render.EditorBatch;
@@ -49,6 +50,7 @@ public class SpriteButton extends Button {
 
     public boolean tryDrawPreview(@NotNull EditorBatch editorBatch) {
         if (!isMouseOnWidget()) return false;
+        editorBatch.draw(AssetData.EDITOR_HIGHLITER_TEXTURE, getPosX(), getPosY(), SpriteMenu.ICON_SIZE, SpriteMenu.ICON_SIZE);
         editorBatch.draw(sprite, getPosX() + SpriteMenu.ICON_SIZE, getPosY() - SpriteMenu.ICON_SIZE * PREVIEW_SCALE,
                 SpriteMenu.ICON_SIZE * PREVIEW_SCALE, SpriteMenu.ICON_SIZE * PREVIEW_SCALE);
         return true;

@@ -7,8 +7,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class DraggedTile extends DraggedThing {
 
-    private final SpriteAtlas spriteAtlas;
-    private final int frameX, frameY;
+    private SpriteAtlas spriteAtlas;
+    private int frameX, frameY;
 
     public DraggedTile(int frameX, int frameY, @NotNull SpriteAtlas spriteAtlas) {
         super(spriteAtlas.getSprite(frameX, frameY));

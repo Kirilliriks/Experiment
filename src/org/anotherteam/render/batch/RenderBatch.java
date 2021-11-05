@@ -140,6 +140,10 @@ public class RenderBatch extends Batch {
         draw(texture, x, y, texture.getWidth(), texture.getHeight(), flipX, flipY);
     }
 
+    public void draw(Texture texture, float x, float y, int width, int height) {
+        draw(texture, x, y, width, height, false, false);
+    }
+
     public void draw(Texture texture,
                      float x, float y,
                      int width, int height,

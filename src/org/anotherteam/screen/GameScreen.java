@@ -3,9 +3,9 @@ package org.anotherteam.screen;
 import lombok.val;
 import org.anotherteam.Input;
 import org.anotherteam.data.AssetData;
+import org.anotherteam.level.room.tile.Tile;
 import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.screen.Camera;
-import org.anotherteam.render.sprite.Sprite;
 import org.anotherteam.render.window.Window;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
@@ -43,5 +43,13 @@ public class GameScreen {
         val renderHeight = GameScreen.HEIGHT * RENDER_SCALE;
         if (Input.getMouseY() < POSITION.y || Input.getMouseY() > POSITION.y + renderHeight) return -1;
         return (int) (((Input.getMouseY() - POSITION.y) / renderHeight) * GameScreen.HEIGHT);
+    }
+
+    public static int onMouseTileX() {
+        return inGameMouseX() / Tile.SIZE.x;
+    }
+
+    public static int onMouseTileY() {
+        return inGameMouseY() / Tile.SIZE.y;
     }
 }

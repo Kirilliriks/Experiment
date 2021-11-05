@@ -13,7 +13,6 @@ import org.anotherteam.editor.gui.menu.text.TextMenu;
 import org.anotherteam.editor.gui.menu.text.SwitchMenu;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.editor.screen.DraggedTile;
-import org.anotherteam.level.room.tile.Tile;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
@@ -24,6 +23,7 @@ public final class TileViewer extends GUIElement {
 
     private final SwitchMenu typeMenu;
 
+    private final DraggedTile highliter;
     private DraggedTile draggedTile;
 
     public TileViewer(float x, float y, GUIElement ownerElement) {
@@ -39,6 +39,8 @@ public final class TileViewer extends GUIElement {
         typeMenu.setStartOffset(Label.DEFAULT_TEXT_OFFSET, 0);
         fillAtlasesButtons();
         typeMenu.setClicked(typeMenu.getButton(0));
+
+        highliter = new DraggedTile(0, 0, AssetData.EDITOR_HIGHLITER_ATLAS);
     }
 
     public void fillAtlasesButtons() {
@@ -52,7 +54,7 @@ public final class TileViewer extends GUIElement {
     }
 
     public void generateTileMenu(@NotNull SwitchButton button, @NotNull String fileName) {
-        val spriteAtlas = AssetData.getOrLoadRoomAtlas(AssetData.ROOM_ATLASES_PATH + fileName);
+        val spriteAtlas = AssetData.getSpriteAtlas(AssetData.ROOM_ATLASES_PATH + fileName);
 
         val spriteMenu = new SpriteMenu(0, -typeMenu.getHeight(), width, height - typeMenu.getHeight(), this);
         spriteMenu.setVisible(false);
@@ -73,28 +75,38 @@ public final class TileViewer extends GUIElement {
     }
 
     @Override
+    public void setVisible(boolean visible) {
+        super.setVisible(visible);
+
+        if (visible)
+            GameScreen.draggedThing = highliter;
+        else
+            GameScreen.draggedThing = null;
+    }
+
+    @Override
     public void update(float dt) {
         if (draggedTile != null) {
             if (Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) {
-                val x = GameScreen.inGameMouseX() / Tile.SIZE.x;
-                val y = GameScreen.inGameMouseY() / Tile.SIZE.y;
+                val x = GameScreen.onMouseTileX();
+                val y = GameScreen.onMouseTileY();
                 if (x < 0 || y < 0) return;
                 Editor.sendLogMessage("added " + x + " " + y);
 
                 val tile = draggedTile.createTile(x, y);
                 Game.game.getCurrentRoom().setTile(tile);
-                GameScreen.draggedThing = null;
+                GameScreen.draggedThing = highliter;
                 draggedTile = null;
             } else if (Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
-                GameScreen.draggedThing = null;
+                GameScreen.draggedThing = highliter;
                 draggedTile = null;
             }
             return;
         }
         if (Input.isAnyButtonPressed()) {
             if (Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
-                val x = GameScreen.inGameMouseX() / Tile.SIZE.x;
-                val y = GameScreen.inGameMouseY() / Tile.SIZE.y;
+                val x = GameScreen.onMouseTileX();
+                val y = GameScreen.onMouseTileY();
                 Game.game.getCurrentRoom().removeTile(x, y);
             }
         }
