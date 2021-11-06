@@ -5,8 +5,9 @@ import org.anotherteam.Input;
 import org.anotherteam.data.AssetData;
 import org.anotherteam.object.component.state.type.PlayerState;
 import org.anotherteam.object.type.entity.EntityObject;
+import org.anotherteam.screen.GameScreen;
 
-public class Player extends EntityObject {
+public final class Player extends EntityObject {
 
     public Player(int x, int y) {
         super(x, y,
@@ -21,13 +22,16 @@ public class Player extends EntityObject {
     @Override
     public void update(float delta) {
         super.update(delta);
+        GameScreen.gameCamera.setPosition(position.x, GameScreen.HEIGHT / 2.0f);
+
         float newMove = 0;
 
-        if (Input.isKeyPressed(Input.KEY_W))
+        if (Input.isKeyPressed(Input.KEY_W)) {
             position.y += 1;
-        if (Input.isKeyPressed(Input.KEY_S))
+        }
+        if (Input.isKeyPressed(Input.KEY_S)) {
             position.y -= 1;
-
+        }
         if (Input.isKeyDown(Input.KEY_A)) {
             newMove -= transform.getSpeed() * delta;
         }

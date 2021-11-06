@@ -99,7 +99,6 @@ public final class TileViewer extends GUIElement {
 
                 val tile = draggedTile.createTile(x, y);
                 Game.game.getCurrentRoom().setTile(tile);
-                Editor.sendLogMessage("added " + x + " " + y);
             } else if (Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
                 GameScreen.draggedThing = highliter;
                 draggedTile = highliter;

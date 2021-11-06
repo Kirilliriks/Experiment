@@ -37,7 +37,7 @@ public final class Editor extends Widget {
                 GameScreen.window.getWidth() - 10, GameScreen.window.getHeight() / 2 - 40, null);
         editor = this;
         editorFont.setScale(2.0f);
-        this.editorBatch = new EditorBatch(AssetData.DEFAULT_SHADER, gameScreen.windowCamera);
+        this.editorBatch = new EditorBatch(AssetData.DEFAULT_SHADER, GameScreen.windowCamera);
         this.editorFrame = new FrameBuffer(GameScreen.window.getWidth(), GameScreen.window.getHeight());
 
         // GUI
@@ -54,6 +54,7 @@ public final class Editor extends Widget {
             } else {
                 Game.game.setGameState(GameState.ON_EDITOR);
                 editorMenu.getLevelMenu().getLevelSelector().restoreEditableLevel();
+                GameScreen.gameCamera.setPosition(GameScreen.WIDTH / 2.0f, GameScreen.HEIGHT / 2.0f);
             }
             Editor.sendLogMessage("Current state: " + Game.game.getGameState());
         });

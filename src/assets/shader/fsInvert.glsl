@@ -1,9 +1,11 @@
 #version 460 core
 in vec2 tex_coord;
 in vec2 tex_positions;
+
+in vec4 translated_player_pos;
+
 uniform sampler2D u_texture;
 layout (binding = 1, rgba8) uniform readonly image2D u_texture1;
-uniform vec2 player_pos;
 
 void main() {
     // constants
@@ -13,8 +15,8 @@ void main() {
     endPosition.x = int(tex_positions.x);
     endPosition.y = int(tex_positions.y);
 
-    startPosition.x = int(player_pos.x);
-    startPosition.y = int(player_pos.y);
+    startPosition.x = int(translated_player_pos.x);
+    startPosition.y = int(translated_player_pos.y);
     //
     vec4 color = texture2D(u_texture, tex_coord);
 
@@ -31,7 +33,9 @@ void main() {
     float lastPower = 1.0;
     float nextPower = 1.0; //
     float hidePower = 1.0; // if zero pixel not visible, else visible
+
     color.a = 0.0;
+
     for (int i = 0; i < 100; i++) {
         if(startPosition == endPosition) {
             color.a = 1;

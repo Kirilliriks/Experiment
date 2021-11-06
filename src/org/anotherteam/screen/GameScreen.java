@@ -13,21 +13,21 @@ import org.joml.Vector2i;
 public class GameScreen {
     public static final Vector2i POSITION = new Vector2i(0, 0);
     public static final int RENDER_SCALE = 5;
+
     public static final int WIDTH = 160;
     public static final int HEIGHT = 90;
 
-    public static DraggedThing draggedThing = null;
+    public final static Camera gameCamera = new Camera(WIDTH / 2, HEIGHT / 2, WIDTH, HEIGHT);
+    public final static Camera windowCamera = new Camera();
 
     public static RenderBatch windowBatch;
-
     public static Window window;
 
-    public final Camera gameCamera;
-    public final Camera windowCamera;
+    public static DraggedThing draggedThing = null;
 
     public GameScreen(@NotNull Window window) {
-        this.windowCamera = new Camera(0, 0, window.getWidth(), window.getHeight());
-        this.gameCamera = new Camera(0, 0, WIDTH, HEIGHT);
+        windowCamera.setPosition(window.getWidth() / 2.0f, window.getHeight() / 2.0f);
+        windowCamera.setProjection(window.getWidth(), window.getHeight());
 
         GameScreen.window = window;
         windowBatch = new RenderBatch(AssetData.DEFAULT_SHADER, windowCamera);

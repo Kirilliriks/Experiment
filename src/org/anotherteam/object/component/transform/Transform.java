@@ -7,6 +7,7 @@ import org.anotherteam.object.component.collider.Collider;
 import org.anotherteam.object.component.sprite.SpriteController;
 import org.anotherteam.object.component.state.StateController;
 import org.anotherteam.object.component.state.type.EntityState;
+import org.anotherteam.screen.GameScreen;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
@@ -21,7 +22,7 @@ public final class Transform extends Component {
 
     public final Vector2f moveImpulse;
 
-    private Vector2i ownerPosition;
+    private Vector2i position;
     private int speed;
 
     private boolean moving;
@@ -48,7 +49,7 @@ public final class Transform extends Component {
     @Override
     public void setOwnerObject(@NotNull GameObject ownerObject) {
         super.setOwnerObject(ownerObject);
-        ownerPosition = ownerObject.getPosition();
+        position = ownerObject.getPosition();
     }
 
     @Override
@@ -71,7 +72,9 @@ public final class Transform extends Component {
         }
         if (moveImpulse.x >= 1 || moveImpulse.x <= -1) {
             checkFlip();
-            ownerPosition.add((int) moveImpulse.x, (int) moveImpulse.y);
+            val x = (int) moveImpulse.x;
+            val y = (int) moveImpulse.y;
+            position.add(x, y);
             moveImpulse.set(0, 0);
         }
         return true;

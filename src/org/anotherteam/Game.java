@@ -28,6 +28,7 @@ public final class Game {
     private final String startLevelName = "StartLevel";
 
     public Game(@NotNull Window window) {
+        window.setFullscreen(true);
         game = this;
         levelManager = new LevelManager();
         gameScreen = new GameScreen(window);
@@ -37,7 +38,7 @@ public final class Game {
         this.gameState = GameState.ON_EDITOR;
 
         DebugMode = false;
-        DebugRender.global = new DebugRender(gameScreen.windowCamera);
+        DebugRender.global = new DebugRender(GameScreen.windowCamera);
         init();
 
         editor = new Editor(gameScreen);
