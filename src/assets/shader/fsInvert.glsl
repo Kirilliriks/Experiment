@@ -2,7 +2,7 @@
 in vec2 tex_coord;
 in vec2 tex_positions;
 
-in vec4 translated_player_pos;
+uniform vec2 player_pos;
 
 uniform sampler2D u_texture;
 layout (binding = 1, rgba8) uniform readonly image2D u_texture1;
@@ -15,8 +15,8 @@ void main() {
     endPosition.x = int(tex_positions.x);
     endPosition.y = int(tex_positions.y);
 
-    startPosition.x = int(translated_player_pos.x);
-    startPosition.y = int(translated_player_pos.y);
+    startPosition.x = int(player_pos.x);
+    startPosition.y = int(player_pos.y);
     //
     vec4 color = texture2D(u_texture, tex_coord);
 

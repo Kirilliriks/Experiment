@@ -90,8 +90,8 @@ public final class TileViewer extends GUIElement {
     public void update(float dt) {
         if (draggedTile != null && draggedTile != highliter) {
             if (Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) {
-                var x = GameScreen.inGameMouseX();
-                var y = GameScreen.inGameMouseY();
+                var x = GameScreen.inGameWindowMouseX();
+                var y = GameScreen.inGameWindowMouseY();
                 if (x < 0 ||  y < 0) return;
 
                 x /= Tile.SIZE.x;

@@ -34,22 +34,34 @@ public class GameScreen {
     }
 
     public static int inGameMouseX() {
+        val x = inGameWindowMouseX();
+        if (x < 0) return -1;
+        return (int) (gameCamera.getPosition().x + x - GameScreen.WIDTH / 2.0f);
+    }
+
+    public static int inGameMouseY() {
+        val y = inGameWindowMouseY();
+        if (y < 0) return -1;
+        return (int) (gameCamera.getPosition().y + y - GameScreen.HEIGHT / 2.0f);
+    }
+
+    public static int inGameWindowMouseX() {
         val renderWidth = GameScreen.WIDTH * RENDER_SCALE;
         if (Input.getMouseX() < POSITION.x || Input.getMouseX() > POSITION.x + renderWidth) return -1;
         return (int) (((Input.getMouseX() - POSITION.x) / renderWidth) * GameScreen.WIDTH);
     }
 
-    public static int inGameMouseY() {
+    public static int inGameWindowMouseY() {
         val renderHeight = GameScreen.HEIGHT * RENDER_SCALE;
         if (Input.getMouseY() < POSITION.y || Input.getMouseY() > POSITION.y + renderHeight) return -1;
         return (int) (((Input.getMouseY() - POSITION.y) / renderHeight) * GameScreen.HEIGHT);
     }
 
     public static int onMouseTileX() {
-        return inGameMouseX() / Tile.SIZE.x;
+        return inGameWindowMouseX() / Tile.SIZE.x;
     }
 
     public static int onMouseTileY() {
-        return inGameMouseY() / Tile.SIZE.y;
+        return inGameWindowMouseY() / Tile.SIZE.y;
     }
 }

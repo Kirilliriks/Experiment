@@ -17,7 +17,6 @@ import org.anotherteam.render.text.Font;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector3f;
 
 public final class GameRender {
 
@@ -65,9 +64,8 @@ public final class GameRender {
         raycastShader.bind();
         raycastShader.setUniform("real_view", GameScreen.gameCamera.getViewMatrix());
 
-        // TODO preparedPos need to correct translated object position's, in this example player's light position
-        val preparedX = GameScreen.WIDTH / 2.0f + room.getPlayer().getPosition().x;
-        val preparedY = GameScreen.HEIGHT / 2.0f + room.getPlayer().getPosition().y + 15;
+        val preparedX = GameScreen.gameCamera.translateX(room.getPlayer().getPosition().x);
+        val preparedY = GameScreen.gameCamera.translateY(room.getPlayer().getPosition().y + 15);
         raycastShader.setUniform("player_pos",
                 preparedX, preparedY);
         glBindImageTexture(1, heightFrame.texture.getId(), 0, false, 0, GL_READ_ONLY, GL_RGBA8);
@@ -111,8 +109,8 @@ public final class GameRender {
         if (Game.game.getGameState() == GameState.ON_LEVEL) return;
 
         if (GameScreen.draggedThing != null) {
-            val mouseX = GameScreen.inGameMouseX();
-            val mouseY = GameScreen.inGameMouseY();
+            val mouseX = GameScreen.inGameWindowMouseX();
+            val mouseY = GameScreen.inGameWindowMouseY();
             if (mouseX < 0 || mouseY < 0) return;
 
             GameScreen.draggedThing.render(mouseX, mouseY, textureBatch);

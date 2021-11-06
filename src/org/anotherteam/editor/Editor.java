@@ -16,6 +16,7 @@ import org.anotherteam.render.text.Font;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector2f;
 
 public final class Editor extends Widget {
     public static final int DEFAULT_BORDER_SIZE = 10;
@@ -73,6 +74,24 @@ public final class Editor extends Widget {
         if (Input.isKeyPressed(Input.KEY_TILDA)) {
             log.setVisible(!log.isVisible());
         }
+
+        float speed = 25;
+        float moveX = 0, moveY = 0;
+
+        if (Input.isKeyDown(Input.KEY_W)) {
+            moveY += speed * dt;
+        }
+        if (Input.isKeyDown(Input.KEY_S)) {
+            moveY -= speed * dt;
+        }
+        if (Input.isKeyDown(Input.KEY_A)) {
+            moveX -= speed * dt;
+        }
+        if (Input.isKeyDown(Input.KEY_D)) {
+            moveX += speed * dt;
+        }
+
+        GameScreen.gameCamera.addPosition(moveX, moveY);
     }
 
     private void renderGUI() {

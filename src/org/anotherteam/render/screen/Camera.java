@@ -1,6 +1,5 @@
 package org.anotherteam.render.screen;
 
-import lombok.val;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
@@ -12,6 +11,9 @@ public final class Camera {
     private final Vector3f position;
     private final Matrix4f projection;
     private final Matrix4f view;
+
+    private int projectionWidth;
+    private int projectionHeight;
 
     public Camera() {
         this(0, 0, 0,0);
@@ -33,6 +35,8 @@ public final class Camera {
     }
 
     public void setProjection(int width, int height) {
+        projectionWidth = width;
+        projectionHeight = height;
         projection.setOrtho2D(
                 -width / 2.0f, width / 2.0f,
                 -height / 2.0f, height / 2.0f);
@@ -49,14 +53,15 @@ public final class Camera {
     }
 
     @NotNull
-    public Matrix4f getMul(){
-        val matrix = new Matrix4f();
-        matrix.identity();
-        return view;
-    }
-
-    @NotNull
     public Matrix4f getViewMatrix() {
         return view.setLookAt(position, temp.set(position.x, position.y, -1.0f), up);
+    }
+
+    public int translateX(int x) {
+        return (int) (x - position.x + projectionWidth / 2.0f);
+    }
+
+    public int translateY(int y) {
+        return (int) (y - position.y + projectionHeight / 2.0f);
     }
 }
