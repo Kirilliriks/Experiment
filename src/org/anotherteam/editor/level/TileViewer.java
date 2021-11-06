@@ -82,7 +82,7 @@ public final class TileViewer extends GUIElement {
         if (visible) {
             GameScreen.draggedThing = highliter;
         } else {
-            draggedTile = null;
+            draggedTile = highliter;
         }
     }
 
