@@ -58,10 +58,10 @@ public class GameScreen {
     }
 
     public static int onMouseTileX() {
-        return inGameWindowMouseX() / Tile.SIZE.x;
+        return inGameMouseX() / Tile.SIZE.x;
     }
 
     public static int onMouseTileY() {
-        return inGameWindowMouseY() / Tile.SIZE.y;
+        return inGameMouseY() / Tile.SIZE.y;
     }
 }

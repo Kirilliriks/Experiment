@@ -117,7 +117,7 @@ public final class Collider extends AABB {
     @Override
     public void debugRender(@NonNull DebugRender debugRender) {
         interactAABB.debugRender(debugRender);
-        if (isOnMouse(GameScreen.inGameWindowMouseX(), GameScreen.inGameWindowMouseY()))
+        if (isOnMouse(GameScreen.inGameMouseX(), GameScreen.inGameMouseY()))
             super.debugRender(debugRender, Color.GREEN);
         else super.debugRender(debugRender, Color.RED);
     }

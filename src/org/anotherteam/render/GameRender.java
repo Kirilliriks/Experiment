@@ -109,8 +109,8 @@ public final class GameRender {
         if (Game.game.getGameState() == GameState.ON_LEVEL) return;
 
         if (GameScreen.draggedThing != null) {
-            val mouseX = GameScreen.inGameWindowMouseX();
-            val mouseY = GameScreen.inGameWindowMouseY();
+            val mouseX = GameScreen.inGameMouseX();
+            val mouseY = GameScreen.inGameMouseY();
             if (mouseX < 0 || mouseY < 0) return;
 
             GameScreen.draggedThing.render(mouseX, mouseY, textureBatch);

@@ -75,7 +75,7 @@ public final class Editor extends Widget {
             log.setVisible(!log.isVisible());
         }
 
-        float speed = 25;
+        float speed = 45;
         float moveX = 0, moveY = 0;
 
         if (Input.isKeyDown(Input.KEY_W)) {
