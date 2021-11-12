@@ -54,15 +54,13 @@ public class GameScreen {
     }
 
     public static int inGameWindowMouseX() {
-        val renderWidth = GameScreen.WIDTH * RENDER_SCALE;
-        if (Input.getMouseX() < POSITION.x || Input.getMouseX() > POSITION.x + renderWidth) return -1;
-        return (int) (((Input.getMouseX() - POSITION.x) / renderWidth) * GameScreen.WIDTH);
+        if (Input.getMouseX() < POSITION.x || Input.getMouseX() > POSITION.x + RENDER_WIDTH) return -1;
+        return (int) (((Input.getMouseX() - POSITION.x) / RENDER_WIDTH) * GameScreen.WIDTH);
     }
 
     public static int inGameWindowMouseY() {
-        val renderHeight = GameScreen.HEIGHT * RENDER_SCALE;
-        if (Input.getMouseY() < POSITION.y || Input.getMouseY() > POSITION.y + renderHeight) return -1;
-        return (int) (((Input.getMouseY() - POSITION.y) / renderHeight) * GameScreen.HEIGHT);
+        if (Input.getMouseY() < POSITION.y || Input.getMouseY() > POSITION.y + RENDER_HEIGHT) return -1;
+        return (int) (((Input.getMouseY() - POSITION.y) / RENDER_HEIGHT) * GameScreen.HEIGHT);
     }
 
     public static int onMouseTileX() {

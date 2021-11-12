@@ -76,7 +76,7 @@ public final class Experimental implements Runnable {
             timeCount += dt;
             unprocessedTime += dt;
 
-            if (Input.isKeyDown(Input.KEY_ESCAPE)) return;
+            if (Input.isKeyPressed(Input.KEY_ESCAPE)) return;
         }
         end();
     }

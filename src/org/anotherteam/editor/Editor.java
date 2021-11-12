@@ -16,7 +16,6 @@ import org.anotherteam.render.text.Font;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector2f;
 
 public final class Editor extends Widget {
     public static final int DEFAULT_BORDER_SIZE = 10;
@@ -36,6 +35,10 @@ public final class Editor extends Widget {
         super("Another Editor",
                 10, GameScreen.window.getHeight() / 2.0f,
                 GameScreen.window.getWidth() - 10, GameScreen.window.getHeight() / 2 - 40, null);
+        GameScreen.RENDER_WIDTH = GameScreen.WIDTH * GameScreen.RENDER_SCALE;
+        GameScreen.RENDER_HEIGHT = GameScreen.HEIGHT * GameScreen.RENDER_SCALE;
+        GameScreen.POSITION.set((int) (GameScreen.window.getWidth() / 2.0f - (GameScreen.RENDER_WIDTH) / 2.0f), 30);
+
         editor = this;
         editorFont.setScale(2.0f);
         this.editorBatch = new EditorBatch(AssetData.DEFAULT_SHADER, GameScreen.windowCamera);
@@ -48,17 +51,7 @@ public final class Editor extends Widget {
         editorMenu.setWidth(width);
         val switchStateButton = new TextButton("Play/Stop", 0, 10, this);
         switchStateButton.setPosX(width / 2.0f - switchStateButton.getWidth() - DEFAULT_BORDER_SIZE / 2.0f);
-        switchStateButton.setOnClick(() -> {
-            if (Game.game.getGameState() == GameState.ON_EDITOR) {
-                Game.game.setGameState(GameState.ON_LEVEL);
-                editorMenu.getLevelMenu().getLevelSelector().storeEditableLevel();
-            } else {
-                Game.game.setGameState(GameState.ON_EDITOR);
-                editorMenu.getLevelMenu().getLevelSelector().restoreEditableLevel();
-                GameScreen.gameCamera.setPosition(GameScreen.WIDTH / 2.0f, GameScreen.HEIGHT / 2.0f);
-            }
-            Editor.sendLogMessage("Current state: " + Game.game.getGameState());
-        });
+        switchStateButton.setOnClick(this::switchPlayStopMode);
 
         val debugButton = new TextButton("Debug mode", 0, 10, this);
         debugButton.setPosX(width / 2.0f + DEFAULT_BORDER_SIZE / 2.0f);
@@ -68,11 +61,40 @@ public final class Editor extends Widget {
         });
     }
 
+    public void switchPlayStopMode() {
+        if (Game.game.getGameState() == GameState.ON_EDITOR) {
+            Game.game.setGameState(GameState.ON_LEVEL);
+
+            GameScreen.RENDER_WIDTH = GameScreen.window.getWidth();
+            GameScreen.RENDER_HEIGHT = GameScreen.window.getHeight();
+            GameScreen.POSITION.set(0, 0);
+
+            editorMenu.getLevelMenu().getLevelSelector().storeEditableLevel();
+        } else {
+            Game.game.setGameState(GameState.ON_EDITOR);
+
+            GameScreen.RENDER_WIDTH = GameScreen.WIDTH * GameScreen.RENDER_SCALE;
+            GameScreen.RENDER_HEIGHT = GameScreen.HEIGHT * GameScreen.RENDER_SCALE;
+            GameScreen.POSITION.set((int) (GameScreen.window.getWidth() / 2.0f - (GameScreen.RENDER_WIDTH) / 2.0f), 30);
+
+            editorMenu.getLevelMenu().getLevelSelector().restoreEditableLevel();
+            GameScreen.gameCamera.setPosition(GameScreen.WIDTH / 2.0f, GameScreen.HEIGHT / 2.0f);
+        }
+        Editor.sendLogMessage("Current state: " + Game.game.getGameState());
+    }
+
     @Override
     public void update(float dt) {
         updateElements(dt);
         if (Input.isKeyPressed(Input.KEY_TILDA)) {
             log.setVisible(!log.isVisible());
+        }
+
+        if (Game.game.getGameState() == GameState.ON_LEVEL) {
+            if (Input.isKeyPressed(Input.KEY_TILDA)) {
+                switchPlayStopMode();
+                return;
+            }
         }
 
         float speed = 45;

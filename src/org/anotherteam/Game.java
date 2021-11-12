@@ -29,7 +29,6 @@ public final class Game {
         game = this;
         levelManager = new LevelManager();
         GameScreen.init(window);
-        GameScreen.POSITION.set((int) (window.getWidth() / 2.0f - (GameScreen.WIDTH * GameScreen.RENDER_SCALE) / 2.0f), 30);
         gameRender = new GameRender();
 
         this.gameState = GameState.ON_EDITOR;
@@ -38,6 +37,8 @@ public final class Game {
         DebugRender.global = new DebugRender(GameScreen.windowCamera);
         init();
 
+        GameScreen.RENDER_WIDTH = window.getWidth();
+        GameScreen.RENDER_HEIGHT = window.getHeight();
         editor = new Editor();
 
         levelManager.loadLevel(startLevelName);
@@ -58,7 +59,9 @@ public final class Game {
 
     public void render(float dt) {
         levelManager.renderLevel(GameScreen.windowBatch);
-        editor.renderFrame(GameScreen.windowBatch);
+
+        if (editor != null && gameState == GameState.ON_EDITOR)
+            editor.renderFrame(GameScreen.windowBatch);
 
         if (gameState != GameState.ON_EDITOR && !DebugMode) return;
         DebugRender.global.draw();
