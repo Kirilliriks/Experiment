@@ -37,7 +37,6 @@ public class GameScreen {
         windowCamera.setPosition(window.getWidth() / 2.0f, window.getHeight() / 2.0f);
         windowCamera.setProjection(window.getWidth(), window.getHeight());
 
-        GameScreen.window = window;
         windowBatch = new RenderBatch(AssetData.DEFAULT_SHADER, windowCamera);
     }
 

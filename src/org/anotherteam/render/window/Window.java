@@ -3,6 +3,7 @@ import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.opengl.GL42.*;
 
 import org.anotherteam.Input;
+import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.exception.RenderException;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWVidMode;
@@ -27,7 +28,7 @@ public final class Window {
     private int fpsMax = 120;
     private boolean fpsLocked = true;
 
-    private int[] windowX = new int[1], windowY = new int[1];
+    private final int[] windowX = new int[1], windowY = new int[1];
 
     public Window(int width, int height, String title) {
         this.input = new Input(this);
@@ -35,6 +36,7 @@ public final class Window {
         this.height = height;
         this.title = title;
         this.vSync = false;
+        GameScreen.window = this;
     }
 
     public void destroy() {
