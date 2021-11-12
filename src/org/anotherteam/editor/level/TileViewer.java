@@ -13,7 +13,7 @@ import org.anotherteam.editor.gui.menu.text.TextMenu;
 import org.anotherteam.editor.gui.menu.text.SwitchMenu;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.editor.screen.DraggedTile;
-import org.anotherteam.level.room.tile.Tile;
+import org.anotherteam.editor.screen.DraggedTiles;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
@@ -25,7 +25,7 @@ public final class TileViewer extends GUIElement {
     private final SwitchMenu typeMenu;
 
     private final DraggedTile highliter;
-    private DraggedTile draggedTile;
+    private DraggedTiles draggedTiles;
 
     public TileViewer(float x, float y, GUIElement ownerElement) {
         super(x, y, ownerElement);
@@ -42,6 +42,7 @@ public final class TileViewer extends GUIElement {
         typeMenu.setClicked(typeMenu.getButton(0));
 
         highliter = new DraggedTile(0, 0, AssetData.EDITOR_HIGHLITER_ATLAS);
+        draggedTiles = null;
     }
 
     public void fillAtlasesButtons() {
@@ -61,14 +62,19 @@ public final class TileViewer extends GUIElement {
         spriteMenu.setVisible(false);
         spriteMenu.setInverted(true);
         for (val sprite : spriteAtlas.getSprites()) {
-            val y = spriteAtlas.getSizeY() - sprite.getFrameY() - 1;
-            if (y < spriteAtlas.getSizeY() / 2) continue;
+            val yCheck = spriteAtlas.getSizeY() - sprite.getFrameY() - 1;
+            if (yCheck < spriteAtlas.getSizeY() / 2) continue;
 
-            val x = sprite.getFrameX();
-            val spriteButton = spriteMenu.addButton(x, y - spriteAtlas.getSizeY() / 2, sprite);
+            val xTile = sprite.getFrameX();
+            val yTile = sprite.getFrameY();
+            val spriteButton = spriteMenu.addButton(xTile, yCheck - spriteAtlas.getSizeY() / 2, sprite);
             spriteButton.setOnClick(()-> {
-                draggedTile = new DraggedTile(x, sprite.getFrameY(), spriteAtlas);
-                GameScreen.draggedThing = draggedTile;
+                if (Input.isKeyDown(Input.KEY_SHIFT) && draggedTiles != null) {
+                    draggedTiles.fillTiles(xTile, yTile);
+                } else {
+                    draggedTiles = new DraggedTiles(new DraggedTile(xTile, yTile, spriteAtlas));
+                    GameScreen.draggedThing = draggedTiles;
+                }
             });
         }
         button.setOnClick(()-> spriteMenu.setVisible(true));
@@ -78,34 +84,33 @@ public final class TileViewer extends GUIElement {
     @Override
     public void setVisible(boolean visible) {
         super.setVisible(visible);
-
+        draggedTiles = null;
         if (visible) {
             GameScreen.draggedThing = highliter;
-        } else {
-            draggedTile = highliter;
         }
     }
 
     @Override
     public void update(float dt) {
-        if (draggedTile != null && draggedTile != highliter) {
+        if (draggedTiles != null) {
             if (Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) {
                 var x = GameScreen.onMouseTileX();
                 var y = GameScreen.onMouseTileY();
-                if (x < 0 ||  y < 0) return;
+                if (x < 0 || y < 0) return;
 
-                val tile = draggedTile.createTile(x, y);
-                Game.game.getCurrentRoom().setTile(tile);
+                draggedTiles.placeTiles(x, y);
             } else if (Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
                 GameScreen.draggedThing = highliter;
-                draggedTile = highliter;
+                draggedTiles = null;
             }
             return;
         }
-        if (Input.isAnyButtonPressed()) {
-            if (Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
+        if (Input.isAnyButtonDown()) {
+            if (Input.isButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
                 val x = GameScreen.onMouseTileX();
                 val y = GameScreen.onMouseTileY();
+                if (x < 0 || y < 0) return;
+
                 Game.game.getCurrentRoom().removeTile(x, y);
             }
         }
@@ -117,7 +122,8 @@ public final class TileViewer extends GUIElement {
 
         super.render(editorBatch);
 
-        if (GameScreen.draggedThing == null || draggedTile == null || draggedTile == highliter) return;
-        editorBatch.draw(draggedTile.getSprite(), Input.getMouseX(), Input.getMouseY(), SpriteMenu.ICON_SIZE, SpriteMenu.ICON_SIZE);
+        if (GameScreen.draggedThing == null || draggedTiles == null) return;
+
+        draggedTiles.editorRender(Input.getMouseX(), Input.getMouseY(), editorBatch);
     }
 }

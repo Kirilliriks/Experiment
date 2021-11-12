@@ -49,6 +49,10 @@ public final class Input {
         return MOUSE_LEFT_BUTTON.pressed || MOUSE_RIGHT_BUTTON.pressed;
     }
 
+    public static boolean isAnyButtonDown() {
+        return MOUSE_LEFT_BUTTON.down || MOUSE_RIGHT_BUTTON.down;
+    }
+
     public static boolean isButtonPressed(MouseButton button) {
         return button.pressed;
     }
@@ -151,7 +155,6 @@ public final class Input {
     }
 
     public static class Key {
-
         public int keycode;
         public boolean down = false, pressed = false;
         private boolean wasDown = false;

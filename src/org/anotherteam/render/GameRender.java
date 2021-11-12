@@ -97,7 +97,7 @@ public final class GameRender {
         }
 
         if (Game.DebugMode) {
-            windowBatch.drawText(debugFont, "Pos : " + GameScreen.inGameMouseX() + " " + GameScreen.inGameMouseY(),
+            windowBatch.drawText(debugFont, "Pos : " + GameScreen.onMouseTileX() + " " + GameScreen.onMouseTileX(),
                     (int) (Input.getMousePos().x + 15), (int) (Input.getMousePos().y - 25), 1.0f, new Color(255, 255, 255, 255));
         }
         windowBatch.end();
@@ -106,7 +106,7 @@ public final class GameRender {
     private void drawTextures(@NotNull Room room) {
         room.drawTexture(textureBatch);
 
-        if (Game.game.getGameState() == GameState.ON_LEVEL) return;
+        if (Game.game.getGameState() != GameState.ON_EDITOR) return;
 
         if (GameScreen.draggedThing != null) {
             val mouseX = GameScreen.inGameMouseX();

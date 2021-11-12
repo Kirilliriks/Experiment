@@ -58,10 +58,14 @@ public class GameScreen {
     }
 
     public static int onMouseTileX() {
-        return inGameMouseX() / Tile.SIZE.x;
+        val x = inGameMouseX();
+        if (x < 0) return -1;
+        return x / Tile.SIZE.x;
     }
 
     public static int onMouseTileY() {
-        return inGameMouseY() / Tile.SIZE.y;
+        val y = inGameMouseY();
+        if (y < 0) return -1;
+        return y / Tile.SIZE.y;
     }
 }

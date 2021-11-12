@@ -3,10 +3,9 @@ package org.anotherteam.editor.screen;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.sprite.Sprite;
-import org.anotherteam.screen.DraggedThing;
 import org.jetbrains.annotations.NotNull;
 
-public final class DraggedGameObject extends DraggedThing {
+public final class DraggedGameObject extends DraggedSprite {
 
     private final GameObject gameObject;
 

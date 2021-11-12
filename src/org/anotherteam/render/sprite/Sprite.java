@@ -56,6 +56,11 @@ public final class Sprite {
         return texture;
     }
 
+    @NotNull
+    public SpriteAtlas getSpriteAtlas() {
+        return spriteAtlas;
+    }
+
     public int getFrameX() {
         return frameX;
     }
