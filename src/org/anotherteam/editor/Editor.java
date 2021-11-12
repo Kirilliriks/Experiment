@@ -32,7 +32,7 @@ public final class Editor extends Widget {
     private final EditorMenu editorMenu;
     //
 
-    public Editor(@NotNull GameScreen gameScreen) {
+    public Editor() {
         super("Another Editor",
                 10, GameScreen.window.getHeight() / 2.0f,
                 GameScreen.window.getWidth() - 10, GameScreen.window.getHeight() / 2 - 40, null);
@@ -98,7 +98,8 @@ public final class Editor extends Widget {
         editorFrame.begin();
         editorBatch.begin();
         super.render(editorBatch);
-        editorBatch.drawText(editorFont, "Pos: " + Input.getMousePos().x + " " + Input.getMousePos().y,
+        val text = "GamePos: " + GameScreen.inGameMouseX() + " " + GameScreen.inGameMouseY() + " | WindowPos: " + Input.getMousePos().x + " " + Input.getMousePos().y;
+        editorBatch.drawText(editorFont, text,
                 width, (int) pos.y + 5, 1.0f, Color.WHITE, true);
         editorBatch.end();
         editorFrame.end();
@@ -142,5 +143,9 @@ public final class Editor extends Widget {
 
     public static float getDownBorderPos() {
         return editor.getPosY();
+    }
+
+    public void destroy() {
+        //TODO add save question messages
     }
 }

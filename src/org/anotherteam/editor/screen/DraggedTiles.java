@@ -17,6 +17,8 @@ public final class DraggedTiles extends DraggedThing {
 
     private final SpriteAtlas spriteAtlas;
     private final DraggedTile firstTile;
+
+    //TODO remove DraggedTile and use correct class (not DraggedThing child)
     private final List<DraggedTile> tiles;
 
     public DraggedTiles(@NotNull DraggedTile firstTile) {

@@ -75,6 +75,7 @@ public class RenderBatch extends Batch {
         } else {
             glDisable(GL_BLEND);
         }
+
         glBindBuffer(GL_ARRAY_BUFFER, vboID);
         glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
 

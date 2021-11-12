@@ -106,7 +106,13 @@ public final class TileViewer extends GUIElement {
             return;
         }
         if (Input.isAnyButtonDown()) {
-            if (Input.isButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
+            if (Input.isKeyDown(Input.KEY_SHIFT) && Input.isButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
+                val x = GameScreen.onMouseTileX();
+                val y = GameScreen.onMouseTileY();
+                if (x < 0 || y < 0) return;
+
+                Game.game.getCurrentRoom().removeTile(x, y);
+            } else if (Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
                 val x = GameScreen.onMouseTileX();
                 val y = GameScreen.onMouseTileY();
                 if (x < 0 || y < 0) return;

@@ -14,11 +14,8 @@ public final class Game {
     public static Game game;
     public static boolean DebugMode;
 
-    private final Editor editor;
-
+    public final Editor editor;
     public final LevelManager levelManager;
-
-    public final GameScreen gameScreen;
     public final GameRender gameRender;
 
     @NotNull
@@ -31,9 +28,9 @@ public final class Game {
         window.setFullscreen(true);
         game = this;
         levelManager = new LevelManager();
-        gameScreen = new GameScreen(window);
-        GameScreen.POSITION.set((int) (window.getWidth() / 2.0f - (GameScreen.WIDTH * GameScreen.RENDER_SCALE) / 2.0f), 0);
-        gameRender = new GameRender(gameScreen);
+        GameScreen.init(window);
+        GameScreen.POSITION.set((int) (window.getWidth() / 2.0f - (GameScreen.WIDTH * GameScreen.RENDER_SCALE) / 2.0f), 30);
+        gameRender = new GameRender();
 
         this.gameState = GameState.ON_EDITOR;
 
@@ -41,7 +38,7 @@ public final class Game {
         DebugRender.global = new DebugRender(GameScreen.windowCamera);
         init();
 
-        editor = new Editor(gameScreen);
+        editor = new Editor();
 
         levelManager.loadLevel(startLevelName);
 
@@ -51,9 +48,11 @@ public final class Game {
     public void init() { }
 
     public void update(float dt) {
-        editor.update(dt);
-        if (gameState == GameState.ON_EDITOR) return;
-        levelManager.updateLevel(dt);
+        if (editor != null)
+            editor.update(dt);
+
+        if (gameState != GameState.ON_EDITOR)
+            levelManager.updateLevel(dt);
     }
 
 
@@ -84,5 +83,8 @@ public final class Game {
         return getCurrenLevel().getCurrentRoom();
     }
 
-    public void destroy() { }
+    public void destroy() {
+        if (editor != null)
+            editor.destroy();
+    }
 }

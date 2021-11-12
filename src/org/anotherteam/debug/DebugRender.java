@@ -1,4 +1,5 @@
 package org.anotherteam.debug;
+import static org.lwjgl.opengl.GL42.*;
 
 import lombok.val;
 import org.anotherteam.data.AssetData;
@@ -7,12 +8,6 @@ import org.anotherteam.render.shader.Shader;
 import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
-
-
-import static org.lwjgl.opengl.GL15.*;
-import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL30.glBindVertexArray;
-import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 public class DebugRender {
     public static DebugRender global = null;
@@ -46,8 +41,6 @@ public class DebugRender {
 
         glVertexAttribPointer(1, 3, GL_FLOAT, false, VERTEX_SIZE * Float.BYTES, 2 * Float.BYTES);
         glEnableVertexAttribArray(1);
-
-        glLineWidth(1.0f);
     }
 
     public void draw() {

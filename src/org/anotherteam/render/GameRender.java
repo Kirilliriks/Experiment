@@ -17,11 +17,9 @@ import org.anotherteam.render.text.Font;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector2f;
 
 public final class GameRender {
-
-    private final GameScreen gameScreen;
-
     private final RenderBatch textureBatch;
     private final RenderBatch effectBatch;
 
@@ -35,8 +33,7 @@ public final class GameRender {
 
     private final Camera renderCamera;
 
-    public GameRender(@NotNull GameScreen screen) {
-        this.gameScreen = screen;
+    public GameRender() {
         renderCamera = new Camera(GameScreen.WIDTH / 2, GameScreen.HEIGHT / 2, GameScreen.WIDTH, GameScreen.HEIGHT);
 
         raycastShader = new Shader("shader/vsInvert.glsl", "shader/fsInvert.glsl");
@@ -84,20 +81,28 @@ public final class GameRender {
             windowBatch.draw(
                     effectFrame.texture,
                     GameScreen.POSITION.x, GameScreen.POSITION.y,
-                    GameScreen.WIDTH * GameScreen.RENDER_SCALE,
-                    GameScreen.HEIGHT * GameScreen.RENDER_SCALE,
+                    GameScreen.RENDER_WIDTH,
+                    GameScreen.RENDER_HEIGHT,
                     false, true);
         } else if (Game.game.getGameState() == GameState.ON_EDITOR) {
             windowBatch.draw(
                     textureFrame.texture,
                     GameScreen.POSITION.x, GameScreen.POSITION.y,
-                    GameScreen.WIDTH * GameScreen.RENDER_SCALE,
-                    GameScreen.HEIGHT * GameScreen.RENDER_SCALE,
+                    GameScreen.RENDER_WIDTH,
+                    GameScreen.RENDER_HEIGHT,
                     false, true);
+            val v1 = new Vector2f(GameScreen.POSITION);
+            val v2 = new Vector2f(GameScreen.POSITION.x + GameScreen.RENDER_WIDTH, GameScreen.POSITION.y);
+            val v3 = new Vector2f(GameScreen.POSITION.x + GameScreen.RENDER_WIDTH, GameScreen.POSITION.y + GameScreen.RENDER_HEIGHT);
+            val v4 = new Vector2f(GameScreen.POSITION.x, GameScreen.POSITION.y + GameScreen.RENDER_HEIGHT);
+            windowBatch.debugRender.drawLine(v1, v2, Color.RED);
+            windowBatch.debugRender.drawLine(v2, v3, Color.RED);
+            windowBatch.debugRender.drawLine(v3, v4, Color.RED);
+            windowBatch.debugRender.drawLine(v4, v1, Color.RED);
         }
 
         if (Game.DebugMode) {
-            windowBatch.drawText(debugFont, "Pos : " + GameScreen.onMouseTileX() + " " + GameScreen.onMouseTileX(),
+            windowBatch.drawText(debugFont, "Pos : " + GameScreen.inGameMouseX() + " " + GameScreen.inGameMouseY(),
                     (int) (Input.getMousePos().x + 15), (int) (Input.getMousePos().y - 25), 1.0f, new Color(255, 255, 255, 255));
         }
         windowBatch.end();

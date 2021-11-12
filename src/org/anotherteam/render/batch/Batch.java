@@ -86,11 +86,6 @@ public abstract class Batch {
 
     public abstract void render();
 
-    public void clear() {
-        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    }
-
     protected int[] generateIndices() {
         val elements = new int[INDICES_PRE_QUAD * batchSize];
         for (int i = 0; i < batchSize; i++) {
@@ -110,5 +105,10 @@ public abstract class Batch {
         elements[offsetArrayIndex + 3] = offset + 2;
         elements[offsetArrayIndex + 4] = offset + 3;
         elements[offsetArrayIndex + 5] = offset;
+    }
+
+    public void clear() {
+        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 }

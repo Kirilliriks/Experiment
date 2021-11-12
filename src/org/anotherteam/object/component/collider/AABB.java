@@ -80,8 +80,7 @@ public abstract class AABB extends Component {
     public void debugRender(@NonNull DebugRender debugRender, Color color){
         val x = objectPosition.x + offSet.x;
         val y = objectPosition.y + offSet.y;
-        // Strange, but need -1
-        val v1 = new Vector2f(x +  firstBound.x - 1, y +  firstBound.y);
+        val v1 = new Vector2f(x +  firstBound.x, y +  firstBound.y);
         val v2 = new Vector2f(x +  firstBound.x, y + secondBound.y);
         val v3 = new Vector2f(x + secondBound.x, y + secondBound.y);
         val v4 = new Vector2f(x + secondBound.x, y +  firstBound.y);

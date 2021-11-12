@@ -7,6 +7,7 @@ import org.anotherteam.level.room.tile.Tile;
 import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.screen.Camera;
 import org.anotherteam.render.window.Window;
+import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
 
@@ -17,15 +18,22 @@ public class GameScreen {
     public static final int WIDTH = 160;
     public static final int HEIGHT = 90;
 
-    public final static Camera gameCamera = new Camera(WIDTH / 2, HEIGHT / 2, WIDTH, HEIGHT);
-    public final static Camera windowCamera = new Camera();
+    public static int RENDER_WIDTH = WIDTH * RENDER_SCALE;
+    public static int RENDER_HEIGHT = HEIGHT * RENDER_SCALE;
+
+    public static final Camera gameCamera = new Camera(WIDTH / 2, HEIGHT / 2, WIDTH, HEIGHT);
+    public static final Camera windowCamera = new Camera();
 
     public static RenderBatch windowBatch;
     public static Window window;
 
     public static DraggedThing draggedThing = null;
 
-    public GameScreen(@NotNull Window window) {
+    private GameScreen() {
+        throw new LifeException("Try create utility class object");
+    }
+
+    public static void init(@NotNull Window window) {
         windowCamera.setPosition(window.getWidth() / 2.0f, window.getHeight() / 2.0f);
         windowCamera.setProjection(window.getWidth(), window.getHeight());
 
