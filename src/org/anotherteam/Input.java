@@ -1,8 +1,11 @@
 package org.anotherteam;
 
 import lombok.val;
+import org.anotherteam.editor.Editor;
 import org.anotherteam.render.window.Window;
+import org.anotherteam.util.CharUtil;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWCursorPosCallback;
@@ -16,6 +19,7 @@ public final class Input {
     private final static Map<Integer, MouseButton> buttons = new HashMap<>();
     private final static Vector2f mousePos = new Vector2f(0, 0);
 
+    private static Key lastPrintedKey;
     public static Map<Integer, Key> keys = new HashMap<>();
 
     public final static Key KEY_W = new Key(GLFW.GLFW_KEY_W);
@@ -29,6 +33,7 @@ public final class Input {
     public final static Key KEY_ESCAPE = new Key(GLFW.GLFW_KEY_ESCAPE);
     public final static Key KEY_SPACE = new Key(GLFW.GLFW_KEY_SPACE);
     public final static Key KEY_SHIFT = new Key(GLFW.GLFW_KEY_LEFT_SHIFT);
+    public final static Key KEY_BACKSPACE = new Key(GLFW.GLFW_KEY_BACKSPACE);
 
     public final static MouseButton MOUSE_LEFT_BUTTON = new MouseButton(GLFW.GLFW_MOUSE_BUTTON_LEFT);
     public final static MouseButton MOUSE_RIGHT_BUTTON = new MouseButton(GLFW.GLFW_MOUSE_BUTTON_RIGHT);
@@ -37,11 +42,40 @@ public final class Input {
     private final GLFWCursorPosCallback mouseMove;
     private final GLFWMouseButtonCallback mouseButton;
 
+    public static boolean isAnyKeyDown() {
+        if (lastPrintedKey == null) return false;
+        return lastPrintedKey.down;
+    }
+
+    public static boolean isAnyKeyPressed() {
+        if (lastPrintedKey == null) return false;
+        return lastPrintedKey.pressed;
+    }
+
+    @Nullable
+    public static Key getLastPrintedKey() {
+        return lastPrintedKey;
+    }
+
     public static boolean isKeyDown(Key key) {
+        if (key.isLetter()) {
+            val anotherChar = (int)CharUtil.toAnotherCase(key.keyCode);
+            if (keys.containsKey(anotherChar) && keys.get(anotherChar).down) {
+                Editor.sendLogMessage("Ch " + key.getChar());
+                return true;
+            }
+        }
+        if (key.down) {
+            Editor.sendLogMessage("Ch " + key.getChar());
+        }
         return key.down;
     }
 
     public static boolean isKeyPressed(Key key) {
+        if (key.isLetter()) {
+            val anotherChar = (int)CharUtil.toAnotherCase(key.keyCode);
+            if (keys.containsKey(anotherChar) && keys.get(anotherChar).pressed) return true;
+        }
         return key.pressed;
     }
 
@@ -79,12 +113,23 @@ public final class Input {
     public Input(@NotNull Window ownerWindow) {
         this.ownerWindow = ownerWindow;
 
+        for (int i = 0; i <= 255; i++) {
+            keys.put(i, new Key(i));
+        }
+
         keyboard = new GLFWKeyCallback() {
             @Override
             public void invoke(long window, int key, int scancode, int action, int mods) {
-                if (!keys.containsKey(key)) return;
+                key = CharUtil.transformKeyCode(key, mods);
+                val anotherKey = (int)CharUtil.toAnotherCase(key);
+                Editor.sendLogMessage("@Ch " + (char)key);
+                if (!keys.containsKey(key)) {
+                    keys.put(key, new Key(key));
+                }
 
-                keys.get(key).toggle(action != GLFW.GLFW_RELEASE);
+                lastPrintedKey = keys.get(key);
+                lastPrintedKey.toggle(action != GLFW.GLFW_RELEASE);
+                if (keys.containsKey(anotherKey)) keys.get(anotherKey).toggle(action != GLFW.GLFW_RELEASE);
             }
         };
         mouseMove = new GLFWCursorPosCallback() {
@@ -102,13 +147,6 @@ public final class Input {
             }
         };
     }
-
-    public void destroy() {
-        keyboard.free();
-        mouseMove.free();
-        mouseButton.free();
-    }
-
 
     @NotNull
     public GLFWKeyCallback getKeyboard() {
@@ -132,6 +170,13 @@ public final class Input {
         for (val button : buttons.values()) {
             button.tick();
         }
+        lastPrintedKey = null;
+    }
+
+    public void destroy() {
+        keyboard.free();
+        mouseMove.free();
+        mouseButton.free();
     }
 
     public static class MouseButton {
@@ -155,12 +200,12 @@ public final class Input {
     }
 
     public static class Key {
-        public int keycode;
+        public int keyCode;
         public boolean down = false, pressed = false;
         private boolean wasDown = false;
 
         public Key(int code) {
-            keycode = code;
+            keyCode = code;
             keys.put(code, this);
         }
 
@@ -171,6 +216,22 @@ public final class Input {
         public void tick() {
             pressed = !wasDown && down;
             wasDown = down;
+        }
+
+        public char getChar() {
+            return (char) keyCode;
+        }
+
+        public boolean isLetter() {
+            return CharUtil.isLetter(keyCode);
+        }
+
+        public boolean isPrintable() {
+            return CharUtil.isPrintable(keyCode);
+        }
+
+        public boolean isLetterOrDigit() {
+            return CharUtil.isLetterOrDigit(keyCode);
         }
     }
 }

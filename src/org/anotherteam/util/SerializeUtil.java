@@ -2,9 +2,11 @@ package org.anotherteam.util;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import lombok.experimental.UtilityClass;
 import lombok.val;
 import org.joml.Vector2i;
 
+@UtilityClass
 public final class SerializeUtil {
 
     public static JsonObject serialize(Vector2i vector2i) {

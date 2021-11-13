@@ -132,7 +132,6 @@ public final class Editor extends Widget {
             moveX += speed * dt;
         }
 
-
         GameScreen.gameCamera.addPosition(moveX, moveY);
     }
 

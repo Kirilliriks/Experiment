@@ -1,6 +1,7 @@
 package org.anotherteam.editor.gui;
 
 import lombok.val;
+import org.anotherteam.editor.gui.text.Label;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,7 @@ public final class EditorLog extends Widget {
 
     public void addMessage(String text) {
         for (int i = logStrings.size() - 1; i > 0; i--)
-            logStrings.get(i).setText(logStrings.get(i - 1).text);
+            logStrings.get(i).setText(logStrings.get(i - 1).getText());
         logStrings.get(0).setText(text);
         width = Math.max(width, logStrings.get(0).getWidth());
     }

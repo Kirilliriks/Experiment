@@ -69,7 +69,7 @@ public final class Experimental implements Runnable {
                     editor.renderFrame(GameScreen.windowBatch);
                 frames++;
 
-                glfwSwapBuffers(window.getHandler());
+                window.swapBuffers();
             }
 
             if (timeCount > 1f) {

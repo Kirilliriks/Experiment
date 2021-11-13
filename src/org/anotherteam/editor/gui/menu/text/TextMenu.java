@@ -3,7 +3,7 @@ package org.anotherteam.editor.gui.menu.text;
 import lombok.val;
 import org.anotherteam.editor.gui.Button;
 import org.anotherteam.editor.gui.GUIElement;
-import org.anotherteam.editor.gui.Label;
+import org.anotherteam.editor.gui.text.Label;
 import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
@@ -68,9 +68,9 @@ public class TextMenu extends GUIElement {
     public TextButton addButton(@NotNull TextButton button) {
 
         int index = buttons.size();
-        if (contains(button.getText())) {
+        if (contains(button.getLabelText())) {
             for (val btn : buttons) {
-                if (!button.getText().equals(btn.getText())) continue;
+                if (!button.getLabelText().equals(btn.getLabelText())) continue;
 
                 index = buttons.indexOf(btn);
                 button = btn;
@@ -132,7 +132,7 @@ public class TextMenu extends GUIElement {
 
     public boolean contains(String text) {
         for (val button : buttons) {
-            if (button.getText().equals(text)) return true;
+            if (button.getLabelText().equals(text)) return true;
         }
         return false;
     }

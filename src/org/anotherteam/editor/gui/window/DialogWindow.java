@@ -6,7 +6,7 @@ import org.anotherteam.util.Color;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class DialogWindow extends GUIElement {
-    public static final Color DEFAULT_COLOR = new Color(120, 120, 150, 255);
+    public static final Color DEFAULT_COLOR = new Color(120, 120, 150);
 
     private Runnable afterClose;
 

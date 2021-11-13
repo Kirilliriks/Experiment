@@ -2,11 +2,11 @@ package org.anotherteam.render.window;
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.opengl.GL42.*;
 
+import lombok.val;
 import org.anotherteam.Input;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.exception.RenderException;
 import org.lwjgl.glfw.GLFW;
-import org.lwjgl.glfw.GLFWVidMode;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.glfw.GLFW.glfwShowWindow;
@@ -100,7 +100,7 @@ public final class Window {
 
         createCallbacks();
 
-        GLFWVidMode videoMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+        val videoMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
         if (videoMode == null)
             throw new RenderException("Error with get video mode");
 
@@ -122,7 +122,6 @@ public final class Window {
         glfwMakeContextCurrent(handler);
         // Enable v-sync
         glfwSwapInterval(vSync ? GL_TRUE : GL_FALSE);
-
         // Make the window visible
         glfwShowWindow(handler);
 

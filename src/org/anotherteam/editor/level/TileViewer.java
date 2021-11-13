@@ -6,7 +6,7 @@ import org.anotherteam.Input;
 import org.anotherteam.data.AssetData;
 import org.anotherteam.editor.Editor;
 import org.anotherteam.editor.gui.GUIElement;
-import org.anotherteam.editor.gui.Label;
+import org.anotherteam.editor.gui.text.Label;
 import org.anotherteam.editor.gui.menu.sprite.SpriteMenu;
 import org.anotherteam.editor.gui.menu.text.SwitchButton;
 import org.anotherteam.editor.gui.menu.text.TextMenu;
@@ -35,8 +35,8 @@ public final class TileViewer extends GUIElement {
         inverted = true;
 
         typeMenu = new SwitchMenu(0, 0, width, TextMenu.Type.HORIZONTAL, this);
-        typeMenu.setYInverted(true);
-        typeMenu.setColor(100, 100, 100, 255);
+        typeMenu.setInvertedY(true);
+        typeMenu.setColor(100, 100, 100);
         typeMenu.setStartOffset(Label.DEFAULT_TEXT_OFFSET, 0);
         fillAtlasesButtons();
         typeMenu.setClicked(typeMenu.getButton(0));
@@ -60,7 +60,7 @@ public final class TileViewer extends GUIElement {
 
         val spriteMenu = new SpriteMenu(0, -typeMenu.getHeight(), width, height - typeMenu.getHeight(), this);
         spriteMenu.setVisible(false);
-        spriteMenu.setYInverted(true);
+        spriteMenu.setInvertedY(true);
         for (val sprite : spriteAtlas.getSprites()) {
             val yCheck = spriteAtlas.getSizeY() - sprite.getFrameY() - 1;
             if (yCheck < spriteAtlas.getSizeY() / 2) continue;
@@ -93,7 +93,7 @@ public final class TileViewer extends GUIElement {
     @Override
     public void update(float dt) {
         if (draggedTiles != null) {
-            if (Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) {
+            if (Input.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
                 var x = GameScreen.onMouseTileX();
                 var y = GameScreen.onMouseTileY();
                 if (x < 0 || y < 0) return;
@@ -105,20 +105,12 @@ public final class TileViewer extends GUIElement {
             }
             return;
         }
-        if (Input.isAnyButtonDown()) {
-            if (Input.isKeyDown(Input.KEY_SHIFT) && Input.isButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
-                val x = GameScreen.onMouseTileX();
-                val y = GameScreen.onMouseTileY();
-                if (x < 0 || y < 0) return;
-
-                Game.levelManager.getCurrentRoom().removeTile(x, y);
-            } else if (Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
-                val x = GameScreen.onMouseTileX();
-                val y = GameScreen.onMouseTileY();
-                if (x < 0 || y < 0) return;
-
-                Game.levelManager.getCurrentRoom().removeTile(x, y);
-            }
+        if (!Input.isAnyButtonDown()) return;
+        val x = GameScreen.onMouseTileX();
+        val y = GameScreen.onMouseTileY();
+        if (x < 0 || y < 0) return;
+        if (Input.isKeyDown(Input.KEY_SHIFT) && Input.isButtonDown(Input.MOUSE_RIGHT_BUTTON) || Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
+            Game.levelManager.getCurrentRoom().removeTile(x, y);
         }
     }
 

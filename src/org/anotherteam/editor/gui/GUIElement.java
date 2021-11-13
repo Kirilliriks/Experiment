@@ -1,6 +1,7 @@
 package org.anotherteam.editor.gui;
 
 import lombok.val;
+import org.anotherteam.Input;
 import org.anotherteam.data.AssetData;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.screen.GameScreen;
@@ -14,7 +15,7 @@ import java.util.List;
 
 public abstract class GUIElement {
 
-    public static final Color DEFAULT_COLOR = new Color(150, 150, 150, 255);
+    public static final Color DEFAULT_COLOR = new Color(150, 150, 150);
 
     protected final List<GUIElement> childElements;
     protected final GUIElement ownerElement;
@@ -53,7 +54,7 @@ public abstract class GUIElement {
         return visible;
     }
 
-    public void setYInverted(boolean inverted) {
+    public void setInvertedY(boolean inverted) {
         this.inverted = inverted;
     }
 
@@ -81,11 +82,12 @@ public abstract class GUIElement {
         this.height = height;
     }
 
+    public void setColor(int r, int g, int b) {
+        color.set(r, g, b);
+    }
+
     public void setColor(int r, int g, int b, int a) {
-        color.r = r;
-        color.g = g;
-        color.b = b;
-        color.a = a;
+        color.set(r, g, b, a);
     }
 
     public void setColor(Color color) {
@@ -113,6 +115,13 @@ public abstract class GUIElement {
 
     public int getHeight() {
         return height;
+    }
+
+    public boolean isMouseOnWidget() {
+        val mouseX = Input.getMousePos().x;
+        val mouseY = Input.getMousePos().y;
+        if (mouseX < getPosX() || mouseX > getPosX() + width) return false;
+        return (!(mouseY < getPosY() || mouseY > getPosY() + height));
     }
 
     public void update(float dt) { }

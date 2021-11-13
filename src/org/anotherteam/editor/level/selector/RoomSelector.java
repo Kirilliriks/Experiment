@@ -28,7 +28,7 @@ public class RoomSelector extends GUIElement {
         selector = new SwitchMenu(Editor.DEFAULT_BORDER_SIZE, -Editor.DEFAULT_BORDER_SIZE,
                 width - Editor.DEFAULT_BORDER_SIZE * 2, height - Editor.DEFAULT_BORDER_SIZE * 3,
                 SwitchMenu.Type.DOUBLE, this);
-        selector.setYInverted(true);
+        selector.setInvertedY(true);
 
         downButtons = new SwitchMenu(Editor.DEFAULT_BORDER_SIZE, Editor.DEFAULT_BORDER_SIZE, 0, 0, SwitchMenu.Type.HORIZONTAL, this);
 

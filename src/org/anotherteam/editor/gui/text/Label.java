@@ -1,6 +1,8 @@
-package org.anotherteam.editor.gui;
+package org.anotherteam.editor.gui.text;
 
 import org.anotherteam.editor.Editor;
+import org.anotherteam.editor.gui.GUIElement;
+import org.anotherteam.editor.gui.menu.text.TextButton;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
@@ -21,7 +23,11 @@ public class Label extends GUIElement {
 
     public void setText(String text) {
         this.text = text;
-        this.width = Editor.editorFont.getTextWidth(text, 1.0f) + DEFAULT_TEXT_OFFSET;
+
+        width = Editor.editorFont.getTextWidth(text, 1.0f) + DEFAULT_TEXT_OFFSET;
+        if (ownerElement instanceof TextButton) {
+            ownerElement.setWidth(width);
+        }
     }
 
     public String getText() {

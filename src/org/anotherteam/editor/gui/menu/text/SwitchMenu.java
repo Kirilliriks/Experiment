@@ -2,20 +2,25 @@ package org.anotherteam.editor.gui.menu.text;
 
 import lombok.val;
 import org.anotherteam.editor.gui.GUIElement;
+import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
 
 public class SwitchMenu extends TextMenu {
+
+    public static final Color DEFAULT_COLOR = new Color(120, 120, 120);
 
     protected SwitchButton lastClicked;
 
     public SwitchMenu(float x, float y, int width, Type type, GUIElement ownerElement) {
         super(x, y, width, DEFAULT_BUTTON_MENU_HEIGHT, type, ownerElement);
         lastClicked = null;
+        setColor(DEFAULT_COLOR);
     }
 
     public SwitchMenu(float x, float y, int width, int height, Type type, GUIElement ownerElement) {
         super(x, y, width, height, type, ownerElement);
         lastClicked = null;
+        setColor(DEFAULT_COLOR);
     }
 
     @NotNull

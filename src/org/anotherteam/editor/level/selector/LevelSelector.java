@@ -12,13 +12,13 @@ import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.level.Level;
 import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 
-public class LevelSelector extends GUIElement {
+public final class LevelSelector extends GUIElement {
 
     private final SwitchMenu selector;
+    private final LevelInspector levelInspector;
 
     private final SwitchMenu downButtons;
     private final TextButton createEmptyButton;
@@ -35,9 +35,13 @@ public class LevelSelector extends GUIElement {
         inverted = true;
 
         selector = new SwitchMenu(Editor.DEFAULT_BORDER_SIZE, -Editor.DEFAULT_BORDER_SIZE,
-                width - Editor.DEFAULT_BORDER_SIZE * 2, height - Editor.DEFAULT_BORDER_SIZE * 3,
+                (int) (width * 0.65f), height - Editor.DEFAULT_BORDER_SIZE * 3,
                 SwitchMenu.Type.DOUBLE, this);
-        selector.setYInverted(true);
+        selector.setInvertedY(true);
+
+        levelInspector = new LevelInspector(selector.getWidth() + Editor.DEFAULT_BORDER_SIZE * 2, -Editor.DEFAULT_BORDER_SIZE,
+                width - selector.getWidth() - Editor.DEFAULT_BORDER_SIZE * 3, selector.getHeight(), this);
+        levelInspector.setInvertedY(true);
 
         downButtons = new SwitchMenu(Editor.DEFAULT_BORDER_SIZE, Editor.DEFAULT_BORDER_SIZE, 0, 0, SwitchMenu.Type.HORIZONTAL, this);
 
@@ -76,16 +80,16 @@ public class LevelSelector extends GUIElement {
         super.render(editorBatch);
     }
 
-    public void loadLevel(String name) {
-        editableLevel = Game.levelManager.loadLevel(name);
-    }
-
     public void storeEditableLevel() {
         storedEditableLevel = FileLoader.LEVEL_GSON.toJson(Game.levelManager.getCurrentLevel());
     }
 
     public void restoreEditableLevel() {
         Game.levelManager.setLevel(FileLoader.LEVEL_GSON.fromJson(storedEditableLevel, Level.class));
+    }
+
+    public void loadLevel(String name) {
+        editableLevel = Game.levelManager.loadLevel(name);
     }
 
     @NotNull

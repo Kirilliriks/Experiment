@@ -1,5 +1,6 @@
 package org.anotherteam.util;
 
+import lombok.experimental.UtilityClass;
 import lombok.val;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.BufferUtils;
@@ -14,7 +15,9 @@ import java.nio.file.Paths;
 
 import static org.lwjgl.system.MemoryUtil.memSlice;
 
+@UtilityClass
 public final class FileUtils {
+
     public static String loadAsString(String fileName) {
         val builder = new StringBuilder();
         BufferedReader reader;

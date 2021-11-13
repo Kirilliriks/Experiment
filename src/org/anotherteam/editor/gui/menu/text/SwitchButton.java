@@ -25,12 +25,12 @@ public class SwitchButton extends TextButton {
         this.clicked = clicked;
 
         if (!clicked) {
-            text.getColor().set(DEFAULT_COLOR);
+            labelText.getColor().set(DEFAULT_COLOR);
             return;
         }
         if (onClick != null) onClick.run();
-        text.getColor().set(DEFAULT_COLOR);
-        text.getColor().r = 255;
+        labelText.getColor().set(DEFAULT_COLOR);
+        labelText.getColor().r = 255;
     }
 
     @Override

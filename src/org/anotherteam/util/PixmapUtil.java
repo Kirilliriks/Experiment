@@ -1,11 +1,13 @@
 package org.anotherteam.util;
 
+import lombok.experimental.UtilityClass;
 import lombok.val;
 import org.lwjgl.BufferUtils;
 
 import java.awt.image.BufferedImage;
 import java.nio.ByteBuffer;
 
+@UtilityClass
 public final class PixmapUtil {
 
     public static ByteBuffer loadPixels(BufferedImage image) {
