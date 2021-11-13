@@ -90,6 +90,7 @@ public final class LevelSelector extends GUIElement {
 
     public void loadLevel(String name) {
         editableLevel = Game.levelManager.loadLevel(name);
+        levelInspector.setLevel(editableLevel);
     }
 
     @NotNull

@@ -31,6 +31,7 @@ public final class Experimental implements Runnable {
         game = new Game(window);
         editor = new Editor();
         game.init();
+        editor.init();
 
         double frameRateDelta = 1.0f / window.getFpsMax();
 

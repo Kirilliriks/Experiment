@@ -25,6 +25,10 @@ public class TextButton extends Button {
         setColor(Color.VOID);
     }
 
+    public void setLabelText(String text) {
+        labelText.setText(text);
+    }
+
     public String getLabelText() {
         return labelText.getText();
     }

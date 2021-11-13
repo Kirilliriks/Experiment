@@ -4,9 +4,7 @@ import lombok.val;
 import org.anotherteam.Input;
 import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.editor.gui.menu.text.TextButton;
-import org.anotherteam.util.CharUtil;
 import org.anotherteam.util.Color;
-import org.lwjgl.glfw.GLFW;
 
 public final class InputPart extends TextButton {
 

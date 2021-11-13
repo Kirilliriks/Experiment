@@ -66,6 +66,9 @@ public final class Editor extends Widget {
         });
 
         dialogWindow = null;
+    }
+
+    public void init() {
         editor.getEditorMenu().getLevelMenu().getLevelSelector().fillButtons();
     }
 

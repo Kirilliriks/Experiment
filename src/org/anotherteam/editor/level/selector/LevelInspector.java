@@ -26,5 +26,6 @@ public final class LevelInspector extends Widget {
 
     public void setLevel(@NotNull Level level) {
         inspectedLevel = level;
+        nameInputLabel.setInputText(level.getName());
     }
 }

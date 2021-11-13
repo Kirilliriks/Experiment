@@ -15,4 +15,8 @@ public final class InputLabel extends Label {
         setColor(DEFAULT_COLOR);
         inputPart = new InputPart("INPUT HERE", width, 0, this);
     }
+
+    public void setInputText(String text) {
+        inputPart.setLabelText(text);
+    }
 }

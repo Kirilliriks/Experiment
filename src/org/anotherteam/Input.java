@@ -108,28 +108,21 @@ public final class Input {
         return mousePos;
     }
 
-    private final Window ownerWindow;
-
     public Input(@NotNull Window ownerWindow) {
-        this.ownerWindow = ownerWindow;
-
-        for (int i = 0; i <= 255; i++) {
-            keys.put(i, new Key(i));
-        }
-
         keyboard = new GLFWKeyCallback() {
             @Override
             public void invoke(long window, int key, int scancode, int action, int mods) {
                 key = CharUtil.transformKeyCode(key, mods);
                 val anotherKey = (int)CharUtil.toAnotherCase(key);
-                Editor.sendLogMessage("@Ch " + (char)key);
+
                 if (!keys.containsKey(key)) {
                     keys.put(key, new Key(key));
                 }
 
+                val bool = action != GLFW.GLFW_RELEASE;
                 lastPrintedKey = keys.get(key);
-                lastPrintedKey.toggle(action != GLFW.GLFW_RELEASE);
-                if (keys.containsKey(anotherKey)) keys.get(anotherKey).toggle(action != GLFW.GLFW_RELEASE);
+                lastPrintedKey.toggle(bool);
+                if (keys.containsKey(anotherKey)) keys.get(anotherKey).toggle(bool);
             }
         };
         mouseMove = new GLFWCursorPosCallback() {
