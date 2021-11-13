@@ -8,7 +8,7 @@ import org.anotherteam.util.Color;
 
 public class TextButton extends Button {
 
-    public static final Color DEFAULT_TEXT_BUTTON_COLOR = new Color(0, 100, 100, 255);
+    public static final Color DEFAULT_COLOR = new Color(0, 100, 100, 255);
 
     protected float releaseTime;
     protected float timeToRelease;
@@ -17,7 +17,7 @@ public class TextButton extends Button {
     public TextButton(String text, float x, float y, GUIElement ownerElement) {
         super(x, y, ownerElement);
         this.text = new Label(text, 0, 0, this);
-        this.text.setColor(DEFAULT_TEXT_BUTTON_COLOR);
+        this.text.setColor(DEFAULT_COLOR);
         releaseTime = 0.6f;
         timeToRelease = 0.0f;
         setColor(Color.VOID);
@@ -41,12 +41,24 @@ public class TextButton extends Button {
     public void setClicked(boolean clicked) {
         super.setClicked(clicked);
         if (!clicked) {
-            text.getColor().r = 0;
+            text.getColor().set(DEFAULT_COLOR);
             return;
         }
         timeToRelease = releaseTime;
         if (onClick != null) onClick.run();
+        text.getColor().set(DEFAULT_COLOR);
         text.getColor().r = 255;
+    }
+
+    @Override
+    public boolean isMouseOnWidget() {
+        if (super.isMouseOnWidget()) {
+            text.getColor().g = 200;
+            return true;
+        } else {
+            text.getColor().set(DEFAULT_COLOR);
+            return false;
+        }
     }
 
     @Override

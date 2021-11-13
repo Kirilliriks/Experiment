@@ -27,6 +27,13 @@ public final class Color {
         this.a = a;
     }
 
+    public void set(Color color) {
+        r = color.r;
+        g = color.g;
+        b = color.b;
+        a = color.a;
+    }
+
     public static void toColor(Color color, int value) {
         color.r = ((value & 0xff000000) >>> 24);
         color.g = ((value & 0x00ff0000) >>> 16);

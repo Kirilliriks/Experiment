@@ -28,19 +28,19 @@ public class RoomSelector extends GUIElement {
         selector = new SwitchMenu(Editor.DEFAULT_BORDER_SIZE, -Editor.DEFAULT_BORDER_SIZE,
                 width - Editor.DEFAULT_BORDER_SIZE * 2, height - Editor.DEFAULT_BORDER_SIZE * 3,
                 SwitchMenu.Type.DOUBLE, this);
-        selector.setInverted(true);
+        selector.setYInverted(true);
 
         downButtons = new SwitchMenu(Editor.DEFAULT_BORDER_SIZE, Editor.DEFAULT_BORDER_SIZE, 0, 0, SwitchMenu.Type.HORIZONTAL, this);
 
         createEmptyButton = new TextButton("Create empty room", 0, 0, downButtons);
         createEmptyButton.setOnClick(()-> {
-            Game.game.getCurrenLevel().addRoom(Room.createEmpty());
+            Game.levelManager.getCurrentLevel().addRoom(Room.createEmpty());
             fillButtons();
         });
         downButtons.addButton(createEmptyButton);
 
         saveLevelButton = new TextButton("Save rooms", 40, 0, downButtons);
-        saveLevelButton.setOnClick(()-> Game.game.levelManager.saveLevel());
+        saveLevelButton.setOnClick(()-> Game.levelManager.saveLevel());
         downButtons.addButton(saveLevelButton);
     }
 
@@ -53,13 +53,14 @@ public class RoomSelector extends GUIElement {
 
     public void fillButtons() {
         selector.clearChild();
-        val rooms  = Game.game.levelManager.getCurrentLevel().getRooms();
+        val currentLevel = Game.levelManager.getCurrentLevel();
+        val rooms  = currentLevel.getRooms();
 
         for (val room : rooms) {
             val btn = selector.addButton(room.getName(),
-                    ()-> Game.game.getCurrenLevel().setCurrentRoom(room));
+                    ()-> currentLevel.setCurrentRoom(room));
 
-            if (Game.game.getCurrentRoom().getName().equals(room.getName()))
+            if (Game.levelManager.getCurrentRoom().getName().equals(room.getName()))
                 selector.setClicked(btn);
         }
     }

@@ -119,7 +119,7 @@ public abstract class GameObject {
             spriteComponent.draw(position, renderBatch);
         }
 
-        if (Game.game.getGameState() != GameState.ON_EDITOR && !Game.DebugMode) return;
+        if (Game.stateManager.getState() != GameState.ON_EDITOR && !Game.DebugMode) return;
         collider.debugRender(renderBatch.debugRender);
     }
 

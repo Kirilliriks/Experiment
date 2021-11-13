@@ -29,7 +29,7 @@ public final class DraggedTiles extends DraggedThing {
     }
 
     public void placeTiles(int x, int y) {
-        val room = Game.game.getCurrentRoom();
+        val room = Game.levelManager.getCurrentRoom();
         for (val tile : tiles) {
             val xOffset = tile.frameX - firstTile.frameX;
             val yOffset = tile.frameY - firstTile.frameY;

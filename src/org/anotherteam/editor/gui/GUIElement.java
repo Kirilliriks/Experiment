@@ -5,6 +5,7 @@ import org.anotherteam.data.AssetData;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.Color;
+import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
 
@@ -38,8 +39,9 @@ public abstract class GUIElement {
         childElements = new ArrayList<>();
 
         this.ownerElement = ownerElement;
-        if (ownerElement == null) return;
-        ownerElement.childElements.add(this);
+
+        if (ownerElement != null)
+            ownerElement.childElements.add(this);
     }
 
     public void setVisible(boolean visible) {
@@ -51,7 +53,7 @@ public abstract class GUIElement {
         return visible;
     }
 
-    public void setInverted(boolean inverted) {
+    public void setYInverted(boolean inverted) {
         this.inverted = inverted;
     }
 
@@ -87,10 +89,7 @@ public abstract class GUIElement {
     }
 
     public void setColor(Color color) {
-        this.color.r = color.r;
-        this.color.g = color.g;
-        this.color.b = color.b;
-        this.color.a = color.a;
+        this.color.set(color);
     }
 
     @NotNull
@@ -141,5 +140,13 @@ public abstract class GUIElement {
 
     public void clearChild() {
         childElements.clear();
+    }
+
+    public void destroy() {
+        if (childElements.isEmpty()) return;
+
+        for (val element : childElements) {
+            element.destroy();
+        }
     }
 }

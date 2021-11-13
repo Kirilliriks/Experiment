@@ -22,7 +22,7 @@ public final class Level {
 
     public Level(String name) {
         this.name = name;
-        this.gameRender = Game.game.gameRender;
+        this.gameRender = Game.gameRender;
         this.rooms = new ArrayList<>();
         currentRoom = null;
     }

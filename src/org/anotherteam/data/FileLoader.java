@@ -8,10 +8,10 @@ import org.anotherteam.data.deserialization.room.RoomDeserializer;
 import org.anotherteam.data.deserialization.room.gameobject.ComponentDeserializer;
 import org.anotherteam.data.deserialization.room.gameobject.GameObjectDeserializer;
 import org.anotherteam.data.deserialization.room.tile.TileDeserializer;
-import org.anotherteam.editor.Editor;
 import org.anotherteam.level.Level;
 import org.anotherteam.level.room.Room;
 import org.anotherteam.level.room.tile.Tile;
+import org.anotherteam.logger.GameLogger;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.Component;
 
@@ -39,8 +39,8 @@ public final class FileLoader {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (inFile.isEmpty()) Editor.sendLogMessage("Level " + levelName + " is empty");
-        else Editor.sendLogMessage("Level " + levelName + " loaded");
+        if (inFile.isEmpty()) GameLogger.sendMessage("Level " + levelName + " is empty");
+        else GameLogger.sendMessage("Level " + levelName + " loaded");
         return LEVEL_GSON.fromJson(inFile, Level.class);
     }
 
@@ -52,6 +52,6 @@ public final class FileLoader {
         } catch(IOException e) {
             e.printStackTrace();
         }
-        Editor.sendLogMessage("Level " + level.getName() + " saved");
+        GameLogger.sendMessage("Level " + level.getName() + " saved");
     }
 }

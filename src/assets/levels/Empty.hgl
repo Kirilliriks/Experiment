@@ -3,7 +3,176 @@
   "rooms": [
     {
       "name": "Empty",
-      "tiles": [],
+      "tiles": [
+        {
+          "xPos": 4,
+          "yPos": 3,
+          "frameX": 0,
+          "frameY": 2,
+          "atlasName": "atlases/room/testTestRoom.png"
+        },
+        {
+          "xPos": 5,
+          "yPos": 4,
+          "frameX": 1,
+          "frameY": 3,
+          "atlasName": "atlases/room/testTestRoom.png"
+        },
+        {
+          "xPos": 4,
+          "yPos": 4,
+          "frameX": 0,
+          "frameY": 3,
+          "atlasName": "atlases/room/testTestRoom.png"
+        },
+        {
+          "xPos": 10,
+          "yPos": 1,
+          "frameX": 8,
+          "frameY": 0,
+          "atlasName": "atlases/room/testTestRoom.png"
+        },
+        {
+          "xPos": 10,
+          "yPos": 2,
+          "frameX": 8,
+          "frameY": 1,
+          "atlasName": "atlases/room/testTestRoom.png"
+        },
+        {
+          "xPos": 10,
+          "yPos": 3,
+          "frameX": 8,
+          "frameY": 2,
+          "atlasName": "atlases/room/testTestRoom.png"
+        },
+        {
+          "xPos": 8,
+          "yPos": 1,
+          "frameX": 8,
+          "frameY": 0,
+          "atlasName": "atlases/room/testTestRoom.png"
+        },
+        {
+          "xPos": 7,
+          "yPos": 1,
+          "frameX": 3,
+          "frameY": 0,
+          "atlasName": "atlases/room/testTestRoom.png"
+        },
+        {
+          "xPos": 10,
+          "yPos": 4,
+          "frameX": 8,
+          "frameY": 3,
+          "atlasName": "atlases/room/testTestRoom.png"
+        },
+        {
+          "xPos": 8,
+          "yPos": 2,
+          "frameX": 8,
+          "frameY": 1,
+          "atlasName": "atlases/room/testTestRoom.png"
+        },
+        {
+          "xPos": 7,
+          "yPos": 2,
+          "frameX": 3,
+          "frameY": 1,
+          "atlasName": "atlases/room/testTestRoom.png"
+        },
+        {
+          "xPos": 6,
+          "yPos": 1,
+          "frameX": 2,
+          "frameY": 0,
+          "atlasName": "atlases/room/testTestRoom.png"
+        },
+        {
+          "xPos": 8,
+          "yPos": 3,
+          "frameX": 8,
+          "frameY": 2,
+          "atlasName": "atlases/room/testTestRoom.png"
+        },
+        {
+          "xPos": 5,
+          "yPos": 1,
+          "frameX": 1,
+          "frameY": 0,
+          "atlasName": "atlases/room/testTestRoom.png"
+        },
+        {
+          "xPos": 7,
+          "yPos": 3,
+          "frameX": 3,
+          "frameY": 2,
+          "atlasName": "atlases/room/testTestRoom.png"
+        },
+        {
+          "xPos": 6,
+          "yPos": 2,
+          "frameX": 2,
+          "frameY": 1,
+          "atlasName": "atlases/room/testTestRoom.png"
+        },
+        {
+          "xPos": 8,
+          "yPos": 4,
+          "frameX": 8,
+          "frameY": 3,
+          "atlasName": "atlases/room/testTestRoom.png"
+        },
+        {
+          "xPos": 5,
+          "yPos": 2,
+          "frameX": 1,
+          "frameY": 1,
+          "atlasName": "atlases/room/testTestRoom.png"
+        },
+        {
+          "xPos": 7,
+          "yPos": 4,
+          "frameX": 3,
+          "frameY": 3,
+          "atlasName": "atlases/room/testTestRoom.png"
+        },
+        {
+          "xPos": 4,
+          "yPos": 1,
+          "frameX": 0,
+          "frameY": 0,
+          "atlasName": "atlases/room/testTestRoom.png"
+        },
+        {
+          "xPos": 6,
+          "yPos": 3,
+          "frameX": 2,
+          "frameY": 2,
+          "atlasName": "atlases/room/testTestRoom.png"
+        },
+        {
+          "xPos": 5,
+          "yPos": 3,
+          "frameX": 1,
+          "frameY": 2,
+          "atlasName": "atlases/room/testTestRoom.png"
+        },
+        {
+          "xPos": 4,
+          "yPos": 2,
+          "frameX": 0,
+          "frameY": 1,
+          "atlasName": "atlases/room/testTestRoom.png"
+        },
+        {
+          "xPos": 6,
+          "yPos": 4,
+          "frameX": 2,
+          "frameY": 3,
+          "atlasName": "atlases/room/testTestRoom.png"
+        }
+      ],
       "gameObjects": [
         {
           "type": "org.anotherteam.level.room.object.entity.Player",
@@ -40,9 +209,7 @@
             }
           ]
         }
-      ],
-      "width": 0,
-      "height": 0
+      ]
     }
   ]
 }

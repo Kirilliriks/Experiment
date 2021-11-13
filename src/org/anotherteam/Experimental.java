@@ -1,6 +1,9 @@
 package org.anotherteam;
 
+import lombok.val;
+import org.anotherteam.editor.Editor;
 import org.anotherteam.render.window.Window;
+import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.Time;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
@@ -12,6 +15,7 @@ public final class Experimental implements Runnable {
 
     private Thread thread;
     private Game game;
+    public  Editor editor;
     private Window window;
 
     public void start() {
@@ -25,6 +29,8 @@ public final class Experimental implements Runnable {
         GL.createCapabilities(); // CRITICAL
 
         game = new Game(window);
+        editor = new Editor();
+        game.init();
 
         double frameRateDelta = 1.0f / window.getFpsMax();
 
@@ -43,11 +49,14 @@ public final class Experimental implements Runnable {
         while (!window.shouldClose()) {
             canRender = !window.isFpsLocked();
 
+            val dtF = (float) frameRateDelta;
             while (unprocessedTime >= frameRateDelta) {
                 unprocessedTime -= frameRateDelta;
 
                 window.update();
-                game.update((float) frameRateDelta);
+                if (editor != null)
+                    editor.update(dtF);
+                game.update(dtF);
                 updates++;
 
                 canRender = true;
@@ -55,7 +64,9 @@ public final class Experimental implements Runnable {
             }
 
             if (canRender) {
-                game.render((float) frameRateDelta);
+                game.render(dtF);
+                if (editor != null && Game.stateManager.getState() == GameState.ON_EDITOR)
+                    editor.renderFrame(GameScreen.windowBatch);
                 frames++;
 
                 glfwSwapBuffers(window.getHandler());
@@ -76,7 +87,7 @@ public final class Experimental implements Runnable {
             timeCount += dt;
             unprocessedTime += dt;
 
-            if (Input.isKeyPressed(Input.KEY_ESCAPE)) return;
+            if (Game.stateManager.getState() == GameState.ON_CLOSE_GAME) return;
         }
         end();
     }
@@ -92,6 +103,8 @@ public final class Experimental implements Runnable {
     }
 
     private void end() {
+        if (editor != null)
+            editor.destroy();
         game.destroy();
         window.destroy();
         glfwSetErrorCallback(null).free();

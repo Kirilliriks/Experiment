@@ -35,7 +35,7 @@ public final class TileViewer extends GUIElement {
         inverted = true;
 
         typeMenu = new SwitchMenu(0, 0, width, TextMenu.Type.HORIZONTAL, this);
-        typeMenu.setInverted(true);
+        typeMenu.setYInverted(true);
         typeMenu.setColor(100, 100, 100, 255);
         typeMenu.setStartOffset(Label.DEFAULT_TEXT_OFFSET, 0);
         fillAtlasesButtons();
@@ -60,7 +60,7 @@ public final class TileViewer extends GUIElement {
 
         val spriteMenu = new SpriteMenu(0, -typeMenu.getHeight(), width, height - typeMenu.getHeight(), this);
         spriteMenu.setVisible(false);
-        spriteMenu.setInverted(true);
+        spriteMenu.setYInverted(true);
         for (val sprite : spriteAtlas.getSprites()) {
             val yCheck = spriteAtlas.getSizeY() - sprite.getFrameY() - 1;
             if (yCheck < spriteAtlas.getSizeY() / 2) continue;
@@ -111,13 +111,13 @@ public final class TileViewer extends GUIElement {
                 val y = GameScreen.onMouseTileY();
                 if (x < 0 || y < 0) return;
 
-                Game.game.getCurrentRoom().removeTile(x, y);
+                Game.levelManager.getCurrentRoom().removeTile(x, y);
             } else if (Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
                 val x = GameScreen.onMouseTileX();
                 val y = GameScreen.onMouseTileY();
                 if (x < 0 || y < 0) return;
 
-                Game.game.getCurrentRoom().removeTile(x, y);
+                Game.levelManager.getCurrentRoom().removeTile(x, y);
             }
         }
     }

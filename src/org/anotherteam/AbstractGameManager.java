@@ -1,8 +1,8 @@
 package org.anotherteam;
 
-public abstract class GameManager {
+public abstract class AbstractGameManager {
 
-    public GameManager(){ }
+    public AbstractGameManager(){ }
 
     public abstract void update(float delta);
 

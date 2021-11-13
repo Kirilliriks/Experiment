@@ -20,6 +20,7 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
 
 public final class GameRender {
+
     private final RenderBatch textureBatch;
     private final RenderBatch effectBatch;
 
@@ -77,14 +78,14 @@ public final class GameRender {
 
         glViewport(0, 0, GameScreen.window.getWidth(), GameScreen.window.getHeight());
         windowBatch.begin();
-        if (Game.game.getGameState() == GameState.ON_LEVEL) {
+        if (Game.stateManager.getState() == GameState.ON_LEVEL) {
             windowBatch.draw(
                     effectFrame.texture,
                     GameScreen.POSITION.x, GameScreen.POSITION.y,
                     GameScreen.RENDER_WIDTH,
                     GameScreen.RENDER_HEIGHT,
                     false, true);
-        } else if (Game.game.getGameState() == GameState.ON_EDITOR) {
+        } else if (Game.stateManager.getState() == GameState.ON_EDITOR) {
             windowBatch.draw(
                     textureFrame.texture,
                     GameScreen.POSITION.x, GameScreen.POSITION.y,
@@ -111,7 +112,7 @@ public final class GameRender {
     private void drawTextures(@NotNull Room room) {
         room.drawTexture(textureBatch);
 
-        if (Game.game.getGameState() != GameState.ON_EDITOR) return;
+        if (Game.stateManager.getState() != GameState.ON_EDITOR) return;
 
         if (GameScreen.draggedThing != null) {
             val mouseX = GameScreen.inGameMouseX();

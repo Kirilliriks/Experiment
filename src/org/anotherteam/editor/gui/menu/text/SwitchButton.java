@@ -5,7 +5,7 @@ import org.anotherteam.editor.gui.GUIElement;
 
 public class SwitchButton extends TextButton {
 
-    private SwitchMenu switchMenu;
+    private final SwitchMenu switchMenu;
     private Runnable afterClick;
 
     public SwitchButton(String text, float x, float y, GUIElement ownerElement) {
@@ -25,10 +25,11 @@ public class SwitchButton extends TextButton {
         this.clicked = clicked;
 
         if (!clicked) {
-            text.getColor().r = 0;
+            text.getColor().set(DEFAULT_COLOR);
             return;
         }
         if (onClick != null) onClick.run();
+        text.getColor().set(DEFAULT_COLOR);
         text.getColor().r = 255;
     }
 

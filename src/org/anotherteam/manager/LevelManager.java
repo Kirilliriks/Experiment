@@ -4,6 +4,7 @@ import org.anotherteam.Game;
 import org.anotherteam.GameState;
 import org.anotherteam.data.FileLoader;
 import org.anotherteam.level.Level;
+import org.anotherteam.level.room.Room;
 import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
@@ -21,7 +22,7 @@ public final class LevelManager extends AbstractManager {
      * Save only on play, not on editor!
      */
     public void savePlayableLevel() {
-        if (Game.game.getGameState() == GameState.ON_EDITOR) throw new LifeException("Trying save playable level when state is ON_EDITOR!");
+        if (Game.stateManager.getState() == GameState.ON_EDITOR) throw new LifeException("Trying save playable level when state is ON_EDITOR!");
         saveLevel();
     }
 
@@ -33,8 +34,10 @@ public final class LevelManager extends AbstractManager {
         currentLevel = level;
     }
 
-    public void loadLevel(@NotNull String levelName) {
+    @NotNull
+    public Level loadLevel(@NotNull String levelName) {
         currentLevel = FileLoader.loadLevel(levelName);
+        return currentLevel;
     }
 
     /**
@@ -51,6 +54,11 @@ public final class LevelManager extends AbstractManager {
     @NotNull
     public Level getCurrentLevel() {
         return currentLevel;
+    }
+
+    @NotNull
+    public Room getCurrentRoom() {
+        return getCurrentLevel().getCurrentRoom();
     }
 
     public void updateLevel(float dt) {

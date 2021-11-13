@@ -36,7 +36,7 @@ public final class AddObjectMenu extends GUIElement {
         inverted = true;
 
         typeMenu = new SwitchMenu(0, 0, width, TextMenu.Type.HORIZONTAL, this);
-        typeMenu.setInverted(true);
+        typeMenu.setYInverted(true);
         typeMenu.setColor(100, 100, 100, 255);
         typeMenu.setStartOffset(Label.DEFAULT_TEXT_OFFSET, 0);
         typeMenu.addButton("Entity");
@@ -52,13 +52,13 @@ public final class AddObjectMenu extends GUIElement {
         val spriteMenu = new SpriteMenu(0, -typeMenu.getHeight(), width, height - typeMenu.getHeight(), this);
         spriteMenu.setVisible(false);
         spriteMenu.setOffsetIcon(8);
-        spriteMenu.setInverted(true);
+        spriteMenu.setYInverted(true);
         for (val value : prefabs) {
             val object = GameObject.create(0, 0, value.getPrefabClass()); // TODO delete new game object instancing
             val sprite = getObjectSprite(object);
             val spriteButton = spriteMenu.addButton(sprite);
             spriteButton.setOnClick(()-> {
-                draggedGameObject = new DraggedGameObject(sprite, GameObject.create(0, 0, value.getPrefabClass()));;
+                draggedGameObject = new DraggedGameObject(sprite, GameObject.create(0, 0, value.getPrefabClass()));
                 GameScreen.draggedThing = draggedGameObject;
             });
         }
@@ -84,7 +84,7 @@ public final class AddObjectMenu extends GUIElement {
 
                 val gameObject = draggedGameObject.getGameObject();
                 gameObject.setPosition(x, y);
-                Game.game.getCurrentRoom().addObject(gameObject);
+                Game.levelManager.getCurrentRoom().addObject(gameObject);
                 GameScreen.draggedThing = null;
                 draggedGameObject = null;
             } else if (Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
@@ -95,15 +95,16 @@ public final class AddObjectMenu extends GUIElement {
         }
 
         if (Input.isAnyButtonPressed()) {
-            for (val gameObject : Game.game.getCurrentRoom().getGameObjects()) {
+            val currentRoom = Game.levelManager.getCurrentRoom();
+            for (val gameObject : currentRoom.getGameObjects()) {
                 if (!gameObject.getCollider().isOnMouse(GameScreen.inGameMouseX(), GameScreen.inGameMouseY())) continue;
 
                 if (Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
-                    Game.game.getCurrentRoom().rewoveObject(gameObject);
+                    currentRoom.rewoveObject(gameObject);
                 } else if (Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) {
                     draggedGameObject = new DraggedGameObject(getObjectSprite(gameObject), gameObject);
                     GameScreen.draggedThing = draggedGameObject;
-                    Game.game.getCurrentRoom().rewoveObject(gameObject);
+                    currentRoom.rewoveObject(gameObject);
                 }
                 break;
             }

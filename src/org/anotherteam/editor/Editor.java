@@ -5,16 +5,19 @@ import org.anotherteam.Game;
 import org.anotherteam.GameState;
 import org.anotherteam.Input;
 import org.anotherteam.data.AssetData;
-import org.anotherteam.editor.gui.Log;
+import org.anotherteam.editor.gui.EditorLog;
 import org.anotherteam.editor.gui.Widget;
 import org.anotherteam.editor.gui.menu.text.TextMenu;
 import org.anotherteam.editor.gui.menu.text.TextButton;
+import org.anotherteam.editor.gui.window.DialogWindow;
+import org.anotherteam.editor.gui.window.SaveLevelDialog;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.framebuffer.FrameBuffer;
 import org.anotherteam.render.text.Font;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.Color;
+import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
 
 public final class Editor extends Widget {
@@ -27,9 +30,11 @@ public final class Editor extends Widget {
     private final FrameBuffer editorFrame;
 
     //GUI
-    private static Log log;
+    private static EditorLog editorLog;
     private final EditorMenu editorMenu;
     //
+
+    private static DialogWindow dialogWindow;
 
     public Editor() {
         super("Another Editor",
@@ -45,8 +50,8 @@ public final class Editor extends Widget {
         this.editorFrame = new FrameBuffer(GameScreen.window.getWidth(), GameScreen.window.getHeight());
 
         // GUI
-        log = new Log(0,  -height , 200, 200, this);
-        log.setVisible(false);
+        editorLog = new EditorLog(0,  -height , 200, 200, this);
+        editorLog.setVisible(false);
         this.editorMenu = new EditorMenu(0, height - TextMenu.DEFAULT_BUTTON_MENU_HEIGHT, this);
         editorMenu.setWidth(width);
         val switchStateButton = new TextButton("Play/Stop", 0, 10, this);
@@ -59,11 +64,14 @@ public final class Editor extends Widget {
             Game.DebugMode = !Game.DebugMode;
             Editor.sendLogMessage("Debug mode: " + Game.DebugMode);
         });
+
+        dialogWindow = null;
+        editor.getEditorMenu().getLevelMenu().getLevelSelector().fillButtons();
     }
 
     public void switchPlayStopMode() {
-        if (Game.game.getGameState() == GameState.ON_EDITOR) {
-            Game.game.setGameState(GameState.ON_LEVEL);
+        if (Game.stateManager.getState() == GameState.ON_EDITOR) {
+            Game.stateManager.setState(GameState.ON_LEVEL);
 
             GameScreen.RENDER_WIDTH = GameScreen.window.getWidth();
             GameScreen.RENDER_HEIGHT = GameScreen.window.getHeight();
@@ -71,7 +79,7 @@ public final class Editor extends Widget {
 
             editorMenu.getLevelMenu().getLevelSelector().storeEditableLevel();
         } else {
-            Game.game.setGameState(GameState.ON_EDITOR);
+            Game.stateManager.setState(GameState.ON_EDITOR);
 
             GameScreen.RENDER_WIDTH = GameScreen.WIDTH * GameScreen.RENDER_SCALE;
             GameScreen.RENDER_HEIGHT = GameScreen.HEIGHT * GameScreen.RENDER_SCALE;
@@ -80,21 +88,32 @@ public final class Editor extends Widget {
             editorMenu.getLevelMenu().getLevelSelector().restoreEditableLevel();
             GameScreen.gameCamera.setPosition(GameScreen.WIDTH / 2.0f, GameScreen.HEIGHT / 2.0f);
         }
-        Editor.sendLogMessage("Current state: " + Game.game.getGameState());
+        Editor.sendLogMessage("Current state: " + Game.stateManager.getState());
     }
 
     @Override
     public void update(float dt) {
-        updateElements(dt);
-        if (Input.isKeyPressed(Input.KEY_TILDA)) {
-            log.setVisible(!log.isVisible());
+        if (dialogWindow != null) {
+            dialogWindow.update(dt);
+            dialogWindow.updateElements(dt);
+            return;
         }
 
-        if (Game.game.getGameState() == GameState.ON_LEVEL) {
-            if (Input.isKeyPressed(Input.KEY_TILDA)) {
+        if (Input.isKeyPressed(Input.KEY_ESCAPE)) {
+            if (Game.stateManager.getState() == GameState.ON_LEVEL) {
                 switchPlayStopMode();
-                return;
+            } else {
+                val levelSelector = getEditorMenu().getLevelMenu().getLevelSelector();
+                val saveWindow = new SaveLevelDialog(levelSelector.getEditableLevel().getName());
+                saveWindow.setOnAfterClose(() -> Game.stateManager.setState(GameState.ON_CLOSE_GAME));
+                Editor.callWindow(saveWindow);
             }
+            return;
+        }
+
+        updateElements(dt);
+        if (Input.isKeyPressed(Input.KEY_TILDA)) {
+            editorLog.setVisible(!editorLog.isVisible());
         }
 
         float speed = 45;
@@ -113,6 +132,7 @@ public final class Editor extends Widget {
             moveX += speed * dt;
         }
 
+
         GameScreen.gameCamera.addPosition(moveX, moveY);
     }
 
@@ -123,6 +143,7 @@ public final class Editor extends Widget {
         val text = "GamePos: " + GameScreen.inGameMouseX() + " " + GameScreen.inGameMouseY() + " | WindowPos: " + Input.getMousePos().x + " " + Input.getMousePos().y;
         editorBatch.drawText(editorFont, text,
                 width, (int) pos.y + 5, 1.0f, Color.WHITE, true);
+        if (dialogWindow != null) dialogWindow.render(editorBatch);
         editorBatch.end();
         editorFrame.end();
     }
@@ -143,12 +164,12 @@ public final class Editor extends Widget {
     }
 
     public static void sendLogMessage(String text) {
-        log.addMessage(text);
+        editorLog.addMessage(text);
     }
 
     @NotNull
-    public static Log log() {
-        return log;
+    public static EditorLog log() {
+        return editorLog;
     }
 
     public static int getRightBorderSize() {
@@ -168,6 +189,17 @@ public final class Editor extends Widget {
     }
 
     public void destroy() {
-        //TODO add save question messages
+        if (Editor.dialogWindow != null) closeWindow();
+        super.destroy();
+    }
+
+    public static void callWindow(@NotNull DialogWindow dialogWindow) {
+        if (Editor.dialogWindow != null) throw new LifeException("Last DialogWindow should be closed");
+        Editor.dialogWindow = dialogWindow;
+    }
+
+    public static void closeWindow() {
+        Editor.dialogWindow.destroy();
+        Editor.dialogWindow = null;
     }
 }

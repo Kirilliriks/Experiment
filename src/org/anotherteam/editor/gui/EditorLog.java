@@ -1,16 +1,15 @@
 package org.anotherteam.editor.gui;
 
 import lombok.val;
-import org.anotherteam.util.Color;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class Log extends Widget {
+public final class EditorLog extends Widget {
 
     private final List<Label> logStrings;
 
-    public Log(float x, float y, int width, int height, GUIElement ownerElement) {
+    public EditorLog(float x, float y, int width, int height, GUIElement ownerElement) {
         super("Log", x, y, width, height, ownerElement);
         logStrings = new ArrayList<>();
         setColor(120, 120, 120, 255);
@@ -26,5 +25,6 @@ public final class Log extends Widget {
         for (int i = logStrings.size() - 1; i > 0; i--)
             logStrings.get(i).setText(logStrings.get(i - 1).text);
         logStrings.get(0).setText(text);
+        width = Math.max(width, logStrings.get(0).getWidth());
     }
 }
