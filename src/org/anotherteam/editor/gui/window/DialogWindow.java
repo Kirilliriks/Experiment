@@ -30,4 +30,10 @@ public abstract class DialogWindow extends GUIElement {
             afterClose.run();
         super.destroy();
     }
+
+    @Override
+    public void update(float dt) {
+        super.update(dt);
+        updateElements(dt);
+    }
 }

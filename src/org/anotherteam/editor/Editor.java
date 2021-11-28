@@ -98,7 +98,6 @@ public final class Editor extends Widget {
     public void update(float dt) {
         if (dialogWindow != null) {
             dialogWindow.update(dt);
-            dialogWindow.updateElements(dt);
             return;
         }
 
