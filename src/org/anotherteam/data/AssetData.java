@@ -5,7 +5,6 @@ import org.anotherteam.level.room.tile.Tile;
 import org.anotherteam.render.shader.Shader;
 import org.anotherteam.render.sprite.SpriteAtlas;
 import org.anotherteam.render.texture.Texture;
-import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -22,11 +21,10 @@ public final class AssetData {
         // Editor textures
         public static final Texture EDITOR_TEXTURE = getTexture("editorTexture.png");
         public static final Texture EDITOR_HIGHLITER_TEXTURE = getTexture("editor_highliter_texture.png");
-        public static final SpriteAtlas EDITOR_HIGHLITER_ATLAS = loadSpriteAtlas("editor_highliter_texture.png", 16,  16);
+        public static final SpriteAtlas EDITOR_HIGHLITER_ATLAS = loadSpriteAtlas("editor_highliter_texture.png", Tile.SIZE.x,  Tile.SIZE.y);
         public static final SpriteAtlas EDITOR_NULL_ICON_ATLAS = loadSpriteAtlas("nullIcon.png", 32,  32);
         //
 
-        public static final SpriteAtlas TEST_ROOM_ATLAS = loadSpriteAtlas(ROOM_ATLASES_PATH + "testTestRoom.png", Tile.SIZE.x,  Tile.SIZE.y);
         public static final SpriteAtlas TEST_PLAYER_ATLAS = loadSpriteAtlas(ENTITY_ATLASES_PATH + "testPlayerAtlas.png", 32,  32);
 
         public static final Shader DEFAULT_SHADER = new Shader("shader/defaultVertexShader.glsl", "shader/defaultFragmentShader.glsl");
@@ -46,7 +44,7 @@ public final class AssetData {
         @NotNull
         public static SpriteAtlas loadSpriteAtlas(String atlasName, int frameWidth, int frameHeight) {
                 val texture = getTexture(atlasName);
-                val atlas = SpriteAtlas.create(getTexture(atlasName), frameWidth, frameHeight, texture.getWidth() / 2 / Tile.SIZE.y);
+                val atlas = SpriteAtlas.create(getTexture(atlasName), frameWidth, frameHeight, (texture.getHeight() / 2) / Tile.SIZE.y);
                 spriteAtlases.put(atlasName, atlas);
                 return atlas;
         }

@@ -60,13 +60,7 @@ public final class Input {
     public static boolean isKeyDown(Key key) {
         if (key.isLetter()) {
             val anotherChar = (int)CharUtil.toAnotherCase(key.keyCode);
-            if (keys.containsKey(anotherChar) && keys.get(anotherChar).down) {
-                Editor.sendLogMessage("Ch " + key.getChar());
-                return true;
-            }
-        }
-        if (key.down) {
-            Editor.sendLogMessage("Ch " + key.getChar());
+            if (keys.containsKey(anotherChar) && keys.get(anotherChar).down) return true;
         }
         return key.down;
     }

@@ -8,7 +8,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public final class SpriteAtlas {
 
     private final Texture texture;
@@ -52,8 +51,8 @@ public final class SpriteAtlas {
 
     @NotNull
     public Sprite getSprite(int x, int y) {
-        val index = x + (y * sizeX);
-        if (index >= sizeY * sizeX) throw new LifeException("Bad sprite index");
+        val index = x + y * sizeX;
+        if (index >= sizeX * sizeY) throw new LifeException("Bad sprite index: " + index + " | x: " + x + " | y: " + y);
         return sprites.get(index);
     }
 

@@ -2,6 +2,7 @@ package org.anotherteam.editor.screen;
 
 import lombok.val;
 import org.anotherteam.Game;
+import org.anotherteam.editor.Editor;
 import org.anotherteam.editor.gui.menu.sprite.SpriteMenu;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.level.room.tile.Tile;
