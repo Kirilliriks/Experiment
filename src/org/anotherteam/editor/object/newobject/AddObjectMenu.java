@@ -127,6 +127,8 @@ public final class AddObjectMenu extends GUIElement {
         if (GameScreen.draggedThing == null || draggedGameObject == null) return;
         val x  = (int) Input.getMouseX();
         val y  = (int) Input.getMouseY();
+
+        if (GameScreen.inGameWindowMouseX() != -1 && GameScreen.inGameWindowMouseY() != -1) return;
         draggedGameObject.getGameObject().setPosition(x, y);
         draggedGameObject.getGameObject().render(editorBatch);
     }

@@ -11,7 +11,7 @@ import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
 
-public class GameScreen {
+public final class GameScreen {
     public static final Vector2i POSITION = new Vector2i(0, 0);
     public static final int RENDER_SCALE = 5;
 
@@ -30,7 +30,7 @@ public class GameScreen {
     public static DraggedThing draggedThing = null;
 
     private GameScreen() {
-        throw new LifeException("Try create utility class object");
+        throw new LifeException("Try create GameScreen object");
     }
 
     public static void init(@NotNull Window window) {

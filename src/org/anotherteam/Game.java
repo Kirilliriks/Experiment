@@ -41,7 +41,6 @@ public final class Game {
             levelManager.update(dt);
     }
 
-
     public void render(float dt) {
         levelManager.renderLevel(GameScreen.windowBatch);
 
