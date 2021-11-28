@@ -37,6 +37,7 @@ public final class Editor extends Widget {
     //
 
     private static DialogWindow dialogWindow;
+    public static boolean inputHandling;
 
     public Editor() {
         super("Another Editor",
@@ -104,6 +105,7 @@ public final class Editor extends Widget {
             return;
         }
 
+
         if (Input.isKeyPressed(Input.KEY_ESCAPE)) {
             if (Game.stateManager.getState() == GameState.ON_LEVEL) {
                 switchPlayStopMode();
@@ -116,6 +118,8 @@ public final class Editor extends Widget {
         }
 
         updateElements(dt);
+        if (inputHandling) return;
+
         if (Input.isKeyPressed(Input.KEY_TILDA)) {
             editorLog.setVisible(!editorLog.isVisible());
         }

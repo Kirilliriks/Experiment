@@ -2,6 +2,7 @@ package org.anotherteam.editor.gui.text.input;
 
 import lombok.val;
 import org.anotherteam.Input;
+import org.anotherteam.editor.Editor;
 import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.editor.gui.menu.text.TextButton;
 import org.anotherteam.util.Color;
@@ -54,6 +55,7 @@ public final class InputPart extends TextButton {
             handleInput();
             if (!Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) return;
             if (!isMouseOnWidget()) {
+                Editor.inputHandling = false;
                 clicked = false;
                 validateInput();
                 if (afterClick != null) afterClick.run();
@@ -62,6 +64,7 @@ public final class InputPart extends TextButton {
         }
         if (!isMouseOnWidget()) return;
         if (!Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) return;
+        Editor.inputHandling = true;
         setClicked(true);
     }
 

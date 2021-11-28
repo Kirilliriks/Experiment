@@ -51,11 +51,11 @@ public final class LevelEditor extends GUIElement {
         downButtons = new SwitchMenu(Editor.DEFAULT_BORDER_SIZE, Editor.DEFAULT_BORDER_SIZE, 0, 0, SwitchMenu.Type.HORIZONTAL, this);
 
         createEmptyButton = new TextButton("Create empty level", 0, 0, downButtons);
-        createEmptyButton.setOnClick(LevelEditor::loadEmptyLevel);
+        createEmptyButton.setOnClick(LevelEditor::createAndLoadEmptyLevel);
         downButtons.addButton(createEmptyButton);
 
         saveLevelButton = new TextButton("Save editable level", 0, 0, downButtons);
-        saveLevelButton.setOnClick(()-> LevelEditor.saveEditableLevel(true));
+        saveLevelButton.setOnClick(LevelEditor::saveEditableLevel);
         downButtons.addButton(saveLevelButton);
 
         deleteLevelButton = new TextButton("Delete editable level", 0, 0, downButtons);
@@ -105,7 +105,7 @@ public final class LevelEditor extends GUIElement {
         update();
     }
 
-    public static void loadEmptyLevel() {
+    public static void createAndLoadEmptyLevel() {
         editableLevel = Game.levelManager.setEmptyLevel();
         levelEditor.levelInspector.setLevel(editableLevel);
         saveEditableLevel(true);
@@ -142,7 +142,7 @@ public final class LevelEditor extends GUIElement {
 
     public static void deleteEditableLevel() {
         FileUtils.deleteLevel(editableLevel);
-        loadEmptyLevel();
+        createAndLoadEmptyLevel();
         update();
     }
 }
