@@ -2,7 +2,7 @@ package org.anotherteam.editor.level.selector;
 
 import lombok.val;
 import org.anotherteam.Game;
-import org.anotherteam.data.FileLoader;
+import org.anotherteam.util.FileUtils;
 import org.anotherteam.editor.Editor;
 import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.editor.gui.menu.text.SwitchMenu;
@@ -15,7 +15,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 
-public final class LevelSelector extends GUIElement {
+public final class LevelEditor extends GUIElement {
+
+    private static LevelEditor levelEditor;
 
     private final SwitchMenu selector;
     private final LevelInspector levelInspector;
@@ -23,19 +25,22 @@ public final class LevelSelector extends GUIElement {
     private final SwitchMenu downButtons;
     private final TextButton createEmptyButton;
     private final TextButton saveLevelButton;
+    private final TextButton deleteLevelButton;
 
-    private Level editableLevel;
+    private static Level editableLevel;
     private String storedEditableLevel;
 
-    public LevelSelector(float x, float y, GUIElement ownerElement) {
+    public LevelEditor(float x, float y, GUIElement ownerElement) {
         super(x, y, ownerElement);
+        levelEditor = this;
+
         val editor = Editor.getInstance();
         width = (int)(editor.getWidth() - getPosX() - Editor.getRightBorderSize());
         height = (int)(getPosY() - Editor.getDownBorderPos() - Editor.DEFAULT_BORDER_SIZE);
         inverted = true;
 
         selector = new SwitchMenu(Editor.DEFAULT_BORDER_SIZE, -Editor.DEFAULT_BORDER_SIZE,
-                (int) (width * 0.65f), height - Editor.DEFAULT_BORDER_SIZE * 3,
+                (int)(width * 0.65f), height - Editor.DEFAULT_BORDER_SIZE * 3,
                 SwitchMenu.Type.DOUBLE, this);
         selector.setInvertedY(true);
 
@@ -46,22 +51,28 @@ public final class LevelSelector extends GUIElement {
         downButtons = new SwitchMenu(Editor.DEFAULT_BORDER_SIZE, Editor.DEFAULT_BORDER_SIZE, 0, 0, SwitchMenu.Type.HORIZONTAL, this);
 
         createEmptyButton = new TextButton("Create empty level", 0, 0, downButtons);
-        createEmptyButton.setOnClick(()-> selector.addButton("Empty." + Level.LEVEL_FILE_EXTENSION, ()-> Game.levelManager.setEmptyLevel()));
+        createEmptyButton.setOnClick(LevelEditor::loadEmptyLevel);
         downButtons.addButton(createEmptyButton);
 
-        saveLevelButton = new TextButton("Save editable level", 40, 0, downButtons);
-        saveLevelButton.setOnClick(()-> Game.levelManager.saveLevel());
+        saveLevelButton = new TextButton("Save editable level", 0, 0, downButtons);
+        saveLevelButton.setOnClick(()-> LevelEditor.saveEditableLevel(true));
         downButtons.addButton(saveLevelButton);
+
+        deleteLevelButton = new TextButton("Delete editable level", 0, 0, downButtons);
+        deleteLevelButton.setOnClick(LevelEditor::deleteEditableLevel);
+        downButtons.addButton(deleteLevelButton);
     }
 
-    public void fillButtons() {
+    public void updateButtons(String currentLevelName) {
         val files = new File("levels/").listFiles();
         if (files == null) throw new LifeException("Level's not found");
 
+        selector.clearChild();
         for (val file : files) {
-            val btn = selector.addButton(file.getName(),
+            val btn = selector.addButton(FileUtils.getNameFromFile(file.getName()),
                     ()-> {
                         if (editableLevel != null) {
+                            levelInspector.acceptChanges();
                             val saveWindow = new SaveLevelDialog(editableLevel.getName());
                             saveWindow.setOnAfterClose(() -> loadLevel(file.getName()));
                             Editor.callWindow(saveWindow);
@@ -70,8 +81,8 @@ public final class LevelSelector extends GUIElement {
                         loadLevel(file.getName());
                     });
 
-            if (file.getName().equals(Game.levelManager.getCurrentLevel().getName() + "." + Level.LEVEL_FILE_EXTENSION))
-                selector.setClicked(btn);
+            if (file.getName().equals(currentLevelName + "." + Level.LEVEL_FILE_EXTENSION))
+                selector.setHighlighted(btn);
         }
     }
 
@@ -81,20 +92,57 @@ public final class LevelSelector extends GUIElement {
     }
 
     public void storeEditableLevel() {
-        storedEditableLevel = FileLoader.LEVEL_GSON.toJson(Game.levelManager.getCurrentLevel());
+        storedEditableLevel = FileUtils.LEVEL_GSON.toJson(Game.levelManager.getCurrentLevel());
     }
 
     public void restoreEditableLevel() {
-        Game.levelManager.setLevel(FileLoader.LEVEL_GSON.fromJson(storedEditableLevel, Level.class));
+        Game.levelManager.setLevel(FileUtils.LEVEL_GSON.fromJson(storedEditableLevel, Level.class));
     }
 
     public void loadLevel(String name) {
         editableLevel = Game.levelManager.loadLevel(name);
         levelInspector.setLevel(editableLevel);
+        update();
+    }
+
+    public static void loadEmptyLevel() {
+        editableLevel = Game.levelManager.setEmptyLevel();
+        levelEditor.levelInspector.setLevel(editableLevel);
+        saveEditableLevel(true);
+    }
+
+    public static void update() {
+        levelEditor.updateButtons(editableLevel.getName());
     }
 
     @NotNull
-    public Level getEditableLevel() {
+    public static Level getEditableLevel() {
         return editableLevel;
+    }
+
+    public static void renameEditableLevel(String newName) {
+        for (val btn : levelEditor.selector.getButtons()) {
+            if (!btn.getLabelText().equals(editableLevel.getName())) continue;
+            btn.setLabelText(newName);
+        }
+
+        FileUtils.renameLevel(newName, editableLevel);
+        editableLevel.setName(newName);
+        saveEditableLevel();
+    }
+
+    public static void saveEditableLevel() {
+        saveEditableLevel(false);
+    }
+
+    public static void saveEditableLevel(boolean needUpdate) {
+        FileUtils.saveEditableLevel(editableLevel);
+        if (needUpdate) update();
+    }
+
+    public static void deleteEditableLevel() {
+        FileUtils.deleteLevel(editableLevel);
+        loadEmptyLevel();
+        update();
     }
 }

@@ -10,7 +10,7 @@ import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.level.room.Room;
 import org.jetbrains.annotations.NotNull;
 
-public class RoomSelector extends GUIElement {
+public class RoomEditor extends GUIElement {
 
     private final SwitchMenu selector;
 
@@ -18,7 +18,7 @@ public class RoomSelector extends GUIElement {
     private final TextButton createEmptyButton;
     private final TextButton saveLevelButton;
 
-    public RoomSelector(float x, float y, GUIElement ownerElement) {
+    public RoomEditor(float x, float y, GUIElement ownerElement) {
         super(x, y, ownerElement);
         val editor = Editor.getInstance();
         width = (int)(editor.getWidth() - getPosX() - Editor.getRightBorderSize());
@@ -40,7 +40,7 @@ public class RoomSelector extends GUIElement {
         downButtons.addButton(createEmptyButton);
 
         saveLevelButton = new TextButton("Save rooms", 40, 0, downButtons);
-        saveLevelButton.setOnClick(()-> Game.levelManager.saveLevel());
+        saveLevelButton.setOnClick(LevelEditor::saveEditableLevel);
         downButtons.addButton(saveLevelButton);
     }
 

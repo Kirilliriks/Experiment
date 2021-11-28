@@ -11,13 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class Level {
-
     public static final String LEVEL_FILE_EXTENSION = "hgl";
 
-    private final String name;
     private final GameRender gameRender;
     private final List<Room> rooms;
 
+    private String name;
     private Room currentRoom;
 
     public Level(String name) {
@@ -25,6 +24,10 @@ public final class Level {
         this.gameRender = Game.gameRender;
         this.rooms = new ArrayList<>();
         currentRoom = null;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getName() {

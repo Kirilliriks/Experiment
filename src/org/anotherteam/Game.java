@@ -38,7 +38,7 @@ public final class Game {
 
     public void update(float dt) {
         if (stateManager.getState() != GameState.ON_EDITOR)
-            levelManager.updateLevel(dt);
+            levelManager.update(dt);
     }
 
 

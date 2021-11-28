@@ -5,7 +5,6 @@ import org.anotherteam.util.Color;
 import org.anotherteam.util.FileUtils;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.BufferUtils;
-import org.lwjgl.system.MemoryStack;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -26,7 +25,7 @@ public final class Pixmap {
             throw new RuntimeException(e);
         }
 
-        try (MemoryStack stack = stackPush()) {
+        try (val stack = stackPush()) {
             val width = stack.mallocInt(1);
             val height = stack.mallocInt(1);
             val comp = stack.mallocInt(1);

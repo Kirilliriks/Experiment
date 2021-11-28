@@ -2,14 +2,14 @@ package org.anotherteam.editor.level;
 
 import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.editor.gui.menu.text.SwitchMenu;
-import org.anotherteam.editor.level.selector.LevelSelector;
-import org.anotherteam.editor.level.selector.RoomSelector;
+import org.anotherteam.editor.level.selector.LevelEditor;
+import org.anotherteam.editor.level.selector.RoomEditor;
 import org.jetbrains.annotations.NotNull;
 
 public final class LevelMenu extends SwitchMenu {
 
-    private final LevelSelector levelSelector;
-    private final RoomSelector roomSelector;
+    private final LevelEditor levelEditor;
+    private final RoomEditor roomEditor;
     private final TileViewer tileViewer;
 
     public LevelMenu(float x, float y, GUIElement ownerElement) {
@@ -18,16 +18,16 @@ public final class LevelMenu extends SwitchMenu {
         addButton("Select room");
         addButton("Tile viewer");
         var button = getButton(0);
-        levelSelector = new LevelSelector(getWidestButtonWidth(), 0, this);
-        levelSelector.setVisible(false);
-        button.setOnClick(()-> levelSelector.setVisible(true));
-        button.setAfterClick(()-> levelSelector.setVisible(false));
+        levelEditor = new LevelEditor(getWidestButtonWidth(), 0, this);
+        levelEditor.setVisible(false);
+        button.setOnClick(()-> levelEditor.setVisible(true));
+        button.setAfterClick(()-> levelEditor.setVisible(false));
 
         button = getButton(1);
-        roomSelector = new RoomSelector(getWidestButtonWidth(), 0, this);
-        roomSelector.setVisible(false);
-        button.setOnClick(()-> roomSelector.setVisible(true));
-        button.setAfterClick(()-> roomSelector.setVisible(false));
+        roomEditor = new RoomEditor(getWidestButtonWidth(), 0, this);
+        roomEditor.setVisible(false);
+        button.setOnClick(()-> roomEditor.setVisible(true));
+        button.setAfterClick(()-> roomEditor.setVisible(false));
 
         button = getButton(2);
         tileViewer = new TileViewer(getWidestButtonWidth(), 0, this);
@@ -39,12 +39,12 @@ public final class LevelMenu extends SwitchMenu {
     }
 
     @NotNull
-    public LevelSelector getLevelSelector() {
-        return levelSelector;
+    public LevelEditor getLevelEditor() {
+        return levelEditor;
     }
 
     @NotNull
-    public RoomSelector getRoomSelector() {
-        return roomSelector;
+    public RoomEditor getRoomEditor() {
+        return roomEditor;
     }
 }

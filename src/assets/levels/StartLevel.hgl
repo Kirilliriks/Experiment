@@ -326,6 +326,11 @@
           },
           "components": [
             {
+              "type": "Transform",
+              "maxSpeed": 25,
+              "speed": 25
+            },
+            {
               "type": "Collider",
               "firstBound": {
                 "x": -7,
@@ -345,11 +350,6 @@
                 "x": 16,
                 "y": 32
               }
-            },
-            {
-              "type": "Transform",
-              "maxSpeed": 25,
-              "speed": 25
             }
           ]
         }
@@ -367,6 +367,11 @@
           },
           "components": [
             {
+              "type": "Transform",
+              "maxSpeed": 25,
+              "speed": 25
+            },
+            {
               "type": "Collider",
               "firstBound": {
                 "x": -6,
@@ -386,11 +391,6 @@
                 "x": 16,
                 "y": 32
               }
-            },
-            {
-              "type": "Transform",
-              "maxSpeed": 25,
-              "speed": 25
             }
           ]
         }
@@ -408,6 +408,11 @@
           },
           "components": [
             {
+              "type": "Transform",
+              "maxSpeed": 25,
+              "speed": 25
+            },
+            {
               "type": "Collider",
               "firstBound": {
                 "x": -6,
@@ -427,11 +432,6 @@
                 "x": 16,
                 "y": 32
               }
-            },
-            {
-              "type": "Transform",
-              "maxSpeed": 25,
-              "speed": 25
             }
           ]
         }

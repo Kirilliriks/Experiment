@@ -1,11 +1,11 @@
 package org.anotherteam.editor.gui.window;
 
 import lombok.val;
-import org.anotherteam.Game;
 import org.anotherteam.Input;
 import org.anotherteam.editor.Editor;
 import org.anotherteam.editor.gui.text.Label;
 import org.anotherteam.editor.gui.menu.text.TextButton;
+import org.anotherteam.editor.level.selector.LevelEditor;
 import org.jetbrains.annotations.NotNull;
 
 public final class SaveLevelDialog extends DialogWindow {
@@ -14,7 +14,7 @@ public final class SaveLevelDialog extends DialogWindow {
         super(200, 50);
         val saveButton = new TextButton("Save", 0, 0, this);
         saveButton.setOnClick(() -> {
-            Game.levelManager.saveLevel();
+            LevelEditor.saveEditableLevel();
             Editor.closeWindow();
         });
 

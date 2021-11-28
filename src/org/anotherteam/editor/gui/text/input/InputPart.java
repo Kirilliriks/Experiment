@@ -10,8 +10,23 @@ public final class InputPart extends TextButton {
 
     public static final Color DEFAULT_COLOR = new Color(180, 180, 180);
 
+    private String lastCorrectInput;
+    private Runnable afterClick;
+
     public InputPart(String text, float x, float y, GUIElement ownerElement) {
         super(text, x, y, ownerElement);
+        setLabelText(text);
+        afterClick = null;
+    }
+
+    public void setAfterClick(Runnable afterClick) {
+        this.afterClick = afterClick;
+    }
+
+    @Override
+    public void setLabelText(String text) {
+        super.setLabelText(text);
+        lastCorrectInput = text;
     }
 
     @Override
@@ -40,6 +55,8 @@ public final class InputPart extends TextButton {
             if (!Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) return;
             if (!isMouseOnWidget()) {
                 clicked = false;
+                validateInput();
+                if (afterClick != null) afterClick.run();
             }
             return;
         }
@@ -62,5 +79,9 @@ public final class InputPart extends TextButton {
         if (!key.isPrintable()) return;
 
         labelText.setText(text + key.getChar());
+    }
+
+    private void validateInput() {
+
     }
 }

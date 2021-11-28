@@ -16,6 +16,14 @@ public final class InputLabel extends Label {
         inputPart = new InputPart("INPUT HERE", width, 0, this);
     }
 
+    public String getInputText() {
+        return inputPart.getLabelText();
+    }
+
+    public void setAfterClick(Runnable afterClick) {
+        inputPart.setAfterClick(afterClick);
+    }
+
     public void setInputText(String text) {
         inputPart.setLabelText(text);
     }

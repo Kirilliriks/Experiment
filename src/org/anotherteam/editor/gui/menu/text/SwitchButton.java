@@ -18,6 +18,12 @@ public class SwitchButton extends TextButton {
         this.afterClick = afterClick;
     }
 
+    public void setHighlighted(){
+        clicked = true;
+        labelText.getColor().set(DEFAULT_COLOR);
+        labelText.getColor().r = 255;
+    }
+
     @Override
     public void setClicked(boolean clicked) {
         if (!clicked && afterClick != null)

@@ -1,8 +1,9 @@
 package org.anotherteam;
 
+import org.anotherteam.manager.AbstractManager;
 import org.jetbrains.annotations.NotNull;
 
-public final class StateManager extends AbstractGameManager {
+public final class StateManager extends AbstractManager {
 
     private GameState state;
 

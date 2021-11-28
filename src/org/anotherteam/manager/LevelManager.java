@@ -2,7 +2,7 @@ package org.anotherteam.manager;
 
 import org.anotherteam.Game;
 import org.anotherteam.GameState;
-import org.anotherteam.data.FileLoader;
+import org.anotherteam.util.FileUtils;
 import org.anotherteam.level.Level;
 import org.anotherteam.level.room.Room;
 import org.anotherteam.render.batch.RenderBatch;
@@ -23,11 +23,7 @@ public final class LevelManager extends AbstractManager {
      */
     public void savePlayableLevel() {
         if (Game.stateManager.getState() == GameState.ON_EDITOR) throw new LifeException("Trying save playable level when state is ON_EDITOR!");
-        saveLevel();
-    }
-
-    public void saveLevel() {
-        FileLoader.saveLevel(currentLevel);
+        FileUtils.saveEditableLevel(currentLevel); // TODO save to game profile directory
     }
 
     public void setLevel(@NotNull Level level) {
@@ -36,19 +32,14 @@ public final class LevelManager extends AbstractManager {
 
     @NotNull
     public Level loadLevel(@NotNull String levelName) {
-        currentLevel = FileLoader.loadLevel(levelName);
+        currentLevel = FileUtils.loadLevel(levelName);
         return currentLevel;
     }
 
-    /**
-     * Reset level to first state, only for editor.
-     */
-    public void resetLevel() {
-        currentLevel = FileLoader.loadLevel(currentLevel.getName());
-    }
-
-    public void setEmptyLevel() {
+    @NotNull
+    public Level setEmptyLevel() {
         currentLevel = Level.createEmpty();
+        return currentLevel;
     }
 
     @NotNull
@@ -61,11 +52,17 @@ public final class LevelManager extends AbstractManager {
         return getCurrentLevel().getCurrentRoom();
     }
 
-    public void updateLevel(float dt) {
-        currentLevel.update(dt);
-    }
-
     public void renderLevel(@NotNull RenderBatch renderBatch) {
         currentLevel.render(renderBatch);
+    }
+
+    @Override
+    public void update(float delta) {
+        currentLevel.update(delta);
+    }
+
+    @Override
+    public void clear() {
+
     }
 }

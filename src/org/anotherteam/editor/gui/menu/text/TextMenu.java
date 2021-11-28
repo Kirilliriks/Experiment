@@ -126,6 +126,11 @@ public class TextMenu extends GUIElement {
         return buttons.get(index);
     }
 
+    @NotNull
+    public List<TextButton> getButtons() {
+        return buttons;
+    }
+
     public int getWidestButtonWidth() {
         return widestButtonWidth;
     }

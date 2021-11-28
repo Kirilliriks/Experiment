@@ -62,6 +62,13 @@ public class SwitchMenu extends TextMenu {
         return (SwitchButton) super.getButton(index);
     }
 
+    public void setHighlighted(SwitchButton switchButton) {
+        if (switchButton == lastClicked) return;
+        if (lastClicked != null) lastClicked.setClicked(false);
+        switchButton.setHighlighted();
+        lastClicked = switchButton;
+    }
+
     public void setClicked(SwitchButton switchButton) {
         if (switchButton == lastClicked) return;
         if (lastClicked != null) lastClicked.setClicked(false);
