@@ -321,7 +321,7 @@
         {
           "type": "org.anotherteam.level.room.object.entity.Player",
           "pos": {
-            "x": 26,
+            "x": 30,
             "y": 25
           },
           "components": [

@@ -7,6 +7,8 @@ uniform vec2 player_pos;
 uniform sampler2D u_texture;
 layout (binding = 1, rgba8) uniform readonly image2D u_texture1;
 
+out vec4 out_Color;
+
 void main() {
     // constants
     vec2 endPosition;
@@ -71,5 +73,5 @@ void main() {
         }
         lastPower = nextPower;
     }
-    gl_FragColor = color;
+    out_Color = color;
 }
