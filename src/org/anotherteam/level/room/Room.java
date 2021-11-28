@@ -11,10 +11,10 @@ import org.joml.Vector2i;
 import java.util.*;
 
 public final class Room {
-    private final String name;
 
     private final Map<Vector2i, Tile> tiles;
     private final List<GameObject> gameObjects; // TODO make Nested List to fast DrawPriority sorting
+    private String name;
 
     private Player player;
 
@@ -23,6 +23,10 @@ public final class Room {
         tiles = new HashMap<>();
         gameObjects = new ArrayList<>();
         player = null;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void update(float dt) {

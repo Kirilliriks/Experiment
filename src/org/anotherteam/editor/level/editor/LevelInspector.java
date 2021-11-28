@@ -1,4 +1,4 @@
-package org.anotherteam.editor.level.selector;
+package org.anotherteam.editor.level.editor;
 
 import org.anotherteam.editor.Editor;
 import org.anotherteam.editor.gui.GUIElement;

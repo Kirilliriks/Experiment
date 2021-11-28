@@ -5,7 +5,7 @@ import org.anotherteam.Input;
 import org.anotherteam.editor.Editor;
 import org.anotherteam.editor.gui.text.Label;
 import org.anotherteam.editor.gui.menu.text.TextButton;
-import org.anotherteam.editor.level.selector.LevelEditor;
+import org.anotherteam.editor.level.editor.LevelEditor;
 import org.jetbrains.annotations.NotNull;
 
 public final class SaveLevelDialog extends DialogWindow {

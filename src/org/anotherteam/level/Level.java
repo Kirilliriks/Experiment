@@ -35,8 +35,14 @@ public final class Level {
     }
 
     public void addRoom(@NotNull Room room) {
-        if (currentRoom == null) currentRoom = room; // TODO Maybe change logic?
+        if (currentRoom == null) currentRoom = room; // TODO change logic
         rooms.add(room);
+    }
+
+    public void removeRoom(@NotNull Room room) {
+        rooms.remove(room);
+        if (currentRoom == room)
+            currentRoom = rooms.get(0);
     }
 
     public void setCurrentRoom(@NotNull Room currentRoom) {

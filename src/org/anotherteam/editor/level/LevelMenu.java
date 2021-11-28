@@ -2,8 +2,8 @@ package org.anotherteam.editor.level;
 
 import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.editor.gui.menu.text.SwitchMenu;
-import org.anotherteam.editor.level.selector.LevelEditor;
-import org.anotherteam.editor.level.selector.RoomEditor;
+import org.anotherteam.editor.level.editor.LevelEditor;
+import org.anotherteam.editor.level.room.RoomEditor;
 import org.jetbrains.annotations.NotNull;
 
 public final class LevelMenu extends SwitchMenu {

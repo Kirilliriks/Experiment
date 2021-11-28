@@ -1,4 +1,4 @@
-package org.anotherteam.editor.level.selector;
+package org.anotherteam.editor.level.editor;
 
 import lombok.val;
 import org.anotherteam.Game;
@@ -27,8 +27,8 @@ public final class LevelEditor extends GUIElement {
     private final TextButton saveLevelButton;
     private final TextButton deleteLevelButton;
 
-    private static Level editableLevel;
-    private String storedEditableLevel;
+    private static Level editedLevel;
+    private String storedEditedLevel;
 
     public LevelEditor(float x, float y, GUIElement ownerElement) {
         super(x, y, ownerElement);
@@ -71,9 +71,9 @@ public final class LevelEditor extends GUIElement {
         for (val file : files) {
             val btn = selector.addButton(FileUtils.getNameFromFile(file.getName()),
                     ()-> {
-                        if (editableLevel != null) {
+                        if (editedLevel != null) {
                             levelInspector.acceptChanges();
-                            val saveWindow = new SaveLevelDialog(editableLevel.getName());
+                            val saveWindow = new SaveLevelDialog(editedLevel.getName());
                             saveWindow.setOnAfterClose(() -> loadLevel(file.getName()));
                             Editor.callWindow(saveWindow);
                             return;
@@ -91,43 +91,43 @@ public final class LevelEditor extends GUIElement {
         super.render(editorBatch);
     }
 
-    public void storeEditableLevel() {
-        storedEditableLevel = FileUtils.LEVEL_GSON.toJson(Game.levelManager.getCurrentLevel());
+    public void storeEditedLevel() {
+        storedEditedLevel = FileUtils.LEVEL_GSON.toJson(Game.levelManager.getCurrentLevel());
     }
 
-    public void restoreEditableLevel() {
-        Game.levelManager.setLevel(FileUtils.LEVEL_GSON.fromJson(storedEditableLevel, Level.class));
+    public void restoreEditedLevel() {
+        Game.levelManager.setLevel(FileUtils.LEVEL_GSON.fromJson(storedEditedLevel, Level.class));
     }
 
     public void loadLevel(String name) {
-        editableLevel = Game.levelManager.loadLevel(name);
-        levelInspector.setLevel(editableLevel);
+        editedLevel = Game.levelManager.loadLevel(name);
+        levelInspector.setLevel(editedLevel);
         update();
     }
 
     public static void createAndLoadEmptyLevel() {
-        editableLevel = Game.levelManager.setEmptyLevel();
-        levelEditor.levelInspector.setLevel(editableLevel);
+        editedLevel = Game.levelManager.setEmptyLevel();
+        levelEditor.levelInspector.setLevel(editedLevel);
         saveEditableLevel(true);
     }
 
     public static void update() {
-        levelEditor.updateButtons(editableLevel.getName());
+        levelEditor.updateButtons(editedLevel.getName());
     }
 
     @NotNull
-    public static Level getEditableLevel() {
-        return editableLevel;
+    public static Level getEditedLevel() {
+        return editedLevel;
     }
 
     public static void renameEditableLevel(String newName) {
         for (val btn : levelEditor.selector.getButtons()) {
-            if (!btn.getLabelText().equals(editableLevel.getName())) continue;
+            if (!btn.getLabelText().equals(editedLevel.getName())) continue;
             btn.setLabelText(newName);
         }
 
-        FileUtils.renameLevel(newName, editableLevel);
-        editableLevel.setName(newName);
+        FileUtils.renameLevel(newName, editedLevel);
+        editedLevel.setName(newName);
         saveEditableLevel();
     }
 
@@ -136,12 +136,12 @@ public final class LevelEditor extends GUIElement {
     }
 
     public static void saveEditableLevel(boolean needUpdate) {
-        FileUtils.saveEditableLevel(editableLevel);
+        FileUtils.saveEditableLevel(editedLevel);
         if (needUpdate) update();
     }
 
     public static void deleteEditableLevel() {
-        FileUtils.deleteLevel(editableLevel);
+        FileUtils.deleteLevel(editedLevel);
         createAndLoadEmptyLevel();
         update();
     }
