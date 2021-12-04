@@ -27,6 +27,7 @@ public final class Editor extends Widget {
 
     private static Editor editor;
 
+    private final EditorCameraController editorCameraController;
     private final EditorBatch editorBatch;
     private final FrameBuffer editorFrame;
 
@@ -50,13 +51,15 @@ public final class Editor extends Widget {
 
         editor = this;
         editorFont.setScale(2.0f);
-        this.editorBatch = new EditorBatch(AssetData.DEFAULT_SHADER, GameScreen.windowCamera);
-        this.editorFrame = new FrameBuffer(GameScreen.window.getWidth(), GameScreen.window.getHeight());
+
+        editorCameraController = new EditorCameraController();
+        editorBatch = new EditorBatch(AssetData.DEFAULT_SHADER, GameScreen.windowCamera);
+        editorFrame = new FrameBuffer(GameScreen.window.getWidth(), GameScreen.window.getHeight());
 
         // GUI
         editorLog = new EditorLog(0,  -height , 200, 200, this);
         editorLog.setVisible(false);
-        this.editorMenu = new EditorMenu(0, height - TextMenu.DEFAULT_BUTTON_MENU_HEIGHT, this);
+        editorMenu = new EditorMenu(0, height - TextMenu.DEFAULT_BUTTON_MENU_HEIGHT, this);
         editorMenu.setWidth(width);
         val switchStateButton = new TextButton("Play/Stop", 0, 10, this);
         switchStateButton.setPosX(width / 2.0f - switchStateButton.getWidth() - DEFAULT_BORDER_SIZE / 2.0f);
@@ -128,27 +131,7 @@ public final class Editor extends Widget {
             editorLog.setVisible(!editorLog.isVisible());
         }
 
-        float speed = 75.0f;
-        float moveX = 0, moveY = 0;
-
-        if (Input.isKeyDown(Input.KEY_SHIFT)) {
-            speed = 125.0f;
-        }
-
-        if (Input.isKeyDown(Input.KEY_W)) {
-            moveY += speed * dt;
-        }
-        if (Input.isKeyDown(Input.KEY_S)) {
-            moveY -= speed * dt;
-        }
-        if (Input.isKeyDown(Input.KEY_A)) {
-            moveX -= speed * dt;
-        }
-        if (Input.isKeyDown(Input.KEY_D)) {
-            moveX += speed * dt;
-        }
-
-        GameScreen.gameCamera.addPosition(moveX, moveY);
+        editorCameraController.handle(dt);
     }
 
     private void renderGUI() {

@@ -7,6 +7,7 @@ import org.anotherteam.util.CharUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector2f;
+import org.joml.Vector2i;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWKeyCallback;
@@ -18,6 +19,7 @@ import java.util.Map;
 public final class Input {
     private final static Map<Integer, MouseButton> buttons = new HashMap<>();
     private final static Vector2f mousePos = new Vector2f(0, 0);
+    private final static Vector2f lastMousePos = new Vector2f(0, 0);
 
     private static Key lastPrintedKey;
     public static Map<Integer, Key> keys = new HashMap<>();
@@ -102,6 +104,19 @@ public final class Input {
         return mousePos;
     }
 
+    public static float getLastMouseX() {
+        return lastMousePos.x;
+    }
+
+    public static float getLastMouseY() {
+        return lastMousePos.y;
+    }
+
+    @NotNull
+    public static Vector2f getLastMousePos() {
+        return lastMousePos;
+    }
+
     public Input(@NotNull Window ownerWindow) {
         keyboard = new GLFWKeyCallback() {
             @Override
@@ -122,6 +137,7 @@ public final class Input {
         mouseMove = new GLFWCursorPosCallback() {
             @Override
             public void invoke(long window, double xpos, double ypos) {
+                lastMousePos.set(mousePos);
                 mousePos.set((float)xpos,  (float) (ownerWindow.getHeight() - ypos));
             }
         };

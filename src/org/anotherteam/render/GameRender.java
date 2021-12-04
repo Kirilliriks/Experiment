@@ -103,8 +103,12 @@ public final class GameRender {
         }
 
         if (Game.DebugMode) {
-            windowBatch.drawText(debugFont, "Pos : " + GameScreen.inGameMouseX() + " " + GameScreen.inGameMouseY(),
-                    (int) (Input.getMousePos().x + 15), (int) (Input.getMousePos().y - 25), 1.0f, new Color(255, 255, 255, 255));
+            val x = GameScreen.inGameMouseX();
+            val y = GameScreen.inGameMouseY();
+            if (x != -1 && y != -1) {
+                windowBatch.drawText(debugFont, "Pos : " + x + " " + y,
+                        (int) (Input.getMousePos().x + 15), (int) (Input.getMousePos().y - 25), 1.0f, new Color(255, 255, 255, 255));
+            }
         }
         windowBatch.end();
     }

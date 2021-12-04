@@ -8,14 +8,12 @@ import org.anotherteam.screen.GameScreen;
 import org.jetbrains.annotations.NotNull;
 
 public final class Game {
+    public static final String START_LEVEL_NAME = "StartLevel";
     public static boolean DebugMode;
 
     public static LevelManager levelManager;
     public static StateManager stateManager;
     public static GameRender gameRender;
-
-    // TODO NewGameData
-    private final String startLevelName = "StartLevel";
 
     public Game(@NotNull Window window) {
         window.setFullscreen(true);
@@ -33,7 +31,7 @@ public final class Game {
     }
 
     public void init() {
-        levelManager.loadLevel(startLevelName);
+        levelManager.loadLevel(START_LEVEL_NAME);
     }
 
     public void update(float dt) {
