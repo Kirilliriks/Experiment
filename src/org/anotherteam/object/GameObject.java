@@ -121,7 +121,7 @@ public abstract class GameObject {
             spriteComponent.draw(position, renderBatch, height);
         }
 
-        if (Game.stateManager.getState() != GameState.ON_EDITOR && !Game.DebugMode) return;
+        if (!Game.DebugMode) return;
         collider.debugRender(renderBatch.debugRender);
     }
 

@@ -43,6 +43,7 @@ public final class Editor extends Widget {
         super("Another Editor",
                 10, GameScreen.window.getHeight() / 2.0f,
                 GameScreen.window.getWidth() - 10, GameScreen.window.getHeight() / 2 - 40, null);
+        Game.DebugMode = true;
         GameScreen.RENDER_WIDTH = GameScreen.WIDTH * GameScreen.RENDER_SCALE;
         GameScreen.RENDER_HEIGHT = GameScreen.HEIGHT * GameScreen.RENDER_SCALE;
         GameScreen.POSITION.set((int) (GameScreen.window.getWidth() / 2.0f - (GameScreen.RENDER_WIDTH) / 2.0f), 30);
@@ -79,6 +80,7 @@ public final class Editor extends Widget {
 
     public void switchPlayStopMode() {
         if (Game.stateManager.getState() == GameState.ON_EDITOR) {
+            Game.DebugMode = false;
             Game.stateManager.setState(GameState.ON_LEVEL);
 
             GameScreen.RENDER_WIDTH = GameScreen.window.getWidth();
@@ -87,6 +89,7 @@ public final class Editor extends Widget {
 
             editorMenu.getLevelMenu().getLevelEditor().storeEditedLevel();
         } else {
+            Game.DebugMode = true;
             Game.stateManager.setState(GameState.ON_EDITOR);
 
             GameScreen.RENDER_WIDTH = GameScreen.WIDTH * GameScreen.RENDER_SCALE;
