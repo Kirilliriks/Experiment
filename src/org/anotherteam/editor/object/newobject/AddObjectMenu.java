@@ -13,10 +13,11 @@ import org.anotherteam.editor.gui.menu.text.TextMenu;
 import org.anotherteam.editor.gui.menu.text.SwitchMenu;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.editor.screen.DraggedGameObject;
+import org.anotherteam.level.room.object.prefab.RoomPrefab;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.sprite.SpriteController;
-import org.anotherteam.object.prefab.ColliderPrefab;
-import org.anotherteam.object.prefab.EntityPrefab;
+import org.anotherteam.level.room.object.prefab.ColliderPrefab;
+import org.anotherteam.level.room.object.prefab.EntityPrefab;
 import org.anotherteam.object.prefab.Prefab;
 import org.anotherteam.render.sprite.Sprite;
 import org.anotherteam.screen.GameScreen;
@@ -41,10 +42,12 @@ public final class AddObjectMenu extends GUIElement {
         typeMenu.setStartOffset(Label.DEFAULT_TEXT_OFFSET, 0);
         typeMenu.addButton("Entity");
         typeMenu.addButton("Item");
+        typeMenu.addButton("Room object");
         typeMenu.addButton("Light");
         typeMenu.addButton("Collider");
         generatePrefabMenu(typeMenu.getButton(0), EntityPrefab.values());
-        generatePrefabMenu(typeMenu.getButton(3), ColliderPrefab.values());
+        generatePrefabMenu(typeMenu.getButton(2), RoomPrefab.values());
+        generatePrefabMenu(typeMenu.getButton(4), ColliderPrefab.values());
         typeMenu.setClicked(typeMenu.getButton(0));
     }
 

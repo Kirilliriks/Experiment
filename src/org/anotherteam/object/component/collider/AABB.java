@@ -38,6 +38,10 @@ public abstract class AABB extends Component {
         objectPosition = ownerObject.getPosition();
     }
 
+    public void setBounds(int width, int height) {
+        setBounds(-width / 2, 0, width / 2, height);
+    }
+
     public void setBounds(int firstX, int firstY, int secondX, int secondY) {
         setFirstBound(firstX, firstY);
         setSecondBound(secondX, secondY);

@@ -13,7 +13,7 @@ public final class Player extends EntityObject {
 
     public Player(int x, int y) {
         super(x, y, PlayerState.IDLE);
-        val atlas = AssetData.getOrLoadSpriteAtlas(AssetData.ENTITY_ATLASES_PATH + "testPlayerAtlas.png", Sprite.SIZE.x, Sprite.SIZE.y);
+        val atlas = AssetData.getOrLoadSpriteAtlas(AssetData.ENTITY_PATH + "testPlayerAtlas.png", Sprite.SIZE.x, Sprite.SIZE.y);
 
         spriteController.setSpriteAtlas(atlas);
         collider.setBounds(-6, 0, 6, 32);

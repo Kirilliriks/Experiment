@@ -33,15 +33,20 @@ public final class SpriteController extends Component {
     public SpriteController(int drawPriority) {
         this.drawPriority = drawPriority;
 
-        this.textureSprite = null;
-        this.animation = null;
-        this.animationTimer = null;
+        textureSprite = null;
+        heightSprite = null;
+        animation = null;
+        animationTimer = null;
 
-        this.center = true;
+        center = true;
     }
 
     public void setSpriteAtlas(SpriteAtlas spriteAtlas) {
         this.spriteAtlas = spriteAtlas;
+        frameX = 0;
+        frameY = 0;
+        textureSprite = spriteAtlas.getTextureSprite(frameX, frameY);
+        heightSprite = spriteAtlas.getHeightSprite(frameX, frameY);
     }
 
     public void update(float delta) {

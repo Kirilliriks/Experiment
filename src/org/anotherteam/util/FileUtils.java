@@ -119,10 +119,11 @@ public final class FileUtils {
                 while (fc.read(buffer) != -1) { }
             }
         } else {
-            try (
+            try {
                 val source = PixmapUtil.class.getClassLoader().getResourceAsStream(resource);
-                val rbc = Channels.newChannel(source)
-            ) {
+                if (source == null) throw new LifeException("Null input");
+
+                val rbc = Channels.newChannel(source);
                 buffer = BufferUtils.createByteBuffer(bufferSize);
 
                 while (rbc.read(buffer) != -1) {
@@ -130,6 +131,8 @@ public final class FileUtils {
 
                     buffer = resizeBuffer(buffer, buffer.capacity() * 3 / 2); // 50%
                 }
+            } catch (Exception e) {
+                throw new LifeException("Bad file loading");
             }
         }
 

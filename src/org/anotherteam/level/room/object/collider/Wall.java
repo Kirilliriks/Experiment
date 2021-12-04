@@ -1,4 +1,4 @@
-package org.anotherteam.level.room.object;
+package org.anotherteam.level.room.object.collider;
 
 import org.anotherteam.object.type.level.StaticObject;
 
