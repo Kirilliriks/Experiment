@@ -3,6 +3,7 @@ package org.anotherteam.render.texture;
 import lombok.val;
 import org.anotherteam.util.Color;
 import org.anotherteam.util.FileUtils;
+import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.BufferUtils;
 
@@ -21,8 +22,8 @@ public final class Pixmap {
         ByteBuffer imageBuffer;
         try {
             imageBuffer = FileUtils.ioResourceToByteBuffer(filePath, 8 * 1024);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (IOException exception) {
+            throw new LifeException("Not found image " + filePath);
         }
 
         try (val stack = stackPush()) {
@@ -40,14 +41,14 @@ public final class Pixmap {
             this.width = width.get(0);
             this.height = height.get(0);
             buffer = stbi_load_from_memory(imageBuffer, width, height, comp, 4);
-            if (this.buffer == null) {
+            if (buffer == null) {
                 throw new RuntimeException("Failed to load image: " + stbi_failure_reason());
             }
         }
     }
 
     public Pixmap(int width, int height) {
-        this.buffer = BufferUtils.createByteBuffer(width * height * 4);
+        buffer = BufferUtils.createByteBuffer(width * height * 4);
         this.width = width;
         this.height = height;
         clear();

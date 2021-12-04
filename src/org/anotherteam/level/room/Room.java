@@ -49,6 +49,10 @@ public final class Room {
         for (val tile : tiles.values()) {
             renderBatch.draw(tile.getHeightSprite(), tile.getPosition().x * Tile.SIZE.x, tile.getPosition().y * Tile.SIZE.y);
         }
+
+        for (val gameObject : gameObjects) {
+            gameObject.render(renderBatch, true);
+        }
     }
 
     @NotNull

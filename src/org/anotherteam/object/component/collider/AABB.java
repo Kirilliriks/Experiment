@@ -26,7 +26,7 @@ public abstract class AABB extends Component {
     }
 
     @Override
-    public void initBy(Component component) {
+    public void instanceBy(Component component) {
         val col = (Collider) component;
         firstBound.set(col.getFirstBound());
         secondBound.set(col.getSecondBound());

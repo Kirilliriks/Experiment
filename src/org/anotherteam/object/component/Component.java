@@ -13,7 +13,7 @@ public abstract class Component {
         ownerObject = null;
     }
 
-    public void initBy(Component component) { }
+    public void instanceBy(Component component) { }
 
     public void setOwnerObject(@NotNull GameObject ownerObject) {
         this.ownerObject = ownerObject;
@@ -25,6 +25,8 @@ public abstract class Component {
     }
 
     public void setDependencies() { }
+
+    public void init() { }
 
     public void update(float dt) { }
 

@@ -8,8 +8,8 @@ import org.jetbrains.annotations.Nullable;
 
 public final class StateController extends Component {
 
-    private final State defaultState;
     private SpriteController sprite;
+    private final State defaultState;
     private State state;
     private State lastState;
 
@@ -17,6 +17,11 @@ public final class StateController extends Component {
         lastState = null;
         this.defaultState = defaultState;
         this.state = defaultState;
+    }
+
+    @Override
+    public void init() {
+        setDefaultState();
     }
 
     @Override

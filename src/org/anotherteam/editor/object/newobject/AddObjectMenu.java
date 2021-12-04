@@ -114,8 +114,8 @@ public final class AddObjectMenu extends GUIElement {
     @NotNull
     public Sprite getObjectSprite(@NotNull GameObject gameObject) {
         return gameObject.hasComponent(SpriteController.class) ?
-                gameObject.getComponent(SpriteController.class).getSprite() :
-                AssetData.EDITOR_NULL_ICON_ATLAS.getSprite(0, 0);
+                gameObject.getComponent(SpriteController.class).getTextureSprite() :
+                AssetData.EDITOR_NULL_ICON_ATLAS.getTextureSprite(0, 0);
     }
 
     @Override

@@ -71,6 +71,14 @@ public abstract class GameObject {
 
     public void setRoom(Room room) {
         this.room = room;
+        init();
+    }
+
+    private void init() {
+        for (val component : components.values()) {
+            component.setDependencies();
+            component.init();
+        }
     }
 
     public boolean hasComponent(Class<? extends Component> componentClass) {
@@ -93,18 +101,11 @@ public abstract class GameObject {
 
     public <T extends Component> void addComponent(T component) {
         if (components.containsKey(component.getClass())) {
-            components.get(component.getClass()).initBy(component);
+            components.get(component.getClass()).instanceBy(component);
             return;
         }
         components.put(component.getClass(), component);
         component.setOwnerObject(this);
-        setComponentsRequirements();
-    }
-
-    private void setComponentsRequirements() {
-        for (val component : components.values()) {
-            component.setDependencies();
-        }
     }
 
     public void update(float delta) {
@@ -114,9 +115,13 @@ public abstract class GameObject {
     }
 
     public void render(@NotNull RenderBatch renderBatch) {
+        render(renderBatch, false);
+    }
+
+    public void render(@NotNull RenderBatch renderBatch, boolean height) {
         val spriteComponent = getComponent(SpriteController.class);
         if (spriteComponent != null) {
-            spriteComponent.draw(position, renderBatch);
+            spriteComponent.draw(position, renderBatch, height);
         }
 
         if (Game.stateManager.getState() != GameState.ON_EDITOR && !Game.DebugMode) return;

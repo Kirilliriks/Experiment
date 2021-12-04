@@ -13,7 +13,7 @@ public final class DraggedTile extends DraggedSprite {
     private final SpriteAtlas spriteAtlas;
 
     public DraggedTile(int frameX, int frameY, @NotNull SpriteAtlas spriteAtlas) {
-        super(spriteAtlas.getSprite(frameX, frameY));
+        super(spriteAtlas.getTextureSprite(frameX, frameY));
         this.spriteAtlas = spriteAtlas;
     }
 

@@ -4,8 +4,11 @@ import lombok.val;
 import org.anotherteam.render.texture.Texture;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
+import org.joml.Vector2i;
 
 public final class Sprite {
+
+    public static final Vector2i SIZE = new Vector2i(32, 32);
 
     private final SpriteAtlas spriteAtlas;
     private final Texture texture;

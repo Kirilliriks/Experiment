@@ -36,7 +36,12 @@ public final class Transform extends Component {
     }
 
     @Override
-    public void initBy(Component component) {
+    public void init() {
+        checkFlip();
+    }
+
+    @Override
+    public void instanceBy(Component component) {
         val transform = (Transform) component;
         speed = transform.speed;
     }

@@ -8,6 +8,7 @@ import org.anotherteam.object.component.sprite.animation.AnimationTimer;
 import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.sprite.Sprite;
 import org.anotherteam.render.sprite.SpriteAtlas;
+import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
 
@@ -16,7 +17,8 @@ public final class SpriteController extends Component {
     private final int drawPriority;
 
     private SpriteAtlas spriteAtlas;
-    private Sprite sprite;
+    private Sprite textureSprite;
+    private Sprite heightSprite;
     private AnimationData animation;
     private AnimationTimer animationTimer;
 
@@ -31,7 +33,7 @@ public final class SpriteController extends Component {
     public SpriteController(int drawPriority) {
         this.drawPriority = drawPriority;
 
-        this.sprite = null;
+        this.textureSprite = null;
         this.animation = null;
         this.animationTimer = null;
 
@@ -43,6 +45,9 @@ public final class SpriteController extends Component {
     }
 
     public void update(float delta) {
+        textureSprite = spriteAtlas.getTextureSprite(frameX, frameY);
+        heightSprite = spriteAtlas.getHeightSprite(frameX, frameY);
+
         if (animationTimer == null ||
             animationTimer.isFinish() ||
             !animationTimer.tick(delta)) return;
@@ -56,15 +61,19 @@ public final class SpriteController extends Component {
             return;
         }
         frameX++;
-        sprite = spriteAtlas.getSprite(frameX, frameY);
     }
 
-    public void draw(@NotNull Vector2i position, @NonNull RenderBatch batch) {
-        if (sprite == null) return;
+    public void draw(@NotNull Vector2i position, @NonNull RenderBatch batch, boolean height) {
+        if (textureSprite == null || (height && heightSprite == null)) throw new LifeException("Try draw null texture");
 
-        val centerOffset = center ? (int)(sprite.getWidth() / 2f) : 0;
-        batch.draw(sprite,
-                position.x - centerOffset, position.y, flipX);
+        val centerOffset = center ? (int)(textureSprite.getWidth() / 2f) : 0;
+        if (height) {
+            batch.draw(heightSprite,
+                    position.x - centerOffset, position.y, flipX);
+        } else {
+            batch.draw(textureSprite,
+                    position.x - centerOffset, position.y, flipX);
+        }
     }
 
     public int getRenderPriority() {
@@ -84,20 +93,21 @@ public final class SpriteController extends Component {
     }
 
     public void setAnimation(@NonNull AnimationData newAnimation) {
-        if (this.animation != null && this.animation == newAnimation) return;
+        if (animation != null && animation == newAnimation) return;
         if (animationTimer != null) animationTimer.cancel();
 
-        this.animation = newAnimation;
+        animation = newAnimation;
         frameX = animation.getStartFrame();
         frameY = animation.getFramePosY();
-        sprite = spriteAtlas.getSprite(animation.getStartFrame(), animation.getFramePosY());
+        textureSprite = spriteAtlas.getTextureSprite(frameX, frameY);
+        heightSprite = spriteAtlas.getHeightSprite(frameX, frameY);
 
-        animationTimer = new AnimationTimer(animation.getAnimSpeed(), (animation.getEndFrame() - animation.getStartFrame() + 1));
+        animationTimer = new AnimationTimer(animation.getAnimSpeed(), (animation.getEndFrame() - frameX + 1));
     }
 
     @NotNull
-    public Sprite getSprite() {
-        return sprite;
+    public Sprite getTextureSprite() {
+        return textureSprite;
     }
 
     public void setFlipX(boolean flipX) {

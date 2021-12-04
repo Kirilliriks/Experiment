@@ -26,8 +26,8 @@ public final class Collider extends AABB {
     }
 
     @Override
-    public void initBy(Component component) {
-        super.initBy(component);
+    public void instanceBy(Component component) {
+        super.instanceBy(component);
         val collider = ((Collider)component);
         solid = collider.solid;
         interactive = collider.interactive;

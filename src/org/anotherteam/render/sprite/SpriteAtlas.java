@@ -50,8 +50,15 @@ public final class SpriteAtlas {
     }
 
     @NotNull
-    public Sprite getSprite(int x, int y) {
+    public Sprite getTextureSprite(int x, int y) {
         val index = x + y * sizeX;
+        if (index >= sizeX * sizeY) throw new LifeException("Bad sprite index: " + index + " | x: " + x + " | y: " + y);
+        return sprites.get(index);
+    }
+
+    @NotNull
+    public Sprite getHeightSprite(int x, int y) {
+        val index = x + (y + getHeightOffset()) * sizeX;
         if (index >= sizeX * sizeY) throw new LifeException("Bad sprite index: " + index + " | x: " + x + " | y: " + y);
         return sprites.get(index);
     }

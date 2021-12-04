@@ -15,7 +15,7 @@ public final class Tile {
     private final Vector2i position;
 
     public Tile(int x, int y, int frameX, int frameY, String atlasName) {
-        this(x, y, frameX, frameY, AssetData.getSpriteAtlas(atlasName));
+        this(x, y, frameX, frameY, AssetData.getOrLoadSpriteAtlas(atlasName));
     }
 
     public Tile(int x, int y, @NotNull SpriteAtlas atlas) {
@@ -24,8 +24,8 @@ public final class Tile {
 
     public Tile(int x, int y, int frameX, int frameY, @NotNull SpriteAtlas atlas) {
         this.position = new Vector2i(x, y);
-        textureSprite = atlas.getSprite(frameX, frameY);
-        heightSprite = atlas.getSprite(frameX, frameY + atlas.getHeightOffset());
+        textureSprite = atlas.getTextureSprite(frameX, frameY);
+        heightSprite = atlas.getHeightSprite(frameX, frameY);
     }
 
     public int getFrameX() {

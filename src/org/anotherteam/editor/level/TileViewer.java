@@ -56,7 +56,7 @@ public final class TileViewer extends GUIElement {
     }
 
     public void generateTileMenu(@NotNull SwitchButton button, @NotNull String fileName) {
-        val spriteAtlas = AssetData.getSpriteAtlas(AssetData.ROOM_ATLASES_PATH + fileName);
+        val spriteAtlas = AssetData.getOrLoadSpriteAtlas(AssetData.ROOM_ATLASES_PATH + fileName);
 
         val spriteMenu = new SpriteMenu(0, -typeMenu.getHeight(), width, height - typeMenu.getHeight(), this);
         spriteMenu.setVisible(false);
