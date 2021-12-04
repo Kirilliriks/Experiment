@@ -133,6 +133,6 @@ public final class AddObjectMenu extends GUIElement {
 
         if (GameScreen.inGameWindowMouseX() != -1 && GameScreen.inGameWindowMouseY() != -1) return;
         draggedGameObject.getGameObject().setPosition(x, y);
-        draggedGameObject.getGameObject().render(editorBatch);
+        draggedGameObject.getGameObject().draw(editorBatch, false);
     }
 }

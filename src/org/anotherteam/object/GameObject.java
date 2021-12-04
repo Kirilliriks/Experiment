@@ -2,7 +2,6 @@ package org.anotherteam.object;
 
 import lombok.val;
 import org.anotherteam.Game;
-import org.anotherteam.GameState;
 import org.anotherteam.level.room.Room;
 import org.anotherteam.object.component.Component;
 import org.anotherteam.object.component.collider.Collider;
@@ -111,11 +110,7 @@ public abstract class GameObject {
         }
     }
 
-    public void render(@NotNull RenderBatch renderBatch) {
-        render(renderBatch, false);
-    }
-
-    public void render(@NotNull RenderBatch renderBatch, boolean height) {
+    public void draw(@NotNull RenderBatch renderBatch, boolean height) {
         val spriteComponent = getComponent(SpriteController.class);
         if (spriteComponent != null) {
             spriteComponent.draw(position, renderBatch, height);

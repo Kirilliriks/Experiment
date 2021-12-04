@@ -125,6 +125,13 @@ public class RenderBatch extends Batch {
                 Color.WHITE, sprite.getTextCoords());
     }
 
+    public void draw(Sprite sprite, float x, float y, boolean flipX, boolean flipY) {
+        draw(sprite.getTexture(), x, y, sprite.getWidth(),
+                sprite.getHeight(),
+                flipX, flipY,
+                Color.WHITE, sprite.getTextCoords());
+    }
+
     public void draw(Texture texture, Vector2i position) {
         draw(texture, position.x, position.y);
     }

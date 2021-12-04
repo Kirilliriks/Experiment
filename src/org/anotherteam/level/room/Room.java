@@ -37,21 +37,21 @@ public final class Room {
 
     public void drawTexture(@NotNull RenderBatch renderBatch) {
         for (val tile : tiles.values()) {
-            renderBatch.draw(tile.getTextureSprite(), tile.getPosition().x * Tile.SIZE.x, tile.getPosition().y * Tile.SIZE.y);
+            tile.draw(renderBatch, false);
         }
 
         for (val gameObject : gameObjects) {
-            gameObject.render(renderBatch);
+            gameObject.draw(renderBatch, false);
         }
     }
 
     public void drawHeight(@NotNull RenderBatch renderBatch) {
         for (val tile : tiles.values()) {
-            renderBatch.draw(tile.getHeightSprite(), tile.getPosition().x * Tile.SIZE.x, tile.getPosition().y * Tile.SIZE.y);
+            tile.draw(renderBatch, true);
         }
 
         for (val gameObject : gameObjects) {
-            gameObject.render(renderBatch, true);
+            gameObject.draw(renderBatch, true);
         }
     }
 
