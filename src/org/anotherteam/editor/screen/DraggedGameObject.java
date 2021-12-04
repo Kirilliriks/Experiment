@@ -12,6 +12,7 @@ public final class DraggedGameObject extends DraggedSprite {
     public DraggedGameObject(@NotNull Sprite sprite, @NotNull GameObject gameObject) {
         super(sprite);
         this.gameObject = gameObject;
+        gameObject.prepare();
     }
 
     @NotNull

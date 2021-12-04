@@ -5,7 +5,9 @@ import lombok.val;
 import org.anotherteam.debug.DebugRender;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.Component;
+import org.anotherteam.object.component.sprite.SpriteController;
 import org.anotherteam.object.type.level.InteractiveObject;
+import org.anotherteam.render.sprite.Sprite;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
@@ -23,6 +25,18 @@ public final class Collider extends AABB {
         solid = false;
         interactAABB = new InteractAABB(this);
         serializable = true;
+    }
+
+    @Override
+    public void init() {
+        if (!firstBound.equals(secondBound)) return;
+        if (!ownerObject.hasComponent(SpriteController.class)) {
+            setBounds(Sprite.SIZE.x, Sprite.SIZE.y);
+            return;
+        }
+        val sprite = ownerObject.getComponent(SpriteController.class);
+        val texture = sprite.getTextureSprite();
+        setBounds(texture.getWidth(), texture.getHeight());
     }
 
     @Override

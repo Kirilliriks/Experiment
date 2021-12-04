@@ -18,8 +18,6 @@ import java.util.Map;
 
 public abstract class GameObject {
 
-    public static final Vector2i DEFAULT_SIZE = new Vector2i(32, 32);
-
     protected Room room;
 
     protected final Map<Class<? extends Component>, Component> components;
@@ -35,7 +33,6 @@ public abstract class GameObject {
         this.position = new Vector2i(x, y);
         components = new HashMap<>();
         collider = new Collider();
-        collider.setBounds(0, 0, DEFAULT_SIZE.x, DEFAULT_SIZE.y);
         addComponent(collider);
     }
 
@@ -71,10 +68,10 @@ public abstract class GameObject {
 
     public void setRoom(Room room) {
         this.room = room;
-        init();
+        prepare();
     }
 
-    private void init() {
+    public void prepare() {
         for (val component : components.values()) {
             component.setDependencies();
             component.init();
