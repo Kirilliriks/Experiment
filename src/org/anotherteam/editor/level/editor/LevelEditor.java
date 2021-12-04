@@ -2,6 +2,7 @@ package org.anotherteam.editor.level.editor;
 
 import lombok.val;
 import org.anotherteam.Game;
+import org.anotherteam.editor.level.room.RoomEditor;
 import org.anotherteam.util.FileUtils;
 import org.anotherteam.editor.Editor;
 import org.anotherteam.editor.gui.GUIElement;
@@ -96,7 +97,10 @@ public final class LevelEditor extends GUIElement {
     }
 
     public void restoreEditedLevel() {
-        Game.levelManager.setLevel(FileUtils.LEVEL_GSON.fromJson(storedEditedLevel, Level.class));
+        editedLevel = Game.levelManager.setLevel(FileUtils.LEVEL_GSON.fromJson(storedEditedLevel, Level.class));
+        editedLevel.setCurrentRoom(RoomEditor.getEditedRoom().getName());
+        levelInspector.setLevel(editedLevel);
+        update();
     }
 
     public void loadLevel(String name) {

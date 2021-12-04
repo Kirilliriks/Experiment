@@ -125,8 +125,12 @@ public final class Editor extends Widget {
             editorLog.setVisible(!editorLog.isVisible());
         }
 
-        float speed = 45;
+        float speed = 75.0f;
         float moveX = 0, moveY = 0;
+
+        if (Input.isKeyDown(Input.KEY_SHIFT)) {
+            speed = 125.0f;
+        }
 
         if (Input.isKeyDown(Input.KEY_W)) {
             moveY += speed * dt;

@@ -6,6 +6,7 @@ import org.anotherteam.level.room.Room;
 import org.anotherteam.render.GameRender;
 import org.anotherteam.render.batch.RenderBatch;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,8 +46,8 @@ public final class Level {
             currentRoom = rooms.get(0);
     }
 
-    public void setCurrentRoom(@NotNull Room currentRoom) {
-        this.currentRoom = currentRoom;
+    public void setCurrentRoom(String roomName) {
+        this.currentRoom = getRoom(roomName);
     }
 
     public void update(float dt) {
@@ -65,6 +66,15 @@ public final class Level {
     @NotNull
     public List<Room> getRooms() {
         return rooms;
+    }
+
+    @Nullable
+    public Room getRoom(String name) {
+        for (val room : rooms) {
+            if (!room.getName().equals(name)) continue;
+            return room;
+        }
+        return null;
     }
 
     @NotNull

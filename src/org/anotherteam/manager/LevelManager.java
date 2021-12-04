@@ -26,14 +26,15 @@ public final class LevelManager extends AbstractManager {
         FileUtils.saveEditableLevel(currentLevel); // TODO save to game profile directory
     }
 
-    public void setLevel(@NotNull Level level) {
+    @NotNull
+    public Level setLevel(@NotNull Level level) {
         currentLevel = level;
+        return currentLevel;
     }
 
     @NotNull
     public Level loadLevel(@NotNull String levelName) {
-        currentLevel = FileUtils.loadLevel(levelName);
-        return currentLevel;
+        return setLevel(FileUtils.loadLevel(levelName));
     }
 
     @NotNull

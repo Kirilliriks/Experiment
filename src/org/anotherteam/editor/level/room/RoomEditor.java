@@ -59,7 +59,7 @@ public class RoomEditor extends GUIElement {
     }
 
     public void setRoom(@NotNull Room room) {
-        LevelEditor.getEditedLevel().setCurrentRoom(room);
+        LevelEditor.getEditedLevel().setCurrentRoom(room.getName());
         editedRoom = room;
         roomInspector.setRoom(room);
     }
@@ -100,6 +100,11 @@ public class RoomEditor extends GUIElement {
 
     public static void update() {
         roomEditor.updateButtons();
+    }
+
+    @NotNull
+    public static Room getEditedRoom() {
+        return editedRoom;
     }
 
     public static void addEmptyRoom() {
