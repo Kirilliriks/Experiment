@@ -11,6 +11,7 @@ import org.anotherteam.editor.gui.menu.text.TextMenu;
 import org.anotherteam.editor.gui.menu.text.TextButton;
 import org.anotherteam.editor.gui.window.DialogWindow;
 import org.anotherteam.editor.gui.window.SaveLevelDialog;
+import org.anotherteam.editor.level.LevelMenu;
 import org.anotherteam.editor.level.editor.LevelEditor;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.render.batch.RenderBatch;
@@ -75,9 +76,10 @@ public final class Editor extends Widget {
     }
 
     public void init(String levelName) {
-        editor.getEditorMenu().getLevelMenu().getLevelEditor().loadLevel(levelName);
-        editor.getEditorMenu().getLevelMenu().getLevelEditor().updateButtons(levelName);
-        editor.getEditorMenu().getLevelMenu().getRoomEditor().updateButtons();
+        final LevelMenu levelMenu = editor.getEditorMenu().getLevelMenu();
+        levelMenu.getLevelEditor().loadLevel(levelName);
+        levelMenu.getLevelEditor().updateButtons(levelName);
+        levelMenu.getRoomEditor().updateButtons();
     }
 
     public void switchPlayStopMode() {
@@ -101,14 +103,14 @@ public final class Editor extends Widget {
 
     private void switchGameView(boolean onEditor) {
         if (onEditor) {
-            final int viewWidth = GameScreen.window.getWidth() - 120;
+            final int viewWidth = GameScreen.window.getWidth() - getBorderSize() * 2;
             GameScreen.WIDTH = viewWidth / GameScreen.RENDER_SCALE;
             GameScreen.RENDER_WIDTH = viewWidth;
             GameScreen.RENDER_HEIGHT = GameScreen.HEIGHT * GameScreen.RENDER_SCALE;
-            GameScreen.POSITION.set((int) (GameScreen.window.getWidth() / 2.0f - (GameScreen.RENDER_WIDTH) / 2.0f), 30);
+            GameScreen.POSITION.set((int) (GameScreen.window.getWidth() / 2.0f - (GameScreen.RENDER_WIDTH) / 2.0f), getDownBorderSize() / 2);
 
         } else {
-            GameScreen.WIDTH = 160;
+            GameScreen.WIDTH = 160; // TODO
             GameScreen.RENDER_WIDTH = GameScreen.window.getWidth();
             GameScreen.RENDER_HEIGHT = GameScreen.window.getHeight();
             GameScreen.POSITION.set(0, 0);
@@ -178,6 +180,10 @@ public final class Editor extends Widget {
     @NotNull
     public static EditorLog log() {
         return editorLog;
+    }
+
+    public static int getBorderSize() {
+        return 60;
     }
 
     public static int getRightBorderSize() {

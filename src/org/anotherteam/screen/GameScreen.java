@@ -14,7 +14,6 @@ import org.joml.Vector2i;
 public final class GameScreen {
     public static final Vector2i POSITION = new Vector2i(0, 0);
     public static final int RENDER_SCALE = 5;
-
     public static int WIDTH = 160;
     public static int HEIGHT = 90;
 
