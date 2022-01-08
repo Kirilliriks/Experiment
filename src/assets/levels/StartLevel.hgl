@@ -7,262 +7,115 @@
         {
           "xPos": 2,
           "yPos": 1,
-          "frameX": 2,
+          "frameX": 0,
           "frameY": 0,
-          "atlasName": "atlases/room/testTestRoom.png"
+          "atlasName": "atlases/room/ROOM218_1.png"
+        },
+        {
+          "xPos": 3,
+          "yPos": 2,
+          "frameX": 1,
+          "frameY": 1,
+          "atlasName": "atlases/room/ROOM218_1.png"
         },
         {
           "xPos": 4,
           "yPos": 3,
-          "frameX": 4,
+          "frameX": 2,
           "frameY": 2,
-          "atlasName": "atlases/room/testTestRoom.png"
+          "atlasName": "atlases/room/ROOM218_1.png"
         },
         {
           "xPos": 2,
           "yPos": 2,
-          "frameX": 2,
-          "frameY": 1,
-          "atlasName": "atlases/room/testTestRoom.png"
-        },
-        {
-          "xPos": 4,
-          "yPos": 4,
-          "frameX": 4,
-          "frameY": 3,
-          "atlasName": "atlases/room/testTestRoom.png"
-        },
-        {
-          "xPos": 0,
-          "yPos": 1,
           "frameX": 0,
-          "frameY": 0,
-          "atlasName": "atlases/room/testTestRoom.png"
+          "frameY": 1,
+          "atlasName": "atlases/room/ROOM218_1.png"
+        },
+        {
+          "xPos": 3,
+          "yPos": 3,
+          "frameX": 1,
+          "frameY": 2,
+          "atlasName": "atlases/room/ROOM218_1.png"
         },
         {
           "xPos": 2,
           "yPos": 3,
-          "frameX": 2,
-          "frameY": 2,
-          "atlasName": "atlases/room/testTestRoom.png"
-        },
-        {
-          "xPos": 0,
-          "yPos": 2,
-          "frameX": 0,
-          "frameY": 1,
-          "atlasName": "atlases/room/testTestRoom.png"
-        },
-        {
-          "xPos": 2,
-          "yPos": 4,
-          "frameX": 2,
-          "frameY": 3,
-          "atlasName": "atlases/room/testTestRoom.png"
-        },
-        {
-          "xPos": 0,
-          "yPos": 3,
           "frameX": 0,
           "frameY": 2,
-          "atlasName": "atlases/room/testTestRoom.png"
-        },
-        {
-          "xPos": 0,
-          "yPos": 4,
-          "frameX": 0,
-          "frameY": 3,
-          "atlasName": "atlases/room/testTestRoom.png"
-        },
-        {
-          "xPos": 7,
-          "yPos": 1,
-          "frameX": 7,
-          "frameY": 0,
-          "atlasName": "atlases/room/testTestRoom.png"
-        },
-        {
-          "xPos": 7,
-          "yPos": 2,
-          "frameX": 7,
-          "frameY": 1,
-          "atlasName": "atlases/room/testTestRoom.png"
-        },
-        {
-          "xPos": 7,
-          "yPos": 3,
-          "frameX": 7,
-          "frameY": 2,
-          "atlasName": "atlases/room/testTestRoom.png"
-        },
-        {
-          "xPos": 5,
-          "yPos": 1,
-          "frameX": 5,
-          "frameY": 0,
-          "atlasName": "atlases/room/testTestRoom.png"
-        },
-        {
-          "xPos": 7,
-          "yPos": 4,
-          "frameX": 7,
-          "frameY": 3,
-          "atlasName": "atlases/room/testTestRoom.png"
-        },
-        {
-          "xPos": 5,
-          "yPos": 2,
-          "frameX": 5,
-          "frameY": 1,
-          "atlasName": "atlases/room/testTestRoom.png"
-        },
-        {
-          "xPos": 3,
-          "yPos": 1,
-          "frameX": 3,
-          "frameY": 0,
-          "atlasName": "atlases/room/testTestRoom.png"
-        },
-        {
-          "xPos": 5,
-          "yPos": 3,
-          "frameX": 5,
-          "frameY": 2,
-          "atlasName": "atlases/room/testTestRoom.png"
-        },
-        {
-          "xPos": 3,
-          "yPos": 2,
-          "frameX": 3,
-          "frameY": 1,
-          "atlasName": "atlases/room/testTestRoom.png"
-        },
-        {
-          "xPos": 5,
-          "yPos": 4,
-          "frameX": 5,
-          "frameY": 3,
-          "atlasName": "atlases/room/testTestRoom.png"
-        },
-        {
-          "xPos": 1,
-          "yPos": 1,
-          "frameX": 1,
-          "frameY": 0,
-          "atlasName": "atlases/room/testTestRoom.png"
-        },
-        {
-          "xPos": 3,
-          "yPos": 3,
-          "frameX": 3,
-          "frameY": 2,
-          "atlasName": "atlases/room/testTestRoom.png"
-        },
-        {
-          "xPos": 1,
-          "yPos": 2,
-          "frameX": 1,
-          "frameY": 1,
-          "atlasName": "atlases/room/testTestRoom.png"
-        },
-        {
-          "xPos": 3,
-          "yPos": 4,
-          "frameX": 3,
-          "frameY": 3,
-          "atlasName": "atlases/room/testTestRoom.png"
-        },
-        {
-          "xPos": 1,
-          "yPos": 3,
-          "frameX": 1,
-          "frameY": 2,
-          "atlasName": "atlases/room/testTestRoom.png"
-        },
-        {
-          "xPos": 1,
-          "yPos": 4,
-          "frameX": 1,
-          "frameY": 3,
-          "atlasName": "atlases/room/testTestRoom.png"
-        },
-        {
-          "xPos": 8,
-          "yPos": 1,
-          "frameX": 8,
-          "frameY": 0,
-          "atlasName": "atlases/room/testTestRoom.png"
-        },
-        {
-          "xPos": 8,
-          "yPos": 2,
-          "frameX": 8,
-          "frameY": 1,
-          "atlasName": "atlases/room/testTestRoom.png"
+          "atlasName": "atlases/room/ROOM218_1.png"
         },
         {
           "xPos": 6,
           "yPos": 1,
-          "frameX": 6,
+          "frameX": 4,
           "frameY": 0,
-          "atlasName": "atlases/room/testTestRoom.png"
+          "atlasName": "atlases/room/ROOM218_1.png"
         },
         {
-          "xPos": 8,
-          "yPos": 3,
-          "frameX": 8,
-          "frameY": 2,
-          "atlasName": "atlases/room/testTestRoom.png"
+          "xPos": 5,
+          "yPos": 1,
+          "frameX": 3,
+          "frameY": 0,
+          "atlasName": "atlases/room/ROOM218_1.png"
         },
         {
           "xPos": 6,
           "yPos": 2,
-          "frameX": 6,
+          "frameX": 4,
           "frameY": 1,
-          "atlasName": "atlases/room/testTestRoom.png"
-        },
-        {
-          "xPos": 8,
-          "yPos": 4,
-          "frameX": 8,
-          "frameY": 3,
-          "atlasName": "atlases/room/testTestRoom.png"
-        },
-        {
-          "xPos": 6,
-          "yPos": 3,
-          "frameX": 6,
-          "frameY": 2,
-          "atlasName": "atlases/room/testTestRoom.png"
+          "atlasName": "atlases/room/ROOM218_1.png"
         },
         {
           "xPos": 4,
           "yPos": 1,
-          "frameX": 4,
+          "frameX": 2,
           "frameY": 0,
-          "atlasName": "atlases/room/testTestRoom.png"
+          "atlasName": "atlases/room/ROOM218_1.png"
+        },
+        {
+          "xPos": 5,
+          "yPos": 2,
+          "frameX": 3,
+          "frameY": 1,
+          "atlasName": "atlases/room/ROOM218_1.png"
         },
         {
           "xPos": 6,
-          "yPos": 4,
-          "frameX": 6,
-          "frameY": 3,
-          "atlasName": "atlases/room/testTestRoom.png"
+          "yPos": 3,
+          "frameX": 4,
+          "frameY": 2,
+          "atlasName": "atlases/room/ROOM218_1.png"
+        },
+        {
+          "xPos": 3,
+          "yPos": 1,
+          "frameX": 1,
+          "frameY": 0,
+          "atlasName": "atlases/room/ROOM218_1.png"
         },
         {
           "xPos": 4,
           "yPos": 2,
-          "frameX": 4,
+          "frameX": 2,
           "frameY": 1,
-          "atlasName": "atlases/room/testTestRoom.png"
+          "atlasName": "atlases/room/ROOM218_1.png"
+        },
+        {
+          "xPos": 5,
+          "yPos": 3,
+          "frameX": 3,
+          "frameY": 2,
+          "atlasName": "atlases/room/ROOM218_1.png"
         }
       ],
       "gameObjects": [
         {
           "type": "org.anotherteam.level.room.object.collider.Wall",
           "pos": {
-            "x": 3,
-            "y": 25
+            "x": 31,
+            "y": 19
           },
           "components": [
             {
@@ -291,8 +144,8 @@
         {
           "type": "org.anotherteam.level.room.object.collider.Wall",
           "pos": {
-            "x": 134,
-            "y": 25
+            "x": 112,
+            "y": 20
           },
           "components": [
             {
@@ -306,6 +159,66 @@
                 "y": 32
               },
               "solid": true,
+              "interactive": false,
+              "interactFirstBound": {
+                "x": 0,
+                "y": 0
+              },
+              "interactSecondBound": {
+                "x": 0,
+                "y": 0
+              }
+            }
+          ]
+        },
+        {
+          "type": "org.anotherteam.level.room.object.room.Bed218",
+          "pos": {
+            "x": 92,
+            "y": 20
+          },
+          "components": [
+            {
+              "type": "Collider",
+              "firstBound": {
+                "x": -15,
+                "y": 0
+              },
+              "secondBound": {
+                "x": 15,
+                "y": 12
+              },
+              "solid": false,
+              "interactive": false,
+              "interactFirstBound": {
+                "x": 0,
+                "y": 0
+              },
+              "interactSecondBound": {
+                "x": 0,
+                "y": 0
+              }
+            }
+          ]
+        },
+        {
+          "type": "org.anotherteam.level.room.object.room.Lamp218",
+          "pos": {
+            "x": 61,
+            "y": 21
+          },
+          "components": [
+            {
+              "type": "Collider",
+              "firstBound": {
+                "x": -6,
+                "y": 0
+              },
+              "secondBound": {
+                "x": 6,
+                "y": 18
+              },
+              "solid": false,
               "interactive": false,
               "interactFirstBound": {
                 "x": 0,
@@ -321,8 +234,8 @@
         {
           "type": "org.anotherteam.level.room.object.entity.Player",
           "pos": {
-            "x": 30,
-            "y": 25
+            "x": 43,
+            "y": 20
           },
           "components": [
             {
@@ -333,7 +246,7 @@
             {
               "type": "Collider",
               "firstBound": {
-                "x": -7,
+                "x": -6,
                 "y": 0
               },
               "secondBound": {
@@ -361,458 +274,578 @@
         {
           "xPos": 2,
           "yPos": 1,
-          "frameX": 2,
+          "frameX": 1,
           "frameY": 0,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
           "xPos": 2,
           "yPos": 2,
-          "frameX": 2,
+          "frameX": 1,
           "frameY": 1,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
           "xPos": 2,
           "yPos": 3,
-          "frameX": 2,
+          "frameX": 1,
           "frameY": 2,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
           "xPos": 2,
           "yPos": 4,
+          "frameX": 1,
+          "frameY": 3,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 15,
+          "yPos": 1,
+          "frameX": 14,
+          "frameY": 0,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 15,
+          "yPos": 2,
+          "frameX": 14,
+          "frameY": 1,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 15,
+          "yPos": 3,
+          "frameX": 14,
+          "frameY": 2,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 15,
+          "yPos": 4,
+          "frameX": 14,
+          "frameY": 3,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 11,
+          "yPos": 1,
+          "frameX": 10,
+          "frameY": 0,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 11,
+          "yPos": 2,
+          "frameX": 10,
+          "frameY": 1,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 11,
+          "yPos": 3,
+          "frameX": 10,
+          "frameY": 2,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 11,
+          "yPos": 4,
+          "frameX": 10,
+          "frameY": 3,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 7,
+          "yPos": 1,
+          "frameX": 6,
+          "frameY": 0,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 7,
+          "yPos": 2,
+          "frameX": 6,
+          "frameY": 1,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 7,
+          "yPos": 3,
+          "frameX": 6,
+          "frameY": 2,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 7,
+          "yPos": 4,
+          "frameX": 6,
+          "frameY": 3,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 3,
+          "yPos": 1,
+          "frameX": 2,
+          "frameY": 0,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 3,
+          "yPos": 2,
+          "frameX": 2,
+          "frameY": 1,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 3,
+          "yPos": 3,
+          "frameX": 2,
+          "frameY": 2,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 3,
+          "yPos": 4,
           "frameX": 2,
           "frameY": 3,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 15,
+          "xPos": 16,
           "yPos": 1,
           "frameX": 15,
           "frameY": 0,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 15,
+          "xPos": 16,
           "yPos": 2,
           "frameX": 15,
           "frameY": 1,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 15,
+          "xPos": 16,
           "yPos": 3,
           "frameX": 15,
           "frameY": 2,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 15,
+          "xPos": 16,
           "yPos": 4,
           "frameX": 15,
           "frameY": 3,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 11,
+          "xPos": 12,
           "yPos": 1,
           "frameX": 11,
           "frameY": 0,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 11,
+          "xPos": 12,
           "yPos": 2,
           "frameX": 11,
           "frameY": 1,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 11,
+          "xPos": 12,
           "yPos": 3,
           "frameX": 11,
           "frameY": 2,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 11,
+          "xPos": 12,
           "yPos": 4,
           "frameX": 11,
           "frameY": 3,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 7,
+          "xPos": 8,
           "yPos": 1,
           "frameX": 7,
           "frameY": 0,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 7,
+          "xPos": 8,
           "yPos": 2,
           "frameX": 7,
           "frameY": 1,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 7,
+          "xPos": 8,
           "yPos": 3,
           "frameX": 7,
           "frameY": 2,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 7,
+          "xPos": 8,
           "yPos": 4,
           "frameX": 7,
           "frameY": 3,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 3,
+          "xPos": 4,
           "yPos": 1,
           "frameX": 3,
           "frameY": 0,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 3,
+          "xPos": 4,
           "yPos": 2,
           "frameX": 3,
           "frameY": 1,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 3,
+          "xPos": 4,
           "yPos": 3,
           "frameX": 3,
           "frameY": 2,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 3,
+          "xPos": 4,
           "yPos": 4,
           "frameX": 3,
           "frameY": 3,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 12,
+          "xPos": 13,
           "yPos": 1,
           "frameX": 12,
           "frameY": 0,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 12,
+          "xPos": 13,
           "yPos": 2,
           "frameX": 12,
           "frameY": 1,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 12,
+          "xPos": 13,
           "yPos": 3,
           "frameX": 12,
           "frameY": 2,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 12,
+          "xPos": 13,
           "yPos": 4,
           "frameX": 12,
           "frameY": 3,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 8,
+          "xPos": 9,
           "yPos": 1,
           "frameX": 8,
           "frameY": 0,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 8,
+          "xPos": 9,
           "yPos": 2,
           "frameX": 8,
           "frameY": 1,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 8,
+          "xPos": 9,
           "yPos": 3,
           "frameX": 8,
           "frameY": 2,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 8,
+          "xPos": 9,
           "yPos": 4,
           "frameX": 8,
           "frameY": 3,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 4,
+          "xPos": 5,
           "yPos": 1,
           "frameX": 4,
           "frameY": 0,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 4,
+          "xPos": 5,
           "yPos": 2,
           "frameX": 4,
           "frameY": 1,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 4,
+          "xPos": 5,
           "yPos": 3,
           "frameX": 4,
           "frameY": 2,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 4,
+          "xPos": 5,
           "yPos": 4,
           "frameX": 4,
           "frameY": 3,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 0,
+          "xPos": 1,
           "yPos": 1,
           "frameX": 0,
           "frameY": 0,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 0,
+          "xPos": 1,
           "yPos": 2,
           "frameX": 0,
           "frameY": 1,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 0,
+          "xPos": 1,
           "yPos": 3,
           "frameX": 0,
           "frameY": 2,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 0,
+          "xPos": 1,
           "yPos": 4,
           "frameX": 0,
           "frameY": 3,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 13,
+          "xPos": 14,
           "yPos": 1,
           "frameX": 13,
           "frameY": 0,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 13,
+          "xPos": 14,
           "yPos": 2,
           "frameX": 13,
           "frameY": 1,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 13,
+          "xPos": 14,
           "yPos": 3,
           "frameX": 13,
           "frameY": 2,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 13,
+          "xPos": 14,
           "yPos": 4,
           "frameX": 13,
           "frameY": 3,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 9,
+          "xPos": 10,
           "yPos": 1,
           "frameX": 9,
           "frameY": 0,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 9,
+          "xPos": 10,
           "yPos": 2,
           "frameX": 9,
           "frameY": 1,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 9,
+          "xPos": 10,
           "yPos": 3,
           "frameX": 9,
           "frameY": 2,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 9,
+          "xPos": 10,
           "yPos": 4,
           "frameX": 9,
           "frameY": 3,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 5,
+          "xPos": 6,
           "yPos": 1,
           "frameX": 5,
           "frameY": 0,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 5,
+          "xPos": 6,
           "yPos": 2,
           "frameX": 5,
           "frameY": 1,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 5,
+          "xPos": 6,
           "yPos": 3,
           "frameX": 5,
           "frameY": 2,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         },
         {
-          "xPos": 5,
+          "xPos": 6,
           "yPos": 4,
           "frameX": 5,
-          "frameY": 3,
-          "atlasName": "atlases/room/Wall_corridor_room.png"
-        },
-        {
-          "xPos": 1,
-          "yPos": 1,
-          "frameX": 1,
-          "frameY": 0,
-          "atlasName": "atlases/room/Wall_corridor_room.png"
-        },
-        {
-          "xPos": 1,
-          "yPos": 2,
-          "frameX": 1,
-          "frameY": 1,
-          "atlasName": "atlases/room/Wall_corridor_room.png"
-        },
-        {
-          "xPos": 1,
-          "yPos": 3,
-          "frameX": 1,
-          "frameY": 2,
-          "atlasName": "atlases/room/Wall_corridor_room.png"
-        },
-        {
-          "xPos": 1,
-          "yPos": 4,
-          "frameX": 1,
-          "frameY": 3,
-          "atlasName": "atlases/room/Wall_corridor_room.png"
-        },
-        {
-          "xPos": 14,
-          "yPos": 1,
-          "frameX": 14,
-          "frameY": 0,
-          "atlasName": "atlases/room/Wall_corridor_room.png"
-        },
-        {
-          "xPos": 14,
-          "yPos": 2,
-          "frameX": 14,
-          "frameY": 1,
-          "atlasName": "atlases/room/Wall_corridor_room.png"
-        },
-        {
-          "xPos": 14,
-          "yPos": 3,
-          "frameX": 14,
-          "frameY": 2,
-          "atlasName": "atlases/room/Wall_corridor_room.png"
-        },
-        {
-          "xPos": 14,
-          "yPos": 4,
-          "frameX": 14,
-          "frameY": 3,
-          "atlasName": "atlases/room/Wall_corridor_room.png"
-        },
-        {
-          "xPos": 10,
-          "yPos": 1,
-          "frameX": 10,
-          "frameY": 0,
-          "atlasName": "atlases/room/Wall_corridor_room.png"
-        },
-        {
-          "xPos": 10,
-          "yPos": 2,
-          "frameX": 10,
-          "frameY": 1,
-          "atlasName": "atlases/room/Wall_corridor_room.png"
-        },
-        {
-          "xPos": 10,
-          "yPos": 3,
-          "frameX": 10,
-          "frameY": 2,
-          "atlasName": "atlases/room/Wall_corridor_room.png"
-        },
-        {
-          "xPos": 10,
-          "yPos": 4,
-          "frameX": 10,
-          "frameY": 3,
-          "atlasName": "atlases/room/Wall_corridor_room.png"
-        },
-        {
-          "xPos": 6,
-          "yPos": 1,
-          "frameX": 6,
-          "frameY": 0,
-          "atlasName": "atlases/room/Wall_corridor_room.png"
-        },
-        {
-          "xPos": 6,
-          "yPos": 2,
-          "frameX": 6,
-          "frameY": 1,
-          "atlasName": "atlases/room/Wall_corridor_room.png"
-        },
-        {
-          "xPos": 6,
-          "yPos": 3,
-          "frameX": 6,
-          "frameY": 2,
-          "atlasName": "atlases/room/Wall_corridor_room.png"
-        },
-        {
-          "xPos": 6,
-          "yPos": 4,
-          "frameX": 6,
           "frameY": 3,
           "atlasName": "atlases/room/Wall_corridor_room.png"
         }
       ],
       "gameObjects": [
         {
+          "type": "org.anotherteam.level.room.object.collider.Wall",
+          "pos": {
+            "x": 267,
+            "y": 20
+          },
+          "components": [
+            {
+              "type": "Collider",
+              "firstBound": {
+                "x": -1,
+                "y": 0
+              },
+              "secondBound": {
+                "x": 1,
+                "y": 32
+              },
+              "solid": true,
+              "interactive": false,
+              "interactFirstBound": {
+                "x": 0,
+                "y": 0
+              },
+              "interactSecondBound": {
+                "x": 0,
+                "y": 0
+              }
+            }
+          ]
+        },
+        {
+          "type": "org.anotherteam.level.room.object.collider.Wall",
+          "pos": {
+            "x": 16,
+            "y": 18
+          },
+          "components": [
+            {
+              "type": "Collider",
+              "firstBound": {
+                "x": -1,
+                "y": 0
+              },
+              "secondBound": {
+                "x": 1,
+                "y": 32
+              },
+              "solid": true,
+              "interactive": false,
+              "interactFirstBound": {
+                "x": 0,
+                "y": 0
+              },
+              "interactSecondBound": {
+                "x": 0,
+                "y": 0
+              }
+            }
+          ]
+        },
+        {
+          "type": "org.anotherteam.level.room.object.room.LightTest",
+          "pos": {
+            "x": 89,
+            "y": 25
+          },
+          "components": [
+            {
+              "type": "Collider",
+              "firstBound": {
+                "x": -16,
+                "y": 0
+              },
+              "secondBound": {
+                "x": 16,
+                "y": 32
+              },
+              "solid": false,
+              "interactive": false,
+              "interactFirstBound": {
+                "x": 0,
+                "y": 0
+              },
+              "interactSecondBound": {
+                "x": 0,
+                "y": 0
+              }
+            }
+          ]
+        },
+        {
+          "type": "org.anotherteam.level.room.object.room.DuctCorridorRoom",
+          "pos": {
+            "x": 188,
+            "y": 19
+          },
+          "components": [
+            {
+              "type": "Collider",
+              "firstBound": {
+                "x": -15,
+                "y": 0
+              },
+              "secondBound": {
+                "x": 15,
+                "y": 49
+              },
+              "solid": false,
+              "interactive": false,
+              "interactFirstBound": {
+                "x": 0,
+                "y": 0
+              },
+              "interactSecondBound": {
+                "x": 0,
+                "y": 0
+              }
+            }
+          ]
+        },
+        {
           "type": "org.anotherteam.level.room.object.entity.Player",
           "pos": {
-            "x": 22,
-            "y": 20
+            "x": 27,
+            "y": 19
           },
           "components": [
             {

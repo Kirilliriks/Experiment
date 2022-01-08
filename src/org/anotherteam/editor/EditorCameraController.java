@@ -32,6 +32,9 @@ public final class EditorCameraController {
             moveX += speed * dt;
         }
 
+
+        if (GameScreen.draggedThing != null) return;
+        if (GameScreen.inGameWindowMouseX() == -1 || GameScreen.inGameMouseY() == -1) return;
         if (Input.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
             if (lastPos.equals(0, 0)) {
                 lastPos.set(Input.getMousePos());

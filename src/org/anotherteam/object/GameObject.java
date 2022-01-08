@@ -116,7 +116,7 @@ public abstract class GameObject {
             spriteComponent.draw(position, renderBatch, height);
         }
 
-        if (!Game.DebugMode) return;
+        if (!Game.DebugMode || height) return;
         collider.debugRender(renderBatch.debugRender);
     }
 
