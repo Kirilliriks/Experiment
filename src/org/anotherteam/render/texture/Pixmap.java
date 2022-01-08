@@ -102,6 +102,6 @@ public final class Pixmap {
     }
 
     public void destroy() {
-        stbi_image_free(buffer);
+        buffer.clear();
     }
 }

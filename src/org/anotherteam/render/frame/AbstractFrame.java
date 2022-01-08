@@ -27,6 +27,10 @@ public abstract class AbstractFrame {
         pixmap = texture.getPixmap();
     }
 
+    public void changeBufferSize(int width, int height) {
+        frameBuffer.changeSize(width, height);
+    }
+
     public void begin() {
         frameBuffer.begin();
         renderBatch.begin();

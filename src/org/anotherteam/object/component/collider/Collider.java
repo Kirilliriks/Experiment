@@ -131,9 +131,11 @@ public final class Collider extends AABB {
     @Override
     public void debugRender(@NonNull DebugRender debugRender) {
         interactAABB.debugRender(debugRender);
-        if (isOnMouse(GameScreen.inGameMouseX(), GameScreen.inGameMouseY()))
+        if (isOnMouse(GameScreen.inGameMouseX(), GameScreen.inGameMouseY())) {
             super.debugRender(debugRender, Color.GREEN);
-        else super.debugRender(debugRender, Color.RED);
+        } else {
+            super.debugRender(debugRender, Color.RED);
+        }
     }
 
     private static class InteractAABB extends AABB {
@@ -154,8 +156,11 @@ public final class Collider extends AABB {
         }
 
         public void flip(boolean flip) {
-            if (flip) setOffSet(ownerCollider.getFirstBound().x - getSecondBound().x, 0);
-            else setOffSet(ownerCollider.getSecondBound().x, 0);
+            if (flip) {
+                setOffSet(ownerCollider.getFirstBound().x - getSecondBound().x, 0);
+            } else {
+                setOffSet(ownerCollider.getSecondBound().x, 0);
+            }
         }
 
         @Override

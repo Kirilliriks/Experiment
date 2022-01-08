@@ -49,6 +49,15 @@ public final class GameRender {
         debugFont = new Font("font/font.ttf", 16);
     }
 
+    public void updateFrames() {
+        textureFrame.changeBufferSize(GameScreen.WIDTH, GameScreen.HEIGHT);
+        heightFrame.changeBufferSize(GameScreen.WIDTH, GameScreen.HEIGHT);
+        effectFrame.changeBufferSize(GameScreen.WIDTH, GameScreen.HEIGHT);
+        renderCamera.setProjection(GameScreen.WIDTH, GameScreen.HEIGHT);
+        GameScreen.gameCamera.setProjection(GameScreen.WIDTH, GameScreen.HEIGHT);
+        GameScreen.gameCamera.setPosition(GameScreen.WIDTH / 2.0f, GameScreen.HEIGHT / 2.0f);
+    }
+
     public void render(@NotNull RenderBatch windowBatch, @NotNull Room room) {
         // Start frames
         heightFrame.begin();

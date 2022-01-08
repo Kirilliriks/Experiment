@@ -8,12 +8,17 @@ import org.jetbrains.annotations.NotNull;
 public final class FrameBuffer {
 
     private final int fboId;
-    private final Texture texture;
+    private Texture texture;
 
     public FrameBuffer(int width, int height) {
         fboId = glGenFramebuffers();
+        changeSize(width, height);
+    }
+
+    public void changeSize(int width, int height) {
         glBindFramebuffer(GL_FRAMEBUFFER, fboId);
 
+        if (texture != null) texture.destroy();
         texture = new Texture(width, height);
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.getId(), 0);
 
@@ -32,7 +37,6 @@ public final class FrameBuffer {
     public Texture getTexture() {
         return texture;
     }
-
 
     public void begin() {
         glViewport(0, 0, texture.getWidth(), texture.getHeight());

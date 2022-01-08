@@ -92,11 +92,11 @@ public final class LevelEditor extends GUIElement {
         super.render(editorBatch);
     }
 
-    public void storeEditedLevel() {
+    public void storeLevel() {
         storedEditedLevel = FileUtils.LEVEL_GSON.toJson(Game.levelManager.getCurrentLevel());
     }
 
-    public void restoreEditedLevel() {
+    public void restoreLevel() {
         editedLevel = Game.levelManager.setLevel(FileUtils.LEVEL_GSON.fromJson(storedEditedLevel, Level.class));
         editedLevel.setCurrentRoom(RoomEditor.getEditedRoom().getName());
         levelInspector.setLevel(editedLevel);

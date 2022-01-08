@@ -15,8 +15,8 @@ public final class GameScreen {
     public static final Vector2i POSITION = new Vector2i(0, 0);
     public static final int RENDER_SCALE = 5;
 
-    public static final int WIDTH = 160;
-    public static final int HEIGHT = 90;
+    public static int WIDTH = 160;
+    public static int HEIGHT = 90;
 
     public static int RENDER_WIDTH = WIDTH * RENDER_SCALE;
     public static int RENDER_HEIGHT = HEIGHT * RENDER_SCALE;

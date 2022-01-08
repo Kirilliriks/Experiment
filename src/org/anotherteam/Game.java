@@ -47,4 +47,8 @@ public final class Game {
     }
 
     public void destroy() { }
+
+    public static GameRender getGameRender() {
+        return gameRender;
+    }
 }

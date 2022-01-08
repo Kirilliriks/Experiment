@@ -45,9 +45,8 @@ public final class Editor extends Widget {
                 10, GameScreen.window.getHeight() / 2.0f,
                 GameScreen.window.getWidth() - 10, GameScreen.window.getHeight() / 2 - 40, null);
         Game.DebugMode = true;
-        GameScreen.RENDER_WIDTH = GameScreen.WIDTH * GameScreen.RENDER_SCALE;
-        GameScreen.RENDER_HEIGHT = GameScreen.HEIGHT * GameScreen.RENDER_SCALE;
-        GameScreen.POSITION.set((int) (GameScreen.window.getWidth() / 2.0f - (GameScreen.RENDER_WIDTH) / 2.0f), 30);
+        Game.stateManager.setState(GameState.ON_EDITOR);
+        switchGameView(true);
 
         editor = this;
         editorFont.setScale(2.0f);
@@ -86,23 +85,35 @@ public final class Editor extends Widget {
             Game.DebugMode = false;
             Game.stateManager.setState(GameState.ON_LEVEL);
 
-            GameScreen.RENDER_WIDTH = GameScreen.window.getWidth();
-            GameScreen.RENDER_HEIGHT = GameScreen.window.getHeight();
-            GameScreen.POSITION.set(0, 0);
+            switchGameView(false);
 
-            editorMenu.getLevelMenu().getLevelEditor().storeEditedLevel();
+            editorMenu.getLevelMenu().getLevelEditor().storeLevel();
         } else {
             Game.DebugMode = true;
             Game.stateManager.setState(GameState.ON_EDITOR);
 
-            GameScreen.RENDER_WIDTH = GameScreen.WIDTH * GameScreen.RENDER_SCALE;
+            switchGameView(true);
+
+            editorMenu.getLevelMenu().getLevelEditor().restoreLevel();
+        }
+        Editor.sendLogMessage("Current state: " + Game.stateManager.getState());
+    }
+
+    private void switchGameView(boolean onEditor) {
+        if (onEditor) {
+            final int viewWidth = GameScreen.window.getWidth() - 120;
+            GameScreen.WIDTH = viewWidth / GameScreen.RENDER_SCALE;
+            GameScreen.RENDER_WIDTH = viewWidth;
             GameScreen.RENDER_HEIGHT = GameScreen.HEIGHT * GameScreen.RENDER_SCALE;
             GameScreen.POSITION.set((int) (GameScreen.window.getWidth() / 2.0f - (GameScreen.RENDER_WIDTH) / 2.0f), 30);
 
-            editorMenu.getLevelMenu().getLevelEditor().restoreEditedLevel();
-            GameScreen.gameCamera.setPosition(GameScreen.WIDTH / 2.0f, GameScreen.HEIGHT / 2.0f);
+        } else {
+            GameScreen.WIDTH = 160;
+            GameScreen.RENDER_WIDTH = GameScreen.window.getWidth();
+            GameScreen.RENDER_HEIGHT = GameScreen.window.getHeight();
+            GameScreen.POSITION.set(0, 0);
         }
-        Editor.sendLogMessage("Current state: " + Game.stateManager.getState());
+        Game.getGameRender().updateFrames();
     }
 
     @Override
@@ -111,7 +122,6 @@ public final class Editor extends Widget {
             dialogWindow.update(dt);
             return;
         }
-
 
         if (Input.isKeyPressed(Input.KEY_ESCAPE)) {
             if (Game.stateManager.getState() == GameState.ON_LEVEL) {

@@ -9,7 +9,7 @@ import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
 
-public class DebugRender {
+public final class DebugRender {
     public static DebugRender global = null;
     private static final int VERTEX_SIZE = 5;
     private static final int MAX_LINES = 500;
