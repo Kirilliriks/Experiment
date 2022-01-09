@@ -9,11 +9,6 @@ public final class FieldMenu extends TextMenu {
 
     public static final Color DEFAULT_COLOR = new Color(120, 120, 120);
 
-    public FieldMenu(float x, float y, int width, Type type, GUIElement ownerElement) {
-        super(x, y, width, DEFAULT_BUTTON_MENU_HEIGHT, type, ownerElement);
-        setColor(DEFAULT_COLOR);
-    }
-
     public FieldMenu(float x, float y, int width, int height, Type type, GUIElement ownerElement) {
         super(x, y, width, height, type, ownerElement);
         setColor(DEFAULT_COLOR);

@@ -6,6 +6,7 @@ import org.anotherteam.editor.Editor;
 import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.editor.gui.menu.text.TextButton;
 import org.anotherteam.editor.gui.text.Label;
+import org.anotherteam.logger.GameLogger;
 import org.anotherteam.util.Color;
 import org.anotherteam.util.StringUtil;
 
@@ -43,6 +44,14 @@ public final class InputPart extends TextButton {
 
     public void setType(Type type) {
         this.type = type;
+
+        switch (type) {
+            case BOOLEAN -> onClick = () -> {
+                boolean value = !Boolean.parseBoolean(valueInput.getText());
+                setValue(String.valueOf(value));
+                setClicked(false);
+            };
+        }
     }
 
     public void setOnUnFocus(Runnable onUnFocus) {
@@ -79,7 +88,10 @@ public final class InputPart extends TextButton {
     @Override
     public void update(float dt) {
         if (clicked) {
-            handleInput();
+            if (type != Type.BOOLEAN) {
+                handleInput();
+            }
+
             if (!Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) return;
             if (!isMouseOnWidget()) {
                 Editor.inputHandling = false;
@@ -94,7 +106,7 @@ public final class InputPart extends TextButton {
         setClicked(true);
     }
 
-    public void handleInput() {
+    private void handleInput() {
         if (!Input.isAnyKeyDown()) return;
         val key = Input.getLastPrintedKey();
         if (key == null) return;
@@ -128,6 +140,7 @@ public final class InputPart extends TextButton {
 
     public enum Type {
         STRING,
+        BOOLEAN,
         INTEGER
     }
 }

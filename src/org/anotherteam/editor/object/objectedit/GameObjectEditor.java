@@ -10,11 +10,14 @@ import org.anotherteam.editor.gui.menu.text.SwitchMenu;
 import org.anotherteam.editor.gui.menu.text.TextButton;
 import org.anotherteam.editor.gui.text.input.InputPart;
 import org.anotherteam.editor.gui.window.ComponentSelectWindow;
+import org.anotherteam.editor.object.GameObjectMenu;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.Component;
 import org.anotherteam.screen.GameScreen;
 
 public final class GameObjectEditor extends GUIElement {
+
+    private final GameObjectMenu gameObjectMenu;
 
     private GameObject editObject;
 
@@ -26,8 +29,9 @@ public final class GameObjectEditor extends GUIElement {
     private final Button addComponentButton;
     private final Button removeComponentButton;
 
-    public GameObjectEditor(float x, float y, GUIElement ownerElement) {
-        super(x, y, ownerElement);
+    public GameObjectEditor(float x, float y, GameObjectMenu gameObjectMenu) {
+        super(x, y, gameObjectMenu);
+        this.gameObjectMenu = gameObjectMenu;
 
         val editor = Editor.getInstance();
         width = (int)(editor.getWidth() - getPosX() - Editor.getRightBorderSize());
@@ -58,13 +62,15 @@ public final class GameObjectEditor extends GUIElement {
         });
 
         inverted = true;
+    }
 
+    public void init() {
         setEditObject(null);
     }
 
     public void setEditObject(GameObject gameObject) {
         editObject = gameObject;
-        selectedComponent = null;
+        setComponent(null);
         fillComponentSelector();
 
         if (editObject == null) {
@@ -88,9 +94,14 @@ public final class GameObjectEditor extends GUIElement {
             componentSelector.addButton(component.getClass().getSimpleName(),
                     ()-> {
                         removeComponentButton.setLock(false);
-                        selectedComponent = component;
+                        setComponent(component);
                     });
         }
+    }
+
+    private void setComponent(Component component) {
+        selectedComponent = component;
+        gameObjectMenu.getComponentEditor().setComponent(component);
     }
 
     @Override

@@ -37,9 +37,15 @@ public final class GameObjectMenu extends SwitchMenu {
         button.setAfterClick(()-> componentEditor.setVisible(false));
 
         inverted = true;
+
+        gameObjectEditor.init();
     }
 
     public GameObjectEditor getGameObjectEditor() {
         return gameObjectEditor;
+    }
+
+    public ComponentEditor getComponentEditor() {
+        return componentEditor;
     }
 }

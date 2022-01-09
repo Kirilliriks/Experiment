@@ -2,16 +2,16 @@ package org.anotherteam.editor.object.componentedit;
 
 import lombok.val;
 import org.anotherteam.editor.Editor;
-import org.anotherteam.editor.gui.Button;
 import org.anotherteam.editor.gui.GUIElement;
-import org.anotherteam.editor.gui.menu.text.SwitchButton;
+import org.anotherteam.editor.gui.menu.text.FieldMenu;
 import org.anotherteam.editor.gui.menu.text.SwitchMenu;
+import org.anotherteam.editor.gui.text.input.InputPart;
 import org.anotherteam.object.component.Component;
 import org.anotherteam.object.component.fieldcontroller.FieldController;
 
 public final class ComponentEditor extends GUIElement {
 
-    private final SwitchMenu fieldMenu;
+    private final FieldMenu fieldMenu;
 
     private Component component;
 
@@ -22,7 +22,7 @@ public final class ComponentEditor extends GUIElement {
         width = (int)(editor.getWidth() - getPosX() - Editor.getRightBorderSize());
         height = (int)(getPosY() - Editor.getDownBorderPos() - Editor.DEFAULT_BORDER_SIZE);
 
-        fieldMenu = new SwitchMenu(Editor.DEFAULT_BORDER_SIZE, -Editor.DEFAULT_BORDER_SIZE,
+        fieldMenu = new FieldMenu(Editor.DEFAULT_BORDER_SIZE, -Editor.DEFAULT_BORDER_SIZE,
                 width - Editor.DEFAULT_BORDER_SIZE * 2, height - Editor.DEFAULT_BORDER_SIZE * 3,
                 SwitchMenu.Type.DOUBLE, this);
         fieldMenu.setInvertedY(true);
@@ -32,11 +32,15 @@ public final class ComponentEditor extends GUIElement {
     }
 
     public void setComponent(Component component) {
+        fieldMenu.clearChild();
+        if (component == null) return;
+
         this.component = component;
         for (final FieldController<?> field : component.getFields()) {
             if (field.getValueClass() == Boolean.class) {
-                final SwitchButton button = fieldMenu.addButton(field.getFieldName());
-
+                final InputPart button = fieldMenu.addButton(field.getFieldName());
+                button.setValue(String.valueOf(field.getValue()));
+                button.setType(InputPart.Type.BOOLEAN);
             }
         }
     }
