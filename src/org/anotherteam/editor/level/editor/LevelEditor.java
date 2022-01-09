@@ -2,7 +2,6 @@ package org.anotherteam.editor.level.editor;
 
 import lombok.val;
 import org.anotherteam.Game;
-import org.anotherteam.editor.level.room.RoomEditor;
 import org.anotherteam.util.FileUtils;
 import org.anotherteam.editor.Editor;
 import org.anotherteam.editor.gui.GUIElement;

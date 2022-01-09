@@ -25,6 +25,8 @@ public final class GameObjectEditor extends GUIElement {
     private Component selectedComponent;
 
     private final InputPart nameInputLabel;
+    private final InputPart posXInputLabel;
+    private final InputPart posYInputLabel;
 
     private final Button addComponentButton;
     private final Button removeComponentButton;
@@ -45,6 +47,16 @@ public final class GameObjectEditor extends GUIElement {
         nameInputLabel = new InputPart("Name: ", Editor.DEFAULT_BORDER_SIZE, -Editor.DEFAULT_BORDER_SIZE, this);
         nameInputLabel.setInvertedY(true);
         nameInputLabel.setAfterUnFocus(() -> editObject.setName(nameInputLabel.getValue()));
+
+        posXInputLabel = new InputPart("PosX: ", Editor.DEFAULT_BORDER_SIZE, -Editor.DEFAULT_BORDER_SIZE * 2 - nameInputLabel.getHeight(), this);
+        posXInputLabel.setType(InputPart.Type.INTEGER);
+        posXInputLabel.setInvertedY(true);
+        posXInputLabel.setAfterUnFocus(() -> editObject.getPosition().x = Integer.parseInt(posXInputLabel.getValue()));
+
+        posYInputLabel = new InputPart("PosY: ", Editor.DEFAULT_BORDER_SIZE, -Editor.DEFAULT_BORDER_SIZE * 2 - nameInputLabel.getHeight() - posXInputLabel.getHeight(), this);
+        posYInputLabel.setType(InputPart.Type.INTEGER);
+        posYInputLabel.setInvertedY(true);
+        posYInputLabel.setAfterUnFocus(() -> editObject.getPosition().y = Integer.parseInt(posYInputLabel.getValue()));
 
         addComponentButton = new TextButton("Add new component", width - componentSelector.getWidth(), Editor.DEFAULT_BORDER_SIZE * 0.8f, this);
         addComponentButton.setOnClick(() -> {
@@ -76,6 +88,10 @@ public final class GameObjectEditor extends GUIElement {
         if (editObject == null) {
             nameInputLabel.setValue("SELECT OBJECT");
             nameInputLabel.setLock(true);
+            posXInputLabel.setValue("");
+            posXInputLabel.setLock(true);
+            posYInputLabel.setValue("");
+            posYInputLabel.setLock(true);
             addComponentButton.setLock(true);
             removeComponentButton.setLock(true);
             return;
@@ -83,6 +99,10 @@ public final class GameObjectEditor extends GUIElement {
 
         nameInputLabel.setValue(editObject.getName());
         nameInputLabel.setLock(false);
+        posXInputLabel.setValue(String.valueOf(editObject.getPosition().x));
+        posXInputLabel.setLock(false);
+        posYInputLabel.setValue(String.valueOf(editObject.getPosition().y));
+        posYInputLabel.setLock(false);
         addComponentButton.setLock(false);
     }
 
