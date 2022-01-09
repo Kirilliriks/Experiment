@@ -52,15 +52,15 @@ public final class LevelEditor extends GUIElement {
         downButtons = new SwitchMenu(Editor.DEFAULT_BORDER_SIZE, Editor.DEFAULT_BORDER_SIZE, 0, 0, SwitchMenu.Type.HORIZONTAL, this);
 
         createEmptyButton = new TextButton("Create empty level", 0, 0, downButtons);
-        createEmptyButton.setOnClick(LevelEditor::createAndLoadEmptyLevel);
+        createEmptyButton.setOnClick(this::createAndLoadEmptyLevel);
         downButtons.addButton(createEmptyButton);
 
         saveLevelButton = new TextButton("Save editable level", 0, 0, downButtons);
-        saveLevelButton.setOnClick(LevelEditor::saveLevel);
+        saveLevelButton.setOnClick(this::saveLevel);
         downButtons.addButton(saveLevelButton);
 
         deleteLevelButton = new TextButton("Delete editable level", 0, 0, downButtons);
-        deleteLevelButton.setOnClick(LevelEditor::deleteLevel);
+        deleteLevelButton.setOnClick(this::deleteLevel);
         downButtons.addButton(deleteLevelButton);
     }
 
@@ -110,22 +110,22 @@ public final class LevelEditor extends GUIElement {
         updateEditor();
     }
 
-    public static void createAndLoadEmptyLevel() {
+    public void createAndLoadEmptyLevel() {
         level = Game.levelManager.setEmptyLevel();
         levelEditor.levelInspector.setLevel(level);
         saveLevel(true);
     }
 
-    private static void updateEditor() {
+    private void updateEditor() {
         levelEditor.updateButtons(level.getName());
     }
 
     @NotNull
-    public static Level getLevel() {
+    public Level getLevel() {
         return level;
     }
 
-    public static void renameLevel(String newName) {
+    public void renameLevel(String newName) {
         for (val btn : levelEditor.selector.getButtons()) {
             if (!btn.getLabelText().equals(level.getName())) continue;
             btn.setLabelText(newName);
@@ -136,16 +136,16 @@ public final class LevelEditor extends GUIElement {
         saveLevel();
     }
 
-    public static void saveLevel() {
+    public void saveLevel() {
         saveLevel(false);
     }
 
-    public static void saveLevel(boolean needUpdate) {
+    public void saveLevel(boolean needUpdate) {
         FileUtils.saveEditableLevel(level);
         if (needUpdate) updateEditor();
     }
 
-    public static void deleteLevel() {
+    public void deleteLevel() {
         FileUtils.deleteLevel(level);
         createAndLoadEmptyLevel();
         updateEditor();

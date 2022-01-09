@@ -51,7 +51,7 @@ public class RoomEditor extends GUIElement {
         downButtons.addButton(createEmptyButton);
 
         saveRoomsButton = new TextButton("Save rooms", 40, 0, downButtons);
-        saveRoomsButton.setOnClick(LevelEditor::saveLevel);
+        saveRoomsButton.setOnClick(() -> Editor.levelEditor.saveLevel());
         downButtons.addButton(saveRoomsButton);
 
         deleteRoomButton = new TextButton("Delete room", 40, 0, downButtons);
@@ -60,7 +60,7 @@ public class RoomEditor extends GUIElement {
     }
 
     public void setRoom(@NotNull Room room) {
-        LevelEditor.getLevel().setCurrentRoom(room.getName());
+        Editor.levelEditor.getLevel().setCurrentRoom(room.getName());
         editedRoom = room;
         roomInspector.setRoom(room);
 
@@ -76,7 +76,7 @@ public class RoomEditor extends GUIElement {
 
     public void updateButtons() {
         selector.clearChild();
-        val currentLevel = LevelEditor.getLevel();
+        val currentLevel = Editor.levelEditor.getLevel();
         setRoom(currentLevel.getCurrentRoom());
         val rooms  = currentLevel.getRooms();
 

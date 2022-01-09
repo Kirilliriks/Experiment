@@ -11,8 +11,8 @@ import org.anotherteam.editor.gui.menu.text.TextMenu;
 import org.anotherteam.editor.gui.menu.text.TextButton;
 import org.anotherteam.editor.gui.window.DialogWindow;
 import org.anotherteam.editor.gui.window.SaveLevelDialog;
-import org.anotherteam.editor.level.LevelMenu;
 import org.anotherteam.editor.level.editor.LevelEditor;
+import org.anotherteam.editor.level.room.RoomEditor;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.logger.GameLogger;
 import org.anotherteam.render.batch.RenderBatch;
@@ -37,6 +37,9 @@ public final class Editor extends Widget {
     private static EditorLog editorLog;
 
     private final EditorMenu editorMenu;
+
+    public static LevelEditor levelEditor;
+    public static RoomEditor roomEditor;
     //
 
     private static DialogWindow dialogWindow;
@@ -77,10 +80,12 @@ public final class Editor extends Widget {
     }
 
     public void init(String levelName) {
-        final LevelMenu levelMenu = editor.getEditorMenu().getLevelMenu();
-        levelMenu.getLevelEditor().loadLevel(levelName);
-        levelMenu.getLevelEditor().updateButtons(levelName);
-        levelMenu.getRoomEditor().updateButtons();
+        levelEditor = editorMenu.getLevelMenu().getLevelEditor();
+        roomEditor = editorMenu.getLevelMenu().getRoomEditor();
+
+        levelEditor.loadLevel(levelName);
+        levelEditor.updateButtons(levelName);
+        roomEditor.updateButtons();
     }
 
     public void switchPlayStopMode() {
@@ -89,16 +94,15 @@ public final class Editor extends Widget {
             Game.stateManager.setState(GameState.ON_LEVEL);
 
             switchGameView(false);
-
-            editorMenu.getLevelMenu().getLevelEditor().storeLevel();
+            levelEditor.storeLevel();
         } else {
             Game.DebugMode = true;
             Game.stateManager.setState(GameState.ON_EDITOR);
 
             switchGameView(true);
-
-            editorMenu.getLevelMenu().getLevelEditor().restoreLevel();
+            levelEditor.restoreLevel();
         }
+
         GameLogger.sendMessage("Current state: " + Game.stateManager.getState());
     }
 
@@ -130,7 +134,7 @@ public final class Editor extends Widget {
             if (Game.stateManager.getState() == GameState.ON_LEVEL) {
                 switchPlayStopMode();
             } else {
-                val saveWindow = new SaveLevelDialog(LevelEditor.getLevel().getName());
+                val saveWindow = new SaveLevelDialog(Editor.levelEditor.getLevel().getName());
                 saveWindow.setOnAfterClose(() -> Game.stateManager.setState(GameState.ON_CLOSE_GAME));
                 Editor.callWindow(saveWindow);
             }

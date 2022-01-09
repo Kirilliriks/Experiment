@@ -18,7 +18,7 @@ public class TextButton extends Button {
         super(x, y, ownerElement);
         labelText = new Label(text, 0, 0, this);
         labelText.setColor(DEFAULT_COLOR);
-        releaseTime = 0.6f;
+        releaseTime = 0.2f;
         timeToRelease = 0.0f;
         width = this.labelText.getWidth();
         height = this.labelText.getHeight();
