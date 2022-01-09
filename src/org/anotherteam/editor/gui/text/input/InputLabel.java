@@ -16,6 +16,10 @@ public final class InputLabel extends Label {
         inputPart = new InputPart("INPUT HERE", width, 0, this);
     }
 
+    public void setType(InputPart.Type type) {
+        inputPart.setType(type);
+    }
+
     public void setLock(boolean lock) {
         inputPart.setLock(lock);
     }

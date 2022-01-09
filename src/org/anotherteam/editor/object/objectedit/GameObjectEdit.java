@@ -6,6 +6,7 @@ import org.anotherteam.Input;
 import org.anotherteam.editor.Editor;
 import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.editor.gui.text.input.InputLabel;
+import org.anotherteam.editor.gui.text.input.InputPart;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.screen.GameScreen;
 

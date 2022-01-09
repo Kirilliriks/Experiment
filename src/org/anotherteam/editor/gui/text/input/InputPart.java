@@ -6,6 +6,7 @@ import org.anotherteam.editor.Editor;
 import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.editor.gui.menu.text.TextButton;
 import org.anotherteam.util.Color;
+import org.anotherteam.util.StringUtil;
 
 public final class InputPart extends TextButton {
 
@@ -13,6 +14,7 @@ public final class InputPart extends TextButton {
 
     private String lastCorrectInput;
     private Runnable onUnFocus;
+    private Type type;
 
     private boolean lock;
 
@@ -21,6 +23,11 @@ public final class InputPart extends TextButton {
         setLabelText(text);
         onUnFocus = null;
         lock = false;
+        type = Type.STRING;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 
     public void setOnUnFocus(Runnable onUnFocus) {
@@ -73,7 +80,6 @@ public final class InputPart extends TextButton {
             if (!isMouseOnWidget()) {
                 Editor.inputHandling = false;
                 clicked = false;
-                validateInput();
                 if (onUnFocus != null) onUnFocus.run();
             }
             return;
@@ -89,7 +95,7 @@ public final class InputPart extends TextButton {
         val key = Input.getLastPrintedKey();
         if (key == null) return;
 
-        val text = labelText.getText();
+        final String text = labelText.getText();
         if (key == Input.KEY_BACKSPACE) {
             if (text.length() == 0) return;
             labelText.setText(text.substring(0, text.length() - 1));
@@ -97,10 +103,21 @@ public final class InputPart extends TextButton {
         }
         if (!key.isPrintable()) return;
 
-        labelText.setText(text + key.getChar());
+        final String newText = text + key.getChar();
+        if (!validateInput(newText)) return;
+
+        labelText.setText(newText);
     }
 
-    private void validateInput() {
+    private boolean validateInput(String text) {
+        if (type == Type.INTEGER) {
+            if (!StringUtil.isNumeric(text)) return false;
+        }
+        return true;
+    }
 
+    public enum Type {
+        STRING,
+        INTEGER
     }
 }
