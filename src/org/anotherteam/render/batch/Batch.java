@@ -2,14 +2,16 @@ package org.anotherteam.render.batch;
 import static org.lwjgl.opengl.GL42.*;
 
 import lombok.val;
-import org.anotherteam.debug.DebugRender;
+import org.anotherteam.debug.DebugBatch;
 import org.anotherteam.render.screen.Camera;
 import org.anotherteam.render.shader.Shader;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class Batch {
 
-    public final DebugRender debugRender;
+    public static final int DEFAULT_SIZE = 1000;
+
+    public final DebugBatch debugBatch;
 
     // Vertex offset
     // ------
@@ -39,14 +41,14 @@ public abstract class Batch {
     protected int numQuads;
 
     public Batch(@NotNull Shader shader, @NotNull Camera camera, short vertexSize) {
-        this.debugRender = new DebugRender(camera);
+        debugBatch = new DebugBatch(camera);
 
         this.vertexSize = vertexSize;
         vertexSizeBytes = (short) (vertexSize * Float.BYTES);
 
         this.camera = camera;
 
-        this.batchSize = 1000; // default
+        batchSize = DEFAULT_SIZE; // default
         vertices = new float[batchSize * QUAD_POS_SIZE * vertexSize];
 
         this.shader = shader;
@@ -74,7 +76,11 @@ public abstract class Batch {
     }
 
     public void begin() {
-        clear();
+        begin(true);
+    }
+
+    public void begin(boolean clear) {
+        if (clear) clear();
         shader.bind();
     }
 

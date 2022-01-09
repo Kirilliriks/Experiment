@@ -9,7 +9,7 @@ public abstract class Button extends GUIElement {
 
     public Button(float x, float y, GUIElement ownerElement) {
         super(x, y, ownerElement);
-        setColor(Color.VOID);
+        setColor(Color.voidColor());
     }
 
     public void setOnClick(Runnable runnable) {

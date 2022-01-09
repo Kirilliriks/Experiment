@@ -2,7 +2,7 @@ package org.anotherteam.object.component.collider;
 
 import lombok.NonNull;
 import lombok.val;
-import org.anotherteam.debug.DebugRender;
+import org.anotherteam.debug.DebugBatch;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.Component;
 import org.anotherteam.object.component.sprite.SpriteController;
@@ -129,12 +129,12 @@ public final class Collider extends AABB {
     }
 
     @Override
-    public void debugRender(@NonNull DebugRender debugRender) {
-        interactAABB.debugRender(debugRender);
+    public void debugRender(@NonNull DebugBatch debugBatch) {
+        interactAABB.debugRender(debugBatch);
         if (isOnMouse(GameScreen.inGameMouseX(), GameScreen.inGameMouseY())) {
-            super.debugRender(debugRender, Color.GREEN);
+            super.debugRender(debugBatch, Color.GREEN);
         } else {
-            super.debugRender(debugRender, Color.RED);
+            super.debugRender(debugBatch, Color.RED);
         }
     }
 
@@ -164,8 +164,8 @@ public final class Collider extends AABB {
         }
 
         @Override
-        public void debugRender(@NonNull DebugRender debugRender) {
-            super.debugRender(debugRender, Color.BLUE);
+        public void debugRender(@NonNull DebugBatch debugBatch) {
+            super.debugRender(debugBatch, Color.BLUE);
         }
     }
 }

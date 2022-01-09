@@ -35,23 +35,13 @@ public final class Room {
         }
     }
 
-    public void drawTexture(@NotNull RenderBatch renderBatch) {
+    public void draw(@NotNull RenderBatch renderBatch, boolean height) {
         for (val tile : tiles.values()) {
-            tile.draw(renderBatch, false);
+            tile.draw(renderBatch, height);
         }
 
         for (val gameObject : gameObjects) {
-            gameObject.draw(renderBatch, false);
-        }
-    }
-
-    public void drawHeight(@NotNull RenderBatch renderBatch) {
-        for (val tile : tiles.values()) {
-            tile.draw(renderBatch, true);
-        }
-
-        for (val gameObject : gameObjects) {
-            gameObject.draw(renderBatch, true);
+            gameObject.draw(renderBatch, height);
         }
     }
 
@@ -61,8 +51,9 @@ public final class Room {
     }
 
     public void addObject(@NotNull GameObject object) {
-        if (object instanceof Player)
+        if (object instanceof Player) {
             player = (Player) object;
+        }
         object.setRoom(this);
         gameObjects.add(object);
         gameObjects.sort(Comparator.comparingInt(GameObject::getRenderPriority));
@@ -97,7 +88,7 @@ public final class Room {
 
     @NotNull
     public static Room createEmpty() {
-        val room = new Room("EmptyRoom");
+        final Room room = new Room("EmptyRoom");
         room.addObject(new Player(0, 0));
         return room;
     }

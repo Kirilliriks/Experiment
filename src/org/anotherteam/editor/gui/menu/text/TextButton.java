@@ -22,7 +22,7 @@ public class TextButton extends Button {
         timeToRelease = 0.0f;
         width = this.labelText.getWidth();
         height = this.labelText.getHeight();
-        setColor(Color.VOID);
+        setColor(Color.voidColor());
     }
 
     public void setLabelText(String text) {

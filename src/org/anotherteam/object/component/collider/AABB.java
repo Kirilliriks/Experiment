@@ -2,7 +2,7 @@ package org.anotherteam.object.component.collider;
 
 import lombok.NonNull;
 import lombok.val;
-import org.anotherteam.debug.DebugRender;
+import org.anotherteam.debug.DebugBatch;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.Component;
 import org.anotherteam.util.Color;
@@ -79,18 +79,18 @@ public abstract class AABB extends Component {
                 (objectPosition.x + secondBound.x) < aabb.getPosition().x  + aabb.getFirstBound().x));
     }
 
-    public abstract void debugRender(@NonNull DebugRender debugRender);
+    public abstract void debugRender(@NonNull DebugBatch debugBatch);
 
-    public void debugRender(@NonNull DebugRender debugRender, Color color){
+    public void debugRender(@NonNull DebugBatch debugBatch, Color color){
         val x = objectPosition.x + offSet.x;
         val y = objectPosition.y + offSet.y;
         val v1 = new Vector2f(x +  firstBound.x, y +  firstBound.y);
         val v2 = new Vector2f(x +  firstBound.x, y + secondBound.y);
         val v3 = new Vector2f(x + secondBound.x, y + secondBound.y);
         val v4 = new Vector2f(x + secondBound.x, y +  firstBound.y);
-        debugRender.drawLine(v1, v2, color);
-        debugRender.drawLine(v2, v3, color);
-        debugRender.drawLine(v3, v4, color);
-        debugRender.drawLine(v4, v1, color);
+        debugBatch.drawLine(v1, v2, color);
+        debugBatch.drawLine(v2, v3, color);
+        debugBatch.drawLine(v3, v4, color);
+        debugBatch.drawLine(v4, v1, color);
     }
 }

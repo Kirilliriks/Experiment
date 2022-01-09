@@ -11,7 +11,7 @@ public class Widget extends GUIElement {
         super(x, y, width, height, ownerElement);
         title = new Label(titleString, 0, height - 0.1f, this);
         title.setColor(80, 80, 80, 255);
-        setColor(Color.GRAY);
+        setColor(Color.gray());
     }
 
     /**

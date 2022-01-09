@@ -20,7 +20,7 @@ public class SpriteButton extends Button {
         this.sprite = sprite;
         width = SpriteMenu.ICON_SIZE;
         height = SpriteMenu.ICON_SIZE;
-        setColor(Color.BLACK);
+        setColor(Color.black());
     }
 
     @Override

@@ -66,8 +66,9 @@ public final class Experimental implements Runnable {
 
             if (canRender) {
                 game.render(dtF);
-                if (editor != null && Game.stateManager.getState() == GameState.ON_EDITOR)
+                if (editor != null && Game.stateManager.getState() == GameState.ON_EDITOR) {
                     editor.renderFrame(GameScreen.windowBatch);
+                }
                 frames++;
 
                 window.swapBuffers();

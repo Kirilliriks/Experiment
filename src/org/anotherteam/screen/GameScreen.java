@@ -42,23 +42,23 @@ public final class GameScreen {
     public static int inGameMouseX() {
         val x = inGameWindowMouseX();
         if (x < 0) return -1;
-        return (int) (gameCamera.getPosition().x + x - GameScreen.WIDTH / 2.0f);
+        return (int) (gameCamera.getPosition().x + x - WIDTH / 2.0f);
     }
 
     public static int inGameMouseY() {
         val y = inGameWindowMouseY();
         if (y < 0) return -1;
-        return (int) (gameCamera.getPosition().y + y - GameScreen.HEIGHT / 2.0f);
+        return (int) (gameCamera.getPosition().y + y - HEIGHT / 2.0f);
     }
 
     public static int inGameWindowMouseX() {
         if (Input.getMouseX() < POSITION.x || Input.getMouseX() > POSITION.x + RENDER_WIDTH) return -1;
-        return (int) (((Input.getMouseX() - POSITION.x) / RENDER_WIDTH) * GameScreen.WIDTH);
+        return (int) (((Input.getMouseX() - POSITION.x) / RENDER_WIDTH) * WIDTH);
     }
 
     public static int inGameWindowMouseY() {
         if (Input.getMouseY() < POSITION.y || Input.getMouseY() > POSITION.y + RENDER_HEIGHT) return -1;
-        return (int) (((Input.getMouseY() - POSITION.y) / RENDER_HEIGHT) * GameScreen.HEIGHT);
+        return (int) (((Input.getMouseY() - POSITION.y) / RENDER_HEIGHT) * HEIGHT);
     }
 
     public static int onMouseTileX() {
@@ -71,5 +71,13 @@ public final class GameScreen {
         val y = inGameMouseY();
         if (y < 0) return -1;
         return y / Tile.SIZE.y;
+    }
+
+    public static int toWindowPosX(int x) {
+        return (int) ((POSITION.x + (x - gameCamera.getPosition().x) * RENDER_WIDTH) / WIDTH + RENDER_WIDTH / 2);
+    }
+
+    public static int toWindowPosY(int y) {
+        return (int) ((POSITION.y + (y - gameCamera.getPosition().y) * RENDER_HEIGHT) / HEIGHT + RENDER_HEIGHT / 2);
     }
 }

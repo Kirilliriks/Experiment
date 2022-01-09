@@ -129,7 +129,7 @@ public final class Editor extends Widget {
             if (Game.stateManager.getState() == GameState.ON_LEVEL) {
                 switchPlayStopMode();
             } else {
-                val saveWindow = new SaveLevelDialog(LevelEditor.getEditedLevel().getName());
+                val saveWindow = new SaveLevelDialog(LevelEditor.getLevel().getName());
                 saveWindow.setOnAfterClose(() -> Game.stateManager.setState(GameState.ON_CLOSE_GAME));
                 Editor.callWindow(saveWindow);
             }
@@ -160,7 +160,9 @@ public final class Editor extends Widget {
 
     public void renderFrame(@NotNull RenderBatch renderBatch) {
         renderGUI();
+        renderBatch.begin(false);
         renderBatch.draw(editorFrame.getTexture(), 0, 0, GameScreen.window.getWidth(), GameScreen.window.getHeight(), false, true);
+        renderBatch.end();
     }
 
     @NotNull

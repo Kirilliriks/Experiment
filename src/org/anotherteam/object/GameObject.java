@@ -117,7 +117,7 @@ public abstract class GameObject {
         }
 
         if (!Game.DebugMode || height) return;
-        collider.debugRender(renderBatch.debugRender);
+        collider.debugRender(renderBatch.debugBatch);
     }
 
     public void onAnimationEnd() { }

@@ -14,7 +14,7 @@ public final class SaveLevelDialog extends DialogWindow {
         super(200, 50);
         val saveButton = new TextButton("Save", 0, 0, this);
         saveButton.setOnClick(() -> {
-            LevelEditor.saveEditableLevel();
+            LevelEditor.saveLevel();
             Editor.closeWindow();
         });
 

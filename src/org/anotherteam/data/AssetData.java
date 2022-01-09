@@ -5,6 +5,7 @@ import org.anotherteam.level.room.tile.Tile;
 import org.anotherteam.render.shader.Shader;
 import org.anotherteam.render.sprite.Sprite;
 import org.anotherteam.render.sprite.SpriteAtlas;
+import org.anotherteam.render.text.Font;
 import org.anotherteam.render.texture.Texture;
 import org.jetbrains.annotations.NotNull;
 
@@ -31,6 +32,8 @@ public final class AssetData {
 
         public static final Shader DEFAULT_SHADER = new Shader("shader/defaultVertexShader.glsl", "shader/defaultFragmentShader.glsl");
         public static final Shader DEBUG_SHADER = new Shader("shader/debugVS.glsl", "shader/debugFS.glsl");
+
+        public static final Font DEBUG_FONT = new Font("font/font.ttf", 16);
 
         @NotNull
         private static Texture getTexture(String textureName) {

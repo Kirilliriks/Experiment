@@ -6,18 +6,20 @@ import org.anotherteam.Game;
 import org.anotherteam.GameState;
 import org.anotherteam.Input;
 import org.anotherteam.data.AssetData;
+import org.anotherteam.editor.level.editor.LevelEditor;
 import org.anotherteam.level.room.Room;
+import org.anotherteam.object.GameObject;
 import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.frame.EffectFrame;
 import org.anotherteam.render.frame.HeightFrame;
 import org.anotherteam.render.frame.TextureFrame;
 import org.anotherteam.render.screen.Camera;
 import org.anotherteam.render.shader.Shader;
-import org.anotherteam.render.text.Font;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
+import org.joml.Vector2i;
 
 public final class GameRender {
 
@@ -29,8 +31,6 @@ public final class GameRender {
     public final EffectFrame effectFrame;
 
     private final Shader raycastShader;
-
-    private final Font debugFont;
 
     private final Camera renderCamera;
 
@@ -45,14 +45,13 @@ public final class GameRender {
         textureFrame = new TextureFrame(textureBatch);
         heightFrame = new HeightFrame(textureBatch);
         effectFrame = new EffectFrame(effectBatch);
-
-        debugFont = new Font("font/font.ttf", 16);
     }
 
     public void updateFrames() {
         textureFrame.changeBufferSize(GameScreen.WIDTH, GameScreen.HEIGHT);
         heightFrame.changeBufferSize(GameScreen.WIDTH, GameScreen.HEIGHT);
         effectFrame.changeBufferSize(GameScreen.WIDTH, GameScreen.HEIGHT);
+
         renderCamera.setProjection(GameScreen.WIDTH, GameScreen.HEIGHT);
         GameScreen.gameCamera.setProjection(GameScreen.WIDTH, GameScreen.HEIGHT);
         GameScreen.gameCamera.setPosition(GameScreen.WIDTH / 2.0f, GameScreen.HEIGHT / 2.0f);
@@ -105,25 +104,20 @@ public final class GameRender {
             val v2 = new Vector2f(GameScreen.POSITION.x + GameScreen.RENDER_WIDTH, GameScreen.POSITION.y);
             val v3 = new Vector2f(GameScreen.POSITION.x + GameScreen.RENDER_WIDTH, GameScreen.POSITION.y + GameScreen.RENDER_HEIGHT);
             val v4 = new Vector2f(GameScreen.POSITION.x, GameScreen.POSITION.y + GameScreen.RENDER_HEIGHT);
-            windowBatch.debugRender.drawLine(v1, v2, Color.RED);
-            windowBatch.debugRender.drawLine(v2, v3, Color.RED);
-            windowBatch.debugRender.drawLine(v3, v4, Color.RED);
-            windowBatch.debugRender.drawLine(v4, v1, Color.RED);
+            windowBatch.debugBatch.drawLine(v1, v2, Color.RED);
+            windowBatch.debugBatch.drawLine(v2, v3, Color.RED);
+            windowBatch.debugBatch.drawLine(v3, v4, Color.RED);
+            windowBatch.debugBatch.drawLine(v4, v1, Color.RED);
         }
 
         if (Game.DebugMode) {
-            val x = GameScreen.inGameMouseX();
-            val y = GameScreen.inGameMouseY();
-            if (x != -1 && y != -1) {
-                windowBatch.drawText(debugFont, "Pos : " + x + " " + y,
-                        (int) (Input.getMousePos().x + 15), (int) (Input.getMousePos().y - 25), 1.0f, new Color(255, 255, 255, 255));
-            }
+            debugRender(windowBatch, room);
         }
         windowBatch.end();
     }
 
     private void drawTextures(@NotNull Room room) {
-        room.drawTexture(textureBatch);
+        room.draw(textureBatch, false);
 
         if (Game.stateManager.getState() != GameState.ON_EDITOR) return;
 
@@ -137,6 +131,22 @@ public final class GameRender {
     }
 
     private void drawHeightMap(@NotNull Room room) {
-        room.drawHeight(textureBatch);
+        room.draw(textureBatch, true);
+    }
+
+    private void debugRender(RenderBatch windowBatch, Room room) {
+        int x = GameScreen.inGameMouseX();
+        int y = GameScreen.inGameMouseY();
+        if (x != -1 && y != -1) {
+            windowBatch.drawText("Pos : " + x + " " + y,
+                    (int) (Input.getMousePos().x + 15), (int) (Input.getMousePos().y - 25));
+        }
+
+        for (final GameObject object : room.getGameObjects()) {
+            final Vector2i pos = object.getPosition();
+            x = GameScreen.toWindowPosX(pos.x);
+            y = GameScreen.toWindowPosY(pos.y);
+            windowBatch.drawText("Pos: " + pos.x + " : " + pos.y, x, y);
+        }
     }
 }

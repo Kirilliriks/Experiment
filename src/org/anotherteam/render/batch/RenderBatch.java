@@ -2,6 +2,7 @@ package org.anotherteam.render.batch;
 import static org.lwjgl.opengl.GL42.*;
 
 import lombok.val;
+import org.anotherteam.data.AssetData;
 import org.anotherteam.render.screen.Camera;
 import org.anotherteam.render.shader.Shader;
 import org.anotherteam.render.sprite.Sprite;
@@ -41,12 +42,6 @@ public class RenderBatch extends Batch {
     }
 
     @Override
-    public void begin() {
-        clear();
-        shader.bind();
-    }
-
-    @Override
     public void end() {
         if (numQuads > 0)
             render();
@@ -54,7 +49,7 @@ public class RenderBatch extends Batch {
         lastTexture = null;
         shader.unbind();
 
-        debugRender.draw();
+        debugBatch.draw();
     }
 
     public void setBlend(boolean blend) {
@@ -108,28 +103,28 @@ public class RenderBatch extends Batch {
         draw(sprite.getTexture(), x, y, sprite.getWidth(),
                 sprite.getHeight(),
                 false, false,
-                Color.WHITE, sprite.getTextCoords());
+                Color.white(), sprite.getTextCoords());
     }
 
     public void draw(Sprite sprite, float x, float y, int width, int height) {
         draw(sprite.getTexture(), x, y, width,
                 height,
                 false, false,
-                Color.WHITE, sprite.getTextCoords());
+                Color.white(), sprite.getTextCoords());
     }
 
     public void draw(Sprite sprite, float x, float y, boolean flipX) {
         draw(sprite.getTexture(), x, y, sprite.getWidth(),
                 sprite.getHeight(),
                 flipX, false,
-                Color.WHITE, sprite.getTextCoords());
+                Color.white(), sprite.getTextCoords());
     }
 
     public void draw(Sprite sprite, float x, float y, boolean flipX, boolean flipY) {
         draw(sprite.getTexture(), x, y, sprite.getWidth(),
                 sprite.getHeight(),
                 flipX, flipY,
-                Color.WHITE, sprite.getTextCoords());
+                Color.white(), sprite.getTextCoords());
     }
 
     public void draw(Texture texture, Vector2i position) {
@@ -156,7 +151,7 @@ public class RenderBatch extends Batch {
                      float x, float y,
                      int width, int height,
                      boolean flipX, boolean flipY) {
-        draw(texture, x, y, width, height, flipX, flipY, Color.WHITE);
+        draw(texture, x, y, width, height, flipX, flipY, Color.white());
     }
 
     public void draw(Texture texture,
@@ -240,6 +235,14 @@ public class RenderBatch extends Batch {
         vertices[offset + 4] = r;
         vertices[offset + 5] = g;
         vertices[offset + 6] = b;
+    }
+
+    public void drawText(String text, int x, int y) {
+        drawText(AssetData.DEBUG_FONT, text, x, y, 1.0f, Color.WHITE, false);
+    }
+
+    public void drawText(String text, int x, int y, float scale, Color color) {
+        drawText(AssetData.DEBUG_FONT, text, x, y, scale, color, false);
     }
 
     public void drawText(Font font, String text, int x, int y, float scale, Color color) {

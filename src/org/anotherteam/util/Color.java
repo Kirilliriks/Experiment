@@ -1,17 +1,14 @@
 package org.anotherteam.util;
 
-public final class Color {
+public class Color {
 
     public static final int MAX = 255;
 
-    public static final Color WHITE = new Color(MAX, MAX, MAX);
-    public static final Color GRAY = new Color(128, 128, 128);
-    public static final Color DARK_GRAY = new Color(64, 64, 64);
-    public static final Color RED = new Color(MAX, 0, 0);
-    public static final Color GREEN = new Color(0, MAX, 0);
-    public static final Color BLUE = new Color(0, 0, MAX);
-    public static final Color BLACK = new Color(0, 0, 0);
-    public static final Color VOID = new Color(0, 0, 0, 0);
+    public static final StaticColor WHITE = new StaticColor(Color.MAX, Color.MAX, Color.MAX);
+    public static final StaticColor RED = new StaticColor(Color.MAX, 0, 0);
+    public static final StaticColor GREEN = new StaticColor(0, Color.MAX, 0);
+    public static final StaticColor BLUE = new StaticColor(0, 0, Color.MAX);
+    public static final StaticColor BLACK = new StaticColor(0, 0, 0);
 
     public int r, g, b, a;
 
@@ -70,5 +67,37 @@ public final class Color {
                 ", b=" + b +
                 ", a=" + a +
                 '}';
+    }
+
+    public static Color white() {
+        return new Color(MAX, MAX, MAX);
+    }
+
+    public static Color gray() {
+        return new Color(128, 128, 128);
+    }
+
+    public static Color darkGray() {
+        return new Color(64, 64, 64);
+    }
+
+    public static Color red() {
+        return new Color(MAX, 0, 0);
+    }
+
+    public static Color green() {
+        return new Color(0, MAX, 0);
+    }
+
+    public static Color blue() {
+        return new Color(0, 0, MAX);
+    }
+
+    public static Color black() {
+        return new Color(0, 0, 0);
+    }
+
+    public static Color voidColor() {
+        return new Color(0, 0, 0, 0);
     }
 }

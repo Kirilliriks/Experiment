@@ -1,6 +1,6 @@
 package org.anotherteam;
 
-import org.anotherteam.debug.DebugRender;
+import org.anotherteam.debug.DebugBatch;
 import org.anotherteam.manager.LevelManager;
 import org.anotherteam.render.GameRender;
 import org.anotherteam.render.window.Window;
@@ -24,7 +24,7 @@ public final class Game {
         gameRender = new GameRender();
 
         DebugMode = false;
-        DebugRender.global = new DebugRender(GameScreen.windowCamera);
+        DebugBatch.global = new DebugBatch(GameScreen.windowCamera);
 
         GameScreen.RENDER_WIDTH = window.getWidth();
         GameScreen.RENDER_HEIGHT = window.getHeight();
@@ -42,8 +42,9 @@ public final class Game {
     public void render(float dt) {
         levelManager.renderLevel(GameScreen.windowBatch);
 
-        if (stateManager.getState() == GameState.ON_EDITOR || DebugMode)
-            DebugRender.global.draw();
+        if (stateManager.getState() == GameState.ON_EDITOR || DebugMode) {
+            //DebugRender.global.draw();
+        }
     }
 
     public void destroy() { }

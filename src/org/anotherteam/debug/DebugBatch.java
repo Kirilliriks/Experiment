@@ -9,8 +9,8 @@ import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
 
-public final class DebugRender {
-    public static DebugRender global = null;
+public final class DebugBatch {
+    public static DebugBatch global = null;
     private static final int VERTEX_SIZE = 5;
     private static final int MAX_LINES = 500;
 
@@ -24,7 +24,7 @@ public final class DebugRender {
 
     private int linesCount = 0;
 
-    public DebugRender(Camera camera) {
+    public DebugBatch(Camera camera) {
         this.camera = camera;
         // Generate the vao
         vaoID = glGenVertexArrays();
