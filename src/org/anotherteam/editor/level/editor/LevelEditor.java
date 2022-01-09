@@ -82,8 +82,9 @@ public final class LevelEditor extends GUIElement {
                         loadLevel(file.getName());
                     });
 
-            if (file.getName().equals(currentLevelName + "." + Level.LEVEL_FILE_EXTENSION))
+            if (file.getName().equals(currentLevelName + "." + Level.LEVEL_FILE_EXTENSION)) {
                 selector.setHighlighted(btn);
+            }
         }
     }
 
