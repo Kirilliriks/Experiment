@@ -21,6 +21,7 @@ public abstract class GameObject {
 
     protected final Map<Class<? extends Component>, Component> components;
     protected final Vector2i position;
+    protected String name;
 
     /**
      * All GameObjects have a Collider component {Default size 32 x 32}
@@ -28,18 +29,29 @@ public abstract class GameObject {
     protected final Collider collider;
 
     public GameObject(int x, int y) {
-        this.room = null;
-        this.position = new Vector2i(x, y);
+        this(x, y, "unknown");
+    }
+
+    public GameObject(int x, int y, String name) {
+        this.name = name;
+        room = null;
+        position = new Vector2i(x, y);
         components = new HashMap<>();
         collider = new Collider();
         addComponent(collider);
     }
 
     public static <T extends GameObject> T create(int x, int y, @NotNull Class<T> gameObjectClass) {
+        return create(x, y, "unknown", gameObjectClass);
+    }
+
+    public static <T extends GameObject> T create(int x, int y, String name, @NotNull Class<T> gameObjectClass) {
         try {
-            return gameObjectClass.cast(gameObjectClass
+            var gameObject = gameObjectClass.cast(gameObjectClass
                     .getDeclaredConstructor(int.class, int.class)
                     .newInstance(x, y));
+            gameObject.setName(name);
+            return gameObject;
         } catch (Exception e) {
             e.printStackTrace();
             throw new LifeException("Unknown GameObject class " + gameObjectClass.getSimpleName());
@@ -53,6 +65,14 @@ public abstract class GameObject {
 
     public void setPosition(int x, int y) {
         position.set(x, y);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @NotNull

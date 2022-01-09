@@ -82,8 +82,8 @@ public abstract class AABB extends Component {
     public abstract void debugRender(@NonNull DebugBatch debugBatch);
 
     public void debugRender(@NonNull DebugBatch debugBatch, Color color){
-        val x = objectPosition.x + offSet.x;
-        val y = objectPosition.y + offSet.y;
+        final int x = objectPosition.x + offSet.x;
+        final int y = objectPosition.y + offSet.y;
         val v1 = new Vector2f(x +  firstBound.x - 1, y +  firstBound.y);
         val v2 = new Vector2f(x +  firstBound.x, y + secondBound.y);
         val v3 = new Vector2f(x + secondBound.x, y + secondBound.y);

@@ -26,6 +26,9 @@ public final class LevelInspector extends Widget {
     }
 
     public void acceptChanges() {
+        final String newName = nameInputLabel.getInputText();
+        if (inspectedLevel.getName().equals(newName)) return;
+
         LevelEditor.renameLevel(nameInputLabel.getInputText());
     }
 

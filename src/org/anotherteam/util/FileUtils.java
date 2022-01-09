@@ -23,6 +23,7 @@ import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static org.lwjgl.system.MemoryUtil.memSlice;
@@ -42,13 +43,23 @@ public final class FileUtils {
     public static Level loadLevel(String levelName) {
         String inFile = "";
         try {
-            val finalName = levelName  + (levelName.split("\\.").length > 1 ? "" : "." + Level.LEVEL_FILE_EXTENSION);
-            inFile = new String(Files.readAllBytes(Paths.get("levels/" + finalName)));
+            final String finalName = levelName  + (levelName.split("\\.").length > 1 ? "" : "." + Level.LEVEL_FILE_EXTENSION);
+            final Path path = Paths.get("levels/" + finalName);
+
+            if (!path.toFile().isFile()) {
+                GameLogger.sendMessage("Level " + levelName + " not found");
+                return Level.createEmpty();
+            }
+
+            inFile = new String(Files.readAllBytes(path));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (inFile.isEmpty()) GameLogger.sendMessage("Level " + levelName + " is empty");
-        else GameLogger.sendMessage("Level " + levelName + " loaded");
+        if (inFile.isEmpty()) {
+            GameLogger.sendMessage("Level " + levelName + " is empty");
+        }  else {
+            GameLogger.sendMessage("Level " + levelName + " loaded");
+        }
         return LEVEL_GSON.fromJson(inFile, Level.class);
     }
 

@@ -15,13 +15,15 @@ public class GameObjectDeserializer implements JsonDeserializer<GameObject>, Jso
     public GameObject deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         val object = json.getAsJsonObject();
         val pos = SerializeUtil.deserialize(object.getAsJsonObject("pos"));
+        final String name = object.get("name").getAsString();
+        final String type = object.get("type").getAsString();
 
         GameObject gameObject;
         try {
-            final Class<?> clazz = Class.forName(object.get("type").getAsString());
-            gameObject = GameObject.create(pos.x, pos.y, (Class<? extends GameObject>) clazz);
+            final Class<?> clazz = Class.forName(type);
+            gameObject = GameObject.create(pos.x, pos.y, name, (Class<? extends GameObject>) clazz);
         } catch (ClassNotFoundException e) {
-            throw new LifeException("Unknown GameObject type " + object.get("type").getAsString());
+            throw new LifeException("Unknown GameObject type " + type);
         }
 
         gameObject.setPosition(pos.x, pos.y);
@@ -34,6 +36,7 @@ public class GameObjectDeserializer implements JsonDeserializer<GameObject>, Jso
     @Override
     public JsonElement serialize(GameObject gameObject, Type typeOfSrc, JsonSerializationContext context) {
         val result = new JsonObject();
+        result.add("name", new JsonPrimitive(gameObject.getName()));
         result.add("type", new JsonPrimitive(gameObject.getClass().getCanonicalName()));
         result.add("pos", SerializeUtil.serialize(gameObject.getPosition()));
         val components = new JsonArray(gameObject.getComponents().values().size());

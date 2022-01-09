@@ -136,10 +136,8 @@ public final class GameRender {
     private void debugRender(RenderBatch windowBatch, Room room) {
         int x = GameScreen.inGameMouseX();
         int y = GameScreen.inGameMouseY();
-        if (x != -1 && y != -1) {
-            windowBatch.drawText("Pos : " + x + " " + y,
-                    (int) (Input.getMousePos().x + 15), (int) (Input.getMousePos().y - 25));
-        }
+        windowBatch.drawText("Pos : " + x + " " + y,
+                (int) (Input.getMousePos().x + 15), (int) (Input.getMousePos().y - 25));
 
         for (final GameObject object : room.getGameObjects()) {
             final Vector2i pos = object.getPosition();
