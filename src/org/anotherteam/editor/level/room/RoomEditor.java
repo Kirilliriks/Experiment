@@ -7,6 +7,7 @@ import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.editor.gui.menu.text.SwitchMenu;
 import org.anotherteam.editor.gui.menu.text.TextButton;
 import org.anotherteam.editor.level.editor.LevelEditor;
+import org.anotherteam.editor.object.GameObjectMenu;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.level.room.Room;
 import org.jetbrains.annotations.NotNull;
@@ -62,6 +63,8 @@ public class RoomEditor extends GUIElement {
         LevelEditor.getLevel().setCurrentRoom(room.getName());
         editedRoom = room;
         roomInspector.setRoom(room);
+
+        GameObjectMenu.onRoomChange();
     }
 
     @Override

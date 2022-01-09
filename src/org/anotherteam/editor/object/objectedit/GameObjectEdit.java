@@ -6,7 +6,6 @@ import org.anotherteam.Input;
 import org.anotherteam.editor.Editor;
 import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.editor.gui.text.input.InputLabel;
-import org.anotherteam.editor.gui.text.input.InputPart;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.screen.GameScreen;
 
@@ -31,7 +30,7 @@ public final class GameObjectEdit extends GUIElement {
         inverted = true;
     }
 
-    private void setEditObject(GameObject gameObject) {
+    public void setEditObject(GameObject gameObject) {
         editObject = gameObject;
 
         if (editObject == null) {
@@ -45,17 +44,21 @@ public final class GameObjectEdit extends GUIElement {
 
     @Override
     public void update(float dt) {
-        if (Input.isAnyButtonPressed()) {
-            val currentRoom = Game.levelManager.getCurrentRoom();
-            for (val gameObject : currentRoom.getGameObjects()) {
-                if (!gameObject.getCollider().isOnMouse(GameScreen.inGameMouseX(), GameScreen.inGameMouseY())) continue;
+        if (!Input.isAnyButtonPressed()) return;
 
-                if (Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) {
-                    setEditObject(gameObject);
-                }
-                return;
-            }
+        if (Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
             setEditObject(null);
+            return;
+        }
+
+        val currentRoom = Game.levelManager.getCurrentRoom();
+        for (val gameObject : currentRoom.getGameObjects()) {
+            if (!gameObject.getCollider().isOnMouse(GameScreen.inGameMouseX(), GameScreen.inGameMouseY())) continue;
+
+            if (Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) {
+                setEditObject(gameObject);
+            }
+            return;
         }
     }
 }

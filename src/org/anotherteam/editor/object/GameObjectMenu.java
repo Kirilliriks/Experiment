@@ -7,11 +7,14 @@ import org.anotherteam.editor.object.objectedit.GameObjectEdit;
 
 public final class GameObjectMenu extends SwitchMenu {
 
+    private static GameObjectMenu gameObjectMenu;
+
     private final AddObjectMenu addObjectMenu;
     private final GameObjectEdit gameObjectEdit;
 
     public GameObjectMenu(float x, float y, EditorMenu ownerElement) {
         super(x, y, 0, 0, Type.VERTICAL, ownerElement);
+        gameObjectMenu = this;
 
         addButton("Add GameObject");
         addButton("GameObject edit");
@@ -29,5 +32,9 @@ public final class GameObjectMenu extends SwitchMenu {
         button.setAfterClick(()-> gameObjectEdit.setVisible(false));
 
         inverted = true;
+    }
+
+    public static void onRoomChange() {
+        gameObjectMenu.gameObjectEdit.setEditObject(null);
     }
 }
