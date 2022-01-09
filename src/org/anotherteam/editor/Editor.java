@@ -123,7 +123,6 @@ public final class Editor extends Widget {
     public void update(float dt) {
         if (dialogWindow != null) {
             dialogWindow.update(dt);
-            dialogWindow.updateElements(dt);
             return;
         }
 
@@ -145,7 +144,7 @@ public final class Editor extends Widget {
             editorLog.setVisible(!editorLog.isVisible());
         }
 
-        editorCameraController.handle(dt);
+        if (Game.stateManager.getState() == GameState.ON_EDITOR) editorCameraController.handle(dt);
     }
 
     private void renderGUI() {

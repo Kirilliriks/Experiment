@@ -1,6 +1,7 @@
 package org.anotherteam.object.component;
 
 import org.anotherteam.object.GameObject;
+import org.anotherteam.object.component.player.PlayerController;
 import org.anotherteam.object.component.sprite.SpriteController;
 import org.anotherteam.object.component.state.StateController;
 import org.anotherteam.object.component.transform.Transform;
@@ -19,13 +20,15 @@ public abstract class Component {
         components.add(SpriteController.class);
         components.add(StateController.class);
         components.add(Transform.class);
+        components.add(PlayerController.class);
     }
 
     protected GameObject ownerObject;
-    protected boolean serializable = false;
+    protected boolean serializable;
 
     public Component() {
         ownerObject = null;
+        serializable = false;
     }
 
     public void instanceBy(Component component) { }

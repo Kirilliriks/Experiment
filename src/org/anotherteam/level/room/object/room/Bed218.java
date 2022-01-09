@@ -9,7 +9,7 @@ public final class Bed218 extends StaticObject {
 
     public Bed218(int x, int y) {
         super(x, y);
-        val spriteController = new SpriteController(0);
+        val spriteController = new SpriteController();
         val asset = AssetData.getOrLoadSpriteAtlas(AssetData.ROOM_OBJECTS_PATH + "BED_218.png", 31, 12);
         spriteController.setSpriteAtlas(asset);
         addComponent(spriteController);

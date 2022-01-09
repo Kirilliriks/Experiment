@@ -131,8 +131,10 @@ public abstract class GameObject {
             components.get(component.getClass()).instanceBy(component);
             return;
         }
+
         components.put(component.getClass(), component);
         component.setOwnerObject(this);
+        component.setDependencies();
     }
 
     public void update(float delta) {

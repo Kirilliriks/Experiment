@@ -10,19 +10,19 @@ import org.anotherteam.object.component.transform.Transform;
 
 public abstract class EntityObject extends GameObject {
 
-    private final static int DEFAULT_SPEED = 25;
-
     protected final Transform transform;
     protected final StateController stateController;
     protected final SpriteController spriteController;
 
     public EntityObject(int x, int y, @NonNull State defaultState) {
         super(x, y);
-        spriteController = new SpriteController(1);
+        spriteController = new SpriteController();
+        spriteController.setDrawPriority(1);
         addComponent(spriteController);
-        stateController = new StateController(defaultState);
+        stateController = new StateController();
+        stateController.setDefaultState(defaultState);
         addComponent(stateController);
-        transform = new Transform(DEFAULT_SPEED);
+        transform = new Transform();
         addComponent(transform);
     }
 }

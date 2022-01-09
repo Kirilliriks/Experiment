@@ -14,7 +14,7 @@ import org.joml.Vector2i;
 
 public final class SpriteController extends Component {
 
-    private final int drawPriority;
+    private int drawPriority;
 
     private SpriteAtlas spriteAtlas;
     private Sprite textureSprite;
@@ -30,8 +30,8 @@ public final class SpriteController extends Component {
      */
     private final boolean center;
 
-    public SpriteController(int drawPriority) {
-        this.drawPriority = drawPriority;
+    public SpriteController() {
+        drawPriority = 0;
 
         textureSprite = null;
         heightSprite = null;
@@ -39,6 +39,10 @@ public final class SpriteController extends Component {
         animationTimer = null;
 
         center = true;
+    }
+
+    public void setDrawPriority(int drawPriority) {
+        this.drawPriority = drawPriority;
     }
 
     public void setSpriteAtlas(SpriteAtlas spriteAtlas) {

@@ -9,7 +9,7 @@ public final class DoorCorridor extends GameObject {
 
     public DoorCorridor(int x, int y) {
         super(x, y);
-        val spriteController = new SpriteController(0);
+        val spriteController = new SpriteController();
         val asset = AssetData.getOrLoadSpriteAtlas(AssetData.ROOM_OBJECTS_PATH + "door_corridor_room.png", 21, 30);
         spriteController.setSpriteAtlas(asset);
         addComponent(spriteController);

@@ -9,7 +9,7 @@ public final class TestCupboard extends StaticObject {
 
     public TestCupboard(int x, int y) {
         super(x, y);
-        val spriteController = new SpriteController(0);
+        val spriteController = new SpriteController();
         val asset = AssetData.getOrLoadSpriteAtlas(AssetData.ROOM_OBJECTS_PATH + "cupboard_test.png", 20, 36);
         spriteController.setSpriteAtlas(asset);
         addComponent(spriteController);

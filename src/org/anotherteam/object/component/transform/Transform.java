@@ -7,14 +7,15 @@ import org.anotherteam.object.component.collider.Collider;
 import org.anotherteam.object.component.sprite.SpriteController;
 import org.anotherteam.object.component.state.StateController;
 import org.anotherteam.object.component.state.type.EntityState;
-import org.anotherteam.screen.GameScreen;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 
 public final class Transform extends Component {
 
-    private final int maxSpeed;
+    public static final int DEFAULT_SPEED = 25;
+
+    private int maxSpeed;
 
     private StateController stateController;
     private Collider collider;
@@ -22,10 +23,17 @@ public final class Transform extends Component {
 
     public final Vector2f moveImpulse;
 
+    /**
+     * Link to GameObject's position
+     */
     private Vector2i position;
     private int speed;
 
     private boolean moving;
+
+    public Transform() {
+        this(DEFAULT_SPEED);
+    }
 
     public Transform(int maxSpeed) {
         this.maxSpeed = maxSpeed;
@@ -33,6 +41,10 @@ public final class Transform extends Component {
         speed = maxSpeed;
         moving = false;
         serializable = true;
+    }
+
+    public void setMaxSpeed(int maxSpeed) {
+        this.maxSpeed = maxSpeed;
     }
 
     @Override
@@ -60,6 +72,7 @@ public final class Transform extends Component {
     @Override
     public void setDependencies() {
         if (sprite != null && collider != null && stateController != null) return;
+
         collider = getDependsComponent(Collider.class);
         stateController = getDependsComponent(StateController.class);
         sprite = getDependsComponent(SpriteController.class);
@@ -67,14 +80,17 @@ public final class Transform extends Component {
 
     public boolean move() {
         if (!isCanMove()) return false;
+
         if (moveImpulse.equals(0, 0)) {
             stateController.setDefaultState();
             return false;
         }
+
         if (collider.checkCollide(moveImpulse)) {
             moveImpulse.set(0, 0);
             return false;
         }
+
         if (moveImpulse.x >= 1 || moveImpulse.x <= -1) {
             checkFlip();
             val x = (int) moveImpulse.x;

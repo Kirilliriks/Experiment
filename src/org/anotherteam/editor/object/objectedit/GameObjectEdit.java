@@ -45,9 +45,8 @@ public final class GameObjectEdit extends GUIElement {
 
         addComponentButton = new TextButton("Add new component", width - componentSelector.getWidth(), Editor.DEFAULT_BORDER_SIZE * 0.8f, this);
         addComponentButton.setOnClick(() -> {
-            final ComponentSelectWindow componentSelectWindow = new ComponentSelectWindow(300, 200, editObject);
+            final ComponentSelectWindow componentSelectWindow = new ComponentSelectWindow(300, 200, editObject, this);
             Editor.callWindow(componentSelectWindow);
-            fillComponentSelector();
         });
 
         removeComponentButton = new TextButton("Remove component", width - componentSelector.getWidth() + addComponentButton.getWidth() + Editor.DEFAULT_BORDER_SIZE, Editor.DEFAULT_BORDER_SIZE * 0.8f, this);
@@ -81,7 +80,7 @@ public final class GameObjectEdit extends GUIElement {
         addComponentButton.setLock(false);
     }
 
-    private void fillComponentSelector() {
+    public void fillComponentSelector() {
         componentSelector.clearChild();
 
         if (editObject == null) return;

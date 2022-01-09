@@ -34,6 +34,7 @@ public final class Collider extends AABB {
             setBounds(Sprite.SIZE.x, Sprite.SIZE.y);
             return;
         }
+
         val sprite = ownerObject.getComponent(SpriteController.class);
         val texture = sprite.getTextureSprite();
         setBounds(texture.getWidth(), texture.getHeight());

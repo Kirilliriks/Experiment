@@ -9,7 +9,7 @@ public final class Lamp218 extends StaticObject {
 
     public Lamp218(int x, int y) {
         super(x, y);
-        val spriteController = new SpriteController(0);
+        val spriteController = new SpriteController();
         val asset = AssetData.getOrLoadSpriteAtlas(AssetData.ROOM_OBJECTS_PATH + "LAMP_218.png", 12, 18);
         spriteController.setSpriteAtlas(asset);
         addComponent(spriteController);
