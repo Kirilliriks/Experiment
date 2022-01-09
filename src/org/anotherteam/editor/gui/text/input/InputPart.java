@@ -37,6 +37,14 @@ public final class InputPart extends TextButton {
         return valueInput.getText();
     }
 
+    public boolean getBoolValue() {
+        return Boolean.parseBoolean(valueInput.getText());
+    }
+
+    public int getIntValue() {
+        return Integer.parseInt(valueInput.getText());
+    }
+
     public void setValue(String text) {
         valueInput.setText(text);
         width = getLabelWidth() + valueInput.getWidth();
@@ -50,6 +58,7 @@ public final class InputPart extends TextButton {
                 boolean value = !Boolean.parseBoolean(valueInput.getText());
                 setValue(String.valueOf(value));
                 setClicked(false);
+                unFocus();
             };
         }
     }
@@ -93,17 +102,19 @@ public final class InputPart extends TextButton {
             }
 
             if (!Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) return;
-            if (!isMouseOnWidget()) {
-                Editor.inputHandling = false;
-                clicked = false;
-                if (onUnFocus != null) onUnFocus.run();
-            }
+            if (!isMouseOnWidget()) unFocus();
             return;
         }
         if (!isMouseOnWidget()) return;
         if (!Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) return;
         Editor.inputHandling = true;
         setClicked(true);
+    }
+
+    private void unFocus() {
+        Editor.inputHandling = false;
+        clicked = false;
+        if (onUnFocus != null) onUnFocus.run();
     }
 
     private void handleInput() {

@@ -53,7 +53,7 @@ public abstract class Component {
         return serializable;
     }
 
-    public List<FieldController<?>> getFields() {
+    public List<FieldController> getFields() {
         return null;
     }
 

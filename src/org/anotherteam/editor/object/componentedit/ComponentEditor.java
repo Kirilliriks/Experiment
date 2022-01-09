@@ -33,14 +33,16 @@ public final class ComponentEditor extends GUIElement {
 
     public void setComponent(Component component) {
         fieldMenu.clearChild();
-        if (component == null) return;
+        if (component == null || component.getFields() == null) return;
 
         this.component = component;
-        for (final FieldController<?> field : component.getFields()) {
+
+        for (final FieldController field : component.getFields()) {
             if (field.getValueClass() == Boolean.class) {
                 final InputPart button = fieldMenu.addButton(field.getFieldName());
                 button.setValue(String.valueOf(field.getValue()));
                 button.setType(InputPart.Type.BOOLEAN);
+                button.setOnUnFocus(() -> field.setValue(button.getBoolValue()));
             }
         }
     }
