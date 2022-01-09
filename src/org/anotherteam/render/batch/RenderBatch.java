@@ -7,6 +7,7 @@ import org.anotherteam.render.screen.Camera;
 import org.anotherteam.render.shader.Shader;
 import org.anotherteam.render.sprite.Sprite;
 import org.anotherteam.render.text.Font;
+import org.anotherteam.render.text.Glyph;
 import org.anotherteam.render.texture.Texture;
 import org.anotherteam.util.Color;
 import org.anotherteam.util.exception.LifeException;
@@ -187,15 +188,16 @@ public class RenderBatch extends Batch {
 
         int offset = index * QUAD_POS_SIZE * VERTEX_SIZE;
 
-        val x0 = flipX ? texCoords[1].x : texCoords[0].x;
-        val x1 = flipX ? texCoords[0].x : texCoords[1].x;
-        val y0 = flipY ? texCoords[2].y : texCoords[1].y;
-        val y1 = flipY ? texCoords[1].y : texCoords[2].y;
+        final float x0 = flipX ? texCoords[1].x : texCoords[0].x;
+        final float x1 = flipX ? texCoords[0].x : texCoords[1].x;
+        final float y0 = flipY ? texCoords[2].y : texCoords[1].y;
+        final float y1 = flipY ? texCoords[1].y : texCoords[2].y;
 
-        float r = color.r / 255.0f;
-        float g = color.g / 255.0f;
-        float b = color.b / 255.0f;
+        final float r = color.r / 255.0f;
+        final float g = color.g / 255.0f;
+        final float b = color.b / 255.0f;
 
+        // TODO Maybe for?
         // Load position
         vertices[offset] = x + QUAD_OFFSET[0].x * width;
         vertices[offset + 1] = y + QUAD_OFFSET[0].y  * height;
@@ -250,16 +252,15 @@ public class RenderBatch extends Batch {
     }
 
     public void drawText(Font font, String text, int x, int y, float scale, Color color, boolean invertWidth) {
-        int offsetX = 0;
-        if (invertWidth) offsetX -= font.getTextWidth(text, scale);
+        final int offsetX = invertWidth ? -font.getTextWidth(text, scale) : 0;
         for (int i = 0; i < text.length(); i++) {
-            val charInfo = font.getCharacter(text.charAt(i));
-            if (charInfo.width == 0)
-                throw new LifeException("Unknown font character " + text.charAt(i));
+            final Glyph charInfo = font.getCharacter(text.charAt(i));
+            if (charInfo.width == 0) throw new LifeException("Unknown font character " + text.charAt(i));
 
             draw(font.texture, x + offsetX, y,
                     (int)(charInfo.width * scale), (int)(charInfo.height * scale),
-                    false, false,
+                    false,
+                    false,
                     color,
                     charInfo.texCoords);
             x += charInfo.width * scale;
