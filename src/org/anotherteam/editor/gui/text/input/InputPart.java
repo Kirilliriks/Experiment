@@ -16,13 +16,10 @@ public final class InputPart extends TextButton {
     private Runnable onUnFocus;
     private Type type;
 
-    private boolean lock;
-
     public InputPart(String text, float x, float y, GUIElement ownerElement) {
         super(text, x, y, ownerElement);
         setLabelText(text);
         onUnFocus = null;
-        lock = false;
         type = Type.STRING;
     }
 
@@ -34,10 +31,6 @@ public final class InputPart extends TextButton {
         this.onUnFocus = onUnFocus;
     }
 
-    public void setLock(boolean lock) {
-        this.lock = lock;
-    }
-
     @Override
     public void setLabelText(String text) {
         super.setLabelText(text);
@@ -47,11 +40,10 @@ public final class InputPart extends TextButton {
     @Override
     public void setClicked(boolean clicked) {
         if (lock) {
-            this.clicked = false;
-            return;
+            clicked = false;
         }
-
         this.clicked = clicked;
+
         if (!clicked) return;
         timeToRelease = releaseTime;
         if (onClick != null) onClick.run();

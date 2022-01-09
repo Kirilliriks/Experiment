@@ -2,7 +2,9 @@ package org.anotherteam.object;
 
 import lombok.val;
 import org.anotherteam.Game;
+import org.anotherteam.editor.Editor;
 import org.anotherteam.level.room.Room;
+import org.anotherteam.logger.GameLogger;
 import org.anotherteam.object.component.Component;
 import org.anotherteam.object.component.collider.Collider;
 import org.anotherteam.object.component.sprite.SpriteController;
@@ -112,6 +114,15 @@ public abstract class GameObject {
     }
 
     public <T extends Component> void removeComponent(Class<T> componentClass) {
+        if (componentClass.isAssignableFrom(Collider.class)) {
+            GameLogger.sendMessage("Collider is static component");
+            return;
+        }
+        if (componentClass.isAssignableFrom(Collider.InteractAABB.class)) {
+            GameLogger.sendMessage("InteractAABB is static component");
+            return;
+        }
+
         components.remove(componentClass);
     }
 

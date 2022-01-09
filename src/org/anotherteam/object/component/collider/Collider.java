@@ -138,7 +138,7 @@ public final class Collider extends AABB {
         }
     }
 
-    private static class InteractAABB extends AABB {
+    public static class InteractAABB extends AABB {
 
         private final Collider ownerCollider;
 

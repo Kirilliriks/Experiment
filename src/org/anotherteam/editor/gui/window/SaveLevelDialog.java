@@ -37,6 +37,5 @@ public final class SaveLevelDialog extends DialogWindow {
         if (Input.isKeyPressed(Input.KEY_ESCAPE)) {
             Editor.closeWindow();
         }
-        updateElements(dt);
     }
 }

@@ -47,7 +47,11 @@ public class TextButton extends Button {
 
     @Override
     public void setClicked(boolean clicked) {
+        if (lock) {
+            clicked = false;
+        }
         super.setClicked(clicked);
+
         if (!clicked) {
             labelText.getColor().set(DEFAULT_COLOR);
             return;
@@ -61,7 +65,11 @@ public class TextButton extends Button {
     @Override
     public boolean isMouseOnWidget() {
         if (super.isMouseOnWidget()) {
-            labelText.getColor().g = 200;
+            if (lock) {
+                labelText.getColor().set(100, 0, 0);
+            } else {
+                labelText.getColor().g = 200;
+            }
             return true;
         } else {
             labelText.getColor().set(DEFAULT_COLOR);

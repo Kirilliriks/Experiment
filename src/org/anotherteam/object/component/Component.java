@@ -1,10 +1,25 @@
 package org.anotherteam.object.component;
 
 import org.anotherteam.object.GameObject;
+import org.anotherteam.object.component.sprite.SpriteController;
+import org.anotherteam.object.component.state.StateController;
+import org.anotherteam.object.component.transform.Transform;
+import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class Component {
+
+    public static final List<Class<? extends Component>> components = new ArrayList<>();
+
+    static {
+        components.add(SpriteController.class);
+        components.add(StateController.class);
+        components.add(Transform.class);
+    }
 
     protected GameObject ownerObject;
     protected boolean serializable = false;
@@ -37,5 +52,16 @@ public abstract class Component {
     @Nullable
     protected <T extends Component> T getDependsComponent(Class<T> clazz) {
         return ownerObject.getComponent(clazz);
+    }
+
+    public static <T extends Component> T create(@NotNull Class<T> componentClass) {
+        try {
+            return componentClass.cast(componentClass
+                    .getDeclaredConstructor()
+                    .newInstance());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new LifeException("Unknown Component class " + componentClass.getSimpleName());
+        }
     }
 }

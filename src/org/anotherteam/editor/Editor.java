@@ -14,6 +14,7 @@ import org.anotherteam.editor.gui.window.SaveLevelDialog;
 import org.anotherteam.editor.level.LevelMenu;
 import org.anotherteam.editor.level.editor.LevelEditor;
 import org.anotherteam.editor.render.EditorBatch;
+import org.anotherteam.logger.GameLogger;
 import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.framebuffer.FrameBuffer;
 import org.anotherteam.render.text.Font;
@@ -69,7 +70,7 @@ public final class Editor extends Widget {
         debugButton.setPosX(width / 2.0f + DEFAULT_BORDER_SIZE / 2.0f);
         debugButton.setOnClick(() -> {
             Game.DebugMode = !Game.DebugMode;
-            Editor.sendLogMessage("Debug mode: " + Game.DebugMode);
+            GameLogger.sendMessage("Debug mode: " + Game.DebugMode);
         });
 
         dialogWindow = null;
@@ -98,7 +99,7 @@ public final class Editor extends Widget {
 
             editorMenu.getLevelMenu().getLevelEditor().restoreLevel();
         }
-        Editor.sendLogMessage("Current state: " + Game.stateManager.getState());
+        GameLogger.sendMessage("Current state: " + Game.stateManager.getState());
     }
 
     private void switchGameView(boolean onEditor) {
@@ -122,6 +123,7 @@ public final class Editor extends Widget {
     public void update(float dt) {
         if (dialogWindow != null) {
             dialogWindow.update(dt);
+            dialogWindow.updateElements(dt);
             return;
         }
 
