@@ -21,6 +21,10 @@ public class TextButton extends Button {
         setColor(Color.VOID);
     }
 
+    public int getLabelWidth() {
+        return labelText.getWidth();
+    }
+
     public void setLabelText(String text) {
         labelText.setText(text);
         width = labelText.getWidth();

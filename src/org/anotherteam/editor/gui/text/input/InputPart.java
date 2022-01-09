@@ -3,33 +3,29 @@ package org.anotherteam.editor.gui.text.input;
 import lombok.val;
 import org.anotherteam.Input;
 import org.anotherteam.editor.Editor;
-import org.anotherteam.editor.gui.Button;
 import org.anotherteam.editor.gui.GUIElement;
+import org.anotherteam.editor.gui.menu.text.TextButton;
 import org.anotherteam.editor.gui.text.Label;
 import org.anotherteam.util.Color;
 import org.anotherteam.util.StringUtil;
 
-public final class InputPart extends Button {
+public final class InputPart extends TextButton {
 
     public static final Color INPUT_COLOR = new Color(180, 180, 180);
 
     private Runnable onUnFocus;
     private Type type;
 
-    private final Label name;
     private final Label valueInput;
 
     public InputPart(String inputName, float x, float y, GUIElement ownerElement) {
-        super(x, y, ownerElement);
-        name = new Label(inputName, 0, 0, this);
-        name.setColor(DEFAULT_COLOR);
+        super(inputName, x, y, ownerElement);
 
         valueInput = new Label("INPUT HERE", 0, 0, this);
-        valueInput.setPosX(name.getWidth());
+        valueInput.setPosX(width);
         valueInput.setColor(INPUT_COLOR);
 
-        width = name.getWidth() + valueInput.getWidth();
-        height = name.getHeight();
+        width = getLabelWidth() + valueInput.getWidth();
 
         onUnFocus = null;
         type = Type.STRING;
@@ -42,7 +38,7 @@ public final class InputPart extends Button {
 
     public void setValue(String text) {
         valueInput.setText(text);
-        width = name.getWidth() + valueInput.getWidth();
+        width = getLabelWidth() + valueInput.getWidth();
     }
 
     public void setType(Type type) {
@@ -107,7 +103,7 @@ public final class InputPart extends Button {
         if (key == Input.KEY_BACKSPACE) {
             if (text.length() == 0) return;
             valueInput.setText(text.substring(0, text.length() - 1));
-            width = name.getWidth() + valueInput.getWidth();
+            width = getLabelWidth() + valueInput.getWidth();
             return;
         }
         if (!key.isPrintable()) return;
@@ -116,7 +112,7 @@ public final class InputPart extends Button {
         if (!validateInput(newText)) return;
 
         valueInput.setText(newText);
-        width = name.getWidth() + valueInput.getWidth();
+        width = getLabelWidth() + valueInput.getWidth();
     }
 
     private boolean validateInput(String text) {
