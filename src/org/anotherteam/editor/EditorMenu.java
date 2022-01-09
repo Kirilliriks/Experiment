@@ -33,4 +33,9 @@ public final class EditorMenu extends SwitchMenu {
     public LevelMenu getLevelMenu() {
         return levelMenu;
     }
+
+    @NotNull
+    public GameObjectMenu getGameObjectMenu() {
+        return gameObjectMenu;
+    }
 }

@@ -15,7 +15,7 @@ import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.Component;
 import org.anotherteam.screen.GameScreen;
 
-public final class GameObjectEdit extends GUIElement {
+public final class GameObjectEditor extends GUIElement {
 
     private GameObject editObject;
 
@@ -27,7 +27,7 @@ public final class GameObjectEdit extends GUIElement {
     private final Button addComponentButton;
     private final Button removeComponentButton;
 
-    public GameObjectEdit(float x, float y, GUIElement ownerElement) {
+    public GameObjectEditor(float x, float y, GUIElement ownerElement) {
         super(x, y, ownerElement);
 
         val editor = Editor.getInstance();
@@ -75,6 +75,7 @@ public final class GameObjectEdit extends GUIElement {
             removeComponentButton.setLock(true);
             return;
         }
+
         nameInputLabel.setInputText(editObject.getName());
         nameInputLabel.setLock(false);
         addComponentButton.setLock(false);
@@ -85,7 +86,7 @@ public final class GameObjectEdit extends GUIElement {
 
         if (editObject == null) return;
         for (final Component component : editObject.getComponents().values()) {
-            final SwitchButton btn = componentSelector.addButton(component.getClass().getSimpleName(),
+            componentSelector.addButton(component.getClass().getSimpleName(),
                     ()-> {
                         removeComponentButton.setLock(false);
                         selectedComponent = component;
@@ -111,5 +112,9 @@ public final class GameObjectEdit extends GUIElement {
             }
             return;
         }
+    }
+
+    public void onRoomChange() {
+        setEditObject(null);
     }
 }

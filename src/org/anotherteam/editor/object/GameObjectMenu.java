@@ -3,14 +3,14 @@ package org.anotherteam.editor.object;
 import org.anotherteam.editor.EditorMenu;
 import org.anotherteam.editor.gui.menu.text.SwitchMenu;
 import org.anotherteam.editor.object.newobject.AddObjectMenu;
-import org.anotherteam.editor.object.objectedit.GameObjectEdit;
+import org.anotherteam.editor.object.objectedit.GameObjectEditor;
 
 public final class GameObjectMenu extends SwitchMenu {
 
     private static GameObjectMenu gameObjectMenu;
 
     private final AddObjectMenu addObjectMenu;
-    private final GameObjectEdit gameObjectEdit;
+    private final GameObjectEditor gameObjectEditor;
 
     public GameObjectMenu(float x, float y, EditorMenu ownerElement) {
         super(x, y, 0, 0, Type.VERTICAL, ownerElement);
@@ -26,15 +26,15 @@ public final class GameObjectMenu extends SwitchMenu {
         button.setAfterClick(()-> addObjectMenu.setVisible(false));
 
         button = getButton(1);
-        gameObjectEdit = new GameObjectEdit(getWidestButtonWidth(), 0, this);
-        gameObjectEdit.setVisible(false);
-        button.setOnClick(()-> gameObjectEdit.setVisible(true));
-        button.setAfterClick(()-> gameObjectEdit.setVisible(false));
+        gameObjectEditor = new GameObjectEditor(getWidestButtonWidth(), 0, this);
+        gameObjectEditor.setVisible(false);
+        button.setOnClick(()-> gameObjectEditor.setVisible(true));
+        button.setAfterClick(()-> gameObjectEditor.setVisible(false));
 
         inverted = true;
     }
 
-    public static void onRoomChange() {
-        gameObjectMenu.gameObjectEdit.setEditObject(null);
+    public GameObjectEditor getGameObjectEditor() {
+        return gameObjectEditor;
     }
 }

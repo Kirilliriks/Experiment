@@ -13,6 +13,7 @@ import org.anotherteam.editor.gui.window.DialogWindow;
 import org.anotherteam.editor.gui.window.SaveLevelDialog;
 import org.anotherteam.editor.level.editor.LevelEditor;
 import org.anotherteam.editor.level.room.RoomEditor;
+import org.anotherteam.editor.object.objectedit.GameObjectEditor;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.logger.GameLogger;
 import org.anotherteam.render.batch.RenderBatch;
@@ -40,6 +41,7 @@ public final class Editor extends Widget {
 
     public static LevelEditor levelEditor;
     public static RoomEditor roomEditor;
+    public static GameObjectEditor gameObjectEditor;
     //
 
     private static DialogWindow dialogWindow;
@@ -82,6 +84,7 @@ public final class Editor extends Widget {
     public void init(String levelName) {
         levelEditor = editorMenu.getLevelMenu().getLevelEditor();
         roomEditor = editorMenu.getLevelMenu().getRoomEditor();
+        gameObjectEditor = editorMenu.getGameObjectMenu().getGameObjectEditor();
 
         levelEditor.loadLevel(levelName);
         levelEditor.updateButtons(levelName);

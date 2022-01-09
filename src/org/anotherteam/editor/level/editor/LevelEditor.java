@@ -99,7 +99,7 @@ public final class LevelEditor extends GUIElement {
 
     public void restoreLevel() {
         level = Game.levelManager.setLevel(FileUtils.LEVEL_GSON.fromJson(storedEditedLevel, Level.class));
-        level.setCurrentRoom(RoomEditor.getEditedRoom().getName());
+        Editor.roomEditor.resetRoom();
         levelInspector.setLevel(level);
         updateEditor();
     }

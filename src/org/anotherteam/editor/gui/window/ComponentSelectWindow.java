@@ -3,7 +3,7 @@ package org.anotherteam.editor.gui.window;
 import org.anotherteam.Input;
 import org.anotherteam.editor.Editor;
 import org.anotherteam.editor.gui.menu.text.SwitchMenu;
-import org.anotherteam.editor.object.objectedit.GameObjectEdit;
+import org.anotherteam.editor.object.objectedit.GameObjectEditor;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.Component;
 
@@ -11,7 +11,7 @@ public final class ComponentSelectWindow extends DialogWindow {
 
     private final SwitchMenu selector;
 
-    public ComponentSelectWindow(int width, int height, GameObject gameObject, GameObjectEdit gameObjectEdit) {
+    public ComponentSelectWindow(int width, int height, GameObject gameObject, GameObjectEditor gameObjectEditor) {
         super(width, height);
 
         selector = new SwitchMenu(0, 0,
@@ -24,7 +24,7 @@ public final class ComponentSelectWindow extends DialogWindow {
                         final Component component = Component.create(clazz);
                         gameObject.addComponent(component);
                         Editor.closeWindow();
-                        gameObjectEdit.fillComponentSelector();
+                        gameObjectEditor.fillComponentSelector();
                     });
         }
     }
