@@ -38,12 +38,8 @@ public final class ComponentEditor extends GUIElement {
         this.component = component;
 
         for (final FieldController field : component.getFields()) {
-            if (field.getValueClass() == Boolean.class) {
-                final InputPart button = fieldMenu.addButton(field.getFieldName());
-                button.setValue(String.valueOf(field.getValue()));
-                button.setType(InputPart.Type.BOOLEAN);
-                button.setOnUnFocus(() -> field.setValue(button.getBoolValue()));
-            }
+            final InputPart button = fieldMenu.addButton(field.getFieldName());
+            button.setField(field);
         }
     }
 }

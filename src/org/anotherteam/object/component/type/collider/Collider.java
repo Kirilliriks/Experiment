@@ -3,7 +3,6 @@ package org.anotherteam.object.component.type.collider;
 import lombok.NonNull;
 import lombok.val;
 import org.anotherteam.debug.DebugBatch;
-import org.anotherteam.logger.GameLogger;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.Component;
 import org.anotherteam.object.component.fieldcontroller.FieldController;
@@ -36,6 +35,7 @@ public final class Collider extends AABB {
     public List<FieldController> getFields() {
         final List<FieldController> list = new ArrayList<>();
         list.add(new FieldController("isSolid", solid, (value) -> solid = (boolean) value));
+        list.add(new FieldController("isInteractive", interactive, (value) -> interactive = (boolean) value));
         return list;
     }
 

@@ -4,6 +4,7 @@ import org.anotherteam.Game;
 import org.anotherteam.Input;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.Component;
+import org.anotherteam.object.component.fieldcontroller.FieldController;
 import org.anotherteam.object.component.type.collider.Collider;
 import org.anotherteam.object.component.type.state.StateController;
 import org.anotherteam.object.component.type.state.type.PlayerState;
@@ -11,6 +12,9 @@ import org.anotherteam.object.component.type.transform.Transform;
 import org.anotherteam.screen.GameScreen;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public final class PlayerController extends Component {
 
@@ -24,6 +28,14 @@ public final class PlayerController extends Component {
     public void setOwnerObject(@NotNull GameObject ownerObject) {
         super.setOwnerObject(ownerObject);
         position = ownerObject.getPosition();
+    }
+
+    @Override
+    public List<FieldController> getFields() {
+        final List<FieldController> list = new ArrayList<>();
+        list.add(new FieldController("posX", position.x, (value) -> position.x = (int) value));
+        list.add(new FieldController("posY", position.y, (value) -> position.y = (int) value));
+        return list;
     }
 
     @Override

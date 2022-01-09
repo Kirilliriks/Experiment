@@ -6,7 +6,7 @@ import org.anotherteam.editor.Editor;
 import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.editor.gui.menu.text.TextButton;
 import org.anotherteam.editor.gui.text.Label;
-import org.anotherteam.logger.GameLogger;
+import org.anotherteam.object.component.fieldcontroller.FieldController;
 import org.anotherteam.util.Color;
 import org.anotherteam.util.StringUtil;
 
@@ -48,6 +48,16 @@ public final class InputPart extends TextButton {
     public void setValue(String text) {
         valueInput.setText(text);
         width = getLabelWidth() + valueInput.getWidth();
+    }
+
+    public void setType(Class<?> clazz) {
+        if (clazz == Boolean.class) {
+            setType(Type.BOOLEAN);
+        } else if (clazz == Integer.class) {
+            setType(Type.INTEGER);
+        } else if (clazz == String.class) {
+            setType(Type.STRING);
+        }
     }
 
     public void setType(Type type) {
@@ -147,6 +157,16 @@ public final class InputPart extends TextButton {
 
     public void setAfterUnFocus(Runnable afterClick) {
         setOnUnFocus(afterClick);
+    }
+
+    public void setField(FieldController field) {
+        setValue(String.valueOf(field.getValue()));
+        setType(field.getValueClass());
+        switch (type) {
+            case BOOLEAN -> setOnUnFocus(() -> field.setValue(getBoolValue()));
+            case INTEGER -> setOnUnFocus(() -> field.setValue(getIntValue()));
+            case STRING -> setOnUnFocus(() -> field.setValue(getValue()));
+        }
     }
 
     public enum Type {
