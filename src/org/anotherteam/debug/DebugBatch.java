@@ -77,7 +77,7 @@ public final class DebugBatch {
 
         int index = linesCount * VERTEX_SIZE * 2;
         for (int i = 0; i < 2; i++) {
-            val position = i == 0 ? from : to;
+            final Vector2f position = i == 0 ? from : to;
 
             // Load position
             vertices[index] = position.x;

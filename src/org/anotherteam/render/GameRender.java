@@ -6,7 +6,6 @@ import org.anotherteam.Game;
 import org.anotherteam.GameState;
 import org.anotherteam.Input;
 import org.anotherteam.data.AssetData;
-import org.anotherteam.editor.level.editor.LevelEditor;
 import org.anotherteam.level.room.Room;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.render.batch.RenderBatch;

@@ -5,7 +5,6 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
 public final class Camera {
-    private static final Vector3f temp = new Vector3f();
     private static final Vector3f up = new Vector3f(0.0f, 1.0f, 0.0f);
 
     private final Vector3f position;
@@ -27,11 +26,11 @@ public final class Camera {
     }
 
     public void setPosition(float x, float y){
-        position.set(x, y, 0.0f);
+        position.set(Math.round(x), Math.round(y), 0.0f);
     }
 
     public void addPosition(float x, float y){
-        position.add(x, y, 0.0f);
+        position.add(Math.round(x), Math.round(y), 0.0f);
     }
 
     public void setProjection(int width, int height) {
@@ -54,7 +53,7 @@ public final class Camera {
 
     @NotNull
     public Matrix4f getViewMatrix() {
-        return view.setLookAt(position, temp.set(position.x, position.y, -1.0f), up);
+        return view.setLookAt(position.x, position.y, position.z, position.x, position.y, -1.0f, up.x, up.y, up.z);
     }
 
     public int translateX(int x) {

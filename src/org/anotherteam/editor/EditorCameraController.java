@@ -1,6 +1,5 @@
 package org.anotherteam.editor;
 
-import lombok.val;
 import org.anotherteam.Input;
 import org.anotherteam.screen.GameScreen;
 import org.joml.Vector2f;
@@ -43,8 +42,8 @@ public final class EditorCameraController {
                 return;
             }
 
-            val diffX = lastPos.x - Input.getMouseX();
-            val diffY = lastPos.y - Input.getMouseY();
+            final float diffX = lastPos.x - Input.getMouseX();
+            final float diffY = lastPos.y - Input.getMouseY();
             moveX += diffX * DRAG_SCALE;
             moveY += diffY * DRAG_SCALE;
             lastPos.set(Input.getMousePos());
