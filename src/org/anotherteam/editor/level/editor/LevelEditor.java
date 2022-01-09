@@ -93,6 +93,10 @@ public final class LevelEditor extends GUIElement {
         super.render(editorBatch);
     }
 
+    private void updateEditor() {
+        levelEditor.updateButtons(level.getName());
+    }
+
     public void storeLevel() {
         storedEditedLevel = FileUtils.LEVEL_GSON.toJson(Game.levelManager.getCurrentLevel());
     }
@@ -114,15 +118,6 @@ public final class LevelEditor extends GUIElement {
         level = Game.levelManager.setEmptyLevel();
         levelEditor.levelInspector.setLevel(level);
         saveLevel(true);
-    }
-
-    private void updateEditor() {
-        levelEditor.updateButtons(level.getName());
-    }
-
-    @NotNull
-    public Level getLevel() {
-        return level;
     }
 
     public void renameLevel(String newName) {
@@ -149,5 +144,10 @@ public final class LevelEditor extends GUIElement {
         FileUtils.deleteLevel(level);
         createAndLoadEmptyLevel();
         updateEditor();
+    }
+
+    @NotNull
+    public Level getLevel() {
+        return level;
     }
 }
