@@ -22,7 +22,7 @@ public final class LevelInspector extends Widget {
         color.set(DEFAULT_COLOR);
         nameInputLabel = new InputLabel("Name: ", Editor.DEFAULT_BORDER_SIZE, -Editor.DEFAULT_BORDER_SIZE, this);
         nameInputLabel.setInvertedY(true);
-        nameInputLabel.setAfterClick(()-> LevelEditor.renameLevel(nameInputLabel.getInputText()));
+        nameInputLabel.setAfterUnFocus(()-> LevelEditor.renameLevel(nameInputLabel.getInputText()));
     }
 
     public void acceptChanges() {

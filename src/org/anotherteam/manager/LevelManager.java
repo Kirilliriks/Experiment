@@ -33,14 +33,16 @@ public final class LevelManager extends AbstractManager {
     }
 
     @NotNull
-    public Level loadLevel(@NotNull String levelName) {
-        return setLevel(FileUtils.loadLevel(levelName));
+    public Level setEmptyLevel() {
+        return setLevel(Level.createEmpty());
     }
 
     @NotNull
-    public Level setEmptyLevel() {
-        currentLevel = Level.createEmpty();
-        return currentLevel;
+    public Level loadLevel(@NotNull String levelName) {
+        final Level loadedLevel = FileUtils.loadLevel(levelName);
+        if (loadedLevel == null) return setEmptyLevel();
+
+        return setLevel(loadedLevel);
     }
 
     @NotNull

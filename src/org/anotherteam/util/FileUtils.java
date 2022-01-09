@@ -48,7 +48,7 @@ public final class FileUtils {
 
             if (!path.toFile().isFile()) {
                 GameLogger.sendMessage("Level " + levelName + " not found");
-                return Level.createEmpty();
+                return null;
             }
 
             inFile = new String(Files.readAllBytes(path));
@@ -57,9 +57,10 @@ public final class FileUtils {
         }
         if (inFile.isEmpty()) {
             GameLogger.sendMessage("Level " + levelName + " is empty");
-        }  else {
-            GameLogger.sendMessage("Level " + levelName + " loaded");
+            return null;
         }
+
+        GameLogger.sendMessage("Level " + levelName + " loaded");
         return LEVEL_GSON.fromJson(inFile, Level.class);
     }
 

@@ -12,16 +12,23 @@ public final class InputPart extends TextButton {
     public static final Color DEFAULT_COLOR = new Color(180, 180, 180);
 
     private String lastCorrectInput;
-    private Runnable afterClick;
+    private Runnable onUnFocus;
+
+    private boolean lock;
 
     public InputPart(String text, float x, float y, GUIElement ownerElement) {
         super(text, x, y, ownerElement);
         setLabelText(text);
-        afterClick = null;
+        onUnFocus = null;
+        lock = false;
     }
 
-    public void setAfterClick(Runnable afterClick) {
-        this.afterClick = afterClick;
+    public void setOnUnFocus(Runnable onUnFocus) {
+        this.onUnFocus = onUnFocus;
+    }
+
+    public void setLock(boolean lock) {
+        this.lock = lock;
     }
 
     @Override
@@ -32,6 +39,11 @@ public final class InputPart extends TextButton {
 
     @Override
     public void setClicked(boolean clicked) {
+        if (lock) {
+            this.clicked = false;
+            return;
+        }
+
         this.clicked = clicked;
         if (!clicked) return;
         timeToRelease = releaseTime;
@@ -41,7 +53,11 @@ public final class InputPart extends TextButton {
     @Override
     public boolean isMouseOnWidget() {
         if (super.isMouseOnWidget()) {
-            labelText.getColor().set(220, 220, 220);
+            if (lock) {
+                labelText.getColor().set(100, 100, 100);
+            } else {
+                labelText.getColor().set(220, 220, 220);
+            }
             return true;
         } else {
             labelText.getColor().set(DEFAULT_COLOR);
@@ -58,7 +74,7 @@ public final class InputPart extends TextButton {
                 Editor.inputHandling = false;
                 clicked = false;
                 validateInput();
-                if (afterClick != null) afterClick.run();
+                if (onUnFocus != null) onUnFocus.run();
             }
             return;
         }
