@@ -1,6 +1,7 @@
 package org.anotherteam.editor.gui.text;
 
 import org.anotherteam.editor.Editor;
+import org.anotherteam.editor.gui.Button;
 import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.editor.gui.menu.text.TextButton;
 import org.anotherteam.editor.render.EditorBatch;
@@ -16,18 +17,14 @@ public class Label extends GUIElement {
 
     public Label(String text, float x, float y, GUIElement ownerElement) {
         super(x, y, 0, DEFAULT_HEIGHT, ownerElement);
-        this.text = text;
-        this.width = Editor.editorFont.getTextWidth(text, 1.0f) + DEFAULT_TEXT_OFFSET;
-        setColor(Color.gray());
+        setText(text);
+        setColor(Color.GRAY);
     }
 
     public void setText(String text) {
         this.text = text;
 
         width = Editor.editorFont.getTextWidth(text, 1.0f) + DEFAULT_TEXT_OFFSET;
-        if (ownerElement instanceof TextButton) {
-            ownerElement.setWidth(width);
-        }
     }
 
     public String getText() {

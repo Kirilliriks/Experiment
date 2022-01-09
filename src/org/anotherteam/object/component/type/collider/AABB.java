@@ -1,4 +1,4 @@
-package org.anotherteam.object.component.collider;
+package org.anotherteam.object.component.type.collider;
 
 import lombok.NonNull;
 import lombok.val;

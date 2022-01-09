@@ -10,23 +10,20 @@ public class TextButton extends Button {
 
     public static final Color DEFAULT_COLOR = new Color(0, 100, 100);
 
-    protected float releaseTime;
-    protected float timeToRelease;
     protected final Label labelText;
 
     public TextButton(String text, float x, float y, GUIElement ownerElement) {
         super(x, y, ownerElement);
         labelText = new Label(text, 0, 0, this);
         labelText.setColor(DEFAULT_COLOR);
-        releaseTime = 0.2f;
-        timeToRelease = 0.0f;
-        width = this.labelText.getWidth();
-        height = this.labelText.getHeight();
-        setColor(Color.voidColor());
+        width = labelText.getWidth();
+        height = labelText.getHeight();
+        setColor(Color.VOID);
     }
 
     public void setLabelText(String text) {
         labelText.setText(text);
+        width = labelText.getWidth();
     }
 
     public String getLabelText() {

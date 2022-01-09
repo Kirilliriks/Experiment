@@ -1,10 +1,11 @@
 package org.anotherteam.object.component;
 
 import org.anotherteam.object.GameObject;
-import org.anotherteam.object.component.player.PlayerController;
-import org.anotherteam.object.component.sprite.SpriteController;
-import org.anotherteam.object.component.state.StateController;
-import org.anotherteam.object.component.transform.Transform;
+import org.anotherteam.object.component.fieldcontroller.FieldController;
+import org.anotherteam.object.component.type.player.PlayerController;
+import org.anotherteam.object.component.type.sprite.SpriteController;
+import org.anotherteam.object.component.type.state.StateController;
+import org.anotherteam.object.component.type.transform.Transform;
 import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -50,6 +51,10 @@ public abstract class Component {
 
     public boolean isSerializable() {
         return serializable;
+    }
+
+    public List<FieldController<?>> getFields() {
+        return null;
     }
 
     @Nullable

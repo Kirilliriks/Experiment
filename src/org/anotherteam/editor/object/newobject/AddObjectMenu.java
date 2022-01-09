@@ -15,7 +15,7 @@ import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.editor.screen.DraggedGameObject;
 import org.anotherteam.level.room.object.prefab.RoomPrefab;
 import org.anotherteam.object.GameObject;
-import org.anotherteam.object.component.sprite.SpriteController;
+import org.anotherteam.object.component.type.sprite.SpriteController;
 import org.anotherteam.level.room.object.prefab.ColliderPrefab;
 import org.anotherteam.level.room.object.prefab.EntityPrefab;
 import org.anotherteam.object.prefab.Prefab;

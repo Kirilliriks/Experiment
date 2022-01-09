@@ -6,7 +6,6 @@ import org.anotherteam.data.AssetData;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.Color;
-import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
 

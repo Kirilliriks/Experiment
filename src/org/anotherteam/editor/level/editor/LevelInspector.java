@@ -3,7 +3,7 @@ package org.anotherteam.editor.level.editor;
 import org.anotherteam.editor.Editor;
 import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.editor.gui.Widget;
-import org.anotherteam.editor.gui.text.input.InputLabel;
+import org.anotherteam.editor.gui.text.input.InputPart;
 import org.anotherteam.level.Level;
 import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
@@ -14,26 +14,26 @@ public final class LevelInspector extends Widget {
 
     private Level inspectedLevel;
 
-    private final InputLabel nameInputLabel;
+    private final InputPart nameInputLabel;
 
     public LevelInspector(float x, float y, int width, int height, GUIElement ownerElement) {
         super("Level inspector", x, y, width, height, ownerElement);
         flipTitle();
         color.set(DEFAULT_COLOR);
-        nameInputLabel = new InputLabel("Name: ", Editor.DEFAULT_BORDER_SIZE, -Editor.DEFAULT_BORDER_SIZE, this);
+        nameInputLabel = new InputPart("Name: ", Editor.DEFAULT_BORDER_SIZE, -Editor.DEFAULT_BORDER_SIZE, this);
         nameInputLabel.setInvertedY(true);
-        nameInputLabel.setAfterUnFocus(()-> Editor.levelEditor.renameLevel(nameInputLabel.getInputText()));
+        nameInputLabel.setAfterUnFocus(()-> Editor.levelEditor.renameLevel(nameInputLabel.getValue()));
     }
 
     public void acceptChanges() {
-        final String newName = nameInputLabel.getInputText();
+        final String newName = nameInputLabel.getValue();
         if (inspectedLevel.getName().equals(newName)) return;
 
-        Editor.levelEditor.renameLevel(nameInputLabel.getInputText());
+        Editor.levelEditor.renameLevel(nameInputLabel.getValue());
     }
 
     public void setLevel(@NotNull Level level) {
         inspectedLevel = level;
-        nameInputLabel.setInputText(level.getName());
+        nameInputLabel.setValue(level.getName());
     }
 }

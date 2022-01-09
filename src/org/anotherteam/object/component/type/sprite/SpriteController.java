@@ -1,10 +1,10 @@
-package org.anotherteam.object.component.sprite;
+package org.anotherteam.object.component.type.sprite;
 
 import lombok.NonNull;
 import lombok.val;
 import org.anotherteam.object.component.Component;
-import org.anotherteam.object.component.sprite.animation.AnimationData;
-import org.anotherteam.object.component.sprite.animation.AnimationTimer;
+import org.anotherteam.object.component.type.sprite.animation.AnimationData;
+import org.anotherteam.object.component.type.sprite.animation.AnimationTimer;
 import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.sprite.Sprite;
 import org.anotherteam.render.sprite.SpriteAtlas;

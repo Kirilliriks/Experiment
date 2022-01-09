@@ -104,28 +104,28 @@ public class RenderBatch extends Batch {
         draw(sprite.getTexture(), x, y, sprite.getWidth(),
                 sprite.getHeight(),
                 false, false,
-                Color.white(), sprite.getTextCoords());
+                Color.WHITE, sprite.getTextCoords());
     }
 
     public void draw(Sprite sprite, float x, float y, int width, int height) {
         draw(sprite.getTexture(), x, y, width,
                 height,
                 false, false,
-                Color.white(), sprite.getTextCoords());
+                Color.WHITE, sprite.getTextCoords());
     }
 
     public void draw(Sprite sprite, float x, float y, boolean flipX) {
         draw(sprite.getTexture(), x, y, sprite.getWidth(),
                 sprite.getHeight(),
                 flipX, false,
-                Color.white(), sprite.getTextCoords());
+                Color.WHITE, sprite.getTextCoords());
     }
 
     public void draw(Sprite sprite, float x, float y, boolean flipX, boolean flipY) {
         draw(sprite.getTexture(), x, y, sprite.getWidth(),
                 sprite.getHeight(),
                 flipX, flipY,
-                Color.white(), sprite.getTextCoords());
+                Color.WHITE, sprite.getTextCoords());
     }
 
     public void draw(Texture texture, Vector2i position) {
@@ -152,7 +152,7 @@ public class RenderBatch extends Batch {
                      float x, float y,
                      int width, int height,
                      boolean flipX, boolean flipY) {
-        draw(texture, x, y, width, height, flipX, flipY, Color.white());
+        draw(texture, x, y, width, height, flipX, flipY, Color.WHITE);
     }
 
     public void draw(Texture texture,

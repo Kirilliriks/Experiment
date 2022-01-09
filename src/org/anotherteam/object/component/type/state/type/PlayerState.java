@@ -1,6 +1,6 @@
-package org.anotherteam.object.component.state.type;
+package org.anotherteam.object.component.type.state.type;
 
-import org.anotherteam.object.component.sprite.animation.AnimationData;
+import org.anotherteam.object.component.type.sprite.animation.AnimationData;
 
 public abstract class PlayerState extends EntityState {
 

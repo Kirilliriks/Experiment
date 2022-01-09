@@ -2,8 +2,8 @@ package org.anotherteam.level.room.object.entity;
 
 import lombok.val;
 import org.anotherteam.data.AssetData;
-import org.anotherteam.object.component.player.PlayerController;
-import org.anotherteam.object.component.state.type.PlayerState;
+import org.anotherteam.object.component.type.player.PlayerController;
+import org.anotherteam.object.component.type.state.type.PlayerState;
 import org.anotherteam.object.type.entity.EntityObject;
 import org.anotherteam.render.sprite.Sprite;
 

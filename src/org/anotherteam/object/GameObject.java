@@ -2,12 +2,11 @@ package org.anotherteam.object;
 
 import lombok.val;
 import org.anotherteam.Game;
-import org.anotherteam.editor.Editor;
 import org.anotherteam.level.room.Room;
 import org.anotherteam.logger.GameLogger;
 import org.anotherteam.object.component.Component;
-import org.anotherteam.object.component.collider.Collider;
-import org.anotherteam.object.component.sprite.SpriteController;
+import org.anotherteam.object.component.type.collider.Collider;
+import org.anotherteam.object.component.type.sprite.SpriteController;
 import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;

@@ -1,13 +1,13 @@
-package org.anotherteam.object.component.player;
+package org.anotherteam.object.component.type.player;
 
 import org.anotherteam.Game;
 import org.anotherteam.Input;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.Component;
-import org.anotherteam.object.component.collider.Collider;
-import org.anotherteam.object.component.state.StateController;
-import org.anotherteam.object.component.state.type.PlayerState;
-import org.anotherteam.object.component.transform.Transform;
+import org.anotherteam.object.component.type.collider.Collider;
+import org.anotherteam.object.component.type.state.StateController;
+import org.anotherteam.object.component.type.state.type.PlayerState;
+import org.anotherteam.object.component.type.transform.Transform;
 import org.anotherteam.screen.GameScreen;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;

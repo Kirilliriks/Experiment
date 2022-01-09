@@ -1,8 +1,8 @@
-package org.anotherteam.object.component.state;
+package org.anotherteam.object.component.type.state;
 
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.Component;
-import org.anotherteam.object.component.sprite.SpriteController;
+import org.anotherteam.object.component.type.sprite.SpriteController;
 import org.jetbrains.annotations.NotNull;
 
 public final class StateController extends Component {

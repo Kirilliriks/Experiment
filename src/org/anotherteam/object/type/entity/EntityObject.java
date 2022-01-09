@@ -3,10 +3,10 @@ package org.anotherteam.object.type.entity;
 
 import lombok.NonNull;
 import org.anotherteam.object.GameObject;
-import org.anotherteam.object.component.sprite.SpriteController;
-import org.anotherteam.object.component.state.State;
-import org.anotherteam.object.component.state.StateController;
-import org.anotherteam.object.component.transform.Transform;
+import org.anotherteam.object.component.type.sprite.SpriteController;
+import org.anotherteam.object.component.type.state.State;
+import org.anotherteam.object.component.type.state.StateController;
+import org.anotherteam.object.component.type.transform.Transform;
 
 public abstract class EntityObject extends GameObject {
 

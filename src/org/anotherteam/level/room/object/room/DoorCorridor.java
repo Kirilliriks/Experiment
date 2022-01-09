@@ -3,7 +3,7 @@ package org.anotherteam.level.room.object.room;
 import lombok.val;
 import org.anotherteam.data.AssetData;
 import org.anotherteam.object.GameObject;
-import org.anotherteam.object.component.sprite.SpriteController;
+import org.anotherteam.object.component.type.sprite.SpriteController;
 
 public final class DoorCorridor extends GameObject {
 

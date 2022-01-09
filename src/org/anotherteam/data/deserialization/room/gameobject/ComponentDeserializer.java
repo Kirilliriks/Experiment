@@ -4,9 +4,9 @@ import com.google.gson.*;
 import lombok.val;
 import org.anotherteam.util.SerializeUtil;
 import org.anotherteam.object.component.Component;
-import org.anotherteam.object.component.collider.AABB;
-import org.anotherteam.object.component.collider.Collider;
-import org.anotherteam.object.component.transform.Transform;
+import org.anotherteam.object.component.type.collider.AABB;
+import org.anotherteam.object.component.type.collider.Collider;
+import org.anotherteam.object.component.type.transform.Transform;
 import org.anotherteam.util.exception.LifeException;
 
 import java.lang.reflect.Type;

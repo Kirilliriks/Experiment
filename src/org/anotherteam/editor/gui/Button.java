@@ -9,9 +9,14 @@ public abstract class Button extends GUIElement {
 
     protected boolean lock;
 
+    protected float releaseTime;
+    protected float timeToRelease;
+
     public Button(float x, float y, GUIElement ownerElement) {
         super(x, y, ownerElement);
-        setColor(Color.voidColor());
+        setColor(Color.VOID);
+        releaseTime = 0.2f;
+        timeToRelease = 0.0f;
     }
 
     public void setLock(boolean lock) {

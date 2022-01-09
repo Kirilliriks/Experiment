@@ -1,17 +1,21 @@
-package org.anotherteam.object.component.collider;
+package org.anotherteam.object.component.type.collider;
 
 import lombok.NonNull;
 import lombok.val;
 import org.anotherteam.debug.DebugBatch;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.Component;
-import org.anotherteam.object.component.sprite.SpriteController;
+import org.anotherteam.object.component.fieldcontroller.FieldController;
+import org.anotherteam.object.component.type.sprite.SpriteController;
 import org.anotherteam.object.type.level.InteractiveObject;
 import org.anotherteam.render.sprite.Sprite;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public final class Collider extends AABB {
 
@@ -25,6 +29,13 @@ public final class Collider extends AABB {
         solid = false;
         interactAABB = new InteractAABB(this);
         serializable = true;
+    }
+
+    @Override
+    public List<FieldController<?>> getFields() {
+        final List<FieldController<?>> list = new ArrayList<>();
+        list.add(new FieldController<>("isSolid", solid, (value) -> solid = value));
+        return list;
     }
 
     @Override

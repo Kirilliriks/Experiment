@@ -3,24 +3,46 @@ package org.anotherteam.editor.gui.text.input;
 import lombok.val;
 import org.anotherteam.Input;
 import org.anotherteam.editor.Editor;
+import org.anotherteam.editor.gui.Button;
 import org.anotherteam.editor.gui.GUIElement;
-import org.anotherteam.editor.gui.menu.text.TextButton;
+import org.anotherteam.editor.gui.text.Label;
 import org.anotherteam.util.Color;
 import org.anotherteam.util.StringUtil;
 
-public final class InputPart extends TextButton {
+public final class InputPart extends Button {
 
-    public static final Color DEFAULT_COLOR = new Color(180, 180, 180);
+    public static final Color INPUT_COLOR = new Color(180, 180, 180);
 
-    private String lastCorrectInput;
     private Runnable onUnFocus;
     private Type type;
 
-    public InputPart(String text, float x, float y, GUIElement ownerElement) {
-        super(text, x, y, ownerElement);
-        setLabelText(text);
+    private final Label name;
+    private final Label valueInput;
+
+    public InputPart(String inputName, float x, float y, GUIElement ownerElement) {
+        super(x, y, ownerElement);
+        name = new Label(inputName, 0, 0, this);
+        name.setColor(DEFAULT_COLOR);
+
+        valueInput = new Label("INPUT HERE", 0, 0, this);
+        valueInput.setPosX(name.getWidth());
+        valueInput.setColor(INPUT_COLOR);
+
+        width = name.getWidth() + valueInput.getWidth();
+        height = name.getHeight();
+
         onUnFocus = null;
         type = Type.STRING;
+        setColor(Color.VOID);
+    }
+
+    public String getValue() {
+        return valueInput.getText();
+    }
+
+    public void setValue(String text) {
+        valueInput.setText(text);
+        width = name.getWidth() + valueInput.getWidth();
     }
 
     public void setType(Type type) {
@@ -29,12 +51,6 @@ public final class InputPart extends TextButton {
 
     public void setOnUnFocus(Runnable onUnFocus) {
         this.onUnFocus = onUnFocus;
-    }
-
-    @Override
-    public void setLabelText(String text) {
-        super.setLabelText(text);
-        lastCorrectInput = text;
     }
 
     @Override
@@ -53,13 +69,13 @@ public final class InputPart extends TextButton {
     public boolean isMouseOnWidget() {
         if (super.isMouseOnWidget()) {
             if (lock) {
-                labelText.getColor().set(100, 100, 100);
+                valueInput.getColor().set(100, 100, 100);
             } else {
-                labelText.getColor().set(220, 220, 220);
+                valueInput.getColor().set(220, 220, 220);
             }
             return true;
         } else {
-            labelText.getColor().set(DEFAULT_COLOR);
+            valueInput.getColor().set(INPUT_COLOR);
             return false;
         }
     }
@@ -87,10 +103,11 @@ public final class InputPart extends TextButton {
         val key = Input.getLastPrintedKey();
         if (key == null) return;
 
-        final String text = labelText.getText();
+        final String text = valueInput.getText();
         if (key == Input.KEY_BACKSPACE) {
             if (text.length() == 0) return;
-            labelText.setText(text.substring(0, text.length() - 1));
+            valueInput.setText(text.substring(0, text.length() - 1));
+            width = name.getWidth() + valueInput.getWidth();
             return;
         }
         if (!key.isPrintable()) return;
@@ -98,7 +115,8 @@ public final class InputPart extends TextButton {
         final String newText = text + key.getChar();
         if (!validateInput(newText)) return;
 
-        labelText.setText(newText);
+        valueInput.setText(newText);
+        width = name.getWidth() + valueInput.getWidth();
     }
 
     private boolean validateInput(String text) {
@@ -106,6 +124,10 @@ public final class InputPart extends TextButton {
             if (!StringUtil.isNumeric(text)) return false;
         }
         return true;
+    }
+
+    public void setAfterUnFocus(Runnable afterClick) {
+        setOnUnFocus(afterClick);
     }
 
     public enum Type {

@@ -8,7 +8,7 @@ import org.anotherteam.editor.gui.Button;
 import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.editor.gui.menu.text.SwitchMenu;
 import org.anotherteam.editor.gui.menu.text.TextButton;
-import org.anotherteam.editor.gui.text.input.InputLabel;
+import org.anotherteam.editor.gui.text.input.InputPart;
 import org.anotherteam.editor.gui.window.ComponentSelectWindow;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.Component;
@@ -21,7 +21,7 @@ public final class GameObjectEditor extends GUIElement {
     private final SwitchMenu componentSelector;
     private Component selectedComponent;
 
-    private final InputLabel nameInputLabel;
+    private final InputPart nameInputLabel;
 
     private final Button addComponentButton;
     private final Button removeComponentButton;
@@ -38,9 +38,9 @@ public final class GameObjectEditor extends GUIElement {
                 SwitchMenu.Type.DOUBLE, this);
         componentSelector.setInvertedY(true);
 
-        nameInputLabel = new InputLabel("Name: ", Editor.DEFAULT_BORDER_SIZE, -Editor.DEFAULT_BORDER_SIZE, this);
+        nameInputLabel = new InputPart("Name: ", Editor.DEFAULT_BORDER_SIZE, -Editor.DEFAULT_BORDER_SIZE, this);
         nameInputLabel.setInvertedY(true);
-        nameInputLabel.setAfterUnFocus(() -> editObject.setName(nameInputLabel.getInputText()));
+        nameInputLabel.setAfterUnFocus(() -> editObject.setName(nameInputLabel.getValue()));
 
         addComponentButton = new TextButton("Add new component", width - componentSelector.getWidth(), Editor.DEFAULT_BORDER_SIZE * 0.8f, this);
         addComponentButton.setOnClick(() -> {
@@ -68,14 +68,14 @@ public final class GameObjectEditor extends GUIElement {
         fillComponentSelector();
 
         if (editObject == null) {
-            nameInputLabel.setInputText("SELECT OBJECT");
+            nameInputLabel.setValue("SELECT OBJECT");
             nameInputLabel.setLock(true);
             addComponentButton.setLock(true);
             removeComponentButton.setLock(true);
             return;
         }
 
-        nameInputLabel.setInputText(editObject.getName());
+        nameInputLabel.setValue(editObject.getName());
         nameInputLabel.setLock(false);
         addComponentButton.setLock(false);
     }
