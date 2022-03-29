@@ -64,6 +64,7 @@ public final class Experimental implements Runnable {
                 if (!window.isFpsLocked()) break;
             }
 
+            //TODO Cursor deformation BUG in RENDER!!!
             if (canRender) {
                 game.render(dtF);
                 if (editor != null && Game.stateManager.getState() == GameState.ON_EDITOR) {
@@ -89,7 +90,7 @@ public final class Experimental implements Runnable {
             timeCount += dt;
             unprocessedTime += dt;
 
-            if (Game.stateManager.getState() == GameState.ON_CLOSE_GAME) return;
+            if (Game.stateManager.getState() == GameState.ON_CLOSE_GAME || Input.isKeyPressed(Input.KEY_ESCAPE)) return;
         }
         end();
     }

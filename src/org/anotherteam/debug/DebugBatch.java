@@ -1,7 +1,6 @@
 package org.anotherteam.debug;
 import static org.lwjgl.opengl.GL42.*;
 
-import lombok.val;
 import org.anotherteam.data.AssetData;
 import org.anotherteam.render.screen.Camera;
 import org.anotherteam.render.shader.Shader;
