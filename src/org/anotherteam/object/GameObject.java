@@ -1,6 +1,5 @@
 package org.anotherteam.object;
 
-import lombok.val;
 import org.anotherteam.Game;
 import org.anotherteam.level.room.Room;
 import org.anotherteam.logger.GameLogger;
@@ -90,7 +89,7 @@ public abstract class GameObject {
     }
 
     public void prepare() {
-        for (val component : components) {
+        for (final Component component : components) {
             component.setDependencies();
             component.init();
         }
@@ -118,7 +117,7 @@ public abstract class GameObject {
 
         components.add(component);
         component.setOwnerObject(this);
-        component.setDependencies();
+        component.setDependencies(); // TODO уже вызывается в Prepare, может можно отказаться?*
     }
 
     public <T extends Component> void removeComponent(Class<T> componentClass) {
@@ -158,9 +157,7 @@ public abstract class GameObject {
         collider.debugRender(renderBatch.debugBatch);
     }
 
-    public void onAnimationEnd() { }
-
-    //TODO make another method
+    //TODO make another method, maybe uze Z?
     public int getRenderPriority() {
         if (getComponent(SpriteController.class) == null) return -1;
         return getComponent(SpriteController.class).getRenderPriority();

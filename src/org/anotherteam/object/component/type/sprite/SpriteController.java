@@ -62,7 +62,6 @@ public final class SpriteController extends Component {
             !animationTimer.tick(delta)) return;
 
         if (frameX >= animation.getEndFrame()) {
-            ownerObject.onAnimationEnd();
             animationTimer.cancel();
             if (!animation.isCancelOnEnd()) {
                 repeatAnimation(); // Again call animation

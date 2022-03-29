@@ -35,16 +35,13 @@ public final class Game {
     }
 
     public void update(float dt) {
-        if (stateManager.getState() != GameState.ON_EDITOR)
-            levelManager.update(dt);
+        if (stateManager.getState() == GameState.ON_EDITOR) return;
+
+        levelManager.update(dt);
     }
 
     public void render(float dt) {
         levelManager.renderLevel(GameScreen.windowBatch);
-
-        if (stateManager.getState() == GameState.ON_EDITOR || DebugMode) {
-            //DebugRender.global.draw();
-        }
     }
 
     public void destroy() { }
