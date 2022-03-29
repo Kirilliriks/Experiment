@@ -110,7 +110,7 @@ public final class GameObjectEditor extends GUIElement {
         componentSelector.clearChild();
 
         if (editObject == null) return;
-        for (final Component component : editObject.getComponents().values()) {
+        for (final Component component : editObject.getComponents()) {
             componentSelector.addButton(component.getClass().getSimpleName(),
                     ()-> {
                         removeComponentButton.setLock(false);

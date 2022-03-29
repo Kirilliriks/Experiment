@@ -12,15 +12,13 @@ import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public abstract class GameObject {
 
     protected Room room;
 
-    protected final Map<Class<? extends Component>, Component> components;
+    protected final List<Component> components;
     protected final Vector2i position;
     protected String name;
 
@@ -37,7 +35,7 @@ public abstract class GameObject {
         this.name = name;
         room = null;
         position = new Vector2i(x, y);
-        components = new HashMap<>();
+        components = new ArrayList<>();
         collider = new Collider();
         addComponent(collider);
     }
@@ -92,24 +90,35 @@ public abstract class GameObject {
     }
 
     public void prepare() {
-        for (val component : components.values()) {
+        for (val component : components) {
             component.setDependencies();
             component.init();
         }
     }
 
     public boolean hasComponent(Class<? extends Component> componentClass) {
-        return components.containsKey(componentClass);
+        for (final Component component : components) {
+            if (componentClass.isAssignableFrom(component.getClass())) return true;
+        }
+        return false;
     }
 
     public <T extends Component> T getComponent(Class<T> componentClass) {
-        if (!components.containsKey(componentClass)) return null;
-        return componentClass.cast(components.get(componentClass));
+        for (final Component component : components) {
+            if (componentClass.isAssignableFrom(component.getClass())) return componentClass.cast(component);
+        }
+        return null;
     }
 
-    @NotNull
-    public Map<Class<? extends Component>, Component> getComponents() {
-        return Collections.unmodifiableMap(components);
+    public <T extends Component> void addComponent(T component) {
+        if (hasComponent(component.getClass())) {
+            getComponent(component.getClass()).instanceBy(component);
+            return;
+        }
+
+        components.add(component);
+        component.setOwnerObject(this);
+        component.setDependencies();
     }
 
     public <T extends Component> void removeComponent(Class<T> componentClass) {
@@ -122,28 +131,25 @@ public abstract class GameObject {
             return;
         }
 
-        components.remove(componentClass);
+        final Component component = getComponent(componentClass);
+        if (component == null) return;
+
+        components.remove(component);
     }
 
-    public <T extends Component> void addComponent(T component) {
-        if (components.containsKey(component.getClass())) {
-            components.get(component.getClass()).instanceBy(component);
-            return;
-        }
-
-        components.put(component.getClass(), component);
-        component.setOwnerObject(this);
-        component.setDependencies();
+    @NotNull
+    public List<Component> getComponents() {
+        return Collections.unmodifiableList(components);
     }
 
     public void update(float delta) {
-        for (val component : components.values()) {
+        for (final Component component : components) {
             component.update(delta);
         }
     }
 
     public void draw(@NotNull RenderBatch renderBatch, boolean height) {
-        val spriteComponent = getComponent(SpriteController.class);
+        final SpriteController spriteComponent = getComponent(SpriteController.class);
         if (spriteComponent != null) {
             spriteComponent.draw(position, renderBatch, height);
         }
