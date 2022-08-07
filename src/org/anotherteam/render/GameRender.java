@@ -66,7 +66,6 @@ public final class GameRender {
         drawTextures(room);
         textureFrame.end();
 
-        raycastShader.bind();
         raycastShader.setUniform("real_view", GameScreen.gameCamera.getViewMatrix());
 
         val preparedX = GameScreen.gameCamera.translateX(room.getPlayer().getPosition().x);

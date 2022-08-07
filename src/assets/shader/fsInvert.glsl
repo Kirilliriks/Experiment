@@ -1,4 +1,5 @@
 #version 460 core
+
 in vec2 tex_coord;
 in vec2 tex_positions;
 
@@ -14,13 +15,17 @@ void main() {
     vec2 endPosition;
     vec2 startPosition;
 
-    endPosition.x = int(tex_positions.x);
-    endPosition.y = int(tex_positions.y);
+    endPosition.x = int(tex_positions.x); // TODO КОНКРЕТНО ДЕЛО В ЭТОМ
+    endPosition.y = int(tex_positions.y); // TODO Или в ином моменте хм
 
     startPosition.x = int(player_pos.x);
     startPosition.y = int(player_pos.y);
     //
     vec4 color = texture2D(u_texture, tex_coord);
+    out_Color = color;
+    return;
+
+    // TODO СЛОМАЛСЯ РЕЙТРЕСИНГ
 
     // Float;
     vec2 directionVector, rayVector;
