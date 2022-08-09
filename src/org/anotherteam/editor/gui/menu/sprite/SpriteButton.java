@@ -3,7 +3,6 @@ package org.anotherteam.editor.gui.menu.sprite;
 import org.anotherteam.Input;
 import org.anotherteam.data.AssetData;
 import org.anotherteam.editor.gui.Button;
-import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.render.sprite.Sprite;
 import org.anotherteam.util.Color;
@@ -13,10 +12,12 @@ public class SpriteButton extends Button {
 
     public static final int PREVIEW_SCALE = 5;
 
+    private final SpriteMenu menu;
     private final Sprite sprite;
 
-    public SpriteButton(@NotNull Sprite sprite, float x, float y, GUIElement ownerElement) {
+    public SpriteButton(@NotNull Sprite sprite, float x, float y, SpriteMenu ownerElement) {
         super(x, y, ownerElement);
+        this.menu = ownerElement;
         this.sprite = sprite;
         width = SpriteMenu.ICON_SIZE;
         height = SpriteMenu.ICON_SIZE;
@@ -25,19 +26,27 @@ public class SpriteButton extends Button {
 
     @Override
     public void setClicked(boolean clicked) {
-        super.setClicked(clicked);
-        if (!clicked) return;
-        if (onClick != null) runClick();
+        if (clicked && onClick != null) runClick(new ClickInfo());
+        this.clicked = clicked;
+    }
+
+    @Override
+    public void setClicked(boolean clicked, boolean left) {
+        if (clicked && onClick != null) runClick(new ClickInfo(left));
+        this.clicked = clicked;
     }
 
     @Override
     public void update(float dt) {
         if (!visible) return;
 
-        setClicked(false);
         if (!isMouseOnWidget()) return;
-        if (!Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) return;
-        setClicked(true);
+
+        final boolean left = Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON);
+        final boolean right = Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON);
+        if (!left && !right) return;
+
+        menu.setClicked(this, left);
     }
 
     @Override
@@ -48,11 +57,12 @@ public class SpriteButton extends Button {
         editorBatch.draw(sprite, getPosX(), getPosY(), SpriteMenu.ICON_SIZE, SpriteMenu.ICON_SIZE);
     }
 
-    public boolean tryDrawPreview(@NotNull EditorBatch editorBatch) {
-        if (!isMouseOnWidget()) return false;
+    public void drawHighlight(@NotNull EditorBatch editorBatch) {
         editorBatch.draw(AssetData.EDITOR_HIGHLITER_TEXTURE, getPosX(), getPosY(), SpriteMenu.ICON_SIZE, SpriteMenu.ICON_SIZE);
+    }
+
+    public void drawPreview(@NotNull EditorBatch editorBatch) {
         editorBatch.draw(sprite, getPosX() + SpriteMenu.ICON_SIZE, getPosY() - SpriteMenu.ICON_SIZE * PREVIEW_SCALE,
                 SpriteMenu.ICON_SIZE * PREVIEW_SCALE, SpriteMenu.ICON_SIZE * PREVIEW_SCALE);
-        return true;
     }
 }

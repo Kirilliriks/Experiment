@@ -16,7 +16,7 @@ public final class Game {
     public static GameRender GAME_RENDER;
 
     public Game(@NotNull Window window) {
-        window.setFullscreen(false);
+        window.setFullscreen(true);
 
         LEVEL_MANAGER = new LevelManager();
         STATE_MANAGER = new StateManager(this, GameState.ON_EDITOR);

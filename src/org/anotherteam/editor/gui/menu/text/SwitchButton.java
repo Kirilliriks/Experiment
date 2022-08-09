@@ -1,18 +1,15 @@
 package org.anotherteam.editor.gui.menu.text;
 
 import org.anotherteam.Input;
-import org.anotherteam.editor.Editor;
-import org.anotherteam.editor.gui.EditorLog;
-import org.anotherteam.editor.gui.GUIElement;
 
 public class SwitchButton extends TextButton {
 
-    private final SwitchMenu switchMenu;
+    private final SwitchMenu menu;
 
-    public SwitchButton(String text, float x, float y, GUIElement ownerElement) {
+    public SwitchButton(String text, float x, float y, SwitchMenu ownerElement) {
         super(text, x, y, ownerElement);
         clicked = false;
-        switchMenu = (SwitchMenu) ownerElement;
+        menu = ownerElement;
     }
 
     public void setHighlighted(){
@@ -27,17 +24,16 @@ public class SwitchButton extends TextButton {
             runAfterClick();
         }
 
-        this.clicked = clicked;
-
         if (!clicked) {
             labelText.getColor().set(DEFAULT_COLOR);
-            return;
+        } else {
+            if (onClick != null) runClick(new ClickInfo(left));
+
+            labelText.getColor().set(DEFAULT_COLOR);
+            labelText.getColor().r = 255;
         }
 
-        if (onClick != null) runClick(new ClickInfo(left));
-
-        labelText.getColor().set(DEFAULT_COLOR);
-        labelText.getColor().r = 255;
+        this.clicked = clicked;
     }
 
     @Override
@@ -50,6 +46,6 @@ public class SwitchButton extends TextButton {
         final boolean right = Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON);
         if (!left && !right) return;
 
-        switchMenu.setClicked(this, left);
+        menu.setClicked(this, left);
     }
 }

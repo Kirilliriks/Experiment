@@ -11,6 +11,7 @@ import org.anotherteam.editor.gui.menu.sprite.SpriteMenu;
 import org.anotherteam.editor.gui.menu.text.SwitchButton;
 import org.anotherteam.editor.gui.menu.text.TextMenu;
 import org.anotherteam.editor.gui.menu.text.SwitchMenu;
+import org.anotherteam.editor.object.objectedit.GameObjectEditor;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.editor.screen.DraggedGameObject;
 import org.anotherteam.level.room.object.prefab.RoomPrefab;
@@ -28,6 +29,8 @@ public final class PrefabObjectMenu extends GUIElement {
     private final SwitchMenu typeMenu;
 
     private DraggedGameObject draggedGameObject;
+
+    private GameObject selected;
 
     public PrefabObjectMenu(float x, float y, GUIElement ownerElement) {
         super(x, y, ownerElement);
@@ -71,6 +74,12 @@ public final class PrefabObjectMenu extends GUIElement {
             final var spriteButton = spriteMenu.addButton(sprite);
 
             spriteButton.setOnClick((left)-> {
+                if (!spriteButton.isClicked()) {
+                    selected = GameObject.create(value.getPrefabClass());
+                    GameObjectEditor.editor().setEditObject(selected);
+                    return;
+                }
+
                 draggedGameObject = new DraggedGameObject(sprite, GameObject.create(value.getPrefabClass()));
                 GameScreen.draggedThing = draggedGameObject;
             });
@@ -84,8 +93,9 @@ public final class PrefabObjectMenu extends GUIElement {
     public void setVisible(boolean visible) {
         super.setVisible(visible);
 
-        if (!visible)
+        if (!visible) {
             draggedGameObject = null;
+        }
     }
 
     @Override

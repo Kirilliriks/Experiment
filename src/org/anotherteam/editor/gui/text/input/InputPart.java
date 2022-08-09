@@ -82,13 +82,13 @@ public final class InputPart extends TextButton {
             clicked = false;
         }
 
+        if (clicked) {
+            timeToRelease = releaseTime;
+
+            if (onClick != null) runClick();
+        }
+
         this.clicked = clicked;
-
-        if (!clicked) return;
-
-        timeToRelease = releaseTime;
-
-        if (onClick != null) runClick();
     }
 
     @Override

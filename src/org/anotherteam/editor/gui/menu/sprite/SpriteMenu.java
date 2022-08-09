@@ -18,12 +18,15 @@ public class SpriteMenu extends GUIElement {
     private int offsetIcon;
     private int sizeX, sizeY;
 
+    protected SpriteButton lastClicked;
+
     public SpriteMenu(float x, float y, int width, int height, GUIElement ownerElement) {
         super(x, y, width, height, ownerElement);
         buttons = new ArrayList<>();
         offsetIcon = 0;
         sizeX = (width + offsetIcon) / ICON_SIZE;
         sizeY = (height + offsetIcon) / ICON_SIZE;
+        lastClicked = null;
     }
 
     public void setOffsetIcon(int offsetIcon) {
@@ -54,14 +57,34 @@ public class SpriteMenu extends GUIElement {
         return spriteButton;
     }
 
+    public void setClicked(SpriteButton button, boolean left) {
+        if (button == null) return;
+
+        if (lastClicked != null && button != lastClicked) {
+            lastClicked.setClicked(false);
+        }
+
+        button.setClicked(true, left);
+        lastClicked = button;
+    }
+
     @Override
     public void render(@NotNull EditorBatch editorBatch) {
         if (!visible) return;
 
         super.render(editorBatch);
         for (final var bnt : buttons) {
-            if (bnt.tryDrawPreview(editorBatch))
-                break;
+
+            if (bnt.isClicked()) {
+                bnt.drawHighlight(editorBatch);
+            }
+
+            if (!bnt.isMouseOnWidget()) continue;
+
+            if (!bnt.isClicked()) {
+                bnt.drawHighlight(editorBatch);
+            }
+            bnt.drawPreview(editorBatch);
         }
     }
 
