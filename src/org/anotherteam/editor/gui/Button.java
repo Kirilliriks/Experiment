@@ -20,6 +20,29 @@ public abstract class Button extends GUIElement {
         timeToRelease = 0.0f;
     }
 
+    @Override
+    public abstract void update(float dt);
+
+    public void setLock(boolean lock) {
+        this.lock = lock;
+    }
+
+    public void setAfterClick(Click afterClick) {
+        this.afterClick = afterClick;
+    }
+
+    public void setOnClick(Click runnable) {
+        this.onClick = runnable;
+    }
+
+    public void setClicked(boolean clicked) {
+        this.clicked = clicked;
+    }
+
+    public boolean isClicked() {
+        return clicked;
+    }
+
     public void runClick() {
         runClick(null);
     }
@@ -50,30 +73,7 @@ public abstract class Button extends GUIElement {
         afterClick.run(info);
     }
 
-    public void setLock(boolean lock) {
-        this.lock = lock;
-    }
-
-    public void setAfterClick(Click afterClick) {
-        this.afterClick = afterClick;
-    }
-
-    public void setOnClick(Click runnable) {
-        this.onClick = runnable;
-    }
-
-    public void setClicked(boolean clicked) {
-        this.clicked = clicked;
-    }
-
-    @Override
-    public abstract void update(float dt);
-
-    public boolean isClicked() {
-        return clicked;
-    }
-
-    public class ClickInfo {
+    public static class ClickInfo {
         boolean left;
         public ClickInfo() {
             left = false;
