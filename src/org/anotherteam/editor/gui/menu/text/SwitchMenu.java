@@ -1,5 +1,6 @@
 package org.anotherteam.editor.gui.menu.text;
 
+import org.anotherteam.editor.gui.Button;
 import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
@@ -23,7 +24,7 @@ public class SwitchMenu extends TextMenu {
     }
 
     @NotNull
-    public TextButton addTextButton(String text, Runnable onClick) {
+    public TextButton addTextButton(String text, Button.Click onClick) {
         final var button = new TextButton(text, 0, 0, this);
         button.setOnClick(onClick);
         addButton(button);
@@ -40,7 +41,7 @@ public class SwitchMenu extends TextMenu {
 
     @Override
     @NotNull
-    public SwitchButton addButton(String text, Runnable onClick) {
+    public SwitchButton addButton(String text, Button.Click onClick) {
         final var button = new SwitchButton(text, 0, 0, this);
         button.setOnClick(onClick);
         addButton(button);
@@ -48,7 +49,7 @@ public class SwitchMenu extends TextMenu {
     }
 
     @NotNull
-    public SwitchButton addButton(String text, Runnable onClick, Runnable afterClick) {
+    public SwitchButton addButton(String text, Button.Click onClick, Button.Click afterClick) {
         final var button = new SwitchButton(text, 0, 0, this);
         button.setOnClick(onClick);
         button.setAfterClick(afterClick);

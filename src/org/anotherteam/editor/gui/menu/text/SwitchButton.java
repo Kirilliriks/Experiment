@@ -6,16 +6,11 @@ import org.anotherteam.editor.gui.GUIElement;
 public class SwitchButton extends TextButton {
 
     private final SwitchMenu switchMenu;
-    private Runnable afterClick;
 
     public SwitchButton(String text, float x, float y, GUIElement ownerElement) {
         super(text, x, y, ownerElement);
         clicked = false;
         switchMenu = (SwitchMenu) ownerElement;
-    }
-
-    public void setAfterClick(Runnable afterClick) {
-        this.afterClick = afterClick;
     }
 
     public void setHighlighted(){
@@ -26,15 +21,19 @@ public class SwitchButton extends TextButton {
 
     @Override
     public void setClicked(boolean clicked) {
-        if (!clicked && afterClick != null)
-            afterClick.run();
+        if (!clicked && afterClick != null) {
+            runAfterClick();
+        }
+
         this.clicked = clicked;
 
         if (!clicked) {
             labelText.getColor().set(DEFAULT_COLOR);
             return;
         }
-        if (onClick != null) onClick.run();
+
+        if (onClick != null) runClick();
+
         labelText.getColor().set(DEFAULT_COLOR);
         labelText.getColor().r = 255;
     }

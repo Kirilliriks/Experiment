@@ -22,20 +22,20 @@ public final class LevelMenu extends SwitchMenu {
         var button = getButton(0);
         levelEditor = new LevelEditor(getWidestButtonWidth(), 0, this);
         levelEditor.setVisible(false);
-        button.setOnClick(()-> levelEditor.setVisible(true));
-        button.setAfterClick(()-> levelEditor.setVisible(false));
+        button.setOnClick((info)-> levelEditor.setVisible(true));
+        button.setAfterClick((info)-> levelEditor.setVisible(false));
 
         button = getButton(1);
         roomEditor = new RoomEditor(getWidestButtonWidth(), 0, this);
         roomEditor.setVisible(false);
-        button.setOnClick(()-> roomEditor.setVisible(true));
-        button.setAfterClick(()-> roomEditor.setVisible(false));
+        button.setOnClick((info)-> roomEditor.setVisible(true));
+        button.setAfterClick((info)-> roomEditor.setVisible(false));
 
         button = getButton(2);
         tileViewer = new TileViewer(getWidestButtonWidth(), 0, this);
         tileViewer.setVisible(false);
-        button.setOnClick(()-> tileViewer.setVisible(true));
-        button.setAfterClick(()-> tileViewer.setVisible(false));
+        button.setOnClick((info)-> tileViewer.setVisible(true));
+        button.setAfterClick((info)-> tileViewer.setVisible(false));
 
         inverted = true;
     }

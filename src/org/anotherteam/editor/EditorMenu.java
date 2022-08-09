@@ -22,10 +22,10 @@ public final class EditorMenu extends SwitchMenu {
         gameObjectMenu.setClicked(gameObjectMenu.getButton(0));
         gameObjectMenu.setVisible(false);
 
-        addButton("Level editor", ()-> levelMenu.setVisible(true), ()-> levelMenu.setVisible(false));
-        addButton("GameObject editor", ()-> gameObjectMenu.setVisible(true), ()-> gameObjectMenu.setVisible(false));
-        addTextButton("Open log", () -> Editor.log().setVisible(true));
-        addTextButton("Close log", () -> Editor.log().setVisible(false));
+        addButton("Level editor", (info)-> levelMenu.setVisible(true), (info)-> levelMenu.setVisible(false));
+        addButton("GameObject editor", (info)-> gameObjectMenu.setVisible(true), (info)-> gameObjectMenu.setVisible(false));
+        addTextButton("Open log", (info) -> Editor.log().setVisible(true));
+        addTextButton("Close log", (info) -> Editor.log().setVisible(false));
         setClicked(getButton(0));
     }
 

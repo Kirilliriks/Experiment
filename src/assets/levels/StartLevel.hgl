@@ -604,6 +604,161 @@
       "gameObjects": [
         {
           "name": "unknown",
+          "type": "org.anotherteam.level.room.object.room.DuctCorridorRoom",
+          "pos": {
+            "x": 116,
+            "y": 20
+          },
+          "components": [
+            {
+              "type": "Collider",
+              "firstBound": {
+                "x": -15,
+                "y": 0
+              },
+              "secondBound": {
+                "x": 15,
+                "y": 49
+              },
+              "solid": false,
+              "interactive": false,
+              "interactFirstBound": {
+                "x": 0,
+                "y": 0
+              },
+              "interactSecondBound": {
+                "x": 0,
+                "y": 0
+              }
+            }
+          ]
+        },
+        {
+          "name": "unknown",
+          "type": "org.anotherteam.level.room.object.room.DoorCorridor",
+          "pos": {
+            "x": 161,
+            "y": 20
+          },
+          "components": [
+            {
+              "type": "Collider",
+              "firstBound": {
+                "x": -10,
+                "y": 0
+              },
+              "secondBound": {
+                "x": 10,
+                "y": 30
+              },
+              "solid": false,
+              "interactive": false,
+              "interactFirstBound": {
+                "x": 0,
+                "y": 0
+              },
+              "interactSecondBound": {
+                "x": 0,
+                "y": 0
+              }
+            }
+          ]
+        },
+        {
+          "name": "unknown",
+          "type": "org.anotherteam.level.room.object.room.DoorCorridor",
+          "pos": {
+            "x": 280,
+            "y": 20
+          },
+          "components": [
+            {
+              "type": "Collider",
+              "firstBound": {
+                "x": -10,
+                "y": 0
+              },
+              "secondBound": {
+                "x": 10,
+                "y": 30
+              },
+              "solid": false,
+              "interactive": false,
+              "interactFirstBound": {
+                "x": 0,
+                "y": 0
+              },
+              "interactSecondBound": {
+                "x": 0,
+                "y": 0
+              }
+            }
+          ]
+        },
+        {
+          "name": "unknown",
+          "type": "org.anotherteam.level.room.object.room.Bed218",
+          "pos": {
+            "x": 218,
+            "y": 19
+          },
+          "components": [
+            {
+              "type": "Collider",
+              "firstBound": {
+                "x": -15,
+                "y": 0
+              },
+              "secondBound": {
+                "x": 15,
+                "y": 12
+              },
+              "solid": false,
+              "interactive": false,
+              "interactFirstBound": {
+                "x": 0,
+                "y": 0
+              },
+              "interactSecondBound": {
+                "x": 0,
+                "y": 0
+              }
+            }
+          ]
+        },
+        {
+          "name": "unknown",
+          "type": "org.anotherteam.level.room.object.room.LightTest",
+          "pos": {
+            "x": 218,
+            "y": 37
+          },
+          "components": [
+            {
+              "type": "Collider",
+              "firstBound": {
+                "x": -16,
+                "y": 0
+              },
+              "secondBound": {
+                "x": 16,
+                "y": 32
+              },
+              "solid": false,
+              "interactive": false,
+              "interactFirstBound": {
+                "x": 0,
+                "y": 0
+              },
+              "interactSecondBound": {
+                "x": 0,
+                "y": 0
+              }
+            }
+          ]
+        },
+        {
+          "name": "unknown",
           "type": "org.anotherteam.level.room.object.entity.Player",
           "pos": {
             "x": 78,

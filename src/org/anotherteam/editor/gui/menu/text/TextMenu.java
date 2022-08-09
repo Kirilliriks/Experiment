@@ -56,9 +56,9 @@ public class TextMenu extends GUIElement {
         return button;
     }
 
-    public TextButton addButton(String text, Runnable runnable) {
+    public TextButton addButton(String text, Button.Click click) {
         final var button = new TextButton(text, 0, 0, this);
-        button.setOnClick(runnable);
+        button.setOnClick(click);
         addButton(button);
         return button;
     }

@@ -64,11 +64,11 @@ public final class Editor extends Widget {
 
         final var switchStateButton = new TextButton("Play/Stop", 0, 10, this);
         switchStateButton.setPosX(width / 2.0f - switchStateButton.getWidth() - DEFAULT_BORDER_SIZE / 2.0f);
-        switchStateButton.setOnClick(this::switchPlayStopMode);
+        switchStateButton.setOnClick((click) -> switchPlayStopMode());
 
         final var debugButton = new TextButton("Debug mode", 0, 10, this);
         debugButton.setPosX(width / 2.0f + DEFAULT_BORDER_SIZE / 2.0f);
-        debugButton.setOnClick(() -> {
+        debugButton.setOnClick((click) -> {
             Game.DEBUG_MODE = !Game.DEBUG_MODE;
             GameLogger.sendMessage("Debug mode: " + Game.DEBUG_MODE);
         });

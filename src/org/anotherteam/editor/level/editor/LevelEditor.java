@@ -51,15 +51,15 @@ public final class LevelEditor extends GUIElement {
         downButtons = new SwitchMenu(Editor.DEFAULT_BORDER_SIZE, Editor.DEFAULT_BORDER_SIZE, 0, 0, SwitchMenu.Type.HORIZONTAL, this);
 
         createEmptyButton = new TextButton("Create empty level", 0, 0, downButtons);
-        createEmptyButton.setOnClick(this::createAndLoadEmptyLevel);
+        createEmptyButton.setOnClick((info) -> createAndLoadEmptyLevel());
         downButtons.addButton(createEmptyButton);
 
         saveLevelButton = new TextButton("Save editable level", 0, 0, downButtons);
-        saveLevelButton.setOnClick(this::saveLevel);
+        saveLevelButton.setOnClick((info) -> saveLevel());
         downButtons.addButton(saveLevelButton);
 
         deleteLevelButton = new TextButton("Delete editable level", 0, 0, downButtons);
-        deleteLevelButton.setOnClick(this::deleteLevel);
+        deleteLevelButton.setOnClick((info) -> deleteLevel());
         downButtons.addButton(deleteLevelButton);
     }
 
@@ -70,7 +70,7 @@ public final class LevelEditor extends GUIElement {
         selector.clearChild();
         for (final var file : files) {
             final var btn = selector.addButton(FileUtils.getNameFromFile(file.getName()),
-                    ()-> {
+                    (info)-> {
                         if (level != null) {
                             levelInspector.acceptChanges();
                             final var saveWindow = new SaveLevelDialog(level.getName());

@@ -5,7 +5,8 @@ import org.anotherteam.util.Color;
 public abstract class Button extends GUIElement {
 
     protected boolean clicked;
-    protected Runnable onClick;
+    protected Click onClick;
+    protected Click afterClick;
 
     protected boolean lock;
 
@@ -19,11 +20,45 @@ public abstract class Button extends GUIElement {
         timeToRelease = 0.0f;
     }
 
+    public void runClick() {
+        runClick(null);
+    }
+
+    public void runClick(ClickInfo info) {
+        if (onClick == null) return;
+
+        if (info == null) {
+            onClick.run(new ClickInfo());
+            return;
+        }
+
+        onClick.run(info);
+    }
+
+    public void runAfterClick() {
+        runAfterClick(null);
+    }
+
+    public void runAfterClick(ClickInfo info) {
+        if (afterClick == null) return;
+
+        if (info == null) {
+            afterClick.run(new ClickInfo());
+            return;
+        }
+
+        afterClick.run(info);
+    }
+
     public void setLock(boolean lock) {
         this.lock = lock;
     }
 
-    public void setOnClick(Runnable runnable) {
+    public void setAfterClick(Click afterClick) {
+        this.afterClick = afterClick;
+    }
+
+    public void setOnClick(Click runnable) {
         this.onClick = runnable;
     }
 
@@ -36,5 +71,17 @@ public abstract class Button extends GUIElement {
 
     public boolean isClicked() {
         return clicked;
+    }
+
+    public class ClickInfo {
+        boolean left;
+        public ClickInfo() {
+            left = false;
+        }
+    }
+
+    public interface Click {
+
+        void run(ClickInfo info);
     }
 }

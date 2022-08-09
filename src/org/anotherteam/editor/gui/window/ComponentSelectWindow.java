@@ -20,7 +20,7 @@ public final class ComponentSelectWindow extends DialogWindow {
 
         for (final var clazz : Component.components) {
             selector.addButton(clazz.getSimpleName(),
-                    ()-> {
+                    (info)-> {
                         final Component component = Component.create(clazz);
                         gameObject.addComponent(component);
                         Editor.closeWindow();

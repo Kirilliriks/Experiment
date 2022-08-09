@@ -12,7 +12,7 @@ public final class SaveLevelDialog extends DialogWindow {
     public SaveLevelDialog(@NotNull String levelName) {
         super(200, 50);
         final var saveButton = new TextButton("Save", 0, 0, this);
-        saveButton.setOnClick(() -> {
+        saveButton.setOnClick((info) -> {
             LevelEditor.editor().saveLevel();
             Editor.closeWindow();
         });
@@ -29,7 +29,7 @@ public final class SaveLevelDialog extends DialogWindow {
 
         final var closeButton = new TextButton("Close", 0, 0, this);
         closeButton.setPos(width - closeButton.getWidth(), 0);
-        closeButton.setOnClick(Editor::closeWindow);
+        closeButton.setOnClick((info) -> Editor.closeWindow());
     }
 
     @Override

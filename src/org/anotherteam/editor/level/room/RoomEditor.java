@@ -46,15 +46,15 @@ public final class RoomEditor extends GUIElement {
         downButtons = new SwitchMenu(Editor.DEFAULT_BORDER_SIZE, Editor.DEFAULT_BORDER_SIZE, 0, 0, SwitchMenu.Type.HORIZONTAL, this);
 
         createEmptyButton = new TextButton("Create empty room", 0, 0, downButtons);
-        createEmptyButton.setOnClick(this::addEmptyRoom);
+        createEmptyButton.setOnClick((info) -> addEmptyRoom());
         downButtons.addButton(createEmptyButton);
 
         saveRoomsButton = new TextButton("Save rooms", 40, 0, downButtons);
-        saveRoomsButton.setOnClick(() -> LevelEditor.editor().saveLevel());
+        saveRoomsButton.setOnClick((info) -> LevelEditor.editor().saveLevel());
         downButtons.addButton(saveRoomsButton);
 
         deleteRoomButton = new TextButton("Delete room", 40, 0, downButtons);
-        deleteRoomButton.setOnClick(this::removeRoom);
+        deleteRoomButton.setOnClick((info) -> removeRoom());
         downButtons.addButton(deleteRoomButton);
     }
 
@@ -91,7 +91,7 @@ public final class RoomEditor extends GUIElement {
         selector.clearChild();
         for (final var room : rooms) {
             final var btn = selector.addButton(room.getName(),
-                    ()-> {
+                    (info)-> {
                         if (this.room != null) {
                             roomInspector.acceptChanges();
                         }

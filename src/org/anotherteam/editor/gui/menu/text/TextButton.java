@@ -51,14 +51,18 @@ public class TextButton extends Button {
         if (lock) {
             clicked = false;
         }
+
         super.setClicked(clicked);
 
         if (!clicked) {
             labelText.getColor().set(DEFAULT_COLOR);
             return;
         }
+
         timeToRelease = releaseTime;
-        if (onClick != null) onClick.run();
+
+        if (onClick != null) runClick();
+
         labelText.getColor().set(DEFAULT_COLOR);
         labelText.getColor().r = 255;
     }

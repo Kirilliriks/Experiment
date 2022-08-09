@@ -63,13 +63,13 @@ public final class GameObjectEditor extends GUIElement {
         posYInputLabel.setAfterUnFocus(() -> editObject.getPosition().y = Integer.parseInt(posYInputLabel.getValue()));
 
         addComponentButton = new TextButton("Add new component", width - componentSelector.getWidth(), Editor.DEFAULT_BORDER_SIZE * 0.8f, this);
-        addComponentButton.setOnClick(() -> {
+        addComponentButton.setOnClick((info) -> {
             final ComponentSelectWindow componentSelectWindow = new ComponentSelectWindow(300, 200, editObject, this);
             Editor.callWindow(componentSelectWindow);
         });
 
         removeComponentButton = new TextButton("Remove component", width - componentSelector.getWidth() + addComponentButton.getWidth() + Editor.DEFAULT_BORDER_SIZE, Editor.DEFAULT_BORDER_SIZE * 0.8f, this);
-        removeComponentButton.setOnClick(() -> {
+        removeComponentButton.setOnClick((info) -> {
             if (selectedComponent == null) return;
 
             editObject.removeComponent(selectedComponent.getClass());
@@ -132,7 +132,7 @@ public final class GameObjectEditor extends GUIElement {
 
         for (final Component component : editObject.getComponents()) {
             componentSelector.addButton(component.getClass().getSimpleName(),
-                    ()-> {
+                    (info)-> {
                         removeComponentButton.setLock(false);
                         setComponent(component);
                     });

@@ -63,14 +63,14 @@ public final class AddObjectMenu extends GUIElement {
             final var sprite = getObjectSprite(object);
             final var spriteButton = spriteMenu.addButton(sprite);
 
-            spriteButton.setOnClick(()-> {
+            spriteButton.setOnClick((left)-> {
                 draggedGameObject = new DraggedGameObject(sprite, GameObject.create(value.getPrefabClass()));
                 GameScreen.draggedThing = draggedGameObject;
             });
         }
 
-        button.setOnClick(()-> spriteMenu.setVisible(true));
-        button.setAfterClick(()-> spriteMenu.setVisible(false));
+        button.setOnClick((left)-> spriteMenu.setVisible(true));
+        button.setAfterClick((left)-> spriteMenu.setVisible(false));
     }
 
     @Override

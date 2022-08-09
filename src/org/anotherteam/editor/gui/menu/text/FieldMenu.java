@@ -1,5 +1,6 @@
 package org.anotherteam.editor.gui.menu.text;
 
+import org.anotherteam.editor.gui.Button;
 import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.editor.gui.text.input.InputPart;
 import org.anotherteam.util.Color;
@@ -24,7 +25,7 @@ public final class FieldMenu extends TextMenu {
 
     @Override
     @NotNull
-    public InputPart addButton(String text, Runnable onClick) {
+    public InputPart addButton(String text, Button.Click onClick) {
         final InputPart button = new InputPart(text, 0, 0, this);
         button.setOnClick(onClick);
         addButton(button);

@@ -63,7 +63,7 @@ public final class InputPart extends TextButton {
         this.type = type;
 
         switch (type) {
-            case BOOLEAN -> onClick = () -> {
+            case BOOLEAN -> onClick = (click) -> {
                 boolean value = !Boolean.parseBoolean(valueInput.getText());
                 setValue(String.valueOf(value));
                 setClicked(false);
@@ -81,11 +81,14 @@ public final class InputPart extends TextButton {
         if (lock) {
             clicked = false;
         }
+
         this.clicked = clicked;
 
         if (!clicked) return;
+
         timeToRelease = releaseTime;
-        if (onClick != null) onClick.run();
+
+        if (onClick != null) runClick();
     }
 
     @Override

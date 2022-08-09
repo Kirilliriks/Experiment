@@ -67,7 +67,7 @@ public final class TileViewer extends GUIElement {
             final var xTile = sprite.getFrameX();
             final var yTile = sprite.getFrameY();
             final var spriteButton = spriteMenu.addButton(xTile, yCheck - spriteAtlas.getSizeY() / 2, sprite);
-            spriteButton.setOnClick(()-> {
+            spriteButton.setOnClick((info)-> {
                 if (Input.isKeyDown(Input.KEY_SHIFT) && draggedTiles != null) {
                     draggedTiles.fillTiles(xTile, yTile);
                 } else {
@@ -76,8 +76,8 @@ public final class TileViewer extends GUIElement {
                 }
             });
         }
-        button.setOnClick(()-> spriteMenu.setVisible(true));
-        button.setAfterClick(()-> spriteMenu.setVisible(false));
+        button.setOnClick((info)-> spriteMenu.setVisible(true));
+        button.setAfterClick((info)-> spriteMenu.setVisible(false));
     }
 
     @Override

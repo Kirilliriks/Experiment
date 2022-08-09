@@ -21,20 +21,20 @@ public final class GameObjectMenu extends SwitchMenu {
         var button = getButton(0);
         addObjectMenu = new AddObjectMenu(getWidestButtonWidth(), 0, this);
         addObjectMenu.setVisible(false);
-        button.setOnClick(()-> addObjectMenu.setVisible(true));
-        button.setAfterClick(()-> addObjectMenu.setVisible(false));
+        button.setOnClick((left)-> addObjectMenu.setVisible(true));
+        button.setAfterClick((left)-> addObjectMenu.setVisible(false));
 
         button = getButton(1);
         gameObjectEditor = new GameObjectEditor(getWidestButtonWidth(), 0, this);
         gameObjectEditor.setVisible(false);
-        button.setOnClick(()-> gameObjectEditor.setVisible(true));
-        button.setAfterClick(()-> gameObjectEditor.setVisible(false));
+        button.setOnClick((left)-> gameObjectEditor.setVisible(true));
+        button.setAfterClick((left)-> gameObjectEditor.setVisible(false));
 
         button = getButton(2);
         componentEditor = new ComponentEditor(getWidestButtonWidth(), 0, this);
         componentEditor.setVisible(false);
-        button.setOnClick(()-> componentEditor.setVisible(true));
-        button.setAfterClick(()-> componentEditor.setVisible(false));
+        button.setOnClick((left)-> componentEditor.setVisible(true));
+        button.setAfterClick((left)-> componentEditor.setVisible(false));
 
         inverted = true;
 

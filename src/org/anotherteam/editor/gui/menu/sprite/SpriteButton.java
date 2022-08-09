@@ -27,7 +27,7 @@ public class SpriteButton extends Button {
     public void setClicked(boolean clicked) {
         super.setClicked(clicked);
         if (!clicked) return;
-        if (onClick != null) onClick.run();
+        if (onClick != null) runClick();
     }
 
     @Override
