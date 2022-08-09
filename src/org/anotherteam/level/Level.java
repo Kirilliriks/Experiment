@@ -26,27 +26,10 @@ public final class Level {
         currentRoom = null;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public void prepare() {
+        if (currentRoom == null) throw new IllegalStateException("Prepare level without current room");
 
-    public String getName() {
-        return name;
-    }
-
-    public void addRoom(@NotNull Room room) {
-        if (currentRoom == null) currentRoom = room; // TODO change logic
-        rooms.add(room);
-    }
-
-    public void removeRoom(@NotNull Room room) {
-        rooms.remove(room);
-        if (currentRoom == room)
-            currentRoom = rooms.get(0);
-    }
-
-    public void setCurrentRoom(String roomName) {
-        this.currentRoom = getRoom(roomName);
+        currentRoom.prepare();
     }
 
     public void update(float dt) {
@@ -57,23 +40,52 @@ public final class Level {
         gameRender.render(windowBatch, currentRoom);
     }
 
-    @NotNull
-    public Room getCurrentRoom() {
-        return currentRoom;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void addRoom(@NotNull Room room) {
+        if (currentRoom == null) {
+            currentRoom = room; // TODO change logic
+        }
+
+        rooms.add(room);
+    }
+
+    public void removeRoom(@NotNull Room room) {
+        rooms.remove(room);
+
+        if (currentRoom == room) {
+            currentRoom = rooms.get(0);
+        }
+    }
+
+    public void setCurrentRoom(String roomName) {
+        this.currentRoom = getRoom(roomName);
     }
 
     @NotNull
-    public List<Room> getRooms() {
-        return rooms;
+    public Room getCurrentRoom() {
+        return currentRoom;
     }
 
     @Nullable
     public Room getRoom(String name) {
         for (final var room : rooms) {
             if (!room.getName().equals(name)) continue;
+
             return room;
         }
         return null;
+    }
+
+    @NotNull
+    public List<Room> getRooms() {
+        return rooms;
     }
 
     @NotNull

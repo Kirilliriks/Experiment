@@ -4,6 +4,7 @@ import org.anotherteam.Input;
 import org.anotherteam.editor.Editor;
 import org.anotherteam.editor.gui.text.Label;
 import org.anotherteam.editor.gui.menu.text.TextButton;
+import org.anotherteam.editor.level.editor.LevelEditor;
 import org.jetbrains.annotations.NotNull;
 
 public final class SaveLevelDialog extends DialogWindow {
@@ -12,7 +13,7 @@ public final class SaveLevelDialog extends DialogWindow {
         super(200, 50);
         final var saveButton = new TextButton("Save", 0, 0, this);
         saveButton.setOnClick(() -> {
-            Editor.LEVEL_EDITOR.saveLevel();
+            LevelEditor.editor().saveLevel();
             Editor.closeWindow();
         });
 
@@ -23,6 +24,7 @@ public final class SaveLevelDialog extends DialogWindow {
         levelText.setPos(0, height - text.getHeight() - levelText.getHeight());
         levelText.setWidth(Math.max(levelText.getWidth(), text.getWidth()));
         text.setWidth(Math.max(levelText.getWidth(), text.getWidth()));
+
         width = levelText.getWidth();
 
         final var closeButton = new TextButton("Close", 0, 0, this);

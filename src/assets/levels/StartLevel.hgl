@@ -115,8 +115,8 @@
           "name": "unknown",
           "type": "org.anotherteam.level.room.object.entity.Player",
           "pos": {
-            "x": 94,
-            "y": 21
+            "x": 90,
+            "y": 20
           },
           "components": [
             {

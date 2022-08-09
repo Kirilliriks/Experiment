@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 public final class Game {
     public static final String START_LEVEL_NAME = "StartLevel";
-    public static boolean DEBUG_MODE;
+    public static boolean DEBUG_MODE = false;
 
     public static LevelManager LEVEL_MANAGER;
     public static StateManager STATE_MANAGER;
@@ -19,11 +19,11 @@ public final class Game {
         window.setFullscreen(true);
 
         LEVEL_MANAGER = new LevelManager();
-        STATE_MANAGER = new StateManager(GameState.ON_EDITOR);
+        STATE_MANAGER = new StateManager(this, GameState.ON_EDITOR);
+
         GameScreen.init(window);
         GAME_RENDER = new GameRender();
 
-        DEBUG_MODE = false;
         DebugBatch.GLOBAL = new DebugBatch(GameScreen.windowCamera);
 
         GameScreen.RENDER_WIDTH = window.getWidth();
@@ -35,7 +35,7 @@ public final class Game {
     }
 
     public void update(float dt) {
-        if (STATE_MANAGER.getState() == GameState.ON_EDITOR) return;
+        if (Game.STATE_MANAGER.getState() == GameState.ON_EDITOR) return;
 
         LEVEL_MANAGER.update(dt);
     }

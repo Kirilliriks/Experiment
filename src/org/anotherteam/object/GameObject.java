@@ -85,7 +85,7 @@ public abstract class GameObject {
 
     public void setRoom(Room room) {
         this.room = room;
-        prepare();
+        //prepare();
     }
 
     public void prepare() {

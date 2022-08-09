@@ -24,8 +24,10 @@ public final class Room {
         player = null;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void prepare() {
+        for (final var object : gameObjects) {
+            object.prepare();
+        }
     }
 
     public void update(float dt) {
@@ -42,6 +44,10 @@ public final class Room {
         for (final var gameObject : gameObjects) {
             gameObject.draw(renderBatch, height);
         }
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @NotNull

@@ -5,11 +5,15 @@ import org.anotherteam.editor.Editor;
 import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.editor.gui.menu.text.SwitchMenu;
 import org.anotherteam.editor.gui.menu.text.TextButton;
+import org.anotherteam.editor.level.editor.LevelEditor;
+import org.anotherteam.editor.object.objectedit.GameObjectEditor;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.level.room.Room;
 import org.jetbrains.annotations.NotNull;
 
-public class RoomEditor extends GUIElement {
+public final class RoomEditor extends GUIElement {
+
+    private static RoomEditor INSTANCE;
 
     private final SwitchMenu selector;
     private final RoomInspector roomInspector;
@@ -23,6 +27,7 @@ public class RoomEditor extends GUIElement {
 
     public RoomEditor(float x, float y, GUIElement ownerElement) {
         super(x, y, ownerElement);
+        INSTANCE = this;
 
         final var editor = Editor.getInstance();
         width = (int)(editor.getWidth() - getPosX() - Editor.getRightBorderSize());
@@ -45,7 +50,7 @@ public class RoomEditor extends GUIElement {
         downButtons.addButton(createEmptyButton);
 
         saveRoomsButton = new TextButton("Save rooms", 40, 0, downButtons);
-        saveRoomsButton.setOnClick(() -> Editor.LEVEL_EDITOR.saveLevel());
+        saveRoomsButton.setOnClick(() -> LevelEditor.editor().saveLevel());
         downButtons.addButton(saveRoomsButton);
 
         deleteRoomButton = new TextButton("Delete room", 40, 0, downButtons);
@@ -54,7 +59,7 @@ public class RoomEditor extends GUIElement {
     }
 
     public void resetRoom() {
-        final Room resetRoom = Editor.LEVEL_EDITOR.getLevel().getRoom(room.getName());
+        final Room resetRoom = LevelEditor.editor().getLevel().getRoom(room.getName());
         if (resetRoom == null)
             throw new RuntimeException("Reset room " + room.getName() + " is null");
 
@@ -64,10 +69,10 @@ public class RoomEditor extends GUIElement {
     public void setRoom(@NotNull Room room) {
         this.room = room;
 
-        Editor.LEVEL_EDITOR.getLevel().setCurrentRoom(room.getName());
+        LevelEditor.editor().getLevel().setCurrentRoom(room.getName());
         roomInspector.setRoom(room);
 
-        Editor.GAME_OBJECT_EDITOR.onRoomChange();
+        GameObjectEditor.editor().onRoomChange();
     }
 
     @Override
@@ -79,7 +84,7 @@ public class RoomEditor extends GUIElement {
 
     public void updateButtons() {
         selector.clearChild();
-        final var currentLevel = Editor.LEVEL_EDITOR.getLevel();
+        final var currentLevel = LevelEditor.editor().getLevel();
         setRoom(currentLevel.getCurrentRoom());
         final var rooms  = currentLevel.getRooms();
 
@@ -130,5 +135,9 @@ public class RoomEditor extends GUIElement {
         }
 
         room.setName(newName);
+    }
+
+    public static RoomEditor editor() {
+        return INSTANCE;
     }
 }

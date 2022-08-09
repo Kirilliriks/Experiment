@@ -1,6 +1,7 @@
 package org.anotherteam.editor.level.editor;
 
 import org.anotherteam.Game;
+import org.anotherteam.editor.level.room.RoomEditor;
 import org.anotherteam.util.FileUtils;
 import org.anotherteam.editor.Editor;
 import org.anotherteam.editor.gui.GUIElement;
@@ -16,7 +17,7 @@ import java.io.File;
 
 public final class LevelEditor extends GUIElement {
 
-    private static LevelEditor levelEditor;
+    private static LevelEditor INSTANCE;
 
     private final SwitchMenu selector;
     private final LevelInspector levelInspector;
@@ -26,12 +27,12 @@ public final class LevelEditor extends GUIElement {
     private final TextButton saveLevelButton;
     private final TextButton deleteLevelButton;
 
-    private static Level level;
-    private String storedEditedLevel;
+    private Level level;
+    private String storedLevel;
 
     public LevelEditor(float x, float y, GUIElement ownerElement) {
         super(x, y, ownerElement);
-        levelEditor = this;
+        INSTANCE = this;
 
         final var editor = Editor.getInstance();
         width = (int)(editor.getWidth() - getPosX() - Editor.getRightBorderSize());
@@ -92,35 +93,42 @@ public final class LevelEditor extends GUIElement {
     }
 
     private void updateEditor() {
-        levelEditor.updateButtons(level.getName());
+        INSTANCE.updateButtons(level.getName());
     }
 
     public void storeLevel() {
-        storedEditedLevel = FileUtils.LEVEL_GSON.toJson(Game.LEVEL_MANAGER.getCurrentLevel());
+        storedLevel = FileUtils.LEVEL_GSON.toJson(Game.LEVEL_MANAGER.getCurrentLevel());
     }
 
     public void restoreLevel() {
-        level = Game.LEVEL_MANAGER.setLevel(FileUtils.LEVEL_GSON.fromJson(storedEditedLevel, Level.class));
-        Editor.ROOM_EDITOR.resetRoom();
+        level = Game.LEVEL_MANAGER.setLevel(FileUtils.LEVEL_GSON.fromJson(storedLevel, Level.class));
+
+        RoomEditor.editor().resetRoom();
+
         levelInspector.setLevel(level);
         updateEditor();
     }
 
     public void loadLevel(String name) {
         level = Game.LEVEL_MANAGER.loadLevel(name);
+
         levelInspector.setLevel(level);
         updateEditor();
     }
 
     public void createAndLoadEmptyLevel() {
         level = Game.LEVEL_MANAGER.setEmptyLevel();
-        levelEditor.levelInspector.setLevel(level);
+
+        levelInspector.setLevel(level);
         saveLevel(true);
     }
 
     public void renameLevel(String newName) {
-        for (final var btn : levelEditor.selector.getButtons()) {
+        if (level.getName().equals(newName)) return;
+
+        for (final var btn : selector.getButtons()) {
             if (!btn.getLabelText().equals(level.getName())) continue;
+
             btn.setLabelText(newName);
         }
 
@@ -135,6 +143,7 @@ public final class LevelEditor extends GUIElement {
 
     public void saveLevel(boolean needUpdate) {
         FileUtils.saveEditableLevel(level);
+
         if (needUpdate) updateEditor();
     }
 
@@ -147,5 +156,9 @@ public final class LevelEditor extends GUIElement {
     @NotNull
     public Level getLevel() {
         return level;
+    }
+
+    public static LevelEditor editor() {
+        return INSTANCE;
     }
 }

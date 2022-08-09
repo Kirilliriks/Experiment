@@ -14,9 +14,11 @@ public final class LevelMenu extends SwitchMenu {
 
     public LevelMenu(float x, float y, GUIElement ownerElement) {
         super(x, y, 0, 0, Type.VERTICAL, ownerElement);
+
         addButton("Select level");
         addButton("Select room");
         addButton("Tile viewer");
+
         var button = getButton(0);
         levelEditor = new LevelEditor(getWidestButtonWidth(), 0, this);
         levelEditor.setVisible(false);

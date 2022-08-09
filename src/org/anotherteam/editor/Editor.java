@@ -12,7 +12,6 @@ import org.anotherteam.editor.gui.window.DialogWindow;
 import org.anotherteam.editor.gui.window.SaveLevelDialog;
 import org.anotherteam.editor.level.editor.LevelEditor;
 import org.anotherteam.editor.level.room.RoomEditor;
-import org.anotherteam.editor.object.objectedit.GameObjectEditor;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.logger.GameLogger;
 import org.anotherteam.render.batch.RenderBatch;
@@ -24,6 +23,7 @@ import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
 
 public final class Editor extends Widget {
+
     public static final int DEFAULT_BORDER_SIZE = 10;
     public static final Font EDITOR_FONT = new Font("font/f1.ttf", 8);
 
@@ -35,12 +35,7 @@ public final class Editor extends Widget {
 
     //GUI
     private final EditorLog editorLog;
-
     private final EditorMenu editorMenu;
-
-    public static LevelEditor LEVEL_EDITOR;
-    public static RoomEditor ROOM_EDITOR;
-    public static GameObjectEditor GAME_OBJECT_EDITOR;
     private static DialogWindow DIALOG_WINDOW;
     //
     public static boolean INPUT_HANDLING;
@@ -81,14 +76,12 @@ public final class Editor extends Widget {
         DIALOG_WINDOW = null;
     }
 
-    public void init(String levelName) {
-        LEVEL_EDITOR = editorMenu.getLevelMenu().getLevelEditor();
-        ROOM_EDITOR = editorMenu.getLevelMenu().getRoomEditor();
-        GAME_OBJECT_EDITOR = editorMenu.getGameObjectMenu().getGameObjectEditor();
+    public void init() {
+        final String levelName = Game.LEVEL_MANAGER.getCurrentLevel().getName();
 
-        LEVEL_EDITOR.loadLevel(levelName);
-        LEVEL_EDITOR.updateButtons(levelName);
-        ROOM_EDITOR.updateButtons();
+        LevelEditor.editor().loadLevel(levelName);
+        LevelEditor.editor().updateButtons(levelName);
+        RoomEditor.editor().updateButtons();
     }
 
     public void switchPlayStopMode() {
@@ -97,13 +90,13 @@ public final class Editor extends Widget {
             Game.STATE_MANAGER.setState(GameState.ON_LEVEL);
 
             switchGameView(false);
-            LEVEL_EDITOR.storeLevel();
+            LevelEditor.editor().storeLevel();
         } else {
             Game.DEBUG_MODE = true;
             Game.STATE_MANAGER.setState(GameState.ON_EDITOR);
 
             switchGameView(true);
-            LEVEL_EDITOR.restoreLevel();
+            LevelEditor.editor().restoreLevel();
         }
 
         GameLogger.sendMessage("Current state: " + Game.STATE_MANAGER.getState());
@@ -129,19 +122,24 @@ public final class Editor extends Widget {
 
     @Override
     public void update(float dt) {
+        if (Game.STATE_MANAGER.getState() == GameState.ON_LEVEL) {
+            if (Input.isKeyPressed(Input.KEY_ESCAPE)) {
+                switchPlayStopMode();
+            }
+            return;
+        } else if (Game.STATE_MANAGER.getState() != GameState.ON_EDITOR) {
+            return;
+        }
+
         if (DIALOG_WINDOW != null) {
             DIALOG_WINDOW.update(dt);
             return;
         }
 
         if (Input.isKeyPressed(Input.KEY_ESCAPE)) {
-            if (Game.STATE_MANAGER.getState() == GameState.ON_LEVEL) {
-                switchPlayStopMode();
-            } else {
-                final var saveWindow = new SaveLevelDialog(Editor.LEVEL_EDITOR.getLevel().getName());
-                saveWindow.setOnAfterClose(() -> Game.STATE_MANAGER.setState(GameState.ON_CLOSE_GAME));
-                Editor.callWindow(saveWindow);
-            }
+            final var saveWindow = new SaveLevelDialog(LevelEditor.editor().getLevel().getName());
+            saveWindow.setOnAfterClose(() -> Game.STATE_MANAGER.setState(GameState.ON_CLOSE_GAME));
+            Editor.callWindow(saveWindow);
             return;
         }
 
@@ -152,7 +150,7 @@ public final class Editor extends Widget {
             editorLog.setVisible(!editorLog.isVisible());
         }
 
-        if (Game.STATE_MANAGER.getState() == GameState.ON_EDITOR) editorCameraController.handle(dt);
+        editorCameraController.handle(dt);
     }
 
     private void renderGUI() {
@@ -168,6 +166,8 @@ public final class Editor extends Widget {
     }
 
     public void renderFrame(@NotNull RenderBatch renderBatch) {
+        if (Game.STATE_MANAGER.getState() != GameState.ON_EDITOR) return;
+
         renderGUI();
         renderBatch.begin(false);
         renderBatch.draw(editorFrame.getTexture(), 0, 0, GameScreen.WINDOW.getWidth(), GameScreen.WINDOW.getHeight(), false, true);
@@ -215,11 +215,13 @@ public final class Editor extends Widget {
 
     public void destroy() {
         if (Editor.DIALOG_WINDOW != null) closeWindow();
+
         super.destroy();
     }
 
     public static void callWindow(@NotNull DialogWindow dialogWindow) {
         if (Editor.DIALOG_WINDOW != null) throw new LifeException("Last DialogWindow should be closed");
+
         Editor.DIALOG_WINDOW = dialogWindow;
     }
 

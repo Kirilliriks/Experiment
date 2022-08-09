@@ -16,6 +16,8 @@ import org.anotherteam.screen.GameScreen;
 
 public final class GameObjectEditor extends GUIElement {
 
+    private static GameObjectEditor INSTANCE;
+
     private final GameObjectMenu gameObjectMenu;
 
     private GameObject editObject;
@@ -32,6 +34,8 @@ public final class GameObjectEditor extends GUIElement {
 
     public GameObjectEditor(float x, float y, GameObjectMenu gameObjectMenu) {
         super(x, y, gameObjectMenu);
+        INSTANCE = this;
+
         this.gameObjectMenu = gameObjectMenu;
 
         final var editor = Editor.getInstance();
@@ -145,5 +149,9 @@ public final class GameObjectEditor extends GUIElement {
 
     public void onRoomChange() {
         setEditObject(null);
+    }
+
+    public static GameObjectEditor editor() {
+        return INSTANCE;
     }
 }

@@ -30,7 +30,7 @@ public final class Experimental implements Runnable {
         game = new Game(window);
         editor = new Editor();
         game.init();
-        editor.init(Game.LEVEL_MANAGER.getCurrentLevel().getName());
+        editor.init();
 
         double frameRateDelta = 1.0f / window.getFpsMax();
 
@@ -54,8 +54,9 @@ public final class Experimental implements Runnable {
                 unprocessedTime -= frameRateDelta;
 
                 window.update();
-                if (editor != null)
+                if (editor != null) {
                     editor.update(dtF);
+                }
                 game.update(dtF);
                 updates++;
 
@@ -66,7 +67,7 @@ public final class Experimental implements Runnable {
             //TODO Cursor deformation BUG in RENDER!!!
             if (canRender) {
                 game.render(dtF);
-                if (editor != null && Game.STATE_MANAGER.getState() == GameState.ON_EDITOR) {
+                if (editor != null) {
                     editor.renderFrame(GameScreen.windowBatch);
                 }
                 frames++;
