@@ -1,9 +1,7 @@
 package org.anotherteam.util;
 
-import lombok.experimental.UtilityClass;
 import org.lwjgl.glfw.GLFW;
 
-@UtilityClass
 public final class CharUtil {
 
     public static boolean isPrintable(int key) {

@@ -1,6 +1,5 @@
 package org.anotherteam.object.component.type.transform;
 
-import lombok.val;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.Component;
 import org.anotherteam.object.component.type.collider.Collider;
@@ -54,7 +53,7 @@ public final class Transform extends Component {
 
     @Override
     public void instanceBy(Component component) {
-        val transform = (Transform) component;
+        final var transform = (Transform) component;
         speed = transform.speed;
     }
 
@@ -93,8 +92,8 @@ public final class Transform extends Component {
 
         if (moveImpulse.x >= 1 || moveImpulse.x <= -1) {
             checkFlip();
-            val x = (int) moveImpulse.x;
-            val y = (int) moveImpulse.y;
+            final var x = (int) moveImpulse.x;
+            final var y = (int) moveImpulse.y;
             position.add(x, y);
             moveImpulse.set(0, 0);
         }
@@ -114,7 +113,7 @@ public final class Transform extends Component {
     }
 
     public void checkFlip() {
-        val flip = (moveImpulse.x < 0);
+        final var flip = (moveImpulse.x < 0);
         sprite.setFlipX(flip);
         collider.setFlipX(flip);
     }

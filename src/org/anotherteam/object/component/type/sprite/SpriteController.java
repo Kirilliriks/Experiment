@@ -1,7 +1,5 @@
 package org.anotherteam.object.component.type.sprite;
 
-import lombok.NonNull;
-import lombok.val;
 import org.anotherteam.object.component.Component;
 import org.anotherteam.object.component.type.sprite.animation.AnimationData;
 import org.anotherteam.object.component.type.sprite.animation.AnimationTimer;
@@ -61,9 +59,9 @@ public final class SpriteController extends Component {
             animationTimer.isFinish() ||
             !animationTimer.tick(delta)) return;
 
-        if (frameX >= animation.getEndFrame()) {
+        if (frameX >= animation.endFrame()) {
             animationTimer.cancel();
-            if (!animation.isCancelOnEnd()) {
+            if (!animation.cancelOnEnd()) {
                 repeatAnimation(); // Again call animation
             } else stopAnimation();
             return;
@@ -71,10 +69,10 @@ public final class SpriteController extends Component {
         frameX++;
     }
 
-    public void draw(@NotNull Vector2i position, @NonNull RenderBatch batch, boolean height) {
+    public void draw(@NotNull Vector2i position, @NotNull RenderBatch batch, boolean height) {
         if (textureSprite == null || (height && heightSprite == null)) throw new LifeException("Try draw null texture");
 
-        val centerOffset = center ? (int)(textureSprite.getWidth() / 2f) : 0;
+        final var centerOffset = center ? (int)(textureSprite.getWidth() / 2f) : 0;
         if (height) {
             batch.draw(heightSprite,
                     position.x - centerOffset, position.y, flipX);
@@ -100,17 +98,17 @@ public final class SpriteController extends Component {
         setAnimation(againAnimation);
     }
 
-    public void setAnimation(@NonNull AnimationData newAnimation) {
+    public void setAnimation(@NotNull AnimationData newAnimation) {
         if (animation != null && animation == newAnimation) return;
         if (animationTimer != null) animationTimer.cancel();
 
         animation = newAnimation;
-        frameX = animation.getStartFrame();
+        frameX = animation.startFrame();
         frameY = animation.getFramePosY();
         textureSprite = spriteAtlas.getTextureSprite(frameX, frameY);
         heightSprite = spriteAtlas.getHeightSprite(frameX, frameY);
 
-        animationTimer = new AnimationTimer(animation.getAnimSpeed(), (animation.getEndFrame() - frameX + 1));
+        animationTimer = new AnimationTimer(animation.getAnimSpeed(), (animation.endFrame() - frameX + 1));
     }
 
     @NotNull

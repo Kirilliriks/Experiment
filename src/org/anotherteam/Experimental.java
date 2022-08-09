@@ -1,6 +1,5 @@
 package org.anotherteam;
 
-import lombok.val;
 import org.anotherteam.editor.Editor;
 import org.anotherteam.render.window.Window;
 import org.anotherteam.screen.GameScreen;
@@ -31,7 +30,7 @@ public final class Experimental implements Runnable {
         game = new Game(window);
         editor = new Editor();
         game.init();
-        editor.init(Game.levelManager.getCurrentLevel().getName());
+        editor.init(Game.LEVEL_MANAGER.getCurrentLevel().getName());
 
         double frameRateDelta = 1.0f / window.getFpsMax();
 
@@ -50,7 +49,7 @@ public final class Experimental implements Runnable {
         while (!window.shouldClose()) {
             canRender = !window.isFpsLocked();
 
-            val dtF = (float) frameRateDelta;
+            final var dtF = (float) frameRateDelta;
             while (unprocessedTime >= frameRateDelta) {
                 unprocessedTime -= frameRateDelta;
 
@@ -67,7 +66,7 @@ public final class Experimental implements Runnable {
             //TODO Cursor deformation BUG in RENDER!!!
             if (canRender) {
                 game.render(dtF);
-                if (editor != null && Game.stateManager.getState() == GameState.ON_EDITOR) {
+                if (editor != null && Game.STATE_MANAGER.getState() == GameState.ON_EDITOR) {
                     editor.renderFrame(GameScreen.windowBatch);
                 }
                 frames++;
@@ -90,7 +89,7 @@ public final class Experimental implements Runnable {
             timeCount += dt;
             unprocessedTime += dt;
 
-            if (Game.stateManager.getState() == GameState.ON_CLOSE_GAME || Input.isKeyPressed(Input.KEY_ESCAPE)) return;
+            if (Game.STATE_MANAGER.getState() == GameState.ON_CLOSE_GAME || Input.isKeyPressed(Input.KEY_ESCAPE)) return;
         }
         end();
     }

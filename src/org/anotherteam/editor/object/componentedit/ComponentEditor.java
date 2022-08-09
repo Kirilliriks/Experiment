@@ -1,6 +1,5 @@
 package org.anotherteam.editor.object.componentedit;
 
-import lombok.val;
 import org.anotherteam.editor.Editor;
 import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.editor.gui.menu.text.FieldMenu;
@@ -18,7 +17,7 @@ public final class ComponentEditor extends GUIElement {
     public ComponentEditor(float x, float y, GUIElement ownerElement) {
         super(x, y, ownerElement);
 
-        val editor = Editor.getInstance();
+        final var editor = Editor.getInstance();
         width = (int)(editor.getWidth() - getPosX() - Editor.getRightBorderSize());
         height = (int)(getPosY() - Editor.getDownBorderPos() - Editor.DEFAULT_BORDER_SIZE);
 

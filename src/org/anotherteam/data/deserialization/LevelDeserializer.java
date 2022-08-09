@@ -1,7 +1,6 @@
 package org.anotherteam.data.deserialization;
 
 import com.google.gson.*;
-import lombok.val;
 import org.anotherteam.level.Level;
 import org.anotherteam.level.room.Room;
 
@@ -11,11 +10,11 @@ public final class LevelDeserializer implements JsonDeserializer<Level>, JsonSer
 
     @Override
     public Level deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        val jsonObject = json.getAsJsonObject();
-        val name = jsonObject.get("name").getAsString();
-        val level = new Level(name);
-        for (val roomJSON : jsonObject.get("rooms").getAsJsonArray()) {
-            val room = (Room) context.deserialize(roomJSON, Room.class);
+        final var jsonObject = json.getAsJsonObject();
+        final var name = jsonObject.get("name").getAsString();
+        final var level = new Level(name);
+        for (final var roomJSON : jsonObject.get("rooms").getAsJsonArray()) {
+            final var room = (Room) context.deserialize(roomJSON, Room.class);
             level.addRoom(room);
         }
         return level;
@@ -23,10 +22,10 @@ public final class LevelDeserializer implements JsonDeserializer<Level>, JsonSer
 
     @Override
     public JsonElement serialize(Level level, Type typeOfSrc, JsonSerializationContext context) {
-        val result = new JsonObject();
+        final var result = new JsonObject();
         result.add("name", new JsonPrimitive(level.getName()));
-        val rooms = new JsonArray(level.getRooms().size());
-        for (val room : level.getRooms()) {
+        final var rooms = new JsonArray(level.getRooms().size());
+        for (final var room : level.getRooms()) {
             rooms.add(context.serialize(room, Room.class));
         }
         result.add("rooms", rooms);

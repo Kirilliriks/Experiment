@@ -1,6 +1,5 @@
 package org.anotherteam.screen;
 
-import lombok.val;
 import org.anotherteam.Input;
 import org.anotherteam.data.AssetData;
 import org.anotherteam.level.room.tile.Tile;
@@ -24,7 +23,7 @@ public final class GameScreen {
     public static final Camera windowCamera = new Camera();
 
     public static RenderBatch windowBatch;
-    public static Window window;
+    public static Window WINDOW;
 
     public static DraggedThing draggedThing = null;
 
@@ -40,13 +39,13 @@ public final class GameScreen {
     }
 
     public static int inGameMouseX() {
-        val x = inGameWindowMouseX();
+        final var x = inGameWindowMouseX();
         if (x < 0) return -1;
         return (int) (gameCamera.getPosition().x + x - WIDTH / 2.0f);
     }
 
     public static int inGameMouseY() {
-        val y = inGameWindowMouseY();
+        final var y = inGameWindowMouseY();
         if (y < 0) return -1;
         return (int) (gameCamera.getPosition().y + y - HEIGHT / 2.0f);
     }
@@ -62,13 +61,13 @@ public final class GameScreen {
     }
 
     public static int onMouseTileX() {
-        val x = inGameMouseX();
+        final var x = inGameMouseX();
         if (x < 0) return -1;
         return x / Tile.SIZE.x;
     }
 
     public static int onMouseTileY() {
-        val y = inGameMouseY();
+        final var y = inGameMouseY();
         if (y < 0) return -1;
         return y / Tile.SIZE.y;
     }

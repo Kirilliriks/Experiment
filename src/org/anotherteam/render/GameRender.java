@@ -1,7 +1,6 @@
 package org.anotherteam.render;
 import static org.lwjgl.opengl.GL42.*;
 
-import lombok.val;
 import org.anotherteam.Game;
 import org.anotherteam.GameState;
 import org.anotherteam.Input;
@@ -70,8 +69,8 @@ public final class GameRender {
 
         raycastShader.setUniform("real_view", GameScreen.gameCamera.getViewMatrix());
 
-        val preparedX = GameScreen.gameCamera.translateX(room.getPlayer().getPosition().x);
-        val preparedY = GameScreen.gameCamera.translateY(room.getPlayer().getPosition().y + 15);
+        final var preparedX = GameScreen.gameCamera.translateX(room.getPlayer().getPosition().x);
+        final var preparedY = GameScreen.gameCamera.translateY(room.getPlayer().getPosition().y + 15);
         raycastShader.setUniform("player_pos",
                 preparedX, preparedY);
 
@@ -85,33 +84,33 @@ public final class GameRender {
         effectFrame.end();
         //Finish frames
 
-        glViewport(0, 0, GameScreen.window.getWidth(), GameScreen.window.getHeight());
+        glViewport(0, 0, GameScreen.WINDOW.getWidth(), GameScreen.WINDOW.getHeight());
         windowBatch.begin();
-        if (Game.stateManager.getState() == GameState.ON_LEVEL) {
+        if (Game.STATE_MANAGER.getState() == GameState.ON_LEVEL) {
             windowBatch.draw(
                     effectFrame.texture,
                     GameScreen.POSITION.x, GameScreen.POSITION.y,
                     GameScreen.RENDER_WIDTH,
                     GameScreen.RENDER_HEIGHT,
                     false, true);
-        } else if (Game.stateManager.getState() == GameState.ON_EDITOR) {
+        } else if (Game.STATE_MANAGER.getState() == GameState.ON_EDITOR) {
             windowBatch.draw(
                     textureFrame.texture,
                     GameScreen.POSITION.x, GameScreen.POSITION.y,
                     GameScreen.RENDER_WIDTH,
                     GameScreen.RENDER_HEIGHT,
                     false, true);
-            val v1 = new Vector2f(GameScreen.POSITION);
-            val v2 = new Vector2f(GameScreen.POSITION.x + GameScreen.RENDER_WIDTH, GameScreen.POSITION.y);
-            val v3 = new Vector2f(GameScreen.POSITION.x + GameScreen.RENDER_WIDTH, GameScreen.POSITION.y + GameScreen.RENDER_HEIGHT);
-            val v4 = new Vector2f(GameScreen.POSITION.x, GameScreen.POSITION.y + GameScreen.RENDER_HEIGHT);
+            final var v1 = new Vector2f(GameScreen.POSITION);
+            final var v2 = new Vector2f(GameScreen.POSITION.x + GameScreen.RENDER_WIDTH, GameScreen.POSITION.y);
+            final var v3 = new Vector2f(GameScreen.POSITION.x + GameScreen.RENDER_WIDTH, GameScreen.POSITION.y + GameScreen.RENDER_HEIGHT);
+            final var v4 = new Vector2f(GameScreen.POSITION.x, GameScreen.POSITION.y + GameScreen.RENDER_HEIGHT);
             windowBatch.debugBatch.drawLine(v1, v2, Color.RED);
             windowBatch.debugBatch.drawLine(v2, v3, Color.RED);
             windowBatch.debugBatch.drawLine(v3, v4, Color.RED);
             windowBatch.debugBatch.drawLine(v4, v1, Color.RED);
         }
 
-        if (Game.DebugMode) {
+        if (Game.DEBUG_MODE) {
             debugRender(windowBatch, room);
         }
         windowBatch.end();
@@ -120,11 +119,11 @@ public final class GameRender {
     private void drawTextures(@NotNull Room room) {
         room.draw(textureBatch, false);
 
-        if (Game.stateManager.getState() != GameState.ON_EDITOR) return;
+        if (Game.STATE_MANAGER.getState() != GameState.ON_EDITOR) return;
 
         if (GameScreen.draggedThing != null) {
-            val mouseX = GameScreen.inGameMouseX();
-            val mouseY = GameScreen.inGameMouseY();
+            final var mouseX = GameScreen.inGameMouseX();
+            final var mouseY = GameScreen.inGameMouseY();
             if (mouseX < 0 || mouseY < 0) return;
 
             GameScreen.draggedThing.render(mouseX, mouseY, textureBatch);

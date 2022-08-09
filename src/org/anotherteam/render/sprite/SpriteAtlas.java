@@ -1,6 +1,5 @@
 package org.anotherteam.render.sprite;
 
-import lombok.val;
 import org.anotherteam.render.texture.Texture;
 import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
@@ -51,14 +50,14 @@ public final class SpriteAtlas {
 
     @NotNull
     public Sprite getTextureSprite(int x, int y) {
-        val index = x + y * sizeX;
+        final var index = x + y * sizeX;
         if (index >= sizeX * sizeY) throw new LifeException("Bad sprite index: " + index + " | x: " + x + " | y: " + y);
         return sprites.get(index);
     }
 
     @NotNull
     public Sprite getHeightSprite(int x, int y) {
-        val index = x + (y + getHeightOffset()) * sizeX;
+        final var index = x + (y + getHeightOffset()) * sizeX;
         if (index >= sizeX * sizeY) throw new LifeException("Bad sprite index: " + index + " | x: " + x + " | y: " + y);
         return sprites.get(index);
     }

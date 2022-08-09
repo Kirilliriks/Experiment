@@ -1,7 +1,5 @@
 package org.anotherteam.object.component.type.collider;
 
-import lombok.NonNull;
-import lombok.val;
 import org.anotherteam.debug.DebugBatch;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.Component;
@@ -27,7 +25,7 @@ public abstract class AABB extends Component {
 
     @Override
     public void instanceBy(Component component) {
-        val col = (Collider) component;
+        final var col = (Collider) component;
         firstBound.set(col.getFirstBound());
         secondBound.set(col.getSecondBound());
     }
@@ -59,35 +57,35 @@ public abstract class AABB extends Component {
         offSet.set(x, y);
     }
 
-    @NonNull
+    @NotNull
     public Vector2i getPosition() {
         return new Vector2i(objectPosition.x, objectPosition.y).add(offSet);
     }
 
-    @NonNull
+    @NotNull
     public Vector2i getFirstBound() {
         return firstBound;
     }
 
-    @NonNull
+    @NotNull
     public Vector2i getSecondBound() {
         return secondBound;
     }
 
-    public boolean isIntersect(@NonNull Collider aabb){
+    public boolean isIntersect(@NotNull Collider aabb){
         return  (!((aabb.getPosition().x + aabb.getSecondBound().x) < objectPosition.x + firstBound.x ||
                 (objectPosition.x + secondBound.x) < aabb.getPosition().x  + aabb.getFirstBound().x));
     }
 
-    public abstract void debugRender(@NonNull DebugBatch debugBatch);
+    public abstract void debugRender(@NotNull DebugBatch debugBatch);
 
-    public void debugRender(@NonNull DebugBatch debugBatch, Color color){
+    public void debugRender(@NotNull DebugBatch debugBatch, Color color){
         final int x = objectPosition.x + offSet.x;
         final int y = objectPosition.y + offSet.y;
-        val v1 = new Vector2f(x +  firstBound.x - 1, y +  firstBound.y);
-        val v2 = new Vector2f(x +  firstBound.x, y + secondBound.y);
-        val v3 = new Vector2f(x + secondBound.x, y + secondBound.y);
-        val v4 = new Vector2f(x + secondBound.x, y +  firstBound.y);
+        final var v1 = new Vector2f(x +  firstBound.x - 1, y +  firstBound.y);
+        final var v2 = new Vector2f(x +  firstBound.x, y + secondBound.y);
+        final var v3 = new Vector2f(x + secondBound.x, y + secondBound.y);
+        final var v4 = new Vector2f(x + secondBound.x, y +  firstBound.y);
         debugBatch.drawLine(v1, v2, color);
         debugBatch.drawLine(v2, v3, color);
         debugBatch.drawLine(v3, v4, color);

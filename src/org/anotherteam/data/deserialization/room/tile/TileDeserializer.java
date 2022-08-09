@@ -1,7 +1,6 @@
 package org.anotherteam.data.deserialization.room.tile;
 
 import com.google.gson.*;
-import lombok.val;
 import org.anotherteam.level.room.tile.Tile;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,7 +13,7 @@ public final class TileDeserializer implements JsonDeserializer<Tile>, JsonSeria
     @Override
     @NotNull
     public Tile deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        val jsonObject = json.getAsJsonObject();
+        final var jsonObject = json.getAsJsonObject();
         return new Tile(jsonObject.get("xPos").getAsInt(),
                         jsonObject.get("yPos").getAsInt(),
                         jsonObject.get("frameX").getAsInt(),
@@ -25,7 +24,7 @@ public final class TileDeserializer implements JsonDeserializer<Tile>, JsonSeria
     @Override
     @NotNull
     public JsonElement serialize(Tile tile, Type typeOfSrc, JsonSerializationContext context) {
-        val result = new JsonObject();
+        final var result = new JsonObject();
         result.add("xPos", new JsonPrimitive(tile.getPosition().x));
         result.add("yPos", new JsonPrimitive(tile.getPosition().y));
         result.add("frameX", new JsonPrimitive(tile.getFrameX()));

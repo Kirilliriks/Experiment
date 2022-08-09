@@ -1,6 +1,5 @@
 package org.anotherteam.editor.level;
 
-import lombok.val;
 import org.anotherteam.Game;
 import org.anotherteam.Input;
 import org.anotherteam.data.AssetData;
@@ -29,7 +28,7 @@ public final class TileViewer extends GUIElement {
 
     public TileViewer(float x, float y, GUIElement ownerElement) {
         super(x, y, ownerElement);
-        val editor = Editor.getInstance();
+        final var editor = Editor.getInstance();
         width = (int)(editor.getWidth() - getPosX() - Editor.getRightBorderSize());
         height = (int)(getPosY() - Editor.getDownBorderPos() - Editor.DEFAULT_BORDER_SIZE);
         inverted = true;
@@ -46,28 +45,28 @@ public final class TileViewer extends GUIElement {
     }
 
     public void fillAtlasesButtons() {
-        val files = new File(AssetData.ROOM_PATH).listFiles();
+        final var files = new File(AssetData.ROOM_PATH).listFiles();
         if (files == null) throw new LifeException("Room's atlases not found");
 
-        for (val file : files) {
-            val btn = typeMenu.addButton(file.getName());
+        for (final var file : files) {
+            final var btn = typeMenu.addButton(file.getName());
             generateTileMenu(btn, file.getName());
         }
     }
 
     public void generateTileMenu(@NotNull SwitchButton button, @NotNull String fileName) {
-        val spriteAtlas = AssetData.getOrLoadRoomAtlas(AssetData.ROOM_PATH + fileName);
+        final var spriteAtlas = AssetData.getOrLoadRoomAtlas(AssetData.ROOM_PATH + fileName);
 
-        val spriteMenu = new SpriteMenu(0, -typeMenu.getHeight(), width, height - typeMenu.getHeight(), this);
+        final var spriteMenu = new SpriteMenu(0, -typeMenu.getHeight(), width, height - typeMenu.getHeight(), this);
         spriteMenu.setVisible(false);
         spriteMenu.setInvertedY(true);
-        for (val sprite : spriteAtlas.getSprites()) {
-            val yCheck = spriteAtlas.getSizeY() - sprite.getFrameY() - 1;
+        for (final var sprite : spriteAtlas.getSprites()) {
+            final var yCheck = spriteAtlas.getSizeY() - sprite.getFrameY() - 1;
             if (yCheck < spriteAtlas.getSizeY() / 2) continue;
 
-            val xTile = sprite.getFrameX();
-            val yTile = sprite.getFrameY();
-            val spriteButton = spriteMenu.addButton(xTile, yCheck - spriteAtlas.getSizeY() / 2, sprite);
+            final var xTile = sprite.getFrameX();
+            final var yTile = sprite.getFrameY();
+            final var spriteButton = spriteMenu.addButton(xTile, yCheck - spriteAtlas.getSizeY() / 2, sprite);
             spriteButton.setOnClick(()-> {
                 if (Input.isKeyDown(Input.KEY_SHIFT) && draggedTiles != null) {
                     draggedTiles.fillTiles(xTile, yTile);
@@ -106,11 +105,11 @@ public final class TileViewer extends GUIElement {
             return;
         }
         if (!Input.isAnyButtonDown()) return;
-        val x = GameScreen.onMouseTileX();
-        val y = GameScreen.onMouseTileY();
+        final var x = GameScreen.onMouseTileX();
+        final var y = GameScreen.onMouseTileY();
         if (x < 0 || y < 0) return;
         if (Input.isKeyDown(Input.KEY_SHIFT) && Input.isButtonDown(Input.MOUSE_RIGHT_BUTTON) || Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
-            Game.levelManager.getCurrentRoom().removeTile(x, y);
+            Game.LEVEL_MANAGER.getCurrentRoom().removeTile(x, y);
         }
     }
 

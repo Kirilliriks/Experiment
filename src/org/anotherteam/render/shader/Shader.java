@@ -1,7 +1,6 @@
 package org.anotherteam.render.shader;
 import static org.lwjgl.opengl.GL42.*;
 
-import lombok.val;
 import org.anotherteam.util.FileUtils;
 import org.joml.Matrix4f;
 import org.joml.Vector2i;
@@ -71,7 +70,7 @@ public final class Shader {
     }
 
     public void setUniform(String name, Matrix4f value) {
-        val matrix = MemoryUtil.memAllocFloat(16);
+        final var matrix = MemoryUtil.memAllocFloat(16);
         value.get(matrix);
         glUniformMatrix4fv(getUniformLocation(name), false, matrix);
     }

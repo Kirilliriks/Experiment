@@ -1,7 +1,6 @@
 package org.anotherteam.render.batch;
 import static org.lwjgl.opengl.GL42.*;
 
-import lombok.val;
 import org.anotherteam.debug.DebugBatch;
 import org.anotherteam.render.screen.Camera;
 import org.anotherteam.render.shader.Shader;
@@ -70,7 +69,7 @@ public abstract class Batch {
         glBufferData(GL_ARRAY_BUFFER, (long) vertices.length * Float.BYTES, GL_DYNAMIC_DRAW);
 
         iboID = glGenBuffers();
-        val indices = generateIndices();
+        final var indices = generateIndices();
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboID);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices, GL_STATIC_DRAW);
 
@@ -101,7 +100,7 @@ public abstract class Batch {
     public abstract void render();
 
     protected int[] generateIndices() {
-        val elements = new int[INDICES_PRE_QUAD * batchSize];
+        final var elements = new int[INDICES_PRE_QUAD * batchSize];
         for (int i = 0; i < batchSize; i++) {
             generateIndexElement(elements, i);
         }
@@ -109,8 +108,8 @@ public abstract class Batch {
     }
 
     protected void generateIndexElement(int[] elements, int index) {
-        val offsetArrayIndex = INDICES_PRE_QUAD * index;
-        val offset = QUAD_POS_SIZE * index;
+        final var offsetArrayIndex = INDICES_PRE_QUAD * index;
+        final var offset = QUAD_POS_SIZE * index;
 
         elements[offsetArrayIndex] = offset;
         elements[offsetArrayIndex + 1] = offset + 1;

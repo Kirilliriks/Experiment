@@ -1,6 +1,5 @@
 package org.anotherteam.level.room;
 
-import lombok.val;
 import org.anotherteam.level.room.object.entity.Player;
 import org.anotherteam.level.room.tile.Tile;
 import org.anotherteam.object.GameObject;
@@ -30,17 +29,17 @@ public final class Room {
     }
 
     public void update(float dt) {
-        for (val object : gameObjects){
+        for (final var object : gameObjects){
             object.update(dt);
         }
     }
 
     public void draw(@NotNull RenderBatch renderBatch, boolean height) {
-        for (val tile : tiles.values()) {
+        for (final var tile : tiles.values()) {
             tile.draw(renderBatch, height);
         }
 
-        for (val gameObject : gameObjects) {
+        for (final var gameObject : gameObjects) {
             gameObject.draw(renderBatch, height);
         }
     }

@@ -1,6 +1,5 @@
 package org.anotherteam.data;
 
-import lombok.val;
 import org.anotherteam.level.room.tile.Tile;
 import org.anotherteam.render.shader.Shader;
 import org.anotherteam.render.sprite.Sprite;
@@ -39,8 +38,8 @@ public final class AssetData {
         private static Texture getTexture(String textureName) {
                 if (textures.containsKey(textureName)) return textures.get(textureName);
 
-                val path = ASSETS_PATH + textureName;
-                val texture = Texture.create(path);
+                final var path = ASSETS_PATH + textureName;
+                final var texture = Texture.create(path);
                 texture.setName(textureName);
                 textures.put(textureName, texture);
                 return texture;
@@ -48,8 +47,8 @@ public final class AssetData {
 
         @NotNull
         private static SpriteAtlas loadSpriteAtlas(String atlasName, int frameWidth, int frameHeight) {
-                val texture = getTexture(atlasName);
-                val atlas = SpriteAtlas.create(getTexture(atlasName), frameWidth, frameHeight, (texture.getHeight() / 2) / frameHeight);
+                final var texture = getTexture(atlasName);
+                final var atlas = SpriteAtlas.create(getTexture(atlasName), frameWidth, frameHeight, (texture.getHeight() / 2) / frameHeight);
                 spriteAtlases.put(atlasName, atlas);
                 return atlas;
         }

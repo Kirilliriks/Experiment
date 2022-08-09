@@ -2,7 +2,6 @@ package org.anotherteam.render.window;
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.opengl.GL42.*;
 
-import lombok.val;
 import org.anotherteam.Input;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.exception.RenderException;
@@ -36,7 +35,7 @@ public final class Window {
         this.height = height;
         this.title = title;
         this.vSync = false;
-        GameScreen.window = this;
+        GameScreen.WINDOW = this;
     }
 
     public void destroy() {
@@ -100,7 +99,7 @@ public final class Window {
 
         createCallbacks();
 
-        val videoMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+        final var videoMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
         if (videoMode == null)
             throw new RenderException("Error with get video mode");
 

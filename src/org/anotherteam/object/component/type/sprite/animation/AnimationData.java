@@ -1,20 +1,6 @@
 package org.anotherteam.object.component.type.sprite.animation;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
-
-@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-@RequiredArgsConstructor(access = AccessLevel.PUBLIC)
-@Getter
-public final class AnimationData {
-
-    int yTexture;
-    float animationSpeed;
-    int startFrame;
-    int endFrame;
-    boolean cancelOnEnd;
+public record AnimationData(int yTexture, float animationSpeed, int startFrame, int endFrame, boolean cancelOnEnd) {
 
     public int getFramePosY() {
         return yTexture;
@@ -22,17 +8,5 @@ public final class AnimationData {
 
     public float getAnimSpeed() {
         return animationSpeed;
-    }
-
-    public int getStartFrame() {
-        return startFrame;
-    }
-
-    public int getEndFrame() {
-        return endFrame;
-    }
-
-    public boolean isCancelOnEnd() {
-        return cancelOnEnd;
     }
 }

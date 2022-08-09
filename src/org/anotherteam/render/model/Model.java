@@ -1,7 +1,6 @@
 package org.anotherteam.render.model;
 import static org.lwjgl.opengl.GL42.*;
 
-import lombok.val;
 import org.lwjgl.system.MemoryUtil;
 
 import java.nio.FloatBuffer;
@@ -30,7 +29,7 @@ public abstract class Model {
         tboID = storeBuffer(createBuffer(uv), 1, TEX_COORDS_SIZE);
 
         iboID = glGenBuffers();
-        val buffer = MemoryUtil.memAllocInt(indices.length);
+        final var buffer = MemoryUtil.memAllocInt(indices.length);
         buffer.put(indices);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboID);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer.flip(), GL_STATIC_DRAW);
@@ -59,7 +58,7 @@ public abstract class Model {
     }
 
     private int storeBuffer(FloatBuffer buffer, int index, int size) {
-        val bufferID = glGenBuffers();
+        final var bufferID = glGenBuffers();
         glBindBuffer(GL_ARRAY_BUFFER, bufferID);
         glBufferData(GL_ARRAY_BUFFER, buffer, GL_STATIC_DRAW);
         glVertexAttribPointer(index, size, GL_FLOAT, false, 0, 0);
@@ -68,7 +67,7 @@ public abstract class Model {
     }
 
     private static FloatBuffer createBuffer(float[] array) {
-        val buffer = MemoryUtil.memAllocFloat(array.length);
+        final var buffer = MemoryUtil.memAllocFloat(array.length);
         buffer.put(array);
         buffer.flip();
         return buffer;

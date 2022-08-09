@@ -1,6 +1,5 @@
 package org.anotherteam.editor.gui.menu.sprite;
 
-import lombok.val;
 import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.render.sprite.Sprite;
@@ -35,7 +34,7 @@ public class SpriteMenu extends GUIElement {
 
     @NotNull
     public SpriteButton addButton(@NotNull Sprite sprite) {
-        val index = buttons.size();
+        final var index = buttons.size();
         if (index >= sizeX * sizeY) throw new LifeException("Need create pages mechanic");
 
         int x = index % sizeX;
@@ -47,7 +46,7 @@ public class SpriteMenu extends GUIElement {
     public SpriteButton addButton(int x, int y, @NotNull Sprite sprite) {
         if (x * y >= sizeX * sizeY) throw new LifeException("Need create pages mechanic");
 
-        val spriteButton = new SpriteButton(sprite, 0, 0, this);
+        final var spriteButton = new SpriteButton(sprite, 0, 0, this);
 
         spriteButton.setPos(x * ICON_SIZE                + (x + 1) * offsetIcon,
                             height - (y + 1) * ICON_SIZE - (y + 1) * offsetIcon);
@@ -60,7 +59,7 @@ public class SpriteMenu extends GUIElement {
         if (!visible) return;
 
         super.render(editorBatch);
-        for (val bnt : buttons) {
+        for (final var bnt : buttons) {
             if (bnt.tryDrawPreview(editorBatch))
                 break;
         }

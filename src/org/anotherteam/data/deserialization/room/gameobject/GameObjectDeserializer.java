@@ -1,7 +1,6 @@
 package org.anotherteam.data.deserialization.room.gameobject;
 
 import com.google.gson.*;
-import lombok.val;
 import org.anotherteam.util.SerializeUtil;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.Component;
@@ -13,8 +12,8 @@ public class GameObjectDeserializer implements JsonDeserializer<GameObject>, Jso
 
     @Override
     public GameObject deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        val object = json.getAsJsonObject();
-        val pos = SerializeUtil.deserialize(object.getAsJsonObject("pos"));
+        final var object = json.getAsJsonObject();
+        final var pos = SerializeUtil.deserialize(object.getAsJsonObject("pos"));
         final String name = object.get("name").getAsString();
         final String type = object.get("type").getAsString();
 
@@ -27,7 +26,7 @@ public class GameObjectDeserializer implements JsonDeserializer<GameObject>, Jso
         }
 
         gameObject.setPosition(pos.x, pos.y);
-        for (val componentJSON : object.getAsJsonArray("components")) {
+        for (final var componentJSON : object.getAsJsonArray("components")) {
             gameObject.addComponent(context.deserialize(componentJSON, Component.class));
         }
         return gameObject;
@@ -35,12 +34,12 @@ public class GameObjectDeserializer implements JsonDeserializer<GameObject>, Jso
 
     @Override
     public JsonElement serialize(GameObject gameObject, Type typeOfSrc, JsonSerializationContext context) {
-        val result = new JsonObject();
+        final var result = new JsonObject();
         result.add("name", new JsonPrimitive(gameObject.getName()));
         result.add("type", new JsonPrimitive(gameObject.getClass().getCanonicalName()));
         result.add("pos", SerializeUtil.serialize(gameObject.getPosition()));
-        val components = new JsonArray(gameObject.getComponents().size());
-        for (val component : gameObject.getComponents()) {
+        final var components = new JsonArray(gameObject.getComponents().size());
+        for (final var component : gameObject.getComponents()) {
             if (!component.isSerializable()) continue;
             components.add(context.serialize(component, Component.class));
         }

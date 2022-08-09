@@ -1,6 +1,5 @@
 package org.anotherteam.level.room.tile;
 
-import lombok.val;
 import org.anotherteam.data.AssetData;
 import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.sprite.Sprite;
@@ -60,7 +59,7 @@ public final class Tile {
     }
 
     public void draw(@NotNull RenderBatch renderBatch, boolean height) {
-        val sprite = height ? heightSprite : textureSprite;
+        final var sprite = height ? heightSprite : textureSprite;
         renderBatch.draw(sprite, position.x * Tile.SIZE.x, position.y * Tile.SIZE.y, flipX, flipY);
     }
 }

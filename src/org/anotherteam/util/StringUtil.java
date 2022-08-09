@@ -1,8 +1,5 @@
 package org.anotherteam.util;
 
-import lombok.experimental.UtilityClass;
-
-@UtilityClass
 public final class StringUtil {
 
     public static boolean isNumeric(String str) {

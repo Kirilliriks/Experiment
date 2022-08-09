@@ -2,8 +2,6 @@ package org.anotherteam.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import lombok.experimental.UtilityClass;
-import lombok.val;
 import org.anotherteam.data.deserialization.LevelDeserializer;
 import org.anotherteam.data.deserialization.room.RoomDeserializer;
 import org.anotherteam.data.deserialization.room.gameobject.ComponentDeserializer;
@@ -28,7 +26,6 @@ import java.nio.file.Paths;
 
 import static org.lwjgl.system.MemoryUtil.memSlice;
 
-@UtilityClass
 public final class FileUtils {
 
     public static final Gson LEVEL_GSON = new GsonBuilder()
@@ -66,7 +63,7 @@ public final class FileUtils {
 
     public static void saveEditableLevel(@NotNull Level level) {
         try {
-            val writer = new FileWriter("levels/" + level.getName()  + "." + Level.LEVEL_FILE_EXTENSION);
+            final var writer = new FileWriter("levels/" + level.getName()  + "." + Level.LEVEL_FILE_EXTENSION);
             writer.write(LEVEL_GSON.toJson(level));
             writer.close();
         } catch(IOException e) {
@@ -76,7 +73,7 @@ public final class FileUtils {
     }
 
     public static void deleteLevel(@NotNull Level level) {
-        val file = new File("levels/" + level.getName()  + "." + Level.LEVEL_FILE_EXTENSION);
+        final var file = new File("levels/" + level.getName()  + "." + Level.LEVEL_FILE_EXTENSION);
         if (!file.isFile())
             throw new LifeException("Not find level: " + level.getName());
         if (!file.delete())
@@ -90,8 +87,8 @@ public final class FileUtils {
      * @param level level
      */
     public static void renameLevel(String newName, @NotNull Level level) {
-        val oldPath = Paths.get("levels/" + level.getName()  + "." + Level.LEVEL_FILE_EXTENSION);
-        val newPath = Paths.get("levels/" + newName  + "." + Level.LEVEL_FILE_EXTENSION);
+        final var oldPath = Paths.get("levels/" + level.getName()  + "." + Level.LEVEL_FILE_EXTENSION);
+        final var newPath = Paths.get("levels/" + newName  + "." + Level.LEVEL_FILE_EXTENSION);
         try {
             Files.move(oldPath, newPath);
         } catch (IOException e) {
@@ -100,12 +97,12 @@ public final class FileUtils {
     }
 
     public static String getNameFromFile(String fileName) {
-        val str = fileName.split("\\.");
+        final var str = fileName.split("\\.");
         return str[str.length - 2];
     }
 
     public static String loadAsString(String fileName) {
-        val builder = new StringBuilder();
+        final var builder = new StringBuilder();
         BufferedReader reader;
         try {
             reader = new BufferedReader(new FileReader(fileName));
@@ -124,18 +121,18 @@ public final class FileUtils {
     public static ByteBuffer ioResourceToByteBuffer(String resource, int bufferSize) throws IOException {
         ByteBuffer buffer;
 
-        val path = Paths.get(resource);
+        final var path = Paths.get(resource);
         if (Files.isReadable(path)) {
-            try (val fc = Files.newByteChannel(path)) {
+            try (final var fc = Files.newByteChannel(path)) {
                 buffer = BufferUtils.createByteBuffer((int) fc.size() + 1);
-                while (fc.read(buffer) != -1) { }
+                while (fc.read(buffer) != -1) {}
             }
         } else {
             try {
-                val source = PixmapUtil.class.getClassLoader().getResourceAsStream(resource);
+                final var source = PixmapUtil.class.getClassLoader().getResourceAsStream(resource);
                 if (source == null) throw new LifeException("Null input");
 
-                val rbc = Channels.newChannel(source);
+                final var rbc = Channels.newChannel(source);
                 buffer = BufferUtils.createByteBuffer(bufferSize);
 
                 while (rbc.read(buffer) != -1) {
@@ -153,7 +150,7 @@ public final class FileUtils {
 
     @NotNull
     private static ByteBuffer resizeBuffer(ByteBuffer buffer, int newCapacity) {
-        val newBuffer = BufferUtils.createByteBuffer(newCapacity);
+        final var newBuffer = BufferUtils.createByteBuffer(newCapacity);
         newBuffer.put(buffer.flip());
         return newBuffer;
     }

@@ -1,6 +1,5 @@
 package org.anotherteam.editor.gui.menu.text;
 
-import lombok.val;
 import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
@@ -25,7 +24,7 @@ public class SwitchMenu extends TextMenu {
 
     @NotNull
     public TextButton addTextButton(String text, Runnable onClick) {
-        val button = new TextButton(text, 0, 0, this);
+        final var button = new TextButton(text, 0, 0, this);
         button.setOnClick(onClick);
         addButton(button);
         return button;
@@ -34,7 +33,7 @@ public class SwitchMenu extends TextMenu {
     @Override
     @NotNull
     public SwitchButton addButton(String text) {
-        val button = new SwitchButton(text, 0, 0, this);
+        final var button = new SwitchButton(text, 0, 0, this);
         addButton(button);
         return button;
     }
@@ -42,7 +41,7 @@ public class SwitchMenu extends TextMenu {
     @Override
     @NotNull
     public SwitchButton addButton(String text, Runnable onClick) {
-        val button = new SwitchButton(text, 0, 0, this);
+        final var button = new SwitchButton(text, 0, 0, this);
         button.setOnClick(onClick);
         addButton(button);
         return button;
@@ -50,7 +49,7 @@ public class SwitchMenu extends TextMenu {
 
     @NotNull
     public SwitchButton addButton(String text, Runnable onClick, Runnable afterClick) {
-        val button = new SwitchButton(text, 0, 0, this);
+        final var button = new SwitchButton(text, 0, 0, this);
         button.setOnClick(onClick);
         button.setAfterClick(afterClick);
         addButton(button);

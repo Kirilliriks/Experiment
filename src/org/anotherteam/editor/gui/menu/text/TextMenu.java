@@ -1,6 +1,5 @@
 package org.anotherteam.editor.gui.menu.text;
 
-import lombok.val;
 import org.anotherteam.editor.gui.Button;
 import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.editor.gui.text.Label;
@@ -52,13 +51,13 @@ public class TextMenu extends GUIElement {
 
     @NotNull
     public TextButton addButton(String text) {
-        val button = new TextButton(text, 0, 0, this);
+        final var button = new TextButton(text, 0, 0, this);
         addButton(button);
         return button;
     }
 
     public TextButton addButton(String text, Runnable runnable) {
-        val button = new TextButton(text, 0, 0, this);
+        final var button = new TextButton(text, 0, 0, this);
         button.setOnClick(runnable);
         addButton(button);
         return button;
@@ -69,7 +68,7 @@ public class TextMenu extends GUIElement {
 
         int index = buttons.size();
         if (contains(button.getLabelText())) {
-            for (val btn : buttons) {
+            for (final var btn : buttons) {
                 if (!button.getLabelText().equals(btn.getLabelText())) continue;
 
                 index = buttons.indexOf(btn);
@@ -81,25 +80,25 @@ public class TextMenu extends GUIElement {
         switch (type) {
             case HORIZONTAL -> {
                 int offsetX = 0;
-                for (val btn : buttons)
+                for (final var btn : buttons)
                     offsetX += btn.getWidth();
                 button.setPos(startOffset.x + Label.DEFAULT_TEXT_OFFSET * index + offsetX, buttonHeight);
             }
             case VERTICAL -> {
                 if (widestButtonWidth < button.getWidth()) widestButtonWidth = button.getWidth();
 
-                for (val btn : buttons) {
+                for (final var btn : buttons) {
                     btn.setWidth(widestButtonWidth);
                 }
 
                 int offsetY = buttonHeight; // TODO this work's correct only to inverted Vertical button menu
-                for (val btn : buttons)
+                for (final var btn : buttons)
                     offsetY += btn.getHeight();
                 button.setPos(0, height - (startOffset.y + buttonHeight * index + offsetY));
             }
             case DOUBLE -> {
-                val sizeX = width / DOUBLE_BUTTON_OFFSET.x;
-                val sizeY = height / DOUBLE_BUTTON_OFFSET.y;
+                final var sizeX = width / DOUBLE_BUTTON_OFFSET.x;
+                final var sizeY = height / DOUBLE_BUTTON_OFFSET.y;
                 if (index >= sizeX * sizeY) throw new LifeException("Need create pages mechanic");
 
                 // X and Y are specially swapped
@@ -136,7 +135,7 @@ public class TextMenu extends GUIElement {
     }
 
     public boolean contains(String text) {
-        for (val button : buttons) {
+        for (final var button : buttons) {
             if (button.getLabelText().equals(text)) return true;
         }
         return false;

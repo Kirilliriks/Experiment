@@ -1,6 +1,5 @@
 package org.anotherteam.editor.gui.text.input;
 
-import lombok.val;
 import org.anotherteam.Input;
 import org.anotherteam.editor.Editor;
 import org.anotherteam.editor.gui.GUIElement;
@@ -129,7 +128,7 @@ public final class InputPart extends TextButton {
 
     private void handleInput() {
         if (!Input.isAnyKeyDown()) return;
-        val key = Input.getLastPrintedKey();
+        final var key = Input.getLastPrintedKey();
         if (key == null) return;
 
         final String text = valueInput.getText();

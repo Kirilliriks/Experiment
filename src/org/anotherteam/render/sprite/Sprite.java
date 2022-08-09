@@ -1,6 +1,5 @@
 package org.anotherteam.render.sprite;
 
-import lombok.val;
 import org.anotherteam.render.texture.Texture;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
@@ -30,11 +29,11 @@ public final class Sprite {
     }
 
     private void changeTextureCoords() {
-        val correctFrame = spriteAtlas.getSizeY() - frameY - 1;
-        val x0 = (float)(width * frameX) / texture.getWidth();
-        val x1 = (float)(width * (frameX + 1)) / texture.getWidth();
-        val y0 = (float)(height * (correctFrame)) / texture.getHeight();
-        val y1 = (float)(height * (correctFrame + 1)) / texture.getHeight();
+        final var correctFrame = spriteAtlas.getSizeY() - frameY - 1;
+        final var x0 = (float)(width * frameX) / texture.getWidth();
+        final var x1 = (float)(width * (frameX + 1)) / texture.getWidth();
+        final var y0 = (float)(height * (correctFrame)) / texture.getHeight();
+        final var y1 = (float)(height * (correctFrame + 1)) / texture.getHeight();
         textCoords[0].set(x0, y0);
         textCoords[1].set(x1, y0);
         textCoords[2].set(x1, y1);

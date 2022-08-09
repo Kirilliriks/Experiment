@@ -1,6 +1,5 @@
 package org.anotherteam;
 
-import lombok.val;
 import org.anotherteam.editor.Editor;
 import org.anotherteam.render.window.Window;
 import org.anotherteam.util.CharUtil;
@@ -61,7 +60,7 @@ public final class Input {
 
     public static boolean isKeyDown(Key key) {
         if (key.isLetter()) {
-            val anotherChar = (int)CharUtil.toAnotherCase(key.keyCode);
+            final var anotherChar = (int)CharUtil.toAnotherCase(key.keyCode);
             if (keys.containsKey(anotherChar) && keys.get(anotherChar).down) return true;
         }
         return key.down;
@@ -69,7 +68,7 @@ public final class Input {
 
     public static boolean isKeyPressed(Key key) {
         if (key.isLetter()) {
-            val anotherChar = (int)CharUtil.toAnotherCase(key.keyCode);
+            final var anotherChar = (int)CharUtil.toAnotherCase(key.keyCode);
             if (keys.containsKey(anotherChar) && keys.get(anotherChar).pressed) return true;
         }
         return key.pressed;
@@ -122,13 +121,13 @@ public final class Input {
             @Override
             public void invoke(long window, int key, int scancode, int action, int mods) {
                 key = CharUtil.transformKeyCode(key, mods);
-                val anotherKey = (int)CharUtil.toAnotherCase(key);
+                final var anotherKey = (int)CharUtil.toAnotherCase(key);
 
                 if (!keys.containsKey(key)) {
                     keys.put(key, new Key(key));
                 }
 
-                val bool = action != GLFW.GLFW_RELEASE;
+                final var bool = action != GLFW.GLFW_RELEASE;
                 lastPrintedKey = keys.get(key);
                 lastPrintedKey.toggle(bool);
                 if (keys.containsKey(anotherKey)) keys.get(anotherKey).toggle(bool);
@@ -167,10 +166,10 @@ public final class Input {
     }
 
     public void tick() {
-        for (val key : keys.values()) {
+        for (final var key : keys.values()) {
             key.tick();
         }
-        for (val button : buttons.values()) {
+        for (final var button : buttons.values()) {
             button.tick();
         }
         lastPrintedKey = null;

@@ -1,6 +1,5 @@
 package org.anotherteam.editor.screen;
 
-import lombok.val;
 import org.anotherteam.data.AssetData;
 import org.anotherteam.editor.gui.menu.sprite.SpriteMenu;
 import org.anotherteam.level.room.tile.Tile;
@@ -31,8 +30,8 @@ public final class DraggedTile extends DraggedSprite {
 
     @Override
     public void render(int x, int y, @NotNull RenderBatch renderBatch) {
-        val xF = (x / Tile.SIZE.x) * Tile.SIZE.x;
-        val yF = (y / Tile.SIZE.y) * Tile.SIZE.y;
+        final var xF = (x / Tile.SIZE.x) * Tile.SIZE.x;
+        final var yF = (y / Tile.SIZE.y) * Tile.SIZE.y;
         renderBatch.draw(sprite, xF, yF, Tile.SIZE.x, Tile.SIZE.y);
 
         if (spriteAtlas != AssetData.EDITOR_HIGHLITER_ATLAS)

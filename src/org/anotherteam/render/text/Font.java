@@ -1,9 +1,6 @@
 package org.anotherteam.render.text;
 
-import lombok.val;
-import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.texture.Texture;
-import org.anotherteam.util.Color;
 import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -45,8 +42,8 @@ public class Font {
     @Nullable
     private java.awt.Font registerFont() {
         try {
-            val ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            val font = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, new File(filepath));
+            final var ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            final var font = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, new File(filepath));
             ge.registerFont(font);
             return font;
         } catch (Exception e) {
@@ -62,9 +59,9 @@ public class Font {
         var img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
         var g2d = img.createGraphics();
         g2d.setFont(font);
-        val fontMetrics = g2d.getFontMetrics();
+        final var fontMetrics = g2d.getFontMetrics();
 
-        val estimatedWidth = (int)Math.sqrt(font.getNumGlyphs()) * font.getSize() + 1;
+        final var estimatedWidth = (int)Math.sqrt(font.getNumGlyphs()) * font.getSize() + 1;
         width = 0;
         height = fontMetrics.getHeight();
         lineHeight = fontMetrics.getHeight();
@@ -73,7 +70,7 @@ public class Font {
 
         for (int i = 0; i < font.getNumGlyphs(); i++) {
             if (font.canDisplay(i)) {
-                val charInfo = new Glyph(x, y, fontMetrics.charWidth(i), fontMetrics.getHeight());
+                final var charInfo = new Glyph(x, y, fontMetrics.charWidth(i), fontMetrics.getHeight());
                 characterMap.put(i, charInfo);
                 width = Math.max(x + fontMetrics.charWidth(i), width);
 
@@ -95,7 +92,7 @@ public class Font {
         g2d.setColor(java.awt.Color.WHITE);
         for (int i = 0; i < font.getNumGlyphs(); i++) {
             if (!font.canDisplay(i)) continue;
-            val info = characterMap.get(i);
+            final var info = characterMap.get(i);
             info.calculateTextureCoordinates(width, height);
             g2d.drawString("" + (char)i, info.sourceX, info.sourceY);
         }
@@ -105,13 +102,13 @@ public class Font {
     }
 
     private void uploadTexture(BufferedImage image) {
-        val pixels = new int[image.getHeight() * image.getWidth()];
+        final var pixels = new int[image.getHeight() * image.getWidth()];
         image.getRGB(0, 0, image.getWidth(), image.getHeight(), pixels, 0, image.getWidth());
 
-        val buffer = BufferUtils.createByteBuffer(image.getWidth() * image.getHeight() * 4);
+        final var buffer = BufferUtils.createByteBuffer(image.getWidth() * image.getHeight() * 4);
         for (int y = 0; y < image.getHeight(); y++) {
             for (int x = 0; x < image.getWidth(); x++) {
-                val alphaComponent = (byte) ((pixels[y * image.getWidth() + x] >> 24) & 0xFF);
+                final var alphaComponent = (byte) ((pixels[y * image.getWidth() + x] >> 24) & 0xFF);
                 buffer.put(alphaComponent);
                 buffer.put(alphaComponent);
                 buffer.put(alphaComponent);
@@ -126,7 +123,7 @@ public class Font {
     public int getTextWidth(String text, float scale) {
         int width = 0;
         for (int i = 0; i < text.length(); i++) {
-            val charInfo = getCharacter(text.charAt(i));
+            final var charInfo = getCharacter(text.charAt(i));
             if (charInfo.width == 0)
                 throw new LifeException("Unknown font character " + text.charAt(i));
 
@@ -136,7 +133,7 @@ public class Font {
     }
 
     public int getTextHeight(String text, float scale) {
-        val charInfo = getCharacter(text.charAt(text.charAt(0)));
+        final var charInfo = getCharacter(text.charAt(text.charAt(0)));
         if (charInfo.width == 0)
             throw new LifeException("Unknown font character " + text.charAt(0));
         return (int)(charInfo.height * scale);

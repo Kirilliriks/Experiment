@@ -1,6 +1,5 @@
 package org.anotherteam.editor.object.newobject;
 
-import lombok.val;
 import org.anotherteam.Game;
 import org.anotherteam.Input;
 import org.anotherteam.data.AssetData;
@@ -31,7 +30,7 @@ public final class AddObjectMenu extends GUIElement {
 
     public AddObjectMenu(float x, float y, GUIElement ownerElement) {
         super(x, y, ownerElement);
-        val editor = Editor.getInstance();
+        final var editor = Editor.getInstance();
         width = (int)(editor.getWidth() - getPosX() - Editor.getRightBorderSize());
         height = (int)(getPosY() - Editor.getDownBorderPos() - Editor.DEFAULT_BORDER_SIZE);
         inverted = true;
@@ -52,14 +51,14 @@ public final class AddObjectMenu extends GUIElement {
     }
 
     public void generatePrefabMenu(@NotNull SwitchButton button, Prefab[] prefabs) {
-        val spriteMenu = new SpriteMenu(0, -typeMenu.getHeight(), width, height - typeMenu.getHeight(), this);
+        final var spriteMenu = new SpriteMenu(0, -typeMenu.getHeight(), width, height - typeMenu.getHeight(), this);
         spriteMenu.setVisible(false);
         spriteMenu.setOffsetIcon(8);
         spriteMenu.setInvertedY(true);
-        for (val value : prefabs) {
-            val object = GameObject.create(0, 0, value.getPrefabClass()); // TODO delete new game object instancing
-            val sprite = getObjectSprite(object);
-            val spriteButton = spriteMenu.addButton(sprite);
+        for (final var value : prefabs) {
+            final var object = GameObject.create(0, 0, value.getPrefabClass()); // TODO delete new game object instancing
+            final var sprite = getObjectSprite(object);
+            final var spriteButton = spriteMenu.addButton(sprite);
             spriteButton.setOnClick(()-> {
                 draggedGameObject = new DraggedGameObject(sprite, GameObject.create(0, 0, value.getPrefabClass()));
                 GameScreen.draggedThing = draggedGameObject;
@@ -81,13 +80,13 @@ public final class AddObjectMenu extends GUIElement {
     public void update(float dt) {
         if (draggedGameObject != null) {
             if (Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) {
-                val x = GameScreen.inGameMouseX();
-                val y = GameScreen.inGameMouseY();
+                final var x = GameScreen.inGameMouseX();
+                final var y = GameScreen.inGameMouseY();
                 if (x < 0 || y < 0) return;
 
-                val gameObject = draggedGameObject.getGameObject();
+                final var gameObject = draggedGameObject.getGameObject();
                 gameObject.setPosition(x, y);
-                Game.levelManager.getCurrentRoom().addObject(gameObject);
+                Game.LEVEL_MANAGER.getCurrentRoom().addObject(gameObject);
                 GameScreen.draggedThing = null;
                 draggedGameObject = null;
             } else if (Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
@@ -98,8 +97,8 @@ public final class AddObjectMenu extends GUIElement {
         }
 
         if (Input.isAnyButtonPressed()) {
-            val currentRoom = Game.levelManager.getCurrentRoom();
-            for (val gameObject : currentRoom.getGameObjects()) {
+            final var currentRoom = Game.LEVEL_MANAGER.getCurrentRoom();
+            for (final var gameObject : currentRoom.getGameObjects()) {
                 if (!gameObject.getCollider().isOnMouse(GameScreen.inGameMouseX(), GameScreen.inGameMouseY())) continue;
 
                 if (Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
@@ -128,8 +127,8 @@ public final class AddObjectMenu extends GUIElement {
         super.render(editorBatch);
 
         if (GameScreen.draggedThing == null || draggedGameObject == null) return;
-        val x  = (int) Input.getMouseX();
-        val y  = (int) Input.getMouseY();
+        final var x  = (int) Input.getMouseX();
+        final var y  = (int) Input.getMouseY();
 
         if (GameScreen.inGameWindowMouseX() != -1 && GameScreen.inGameWindowMouseY() != -1) return;
         draggedGameObject.getGameObject().setPosition(x, y);

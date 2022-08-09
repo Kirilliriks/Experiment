@@ -1,7 +1,7 @@
 package org.anotherteam.object.component.type.state;
 
-import lombok.NonNull;
 import org.anotherteam.object.component.type.sprite.animation.AnimationData;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class State {
 
@@ -15,7 +15,7 @@ public abstract class State {
         return animationData;
     }
 
-    public void onEnd(@NonNull StateController stateController) { }
+    public void onEnd(@NotNull StateController stateController) { }
 
-    public void onStart(@NonNull StateController stateController){ }
+    public void onStart(@NotNull StateController stateController){ }
 }

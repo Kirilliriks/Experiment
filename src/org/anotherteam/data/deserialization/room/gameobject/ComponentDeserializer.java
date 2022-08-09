@@ -1,7 +1,6 @@
 package org.anotherteam.data.deserialization.room.gameobject;
 
 import com.google.gson.*;
-import lombok.val;
 import org.anotherteam.util.SerializeUtil;
 import org.anotherteam.object.component.Component;
 import org.anotherteam.object.component.type.collider.AABB;
@@ -26,7 +25,7 @@ public final class ComponentDeserializer implements JsonDeserializer<Component>,
     private static class ComponentFabric {
 
         private static Component deserialize(JsonElement json) {
-            val object = json.getAsJsonObject();
+            final var object = json.getAsJsonObject();
             switch (object.get("type").getAsString()) {
                 case "Collider" -> {
                    return deserializeCollider(object);
@@ -39,7 +38,7 @@ public final class ComponentDeserializer implements JsonDeserializer<Component>,
         }
 
         private static JsonElement serialize(Component component) {
-            val result = new JsonObject();
+            final var result = new JsonObject();
             result.add("type", new JsonPrimitive(component.getClass().getSimpleName()));
             switch (result.get("type").getAsString()) {
                 case "Collider" -> {
@@ -54,11 +53,11 @@ public final class ComponentDeserializer implements JsonDeserializer<Component>,
 
 
         public static Collider deserializeCollider(JsonObject object) {
-            val firstBound = SerializeUtil.deserialize(object.get("firstBound").getAsJsonObject());
-            val secondBound = SerializeUtil.deserialize(object.get("secondBound").getAsJsonObject());
-            val interactFirstBound = SerializeUtil.deserialize(object.get("interactFirstBound").getAsJsonObject());
-            val interactSecondBound = SerializeUtil.deserialize(object.get("interactSecondBound").getAsJsonObject());
-            val collider = new Collider();
+            final var firstBound = SerializeUtil.deserialize(object.get("firstBound").getAsJsonObject());
+            final var secondBound = SerializeUtil.deserialize(object.get("secondBound").getAsJsonObject());
+            final var interactFirstBound = SerializeUtil.deserialize(object.get("interactFirstBound").getAsJsonObject());
+            final var interactSecondBound = SerializeUtil.deserialize(object.get("interactSecondBound").getAsJsonObject());
+            final var collider = new Collider();
             collider.setBounds(firstBound.x, firstBound.y, secondBound.x, secondBound.y);
             collider.setInteractBounds(interactFirstBound.x, interactFirstBound.y, interactSecondBound.x, interactSecondBound.y);
             collider.setSolid(object.get("solid").getAsBoolean());
@@ -71,16 +70,16 @@ public final class ComponentDeserializer implements JsonDeserializer<Component>,
             result.add("secondBound", SerializeUtil.serialize(collider.getSecondBound()));
             result.add("solid", new JsonPrimitive(collider.isSolid()));
             result.add("interactive", new JsonPrimitive(collider.isInteractive()));
-            val interactAABB = (AABB) collider.getInteractAABB();
+            final var interactAABB = (AABB) collider.getInteractAABB();
             result.add("interactFirstBound", SerializeUtil.serialize(interactAABB.getFirstBound()));
             result.add("interactSecondBound", SerializeUtil.serialize(interactAABB.getSecondBound()));
             return result;
         }
 
         public static Transform deserializeTransform(JsonObject object) {
-            val maxSpeed = object.get("maxSpeed").getAsInt();
-            val speed = object.get("speed").getAsInt();
-            val transform = new Transform(maxSpeed);
+            final var maxSpeed = object.get("maxSpeed").getAsInt();
+            final var speed = object.get("speed").getAsInt();
+            final var transform = new Transform(maxSpeed);
             transform.setSpeed(speed);
             return transform;
         }

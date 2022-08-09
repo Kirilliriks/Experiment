@@ -1,7 +1,5 @@
 package org.anotherteam.object.component.type.collider;
 
-import lombok.NonNull;
-import lombok.val;
 import org.anotherteam.debug.DebugBatch;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.Component;
@@ -47,18 +45,18 @@ public final class Collider extends AABB {
             return;
         }
 
-        val sprite = ownerObject.getComponent(SpriteController.class);
-        val texture = sprite.getTextureSprite();
+        final var sprite = ownerObject.getComponent(SpriteController.class);
+        final var texture = sprite.getTextureSprite();
         setBounds(texture.getWidth(), texture.getHeight());
     }
 
     @Override
     public void instanceBy(Component component) {
         super.instanceBy(component);
-        val collider = ((Collider)component);
+        final var collider = ((Collider)component);
         solid = collider.solid;
         interactive = collider.interactive;
-        val intAABB = collider.getInteractAABB();
+        final var intAABB = collider.getInteractAABB();
         interactAABB.setBounds(intAABB.firstBound.x, intAABB.firstBound.y, intAABB.secondBound.x, intAABB.secondBound.y);
     }
 
@@ -93,16 +91,16 @@ public final class Collider extends AABB {
         return interactive;
     }
 
-    public boolean isCollide(@NonNull Collider aabb, @NonNull Vector2f moveVector){
+    public boolean isCollide(@NotNull Collider aabb, @NotNull Vector2f moveVector){
         return isCollide(aabb, moveVector.x, moveVector.y);
     }
 
-    public boolean isCollide(@NonNull Collider aabb, float x, float y){
+    public boolean isCollide(@NotNull Collider aabb, float x, float y){
         if (!aabb.isSolid()) return false;
-        val collisionX =  objectPosition.x + secondBound.x + x >= aabb.getPosition().x  + aabb.getFirstBound().x &&
+        final var collisionX =  objectPosition.x + secondBound.x + x >= aabb.getPosition().x  + aabb.getFirstBound().x &&
                 objectPosition.x + firstBound.x + x <= aabb.getPosition().x  + aabb.getSecondBound().x;
 
-        val collisionY =  objectPosition.y + secondBound.y + y >= aabb.getPosition().y  + aabb.getFirstBound().y &&
+        final var collisionY =  objectPosition.y + secondBound.y + y >= aabb.getPosition().y  + aabb.getFirstBound().y &&
                 objectPosition.y + firstBound.y + y <= aabb.getPosition().y  + aabb.getSecondBound().y;
         return collisionX && collisionY;
     }
@@ -114,23 +112,23 @@ public final class Collider extends AABB {
                objectPosition.y + firstBound.y <= y && y <= objectPosition.y + secondBound.y;
     }
 
-    public boolean isCanInteract(@NonNull Collider collider){
+    public boolean isCanInteract(@NotNull Collider collider){
         if (!interactive) return false;
         return interactAABB.isInteract(collider);
     }
 
     public void checkInteract() {
-        for (val object : ownerObject.getRoom().getGameObjects()) {
+        for (final var object : ownerObject.getRoom().getGameObjects()) {
             if (!(object instanceof InteractiveObject)) continue;
-            val collider = object.getCollider();
+            final var collider = object.getCollider();
             if (!isCanInteract(collider)) continue;
             ((InteractiveObject)ownerObject).interactBy(object);
         }
     }
 
-    public boolean checkCollide(@NonNull Vector2f moveVector) {
-        for (val object : ownerObject.getRoom().getGameObjects()) {
-            val collider = object.getCollider();
+    public boolean checkCollide(@NotNull Vector2f moveVector) {
+        for (final var object : ownerObject.getRoom().getGameObjects()) {
+            final var collider = object.getCollider();
             if (!isCollide(collider, moveVector)) continue;
             return true;
         }
@@ -142,7 +140,7 @@ public final class Collider extends AABB {
     }
 
     @Override
-    public void debugRender(@NonNull DebugBatch debugBatch) {
+    public void debugRender(@NotNull DebugBatch debugBatch) {
         interactAABB.debugRender(debugBatch);
         if (isOnMouse(GameScreen.inGameMouseX(), GameScreen.inGameMouseY())) {
             super.debugRender(debugBatch, Color.GREEN);
@@ -155,15 +153,15 @@ public final class Collider extends AABB {
 
         private final Collider ownerCollider;
 
-        public InteractAABB(@NonNull Collider ownerCollider){
+        public InteractAABB(@NotNull Collider ownerCollider){
             super();
             this.ownerCollider = ownerCollider;
             setBounds(ownerCollider.firstBound.x, ownerCollider.firstBound.y, ownerCollider.secondBound.x, ownerCollider.secondBound.y);
             serializable = false;
         }
 
-        public boolean isInteract(@NonNull Collider otherCollider){
-            val otherInteractAABB = otherCollider.interactAABB;
+        public boolean isInteract(@NotNull Collider otherCollider){
+            final var otherInteractAABB = otherCollider.interactAABB;
             return  (!((otherCollider.objectPosition.x + otherCollider.secondBound.x) < otherInteractAABB.objectPosition.x + otherInteractAABB.offSet.x + firstBound.x ||
                     (otherInteractAABB.objectPosition.x + otherInteractAABB.offSet.x + otherInteractAABB.secondBound.x) < otherCollider.objectPosition.x  + otherCollider.firstBound.x));
         }
@@ -177,7 +175,7 @@ public final class Collider extends AABB {
         }
 
         @Override
-        public void debugRender(@NonNull DebugBatch debugBatch) {
+        public void debugRender(@NotNull DebugBatch debugBatch) {
             super.debugRender(debugBatch, Color.BLUE);
         }
     }

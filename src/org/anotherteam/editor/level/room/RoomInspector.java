@@ -22,11 +22,11 @@ public final class RoomInspector extends Widget {
         color.set(DEFAULT_COLOR);
         nameInputLabel = new InputPart("Name: ", Editor.DEFAULT_BORDER_SIZE, -Editor.DEFAULT_BORDER_SIZE, this);
         nameInputLabel.setInvertedY(true);
-        nameInputLabel.setAfterUnFocus(()-> Editor.roomEditor.renameRoom(nameInputLabel.getValue()));
+        nameInputLabel.setAfterUnFocus(()-> Editor.ROOM_EDITOR.renameRoom(nameInputLabel.getValue()));
     }
 
     public void acceptChanges() {
-        Editor.roomEditor.renameRoom(nameInputLabel.getValue());
+        Editor.ROOM_EDITOR.renameRoom(nameInputLabel.getValue());
     }
 
     public void setRoom(@NotNull Room room) {

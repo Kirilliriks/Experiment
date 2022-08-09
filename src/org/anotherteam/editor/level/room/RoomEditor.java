@@ -1,6 +1,5 @@
 package org.anotherteam.editor.level.room;
 
-import lombok.val;
 import org.anotherteam.Game;
 import org.anotherteam.editor.Editor;
 import org.anotherteam.editor.gui.GUIElement;
@@ -25,7 +24,7 @@ public class RoomEditor extends GUIElement {
     public RoomEditor(float x, float y, GUIElement ownerElement) {
         super(x, y, ownerElement);
 
-        val editor = Editor.getInstance();
+        final var editor = Editor.getInstance();
         width = (int)(editor.getWidth() - getPosX() - Editor.getRightBorderSize());
         height = (int)(getPosY() - Editor.getDownBorderPos() - Editor.DEFAULT_BORDER_SIZE);
         inverted = true;
@@ -46,7 +45,7 @@ public class RoomEditor extends GUIElement {
         downButtons.addButton(createEmptyButton);
 
         saveRoomsButton = new TextButton("Save rooms", 40, 0, downButtons);
-        saveRoomsButton.setOnClick(() -> Editor.levelEditor.saveLevel());
+        saveRoomsButton.setOnClick(() -> Editor.LEVEL_EDITOR.saveLevel());
         downButtons.addButton(saveRoomsButton);
 
         deleteRoomButton = new TextButton("Delete room", 40, 0, downButtons);
@@ -55,7 +54,7 @@ public class RoomEditor extends GUIElement {
     }
 
     public void resetRoom() {
-        final Room resetRoom = Editor.levelEditor.getLevel().getRoom(room.getName());
+        final Room resetRoom = Editor.LEVEL_EDITOR.getLevel().getRoom(room.getName());
         if (resetRoom == null)
             throw new RuntimeException("Reset room " + room.getName() + " is null");
 
@@ -65,10 +64,10 @@ public class RoomEditor extends GUIElement {
     public void setRoom(@NotNull Room room) {
         this.room = room;
 
-        Editor.levelEditor.getLevel().setCurrentRoom(room.getName());
+        Editor.LEVEL_EDITOR.getLevel().setCurrentRoom(room.getName());
         roomInspector.setRoom(room);
 
-        Editor.gameObjectEditor.onRoomChange();
+        Editor.GAME_OBJECT_EDITOR.onRoomChange();
     }
 
     @Override
@@ -80,13 +79,13 @@ public class RoomEditor extends GUIElement {
 
     public void updateButtons() {
         selector.clearChild();
-        val currentLevel = Editor.levelEditor.getLevel();
+        final var currentLevel = Editor.LEVEL_EDITOR.getLevel();
         setRoom(currentLevel.getCurrentRoom());
-        val rooms  = currentLevel.getRooms();
+        final var rooms  = currentLevel.getRooms();
 
         selector.clearChild();
-        for (val room : rooms) {
-            val btn = selector.addButton(room.getName(),
+        for (final var room : rooms) {
+            final var btn = selector.addButton(room.getName(),
                     ()-> {
                         if (this.room != null) {
                             roomInspector.acceptChanges();
@@ -115,17 +114,17 @@ public class RoomEditor extends GUIElement {
     }
 
     public void addEmptyRoom() {
-        Game.levelManager.getCurrentLevel().addRoom(Room.createEmpty());
+        Game.LEVEL_MANAGER.getCurrentLevel().addRoom(Room.createEmpty());
         update();
     }
 
     public void removeRoom() {
-        Game.levelManager.getCurrentLevel().removeRoom(room);
+        Game.LEVEL_MANAGER.getCurrentLevel().removeRoom(room);
         update();
     }
 
     public void renameRoom(String newName) {
-        for (val btn : selector.getButtons()) {
+        for (final var btn : selector.getButtons()) {
             if (!btn.getLabelText().equals(room.getName())) continue;
             btn.setLabelText(newName);
         }

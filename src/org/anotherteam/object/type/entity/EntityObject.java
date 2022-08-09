@@ -1,12 +1,12 @@
 package org.anotherteam.object.type.entity;
 
 
-import lombok.NonNull;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.type.sprite.SpriteController;
 import org.anotherteam.object.component.type.state.State;
 import org.anotherteam.object.component.type.state.StateController;
 import org.anotherteam.object.component.type.transform.Transform;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class EntityObject extends GameObject {
 
@@ -14,7 +14,7 @@ public abstract class EntityObject extends GameObject {
     protected final StateController stateController;
     protected final SpriteController spriteController;
 
-    public EntityObject(int x, int y, @NonNull State defaultState) {
+    public EntityObject(int x, int y, @NotNull State defaultState) {
         super(x, y);
         spriteController = new SpriteController();
         spriteController.setDrawPriority(1);

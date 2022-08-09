@@ -1,6 +1,5 @@
 package org.anotherteam.level;
 
-import lombok.val;
 import org.anotherteam.Game;
 import org.anotherteam.level.room.Room;
 import org.anotherteam.render.GameRender;
@@ -22,7 +21,7 @@ public final class Level {
 
     public Level(String name) {
         this.name = name;
-        this.gameRender = Game.gameRender;
+        this.gameRender = Game.GAME_RENDER;
         this.rooms = new ArrayList<>();
         currentRoom = null;
     }
@@ -70,7 +69,7 @@ public final class Level {
 
     @Nullable
     public Room getRoom(String name) {
-        for (val room : rooms) {
+        for (final var room : rooms) {
             if (!room.getName().equals(name)) continue;
             return room;
         }
@@ -79,7 +78,7 @@ public final class Level {
 
     @NotNull
     public static Level createEmpty() {
-        val level = new Level("Empty");
+        final var level = new Level("Empty");
         level.addRoom(Room.createEmpty());
         return level;
     }

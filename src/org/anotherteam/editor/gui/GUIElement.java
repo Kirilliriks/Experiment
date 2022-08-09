@@ -1,6 +1,5 @@
 package org.anotherteam.editor.gui;
 
-import lombok.val;
 import org.anotherteam.Input;
 import org.anotherteam.data.AssetData;
 import org.anotherteam.editor.render.EditorBatch;
@@ -117,8 +116,8 @@ public abstract class GUIElement {
     }
 
     public boolean isMouseOnWidget() {
-        val mouseX = Input.getMousePos().x;
-        val mouseY = Input.getMousePos().y;
+        final var mouseX = Input.getMousePos().x;
+        final var mouseY = Input.getMousePos().y;
         if (mouseX < getPosX() || mouseX > getPosX() + width) return false;
         return (!(mouseY < getPosY() || mouseY > getPosY() + height));
     }
@@ -128,7 +127,7 @@ public abstract class GUIElement {
     public void updateElements(float dt) {
         if (!visible) return;
 
-        for (val element : childElements) {
+        for (final var element : childElements) {
             if (!element.visible) continue;
             element.update(dt);
             element.updateElements(dt);
@@ -141,7 +140,7 @@ public abstract class GUIElement {
         if (width > 0 || height > 0)
             editorBatch.draw(AssetData.EDITOR_TEXTURE, getPosX(), getPosY(), width, height, false, false, color);
 
-        for (val element : childElements) {
+        for (final var element : childElements) {
             element.render(editorBatch);
         }
     }
@@ -153,7 +152,7 @@ public abstract class GUIElement {
     public void destroy() {
         if (childElements.isEmpty()) return;
 
-        for (val element : childElements) {
+        for (final var element : childElements) {
             element.destroy();
         }
     }

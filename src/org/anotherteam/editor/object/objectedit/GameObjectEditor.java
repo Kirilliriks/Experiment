@@ -1,6 +1,5 @@
 package org.anotherteam.editor.object.objectedit;
 
-import lombok.val;
 import org.anotherteam.Game;
 import org.anotherteam.Input;
 import org.anotherteam.editor.Editor;
@@ -35,7 +34,7 @@ public final class GameObjectEditor extends GUIElement {
         super(x, y, gameObjectMenu);
         this.gameObjectMenu = gameObjectMenu;
 
-        val editor = Editor.getInstance();
+        final var editor = Editor.getInstance();
         width = (int)(editor.getWidth() - getPosX() - Editor.getRightBorderSize());
         height = (int)(getPosY() - Editor.getDownBorderPos() - Editor.DEFAULT_BORDER_SIZE);
 
@@ -133,8 +132,8 @@ public final class GameObjectEditor extends GUIElement {
             return;
         }
 
-        val currentRoom = Game.levelManager.getCurrentRoom();
-        for (val gameObject : currentRoom.getGameObjects()) {
+        final var currentRoom = Game.LEVEL_MANAGER.getCurrentRoom();
+        for (final var gameObject : currentRoom.getGameObjects()) {
             if (!gameObject.getCollider().isOnMouse(GameScreen.inGameMouseX(), GameScreen.inGameMouseY())) continue;
 
             if (Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) {

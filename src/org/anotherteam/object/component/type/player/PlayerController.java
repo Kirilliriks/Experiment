@@ -74,7 +74,7 @@ public final class PlayerController extends Component {
         if (transform.isMoving()) stateController.setState(PlayerState.WALK);
 
         if (Input.isKeyPressed(Input.KEY_SPACE)) {
-            Game.DebugMode = !Game.DebugMode;
+            Game.DEBUG_MODE = !Game.DEBUG_MODE;
         }
     }
 }

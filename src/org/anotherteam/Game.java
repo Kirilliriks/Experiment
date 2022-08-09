@@ -9,21 +9,21 @@ import org.jetbrains.annotations.NotNull;
 
 public final class Game {
     public static final String START_LEVEL_NAME = "StartLevel";
-    public static boolean DebugMode;
+    public static boolean DEBUG_MODE;
 
-    public static LevelManager levelManager;
-    public static StateManager stateManager;
-    public static GameRender gameRender;
+    public static LevelManager LEVEL_MANAGER;
+    public static StateManager STATE_MANAGER;
+    public static GameRender GAME_RENDER;
 
     public Game(@NotNull Window window) {
         window.setFullscreen(true);
 
-        levelManager = new LevelManager();
-        stateManager = new StateManager(GameState.ON_EDITOR);
+        LEVEL_MANAGER = new LevelManager();
+        STATE_MANAGER = new StateManager(GameState.ON_EDITOR);
         GameScreen.init(window);
-        gameRender = new GameRender();
+        GAME_RENDER = new GameRender();
 
-        DebugMode = false;
+        DEBUG_MODE = false;
         DebugBatch.GLOBAL = new DebugBatch(GameScreen.windowCamera);
 
         GameScreen.RENDER_WIDTH = window.getWidth();
@@ -31,22 +31,22 @@ public final class Game {
     }
 
     public void init() {
-        levelManager.loadLevel(START_LEVEL_NAME);
+        LEVEL_MANAGER.loadLevel(START_LEVEL_NAME);
     }
 
     public void update(float dt) {
-        if (stateManager.getState() == GameState.ON_EDITOR) return;
+        if (STATE_MANAGER.getState() == GameState.ON_EDITOR) return;
 
-        levelManager.update(dt);
+        LEVEL_MANAGER.update(dt);
     }
 
     public void render(float dt) {
-        levelManager.renderLevel(GameScreen.windowBatch);
+        LEVEL_MANAGER.renderLevel(GameScreen.windowBatch);
     }
 
     public void destroy() { }
 
     public static GameRender getGameRender() {
-        return gameRender;
+        return GAME_RENDER;
     }
 }

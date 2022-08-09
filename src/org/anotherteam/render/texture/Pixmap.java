@@ -1,6 +1,5 @@
 package org.anotherteam.render.texture;
 
-import lombok.val;
 import org.anotherteam.util.Color;
 import org.anotherteam.util.FileUtils;
 import org.anotherteam.util.exception.LifeException;
@@ -26,10 +25,10 @@ public final class Pixmap {
             throw new LifeException("Not found image " + filePath);
         }
 
-        try (val stack = stackPush()) {
-            val width = stack.mallocInt(1);
-            val height = stack.mallocInt(1);
-            val comp = stack.mallocInt(1);
+        try (final var stack = stackPush()) {
+            final var width = stack.mallocInt(1);
+            final var height = stack.mallocInt(1);
+            final var comp = stack.mallocInt(1);
 
             // Use info to read image metadata without decoding the entire image.
             // We don't need this for this demo, just testing the API.
@@ -73,13 +72,13 @@ public final class Pixmap {
     }
 
     public void drawPixmap(@NotNull Pixmap pix, int xOwner, int yOwner, int xPix, int yPix, int frameWidth, int frameHeight) {
-        val pixBuffer = pix.getPixels();
+        final var pixBuffer = pix.getPixels();
 
         for (int yP = 0; yP < frameHeight; yP++) {
             for (int xP = 0; xP < frameWidth; xP++) {
-                val drawIndex = (xPix + xP + (yPix + yP) * pix.width) * 4;
+                final var drawIndex = (xPix + xP + (yPix + yP) * pix.width) * 4;
                 if (drawIndex >= pixBuffer.limit() || drawIndex < 0) break;
-                val ownerIndex = (xOwner + xP + (yOwner + yP) * width) * 4;
+                final var ownerIndex = (xOwner + xP + (yOwner + yP) * width) * 4;
                 if (ownerIndex >= buffer.limit() || ownerIndex < 0) break;
                 buffer.putInt(ownerIndex, pixBuffer.getInt(drawIndex));
             }
