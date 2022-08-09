@@ -39,8 +39,9 @@ public abstract class GUIElement {
 
         this.ownerElement = ownerElement;
 
-        if (ownerElement != null)
+        if (ownerElement != null) {
             ownerElement.childElements.add(this);
+        }
     }
 
     public void setVisible(boolean visible) {

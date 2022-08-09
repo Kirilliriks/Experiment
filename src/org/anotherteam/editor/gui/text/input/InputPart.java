@@ -94,14 +94,18 @@ public final class InputPart extends TextButton {
     @Override
     public boolean isMouseOnWidget() {
         if (super.isMouseOnWidget()) {
-            if (lock) {
-                valueInput.getColor().set(100, 100, 100);
-            } else {
-                valueInput.getColor().set(220, 220, 220);
+            if (!clicked) {
+                if (lock) {
+                    valueInput.getColor().set(100, 100, 100);
+                } else {
+                    valueInput.getColor().set(220, 220, 220);
+                }
             }
             return true;
         } else {
-            valueInput.getColor().set(INPUT_COLOR);
+            if (!clicked) {
+                valueInput.getColor().set(INPUT_COLOR);
+            }
             return false;
         }
     }

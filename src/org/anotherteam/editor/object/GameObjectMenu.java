@@ -41,6 +41,10 @@ public final class GameObjectMenu extends SwitchMenu {
         gameObjectEditor.init();
     }
 
+    public void chooseComponentEditor() {
+        setClicked(2);
+    }
+
     public GameObjectEditor getGameObjectEditor() {
         return gameObjectEditor;
     }

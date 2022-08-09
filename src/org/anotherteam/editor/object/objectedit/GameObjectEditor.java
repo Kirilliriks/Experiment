@@ -135,6 +135,10 @@ public final class GameObjectEditor extends GUIElement {
                     (info)-> {
                         removeComponentButton.setLock(false);
                         setComponent(component);
+
+                        if (info.isRight()) {
+                            gameObjectMenu.chooseComponentEditor();
+                        }
                     });
         }
     }
@@ -149,17 +153,20 @@ public final class GameObjectEditor extends GUIElement {
         if (!Input.isAnyButtonPressed()) return;
 
         if (Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
+            if (editObject == null) return;
+            if (!editObject.getCollider().isOnMouse(GameScreen.inGameMouseX(), GameScreen.inGameMouseY())) return;
+
             setEditObject(null);
             return;
         }
+
+        if (!Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) return;
 
         final Room currentRoom = RoomEditor.editor().getRoom();
         for (final GameObject gameObject : currentRoom.getGameObjects()) {
             if (!gameObject.getCollider().isOnMouse(GameScreen.inGameMouseX(), GameScreen.inGameMouseY())) continue;
 
-            if (Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) {
-                setEditObject(gameObject);
-            }
+            setEditObject(gameObject);
             return;
         }
     }

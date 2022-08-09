@@ -31,11 +31,15 @@ public abstract class Button extends GUIElement {
         this.afterClick = afterClick;
     }
 
-    public void setOnClick(Click runnable) {
-        this.onClick = runnable;
+    public void setOnClick(Click click) {
+        this.onClick = click;
     }
 
     public void setClicked(boolean clicked) {
+        setClicked(clicked, true);
+    }
+
+    public void setClicked(boolean clicked, boolean left) {
         this.clicked = clicked;
     }
 
@@ -74,9 +78,22 @@ public abstract class Button extends GUIElement {
     }
 
     public static class ClickInfo {
-        boolean left;
+        public final boolean left;
+
         public ClickInfo() {
-            left = false;
+            this(true);
+        }
+
+        public ClickInfo(boolean left) {
+            this.left = left;
+        }
+
+        public boolean isLeft() {
+            return left;
+        }
+
+        public boolean isRight() {
+            return !left;
         }
     }
 

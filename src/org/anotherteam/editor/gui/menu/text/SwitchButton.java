@@ -1,6 +1,8 @@
 package org.anotherteam.editor.gui.menu.text;
 
 import org.anotherteam.Input;
+import org.anotherteam.editor.Editor;
+import org.anotherteam.editor.gui.EditorLog;
 import org.anotherteam.editor.gui.GUIElement;
 
 public class SwitchButton extends TextButton {
@@ -20,7 +22,7 @@ public class SwitchButton extends TextButton {
     }
 
     @Override
-    public void setClicked(boolean clicked) {
+    public void setClicked(boolean clicked, boolean left) {
         if (!clicked && afterClick != null) {
             runAfterClick();
         }
@@ -32,7 +34,7 @@ public class SwitchButton extends TextButton {
             return;
         }
 
-        if (onClick != null) runClick();
+        if (onClick != null) runClick(new ClickInfo(left));
 
         labelText.getColor().set(DEFAULT_COLOR);
         labelText.getColor().r = 255;
@@ -42,9 +44,12 @@ public class SwitchButton extends TextButton {
     public void update(float dt) {
         if (!visible) return;
 
-        if (clicked) return;
         if (!isMouseOnWidget()) return;
-        if (!Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) return;
-        switchMenu.setClicked(this);
+
+        final boolean left = Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON);
+        final boolean right = Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON);
+        if (!left && !right) return;
+
+        switchMenu.setClicked(this, left);
     }
 }

@@ -70,14 +70,18 @@ public class TextButton extends Button {
     @Override
     public boolean isMouseOnWidget() {
         if (super.isMouseOnWidget()) {
-            if (lock) {
-                labelText.getColor().set(100, 0, 0);
-            } else {
-                labelText.getColor().g = 200;
+            if (!clicked) {
+                if (lock) {
+                    labelText.getColor().set(100, 0, 0);
+                } else {
+                    labelText.getColor().g = 200;
+                }
             }
             return true;
         } else {
-            labelText.getColor().set(DEFAULT_COLOR);
+            if (!clicked) {
+                labelText.getColor().set(DEFAULT_COLOR);
+            }
             return false;
         }
     }
