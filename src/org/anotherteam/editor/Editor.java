@@ -24,6 +24,7 @@ import org.jetbrains.annotations.NotNull;
 
 public final class Editor extends Widget {
 
+    public static final int DEFAULT_OFFSET_SIZE = 20;
     public static final int DEFAULT_BORDER_SIZE = 10;
     public static final Font EDITOR_FONT = new Font("font/f1.ttf", 8);
 

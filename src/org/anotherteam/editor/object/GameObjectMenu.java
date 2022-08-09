@@ -3,26 +3,26 @@ package org.anotherteam.editor.object;
 import org.anotherteam.editor.EditorMenu;
 import org.anotherteam.editor.gui.menu.text.SwitchMenu;
 import org.anotherteam.editor.object.componentedit.ComponentEditor;
-import org.anotherteam.editor.object.newobject.AddObjectMenu;
+import org.anotherteam.editor.object.newobject.PrefabObjectMenu;
 import org.anotherteam.editor.object.objectedit.GameObjectEditor;
 
 public final class GameObjectMenu extends SwitchMenu {
 
-    private final AddObjectMenu addObjectMenu;
+    private final PrefabObjectMenu prefabObjectMenu;
     private final GameObjectEditor gameObjectEditor;
     private final ComponentEditor componentEditor;
 
     public GameObjectMenu(float x, float y, EditorMenu ownerElement) {
         super(x, y, 0, 0, Type.VERTICAL, ownerElement);
 
-        addButton("Add GameObject");
+        addButton("Prefabs");
         addButton("GameObject edit");
         addButton("Component edit");
         var button = getButton(0);
-        addObjectMenu = new AddObjectMenu(getWidestButtonWidth(), 0, this);
-        addObjectMenu.setVisible(false);
-        button.setOnClick((left)-> addObjectMenu.setVisible(true));
-        button.setAfterClick((left)-> addObjectMenu.setVisible(false));
+        prefabObjectMenu = new PrefabObjectMenu(getWidestButtonWidth(), 0, this);
+        prefabObjectMenu.setVisible(false);
+        button.setOnClick((left)-> prefabObjectMenu.setVisible(true));
+        button.setAfterClick((left)-> prefabObjectMenu.setVisible(false));
 
         button = getButton(1);
         gameObjectEditor = new GameObjectEditor(getWidestButtonWidth(), 0, this);

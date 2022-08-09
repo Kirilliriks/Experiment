@@ -5,6 +5,7 @@ import org.anotherteam.Input;
 import org.anotherteam.data.AssetData;
 import org.anotherteam.editor.Editor;
 import org.anotherteam.editor.gui.GUIElement;
+import org.anotherteam.editor.gui.menu.text.TextButton;
 import org.anotherteam.editor.gui.text.Label;
 import org.anotherteam.editor.gui.menu.sprite.SpriteMenu;
 import org.anotherteam.editor.gui.menu.text.SwitchButton;
@@ -22,18 +23,19 @@ import org.anotherteam.render.sprite.Sprite;
 import org.anotherteam.screen.GameScreen;
 import org.jetbrains.annotations.NotNull;
 
-public final class AddObjectMenu extends GUIElement {
+public final class PrefabObjectMenu extends GUIElement {
 
     private final SwitchMenu typeMenu;
 
     private DraggedGameObject draggedGameObject;
 
-    public AddObjectMenu(float x, float y, GUIElement ownerElement) {
+    public PrefabObjectMenu(float x, float y, GUIElement ownerElement) {
         super(x, y, ownerElement);
         width = (int)(Editor.inst().getWidth() - getPosX() - Editor.getRightBorderSize());
         height = (int)(getPosY() - Editor.getDownBorderPos() - Editor.DEFAULT_BORDER_SIZE);
         inverted = true;
 
+        // TODO maybe add createPrefabList button?
         typeMenu = new SwitchMenu(0, 0, width, TextMenu.Type.HORIZONTAL, this);
         typeMenu.setInvertedY(true);
         typeMenu.setColor(100, 100, 100, 255);
@@ -49,10 +51,15 @@ public final class AddObjectMenu extends GUIElement {
         generatePrefabMenu(typeMenu.getButton(4), ColliderPrefab.values());
 
         typeMenu.setClicked(typeMenu.getButton(0));
+
+        final var addGameObjectButton = new TextButton("Add new prefab", 0, 0, this);
+        addGameObjectButton.setOnClick((click) -> {
+
+        });
     }
 
     public void generatePrefabMenu(@NotNull SwitchButton button, Prefab[] prefabs) {
-        final var spriteMenu = new SpriteMenu(0, -typeMenu.getHeight(), width, height - typeMenu.getHeight(), this);
+        final var spriteMenu = new SpriteMenu(0, -typeMenu.getHeight(), width, height - typeMenu.getHeight() - Editor.DEFAULT_OFFSET_SIZE, this);
         spriteMenu.setVisible(false);
         spriteMenu.setOffsetIcon(8);
         spriteMenu.setInvertedY(true);
