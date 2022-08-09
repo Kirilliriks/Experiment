@@ -180,7 +180,7 @@ public final class Editor extends Widget {
     }
 
     @NotNull
-    public static Editor getInstance() { // TODO maybe remove?
+    public static Editor inst() { // TODO maybe remove?
         return EDITOR;
     }
 

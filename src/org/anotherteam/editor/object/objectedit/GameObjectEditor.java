@@ -1,6 +1,5 @@
 package org.anotherteam.editor.object.objectedit;
 
-import org.anotherteam.Game;
 import org.anotherteam.Input;
 import org.anotherteam.editor.Editor;
 import org.anotherteam.editor.gui.Button;
@@ -9,7 +8,9 @@ import org.anotherteam.editor.gui.menu.text.SwitchMenu;
 import org.anotherteam.editor.gui.menu.text.TextButton;
 import org.anotherteam.editor.gui.text.input.InputPart;
 import org.anotherteam.editor.gui.window.ComponentSelectWindow;
+import org.anotherteam.editor.level.room.RoomEditor;
 import org.anotherteam.editor.object.GameObjectMenu;
+import org.anotherteam.level.room.Room;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.Component;
 import org.anotherteam.screen.GameScreen;
@@ -38,7 +39,7 @@ public final class GameObjectEditor extends GUIElement {
 
         this.gameObjectMenu = gameObjectMenu;
 
-        final var editor = Editor.getInstance();
+        final var editor = Editor.inst();
         width = (int)(editor.getWidth() - getPosX() - Editor.getRightBorderSize());
         height = (int)(getPosY() - Editor.getDownBorderPos() - Editor.DEFAULT_BORDER_SIZE);
 
@@ -72,11 +73,21 @@ public final class GameObjectEditor extends GUIElement {
             if (selectedComponent == null) return;
 
             editObject.removeComponent(selectedComponent.getClass());
+
             removeComponentButton.setLock(true);
             fillComponentSelector();
         });
 
         inverted = true;
+    }
+
+    @Override
+    public void setVisible(boolean visible) {
+        super.setVisible(visible);
+
+        if (visible) {
+            updateEditObject();
+        }
     }
 
     public void init() {
@@ -100,6 +111,12 @@ public final class GameObjectEditor extends GUIElement {
             return;
         }
 
+        updateEditObject();
+    }
+
+    public void updateEditObject() {
+        if (editObject == null) return;
+
         nameInputLabel.setValue(editObject.getName());
         nameInputLabel.setLock(false);
         posXInputLabel.setValue(String.valueOf(editObject.getPosition().x));
@@ -111,8 +128,8 @@ public final class GameObjectEditor extends GUIElement {
 
     public void fillComponentSelector() {
         componentSelector.clearChild();
-
         if (editObject == null) return;
+
         for (final Component component : editObject.getComponents()) {
             componentSelector.addButton(component.getClass().getSimpleName(),
                     ()-> {
@@ -136,8 +153,8 @@ public final class GameObjectEditor extends GUIElement {
             return;
         }
 
-        final var currentRoom = Game.LEVEL_MANAGER.getCurrentRoom();
-        for (final var gameObject : currentRoom.getGameObjects()) {
+        final Room currentRoom = RoomEditor.editor().getRoom();
+        for (final GameObject gameObject : currentRoom.getGameObjects()) {
             if (!gameObject.getCollider().isOnMouse(GameScreen.inGameMouseX(), GameScreen.inGameMouseY())) continue;
 
             if (Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) {

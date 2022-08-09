@@ -39,19 +39,19 @@ public abstract class GameObject {
         addComponent(collider);
     }
 
-    public static <T extends GameObject> T create(int x, int y, @NotNull Class<T> gameObjectClass) {
-        return create(x, y, "unknown", gameObjectClass);
+    public static <T extends GameObject> T create(@NotNull Class<T> gameObjectClass) {
+        return create(0, 0, "unknown", gameObjectClass);
     }
 
     public static <T extends GameObject> T create(int x, int y, String name, @NotNull Class<T> gameObjectClass) {
         try {
-            var gameObject = gameObjectClass.cast(gameObjectClass
+            final var gameObject = gameObjectClass.cast(gameObjectClass
                     .getDeclaredConstructor(int.class, int.class)
                     .newInstance(x, y));
             gameObject.setName(name);
             return gameObject;
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception exception) {
+            exception.printStackTrace();
             throw new LifeException("Unknown GameObject class " + gameObjectClass.getSimpleName());
         }
     }
@@ -85,7 +85,7 @@ public abstract class GameObject {
 
     public void setRoom(Room room) {
         this.room = room;
-        //prepare();
+        prepare();
     }
 
     public void prepare() {

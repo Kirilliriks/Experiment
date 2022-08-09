@@ -34,7 +34,7 @@ public final class LevelEditor extends GUIElement {
         super(x, y, ownerElement);
         INSTANCE = this;
 
-        final var editor = Editor.getInstance();
+        final var editor = Editor.inst();
         width = (int)(editor.getWidth() - getPosX() - Editor.getRightBorderSize());
         height = (int)(getPosY() - Editor.getDownBorderPos() - Editor.DEFAULT_BORDER_SIZE);
         inverted = true;

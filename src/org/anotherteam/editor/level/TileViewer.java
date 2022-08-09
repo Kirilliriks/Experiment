@@ -28,7 +28,7 @@ public final class TileViewer extends GUIElement {
 
     public TileViewer(float x, float y, GUIElement ownerElement) {
         super(x, y, ownerElement);
-        final var editor = Editor.getInstance();
+        final var editor = Editor.inst();
         width = (int)(editor.getWidth() - getPosX() - Editor.getRightBorderSize());
         height = (int)(getPosY() - Editor.getDownBorderPos() - Editor.DEFAULT_BORDER_SIZE);
         inverted = true;

@@ -30,8 +30,7 @@ public final class AddObjectMenu extends GUIElement {
 
     public AddObjectMenu(float x, float y, GUIElement ownerElement) {
         super(x, y, ownerElement);
-        final var editor = Editor.getInstance();
-        width = (int)(editor.getWidth() - getPosX() - Editor.getRightBorderSize());
+        width = (int)(Editor.inst().getWidth() - getPosX() - Editor.getRightBorderSize());
         height = (int)(getPosY() - Editor.getDownBorderPos() - Editor.DEFAULT_BORDER_SIZE);
         inverted = true;
 
@@ -44,9 +43,11 @@ public final class AddObjectMenu extends GUIElement {
         typeMenu.addButton("Room object");
         typeMenu.addButton("Light");
         typeMenu.addButton("Collider");
+
         generatePrefabMenu(typeMenu.getButton(0), EntityPrefab.values());
         generatePrefabMenu(typeMenu.getButton(2), RoomPrefab.values());
         generatePrefabMenu(typeMenu.getButton(4), ColliderPrefab.values());
+
         typeMenu.setClicked(typeMenu.getButton(0));
     }
 
@@ -55,15 +56,19 @@ public final class AddObjectMenu extends GUIElement {
         spriteMenu.setVisible(false);
         spriteMenu.setOffsetIcon(8);
         spriteMenu.setInvertedY(true);
+
         for (final var value : prefabs) {
-            final var object = GameObject.create(0, 0, value.getPrefabClass()); // TODO delete new game object instancing
+            final var object = GameObject.create(value.getPrefabClass());
+
             final var sprite = getObjectSprite(object);
             final var spriteButton = spriteMenu.addButton(sprite);
+
             spriteButton.setOnClick(()-> {
-                draggedGameObject = new DraggedGameObject(sprite, GameObject.create(0, 0, value.getPrefabClass()));
+                draggedGameObject = new DraggedGameObject(sprite, GameObject.create(value.getPrefabClass()));
                 GameScreen.draggedThing = draggedGameObject;
             });
         }
+
         button.setOnClick(()-> spriteMenu.setVisible(true));
         button.setAfterClick(()-> spriteMenu.setVisible(false));
     }
