@@ -9,9 +9,14 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
 
 public final class DebugBatch {
-    public static DebugBatch global = null;
-    private static final int VERTEX_SIZE = 5;
+    public static DebugBatch GLOBAL = null;
+    private static final short VERTEX_SIZE = 5;
+    private static final short VERTEX_SIZE_BYTE = (short) (VERTEX_SIZE * Float.BYTES);
     private static final int MAX_LINES = 500;
+
+    private static final short POS_OFFSET = 0;
+
+    private static final short COLOR_OFFSET = (short) (2 * Float.BYTES);
 
     private static final Shader shader = AssetData.DEBUG_SHADER;
 
@@ -32,18 +37,21 @@ public final class DebugBatch {
         // Create the vbo and buffer some memory
         vboID = glGenBuffers();
         glBindBuffer(GL_ARRAY_BUFFER, vboID);
-        glBufferData(GL_ARRAY_BUFFER, (long) vertices.length * Float.BYTES, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, (long) vertices.length * Float.BYTES, GL_DYNAMIC_DRAW);
 
         // Enable the vertex array attributes
-        glVertexAttribPointer(0, 2, GL_FLOAT, false, VERTEX_SIZE * Float.BYTES, 0);
+        glVertexAttribPointer(0, 2, GL_FLOAT, false, VERTEX_SIZE_BYTE, POS_OFFSET);
         glEnableVertexAttribArray(0);
 
-        glVertexAttribPointer(1, 3, GL_FLOAT, false, VERTEX_SIZE * Float.BYTES, 2 * Float.BYTES);
+        glVertexAttribPointer(1, 3, GL_FLOAT, false, VERTEX_SIZE_BYTE, COLOR_OFFSET);
         glEnableVertexAttribArray(1);
     }
 
     public void draw() {
         if (linesCount <= 0) return;
+
+        // Bind the vao
+        glBindVertexArray(vaoID);
 
         glBindBuffer(GL_ARRAY_BUFFER, vboID);
         glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
@@ -53,8 +61,6 @@ public final class DebugBatch {
         shader.setUniform("projection", camera.getProjection());
         shader.setUniform("view", camera.getViewMatrix());
 
-        // Bind the vao
-        glBindVertexArray(vaoID);
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
 
@@ -62,8 +68,8 @@ public final class DebugBatch {
         glDrawArrays(GL_LINES, 0, linesCount * 2);
 
         // Disable Location
-        glDisableVertexAttribArray(1);
         glDisableVertexAttribArray(0);
+        glDisableVertexAttribArray(1);
         glBindVertexArray(0);
 
         // Unbind shader
@@ -86,6 +92,7 @@ public final class DebugBatch {
             vertices[index + 2] = color.r / 255.0f;
             vertices[index + 3] = color.g / 255.0f;
             vertices[index + 4] = color.b / 255.0f;
+
             index += VERTEX_SIZE;
         }
         linesCount++;

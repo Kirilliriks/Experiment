@@ -17,16 +17,8 @@ import org.joml.Vector2i;
 
 public class RenderBatch extends Batch {
 
-    private static final Vector2i[] QUAD_OFFSET = new Vector2i[] {
-            new Vector2i(0, 1),
-            new Vector2i(1, 1),
-            new Vector2i(1, 0),
-            new Vector2i(0, 0)
-    };
-
     private static final short TEX_COORDS_OFFSET = POS_OFFSET + POS_SIZE * Float.BYTES;
     private static final short COLOR_COORDS_OFFSET = TEX_COORDS_OFFSET + TEX_COORDS_SIZE * Float.BYTES;
-
     private static final short VERTEX_SIZE = 7;
 
     protected Texture lastTexture;

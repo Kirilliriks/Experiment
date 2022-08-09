@@ -6,6 +6,7 @@ import org.anotherteam.debug.DebugBatch;
 import org.anotherteam.render.screen.Camera;
 import org.anotherteam.render.shader.Shader;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector2i;
 
 public abstract class Batch {
 
@@ -18,12 +19,19 @@ public abstract class Batch {
     // Pos              tex coords      color
     // float, float     float, float    float, float, float
 
+    protected static final Vector2i[] QUAD_OFFSET = new Vector2i[] {
+            new Vector2i(0, 1),
+            new Vector2i(1, 1),
+            new Vector2i(1, 0),
+            new Vector2i(0, 0)
+    };
+
     protected static final short QUAD_POS_SIZE = 4;
     protected static final short INDICES_PRE_QUAD = 6;
 
-    protected static final short POS_SIZE = 2; // x, y
+    protected static final short POS_SIZE = 2;        // x, y
     protected static final short TEX_COORDS_SIZE = 2; // u, v
-    protected static final short COLOR_SIZE = 3; // r, g, b
+    protected static final short COLOR_SIZE = 3;      // r, g, b
 
     protected static final short POS_OFFSET = 0;
 

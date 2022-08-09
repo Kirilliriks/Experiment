@@ -24,7 +24,7 @@ public final class Game {
         gameRender = new GameRender();
 
         DebugMode = false;
-        DebugBatch.global = new DebugBatch(GameScreen.windowCamera);
+        DebugBatch.GLOBAL = new DebugBatch(GameScreen.windowCamera);
 
         GameScreen.RENDER_WIDTH = window.getWidth();
         GameScreen.RENDER_HEIGHT = window.getHeight();

@@ -2,6 +2,7 @@
 
 in vec2 tex_coord;
 in vec3 colorRGB;
+
 uniform sampler2D sampler;
 
 out vec4 out_Color;
