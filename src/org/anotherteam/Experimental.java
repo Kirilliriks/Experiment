@@ -89,7 +89,7 @@ public final class Experimental implements Runnable {
             timeCount += dt;
             unprocessedTime += dt;
 
-            if (Game.STATE_MANAGER.getState() == GameState.ON_CLOSE_GAME || Input.isKeyPressed(Input.KEY_ESCAPE)) return;
+            if (Game.STATE_MANAGER.getState() == GameState.ON_CLOSE_GAME) break;
         }
         end();
     }
@@ -97,8 +97,9 @@ public final class Experimental implements Runnable {
     private void init() {
         GLFWErrorCallback.createPrint(System.err).set();
 
-        if (!glfwInit())
+        if (!glfwInit()) {
             throw new IllegalStateException("Unable to initialize GLFW");
+        }
 
         window = new Window(1920, 1080, "Experimental");
         window.create();

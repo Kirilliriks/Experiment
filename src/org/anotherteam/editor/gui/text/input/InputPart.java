@@ -116,12 +116,12 @@ public final class InputPart extends TextButton {
         }
         if (!isMouseOnWidget()) return;
         if (!Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) return;
-        Editor.inputHandling = true;
+        Editor.INPUT_HANDLING = true;
         setClicked(true);
     }
 
     private void unFocus() {
-        Editor.inputHandling = false;
+        Editor.INPUT_HANDLING = false;
         clicked = false;
         if (onUnFocus != null) onUnFocus.run();
     }
@@ -149,7 +149,7 @@ public final class InputPart extends TextButton {
 
     private boolean validateInput(String text) {
         if (type == Type.INTEGER) {
-            if (!StringUtil.isNumeric(text)) return false;
+            return StringUtil.isNumeric(text);
         }
         return true;
     }

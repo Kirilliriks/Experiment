@@ -43,17 +43,18 @@ public final class Editor extends Widget {
     public static GameObjectEditor GAME_OBJECT_EDITOR;
     private static DialogWindow DIALOG_WINDOW;
     //
-    public static boolean inputHandling;
+    public static boolean INPUT_HANDLING;
 
     public Editor() {
         super("Another Editor",
                 10, GameScreen.WINDOW.getHeight() / 2.0f,
                 GameScreen.WINDOW.getWidth() - 10, GameScreen.WINDOW.getHeight() / 2 - 40, null);
+        EDITOR = this;
+
         Game.DEBUG_MODE = true;
         Game.STATE_MANAGER.setState(GameState.ON_EDITOR);
         switchGameView(true);
 
-        EDITOR = this;
         EDITOR_FONT.setScale(2.0f);
 
         editorCameraController = new EditorCameraController();
@@ -65,6 +66,7 @@ public final class Editor extends Widget {
         editorLog.setVisible(false);
         editorMenu = new EditorMenu(0, height - TextMenu.DEFAULT_BUTTON_MENU_HEIGHT, this);
         editorMenu.setWidth(width);
+
         final var switchStateButton = new TextButton("Play/Stop", 0, 10, this);
         switchStateButton.setPosX(width / 2.0f - switchStateButton.getWidth() - DEFAULT_BORDER_SIZE / 2.0f);
         switchStateButton.setOnClick(this::switchPlayStopMode);
@@ -116,7 +118,7 @@ public final class Editor extends Widget {
             GameScreen.POSITION.set((int) (GameScreen.WINDOW.getWidth() / 2.0f - (GameScreen.RENDER_WIDTH) / 2.0f), getDownBorderSize() / 2);
 
         } else {
-            GameScreen.WIDTH = 160; // TODO
+            GameScreen.WIDTH = 160; // TODO make static constant
             GameScreen.RENDER_WIDTH = GameScreen.WINDOW.getWidth();
             GameScreen.RENDER_HEIGHT = GameScreen.WINDOW.getHeight();
             GameScreen.POSITION.set(0, 0);
@@ -144,7 +146,7 @@ public final class Editor extends Widget {
         }
 
         updateElements(dt);
-        if (inputHandling) return;
+        if (INPUT_HANDLING) return;
 
         if (Input.isKeyPressed(Input.KEY_TILDA)) {
             editorLog.setVisible(!editorLog.isVisible());

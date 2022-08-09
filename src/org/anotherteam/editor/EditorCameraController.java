@@ -31,8 +31,7 @@ public final class EditorCameraController {
             impulse.x += speed * dt;
         }
 
-        if (GameScreen.draggedThing != null ||
-           (GameScreen.inGameWindowMouseX() == -1 || GameScreen.inGameMouseY() == -1)) {
+        if (GameScreen.draggedThing != null || (GameScreen.inGameWindowMouseX() == -1 || GameScreen.inGameMouseY() == -1)) {
             lastPos.set(0, 0);
             return;
         }
@@ -47,7 +46,9 @@ public final class EditorCameraController {
             impulse.x += diffX * DRAG_SCALE;
             impulse.y += diffY * DRAG_SCALE;
             lastPos.set(Input.getMousePos());
-        } else lastPos.set(0, 0);
+        } else {
+            lastPos.set(0, 0);
+        }
 
         if (impulse.length() >= 1) {
             GameScreen.gameCamera.addPosition(impulse.x, impulse.y);
