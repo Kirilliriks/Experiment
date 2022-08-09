@@ -66,19 +66,22 @@ public final class GameRender {
         drawTextures(room);
         textureFrame.end();
 
+        effectFrame.begin();
+
         raycastShader.setUniform("real_view", GameScreen.gameCamera.getViewMatrix());
 
         val preparedX = GameScreen.gameCamera.translateX(room.getPlayer().getPosition().x);
         val preparedY = GameScreen.gameCamera.translateY(room.getPlayer().getPosition().y + 15);
         raycastShader.setUniform("player_pos",
                 preparedX, preparedY);
+
         glBindImageTexture(1, heightFrame.texture.getId(), 0, false, 0, GL_READ_ONLY, GL_RGBA8);
         raycastShader.setUniform("u_texture", 0);
         effectFrame.texture.bind(0);
 
-        effectFrame.begin();
         effectBatch.draw(
                 textureFrame.texture, 0, 0, false, true);
+
         effectFrame.end();
         //Finish frames
 

@@ -148,6 +148,497 @@
           ]
         }
       ]
+    },
+    {
+      "name": "TestRoom",
+      "tiles": [
+        {
+          "xPos": 19,
+          "yPos": 1,
+          "frameX": 15,
+          "frameY": 0,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 19,
+          "yPos": 2,
+          "frameX": 15,
+          "frameY": 1,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 19,
+          "yPos": 3,
+          "frameX": 15,
+          "frameY": 2,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 19,
+          "yPos": 4,
+          "frameX": 15,
+          "frameY": 3,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 15,
+          "yPos": 1,
+          "frameX": 11,
+          "frameY": 0,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 15,
+          "yPos": 2,
+          "frameX": 11,
+          "frameY": 1,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 15,
+          "yPos": 3,
+          "frameX": 11,
+          "frameY": 2,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 15,
+          "yPos": 4,
+          "frameX": 11,
+          "frameY": 3,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 11,
+          "yPos": 1,
+          "frameX": 7,
+          "frameY": 0,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 11,
+          "yPos": 2,
+          "frameX": 7,
+          "frameY": 1,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 11,
+          "yPos": 3,
+          "frameX": 7,
+          "frameY": 2,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 11,
+          "yPos": 4,
+          "frameX": 7,
+          "frameY": 3,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 7,
+          "yPos": 1,
+          "frameX": 3,
+          "frameY": 0,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 7,
+          "yPos": 2,
+          "frameX": 3,
+          "frameY": 1,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 7,
+          "yPos": 3,
+          "frameX": 3,
+          "frameY": 2,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 7,
+          "yPos": 4,
+          "frameX": 3,
+          "frameY": 3,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 16,
+          "yPos": 1,
+          "frameX": 12,
+          "frameY": 0,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 16,
+          "yPos": 2,
+          "frameX": 12,
+          "frameY": 1,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 16,
+          "yPos": 3,
+          "frameX": 12,
+          "frameY": 2,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 16,
+          "yPos": 4,
+          "frameX": 12,
+          "frameY": 3,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 12,
+          "yPos": 1,
+          "frameX": 8,
+          "frameY": 0,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 12,
+          "yPos": 2,
+          "frameX": 8,
+          "frameY": 1,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 12,
+          "yPos": 3,
+          "frameX": 8,
+          "frameY": 2,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 12,
+          "yPos": 4,
+          "frameX": 8,
+          "frameY": 3,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 8,
+          "yPos": 1,
+          "frameX": 4,
+          "frameY": 0,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 8,
+          "yPos": 2,
+          "frameX": 4,
+          "frameY": 1,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 8,
+          "yPos": 3,
+          "frameX": 4,
+          "frameY": 2,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 8,
+          "yPos": 4,
+          "frameX": 4,
+          "frameY": 3,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 4,
+          "yPos": 1,
+          "frameX": 0,
+          "frameY": 0,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 4,
+          "yPos": 2,
+          "frameX": 0,
+          "frameY": 1,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 4,
+          "yPos": 3,
+          "frameX": 0,
+          "frameY": 2,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 4,
+          "yPos": 4,
+          "frameX": 0,
+          "frameY": 3,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 17,
+          "yPos": 1,
+          "frameX": 13,
+          "frameY": 0,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 17,
+          "yPos": 2,
+          "frameX": 13,
+          "frameY": 1,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 17,
+          "yPos": 3,
+          "frameX": 13,
+          "frameY": 2,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 17,
+          "yPos": 4,
+          "frameX": 13,
+          "frameY": 3,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 13,
+          "yPos": 1,
+          "frameX": 9,
+          "frameY": 0,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 13,
+          "yPos": 2,
+          "frameX": 9,
+          "frameY": 1,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 13,
+          "yPos": 3,
+          "frameX": 9,
+          "frameY": 2,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 13,
+          "yPos": 4,
+          "frameX": 9,
+          "frameY": 3,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 9,
+          "yPos": 1,
+          "frameX": 5,
+          "frameY": 0,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 9,
+          "yPos": 2,
+          "frameX": 5,
+          "frameY": 1,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 9,
+          "yPos": 3,
+          "frameX": 5,
+          "frameY": 2,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 9,
+          "yPos": 4,
+          "frameX": 5,
+          "frameY": 3,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 5,
+          "yPos": 1,
+          "frameX": 1,
+          "frameY": 0,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 5,
+          "yPos": 2,
+          "frameX": 1,
+          "frameY": 1,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 5,
+          "yPos": 3,
+          "frameX": 1,
+          "frameY": 2,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 5,
+          "yPos": 4,
+          "frameX": 1,
+          "frameY": 3,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 18,
+          "yPos": 1,
+          "frameX": 14,
+          "frameY": 0,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 18,
+          "yPos": 2,
+          "frameX": 14,
+          "frameY": 1,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 18,
+          "yPos": 3,
+          "frameX": 14,
+          "frameY": 2,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 18,
+          "yPos": 4,
+          "frameX": 14,
+          "frameY": 3,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 14,
+          "yPos": 1,
+          "frameX": 10,
+          "frameY": 0,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 14,
+          "yPos": 2,
+          "frameX": 10,
+          "frameY": 1,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 14,
+          "yPos": 3,
+          "frameX": 10,
+          "frameY": 2,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 14,
+          "yPos": 4,
+          "frameX": 10,
+          "frameY": 3,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 10,
+          "yPos": 1,
+          "frameX": 6,
+          "frameY": 0,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 10,
+          "yPos": 2,
+          "frameX": 6,
+          "frameY": 1,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 10,
+          "yPos": 3,
+          "frameX": 6,
+          "frameY": 2,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 10,
+          "yPos": 4,
+          "frameX": 6,
+          "frameY": 3,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 6,
+          "yPos": 1,
+          "frameX": 2,
+          "frameY": 0,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 6,
+          "yPos": 2,
+          "frameX": 2,
+          "frameY": 1,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 6,
+          "yPos": 3,
+          "frameX": 2,
+          "frameY": 2,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        },
+        {
+          "xPos": 6,
+          "yPos": 4,
+          "frameX": 2,
+          "frameY": 3,
+          "atlasName": "atlases/room/Wall_corridor_room.png"
+        }
+      ],
+      "gameObjects": [
+        {
+          "name": "unknown",
+          "type": "org.anotherteam.level.room.object.entity.Player",
+          "pos": {
+            "x": 78,
+            "y": 20
+          },
+          "components": [
+            {
+              "type": "Collider",
+              "firstBound": {
+                "x": -6,
+                "y": 0
+              },
+              "secondBound": {
+                "x": 6,
+                "y": 32
+              },
+              "solid": false,
+              "interactive": false,
+              "interactFirstBound": {
+                "x": 0,
+                "y": 0
+              },
+              "interactSecondBound": {
+                "x": 16,
+                "y": 32
+              }
+            },
+            {
+              "type": "Transform",
+              "maxSpeed": 25,
+              "speed": 25
+            }
+          ]
+        }
+      ]
     }
   ]
 }

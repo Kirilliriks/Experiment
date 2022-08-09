@@ -22,8 +22,6 @@ void main() {
     startPosition.y = int(player_pos.y);
     //
     vec4 color = texture2D(u_texture, tex_coord);
-    out_Color = color;
-    return;
 
     // TODO СЛОМАЛСЯ РЕЙТРЕСИНГ
 
@@ -37,15 +35,14 @@ void main() {
     directionVector = normalize(endPosition - startPosition);
     rayVector = startPosition;
 
-    float lastPower = 1.0;
-    float nextPower = 1.0; //
-    float hidePower = 1.0; // if zero pixel not visible, else visible
+    float lastPower = 1.0f;
+    float nextPower = 1.0f; //
+    float hidePower = 1.0f; // if zero pixel not visible, else visible
 
-    color.a = 0.0;
-
+    color.a = 0.0f;
     for (int i = 0; i < 100; i++) {
         if(startPosition == endPosition) {
-            color.a = 1;
+            color.a = 1.0f;
             break;
         }
         rayVector.x += directionVector.x;
@@ -56,15 +53,15 @@ void main() {
         integerRayVector.y = int(round(rayVector.y));
         //
 
-        nextPower -= 0.01;
-        hidePower -= 0.01;
+        nextPower -= 0.01f;
+        hidePower -= 0.01f;
 
         vec4 heightColor = imageLoad(u_texture1, integerRayVector);
         float height = heightColor.g;
         if (height != 0.0) {
             if (height == 1.0f)
-                hidePower = 0;
-            nextPower -= height / 20.0;
+            hidePower = 0.0f;
+            nextPower -= height / 20.0f;
         }
         if (hidePower <= 0 || nextPower <= 0) {
             break;
@@ -73,7 +70,7 @@ void main() {
             color.r *= lastPower;
             color.g *= lastPower;
             color.b *= lastPower;
-            color.a = 1.0;
+            color.a = 1.0f;
             break;
         }
         lastPower = nextPower;
