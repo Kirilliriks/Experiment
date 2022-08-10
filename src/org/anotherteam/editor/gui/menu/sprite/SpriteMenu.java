@@ -5,6 +5,7 @@ import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.render.sprite.Sprite;
 import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,11 @@ public class SpriteMenu extends GUIElement {
         sizeX = (width + offsetIcon) / ICON_SIZE;
         sizeY = (height + offsetIcon) / ICON_SIZE;
         lastClicked = null;
+    }
+
+    @Nullable
+    public SpriteButton getLastClicked() {
+        return lastClicked;
     }
 
     public void setOffsetIcon(int offsetIcon) {
@@ -55,6 +61,20 @@ public class SpriteMenu extends GUIElement {
                             height - (y + 1) * ICON_SIZE - (y + 1) * offsetIcon);
         buttons.add(spriteButton);
         return spriteButton;
+    }
+
+    public void removeLastButton() {
+        final SpriteButton last = getLastClicked();
+        if (last == null) return;
+
+        removeButton(last);
+    }
+
+    public void removeButton(SpriteButton button) {
+        buttons.remove(button);
+        removeChild(button);
+
+        if (lastClicked == button) lastClicked = null;
     }
 
     public void setClicked(SpriteButton button, boolean left) {

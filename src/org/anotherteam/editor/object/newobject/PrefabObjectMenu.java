@@ -28,6 +28,8 @@ public final class PrefabObjectMenu extends GUIElement {
 
     private final SwitchMenu typeMenu;
 
+    private SpriteMenu selectedMenu;
+
     private DraggedGameObject draggedGameObject;
 
     private GameObject selected;
@@ -55,10 +57,27 @@ public final class PrefabObjectMenu extends GUIElement {
 
         typeMenu.setClicked(typeMenu.getButton(0));
 
-        final var addGameObjectButton = new TextButton("Add new prefab", 0, 0, this);
-        addGameObjectButton.setOnClick((click) -> {
+        final var addPrefabButton = new TextButton("Add new prefab", 0, 0, this);
+        addPrefabButton.setOnClick((click) -> {
+            final var object = new GameObject(0, 0);
 
+            final Sprite sprite = getObjectsSprite(object);
+            final var spriteButton = selectedMenu.addButton(sprite);
+
+            spriteButton.setOnClick((left)-> {
+                if (!spriteButton.isClicked()) {
+                    selected = new GameObject(0, 0);
+                    GameObjectEditor.editor().setEditObject(selected);
+                    return;
+                }
+
+                draggedGameObject = new DraggedGameObject(sprite, new GameObject(0, 0));
+                GameScreen.draggedThing = draggedGameObject;
+            });
         });
+
+        final var removePrefabButton = new TextButton("Remove prefab", addPrefabButton.getWidth() + Editor.DEFAULT_BORDER_SIZE, 0, this);
+        removePrefabButton.setOnClick((click) -> selectedMenu.removeLastButton());
     }
 
     public void generatePrefabMenu(@NotNull SwitchButton button, Prefab[] prefabs) {
@@ -70,7 +89,7 @@ public final class PrefabObjectMenu extends GUIElement {
         for (final var value : prefabs) {
             final var object = GameObject.create(value.getPrefabClass());
 
-            final var sprite = getObjectSprite(object);
+            final var sprite = getObjectsSprite(object);
             final var spriteButton = spriteMenu.addButton(sprite);
 
             spriteButton.setOnClick((left)-> {
@@ -85,8 +104,13 @@ public final class PrefabObjectMenu extends GUIElement {
             });
         }
 
-        button.setOnClick((left)-> spriteMenu.setVisible(true));
+        button.setOnClick((left)-> {
+            spriteMenu.setVisible(true);
+            selectedMenu = spriteMenu;
+        });
         button.setAfterClick((left)-> spriteMenu.setVisible(false));
+
+        if (selectedMenu == null) selectedMenu = spriteMenu;
     }
 
     @Override
@@ -126,7 +150,7 @@ public final class PrefabObjectMenu extends GUIElement {
                 if (Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
                     currentRoom.rewoveObject(gameObject);
                 } else if (Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) {
-                    draggedGameObject = new DraggedGameObject(getObjectSprite(gameObject), gameObject);
+                    draggedGameObject = new DraggedGameObject(getObjectsSprite(gameObject), gameObject);
                     GameScreen.draggedThing = draggedGameObject;
                     currentRoom.rewoveObject(gameObject);
                 }
@@ -136,7 +160,7 @@ public final class PrefabObjectMenu extends GUIElement {
     }
 
     @NotNull
-    public Sprite getObjectSprite(@NotNull GameObject gameObject) {
+    public Sprite getObjectsSprite(@NotNull GameObject gameObject) {
         return gameObject.hasComponent(SpriteController.class) ?
                 gameObject.getComponent(SpriteController.class).getTextureSprite() :
                 AssetData.EDITOR_NULL_ICON_ATLAS.getTextureSprite(0, 0);

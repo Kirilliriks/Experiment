@@ -1,6 +1,5 @@
 package org.anotherteam.object.type.entity;
 
-
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.type.sprite.SpriteController;
 import org.anotherteam.object.component.type.state.State;

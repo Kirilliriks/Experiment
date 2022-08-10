@@ -13,7 +13,7 @@ import org.joml.Vector2i;
 
 import java.util.*;
 
-public abstract class GameObject {
+public class GameObject {
 
     protected Room room;
 
@@ -27,7 +27,7 @@ public abstract class GameObject {
     protected final Collider collider;
 
     public GameObject(int x, int y) {
-        this(x, y, "unknown");
+        this(x, y, "unnamed");
     }
 
     public GameObject(int x, int y, String name) {
@@ -40,7 +40,7 @@ public abstract class GameObject {
     }
 
     public static <T extends GameObject> T create(@NotNull Class<T> gameObjectClass) {
-        return create(0, 0, "unknown", gameObjectClass);
+        return create(0, 0, "unnamed", gameObjectClass);
     }
 
     public static <T extends GameObject> T create(int x, int y, String name, @NotNull Class<T> gameObjectClass) {

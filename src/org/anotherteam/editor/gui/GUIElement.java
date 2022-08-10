@@ -146,6 +146,11 @@ public abstract class GUIElement {
         }
     }
 
+    public void removeChild(GUIElement element) {
+        childElements.remove(element);
+        element.destroy();
+    }
+
     public void clearChild() {
         childElements.clear();
     }

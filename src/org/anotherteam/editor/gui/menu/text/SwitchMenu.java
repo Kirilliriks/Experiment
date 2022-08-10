@@ -4,6 +4,7 @@ import org.anotherteam.editor.gui.Button;
 import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class SwitchMenu extends TextMenu {
 
@@ -21,6 +22,11 @@ public class SwitchMenu extends TextMenu {
         super(x, y, width, height, type, ownerElement);
         lastClicked = null;
         setColor(DEFAULT_COLOR);
+    }
+
+    @Nullable
+    public SwitchButton getLastClicked() {
+        return lastClicked;
     }
 
     @NotNull
