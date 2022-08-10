@@ -32,6 +32,11 @@ public abstract class Component {
         serializable = false;
     }
 
+    public void init() { }
+
+    public void update(float dt) { }
+
+    // TODO remove
     public void instanceBy(Component component) { }
 
     public void setOwnerObject(@NotNull GameObject ownerObject) {
@@ -45,10 +50,6 @@ public abstract class Component {
 
     public void setDependencies() { }
 
-    public void init() { }
-
-    public void update(float dt) { }
-
     public boolean isSerializable() {
         return serializable;
     }
@@ -61,6 +62,9 @@ public abstract class Component {
     protected <T extends Component> T getDependsComponent(Class<T> clazz) {
         return ownerObject.getComponent(clazz);
     }
+
+    // TODO release
+    //public abstract Component copy();
 
     public static <T extends Component> T create(@NotNull Class<T> componentClass) {
         try {

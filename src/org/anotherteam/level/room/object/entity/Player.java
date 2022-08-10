@@ -15,8 +15,8 @@ public final class Player extends EntityObject {
         final var atlas = AssetData.getOrLoadSpriteAtlas(AssetData.ENTITY_PATH + "testPlayerAtlas.png", Sprite.SIZE.x, Sprite.SIZE.y);
 
         spriteController.setSpriteAtlas(atlas);
-        collider.setBounds(-6, 0, 6, 32);
-        collider.setInteractBounds(0, 0, 16, 32);
+        getCollider().setBounds(-6, 0, 6, 32);
+        getCollider().setInteractBounds(0, 0, 16, 32);
         transform.setSpeed(25);
 
         playerController = new PlayerController();

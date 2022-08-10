@@ -22,9 +22,8 @@ public class GameObject {
     protected String name;
 
     /**
-     * All GameObjects have a Collider component {Default size 32 x 32}
+     * All GameObjects have a Collider component (index 0) {Default size 32 x 32}
      */
-    protected final Collider collider;
 
     public GameObject(int x, int y) {
         this(x, y, "unnamed");
@@ -35,8 +34,7 @@ public class GameObject {
         room = null;
         position = new Vector2i(x, y);
         components = new ArrayList<>();
-        collider = new Collider();
-        addComponent(collider);
+        addComponent(new Collider());
     }
 
     public static <T extends GameObject> T create(@NotNull Class<T> gameObjectClass) {
@@ -75,7 +73,7 @@ public class GameObject {
 
     @NotNull
     public Collider getCollider() {
-        return collider;
+        return (Collider) components.get(0);
     }
 
     @NotNull
@@ -154,12 +152,18 @@ public class GameObject {
         }
 
         if (!Game.DEBUG_MODE || height) return;
-        collider.debugRender(renderBatch.debugBatch);
+
+        getCollider().debugRender(renderBatch.debugBatch);
     }
 
     //TODO make another method, maybe uze Z?
     public int getRenderPriority() {
         if (getComponent(SpriteController.class) == null) return -1;
+
         return getComponent(SpriteController.class).getRenderPriority();
+    }
+
+    public GameObject copy() {
+        return new GameObject(position.x, position.y, name); // TODO copy components
     }
 }
