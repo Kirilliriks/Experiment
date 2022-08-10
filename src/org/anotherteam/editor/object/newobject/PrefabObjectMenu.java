@@ -58,26 +58,32 @@ public final class PrefabObjectMenu extends GUIElement {
         typeMenu.setClicked(typeMenu.getButton(0));
 
         final var addPrefabButton = new TextButton("Add new prefab", 0, 0, this);
-        addPrefabButton.setOnClick((click) -> {
-            final var object = new GameObject(0, 0);
-
-            final Sprite sprite = getObjectsSprite(object);
-            final var spriteButton = selectedMenu.addButton(sprite);
-
-            spriteButton.setOnClick((left)-> {
-                if (!spriteButton.isClicked()) {
-                    selected = new GameObject(0, 0);
-                    GameObjectEditor.editor().setEditObject(selected);
-                    return;
-                }
-
-                draggedGameObject = new DraggedGameObject(sprite, new GameObject(0, 0));
-                GameScreen.draggedThing = draggedGameObject;
-            });
-        });
+        addPrefabButton.setOnClick((click) -> addPrefab());
 
         final var removePrefabButton = new TextButton("Remove prefab", addPrefabButton.getWidth() + Editor.DEFAULT_BORDER_SIZE, 0, this);
-        removePrefabButton.setOnClick((click) -> selectedMenu.removeLastButton());
+        removePrefabButton.setOnClick((click) -> removePrefab());
+    }
+
+    private void addPrefab() {
+        final var object = new GameObject(0, 0);
+
+        final Sprite sprite = getObjectsSprite(object);
+        final var spriteButton = selectedMenu.addButton(sprite);
+
+        spriteButton.setOnClick((left)-> {
+            if (!spriteButton.isClicked()) {
+                selected = new GameObject(0, 0);
+                GameObjectEditor.editor().setEditObject(selected);
+                return;
+            }
+
+            draggedGameObject = new DraggedGameObject(sprite, new GameObject(0, 0));
+            GameScreen.draggedThing = draggedGameObject;
+        });
+    }
+
+    private void removePrefab() {
+        selectedMenu.removeLastButton();
     }
 
     public void generatePrefabMenu(@NotNull SwitchButton button, Prefab[] prefabs) {
@@ -128,17 +134,25 @@ public final class PrefabObjectMenu extends GUIElement {
             if (Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) {
                 final var x = GameScreen.inGameMouseX();
                 final var y = GameScreen.inGameMouseY();
-                if (x < 0 || y < 0) return;
+                if (x < 0 || y < 0) {
+                    GameScreen.draggedThing = null;
+                    draggedGameObject = null;
+                    addPrefab(); // TODO add prefab if not contains from DraggedGameObject maybe?
+                    return;
+                }
 
                 final var gameObject = draggedGameObject.getGameObject();
                 gameObject.setPosition(x, y);
+
                 Game.LEVEL_MANAGER.getCurrentRoom().addObject(gameObject);
+
                 GameScreen.draggedThing = null;
                 draggedGameObject = null;
             } else if (Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
                 GameScreen.draggedThing = null;
                 draggedGameObject = null;
             }
+
             return;
         }
 
@@ -154,6 +168,7 @@ public final class PrefabObjectMenu extends GUIElement {
                     GameScreen.draggedThing = draggedGameObject;
                     currentRoom.rewoveObject(gameObject);
                 }
+
                 break;
             }
         }
