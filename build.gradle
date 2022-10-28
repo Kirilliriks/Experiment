@@ -17,7 +17,7 @@ repositories {
 
 sourceCompatibility = JavaVersion.VERSION_16
 
-project.ext.lwjglVersion = "3.2.3"
+project.ext.lwjglVersion = "3.3.1"
 project.ext.lwjglNatives = "natives-windows"
 project.ext.imguiVersion = '1.77-0.17.2'
 
@@ -39,14 +39,14 @@ task runApp(type: JavaExec) {
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
 
-    compileOnly 'org.jetbrains:annotations:22.0.0'
+    compileOnly 'org.jetbrains:annotations:23.0.0'
 
-    implementation "org.joml:joml:1.10.2"
+    implementation 'org.joml:joml:1.10.4'
 
-    implementation 'com.google.code.gson:gson:2.8.8'
+    implementation 'com.google.code.gson:gson:2.10'
 
     // Include all available natives, but it's likely that you want something specific
     runtimeOnly "io.imgui.java:natives-windows:$imguiVersion"
