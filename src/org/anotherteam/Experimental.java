@@ -1,6 +1,7 @@
 package org.anotherteam;
 
 import org.anotherteam.editor.Editor;
+import org.anotherteam.imgui.ImGuiMain;
 import org.anotherteam.render.window.Window;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.Time;
@@ -17,6 +18,8 @@ public final class Experimental implements Runnable {
     public  Editor editor;
     private Window window;
 
+    private ImGuiMain imGuiMain;
+
     public void start() {
         thread = new Thread(this, "thread");
         thread.start();
@@ -28,9 +31,12 @@ public final class Experimental implements Runnable {
         GL.createCapabilities(); // CRITICAL
 
         game = new Game(window);
-        editor = new Editor();
+        //editor = new Editor();
         game.init();
-        editor.init();
+        //editor.init();
+
+        imGuiMain = new ImGuiMain();
+        imGuiMain.initImGui(window.getHandler(), "#version 130");
 
         double frameRateDelta = 1.0f / window.getFpsMax();
 
@@ -66,10 +72,14 @@ public final class Experimental implements Runnable {
 
             //TODO Cursor deformation BUG in RENDER!!!
             if (canRender) {
+
                 game.render(dtF);
                 if (editor != null) {
                     editor.renderFrame(GameScreen.windowBatch);
                 }
+
+                imGuiMain.start();
+
                 frames++;
 
                 window.swapBuffers();
@@ -77,8 +87,10 @@ public final class Experimental implements Runnable {
 
             if (timeCount > 1f) {
                 window.setTitle("FPS: " + frames);
-                if (!window.isFpsLocked())
+                if (!window.isFpsLocked()) {
                     frameRateDelta = 1.0f / frames;
+                }
+
                 frames = 0;
                 updates = 0;
                 timeCount -= 1.0f;
