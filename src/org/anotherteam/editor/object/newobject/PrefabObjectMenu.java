@@ -180,19 +180,4 @@ public final class PrefabObjectMenu extends GUIElement {
                 gameObject.getComponent(SpriteController.class).getTextureSprite() :
                 AssetData.EDITOR_NULL_ICON_ATLAS.getTextureSprite(0, 0);
     }
-
-    @Override
-    public void render(@NotNull EditorBatch editorBatch) {
-        if (!visible) return;
-
-        super.render(editorBatch);
-
-        if (GameScreen.draggedThing == null || draggedGameObject == null) return;
-        final var x  = (int) Input.getMouseX();
-        final var y  = (int) Input.getMouseY();
-
-        if (GameScreen.inGameWindowMouseX() != -1 && GameScreen.inGameWindowMouseY() != -1) return;
-        draggedGameObject.getGameObject().setPosition(x, y);
-        draggedGameObject.getGameObject().draw(editorBatch, false);
-    }
 }

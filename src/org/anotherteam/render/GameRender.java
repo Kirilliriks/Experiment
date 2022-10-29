@@ -111,6 +111,7 @@ public final class GameRender {
         if (Game.DEBUG_MODE) {
             debugRender(windowBatch, room);
         }
+
         windowBatch.end();
     }
 
@@ -118,14 +119,13 @@ public final class GameRender {
         room.draw(textureBatch, false);
 
         if (Game.STATE_MANAGER.getState() != GameState.ON_EDITOR) return;
+        if (GameScreen.draggedThing == null) return;
 
-        if (GameScreen.draggedThing != null) {
-            final var mouseX = GameScreen.inGameMouseX();
-            final var mouseY = GameScreen.inGameMouseY();
-            if (mouseX < 0 || mouseY < 0) return;
+        final int x = GameScreen.inGameMouseX();
+        final int y = GameScreen.inGameMouseY();
+        if (x < 0 || y < 0) return;
 
-            GameScreen.draggedThing.render(mouseX, mouseY, textureBatch);
-        }
+        GameScreen.draggedThing.draw(x, y, textureBatch);
     }
 
     private void drawHeightMap(@NotNull Room room) {
@@ -133,11 +133,17 @@ public final class GameRender {
     }
 
     private void debugRender(RenderBatch renderBatch, Room room) {
-        int x = GameScreen.inGameMouseX();
-        int y = GameScreen.inGameMouseY();
+        final int x = GameScreen.inGameMouseX();
+        final int y = GameScreen.inGameMouseY();
         renderBatch.drawText("Pos: " + x + " " + y,
                 (int) (Input.getMousePos().x + 15), (int) (Input.getMousePos().y - 25));
 
         room.debugDraw(renderBatch);
+
+        if (Game.STATE_MANAGER.getState() != GameState.ON_EDITOR) return;
+        if (GameScreen.draggedThing == null) return;
+        if (x < 0 || y < 0) return;
+
+        GameScreen.draggedThing.debugDraw(x, y, false, renderBatch);
     }
 }

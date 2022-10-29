@@ -51,7 +51,7 @@ public final class Room {
         if (!Game.DEBUG_MODE) return;
 
         for (final var gameObject : gameObjects) {
-            gameObject.debugDraw(renderBatch);
+            gameObject.debugDraw(renderBatch, false);
         }
     }
 

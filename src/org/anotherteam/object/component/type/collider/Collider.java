@@ -140,13 +140,15 @@ public final class Collider extends AABB {
     }
 
     @Override
-    public void debugRender(@NotNull DebugBatch debugBatch) {
-        interactAABB.debugRender(debugBatch);
+    public void debugRender(boolean inEditor, @NotNull DebugBatch debugBatch) {
+        interactAABB.debugRender(inEditor, debugBatch);
+
+        Color color = Color.RED;
         if (isOnMouse(GameScreen.inGameMouseX(), GameScreen.inGameMouseY())) {
-            super.debugRender(debugBatch, Color.GREEN);
-        } else {
-            super.debugRender(debugBatch, Color.RED);
+            color = Color.GREEN;
         }
+
+        super.debugRender(inEditor, debugBatch, color);
     }
 
     public static class InteractAABB extends AABB {
@@ -175,8 +177,8 @@ public final class Collider extends AABB {
         }
 
         @Override
-        public void debugRender(@NotNull DebugBatch debugBatch) {
-            super.debugRender(debugBatch, Color.BLUE);
+        public void debugRender(boolean inEditor, @NotNull DebugBatch debugBatch) {
+            super.debugRender(inEditor, debugBatch, Color.BLUE);
         }
     }
 }

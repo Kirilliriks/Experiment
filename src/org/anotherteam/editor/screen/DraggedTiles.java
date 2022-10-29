@@ -58,11 +58,20 @@ public final class DraggedTiles extends DraggedThing {
     }
 
     @Override
-    public void render(int x, int y, @NotNull RenderBatch renderBatch) {
+    public void draw(int x, int y, @NotNull RenderBatch renderBatch) {
         for (final var tile : tiles) {
             final var xOffset = (tile.frameX - firstTile.frameX) * Tile.SIZE.x;
             final var yOffset = (tile.frameY - firstTile.frameY) * Tile.SIZE.y;
-            tile.render(x + xOffset, y + yOffset, renderBatch);
+            tile.draw(x + xOffset, y + yOffset, renderBatch);
+        }
+    }
+
+    @Override
+    public void debugDraw(int x, int y, boolean inEditor, @NotNull RenderBatch renderBatch) {
+        for (final var tile : tiles) {
+            final var xOffset = (tile.frameX - firstTile.frameX) * Tile.SIZE.x;
+            final var yOffset = (tile.frameY - firstTile.frameY) * Tile.SIZE.y;
+            tile.debugDraw(x + xOffset, y + yOffset, inEditor, renderBatch);
         }
     }
 }

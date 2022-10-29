@@ -29,12 +29,16 @@ public final class DraggedTile extends DraggedSprite {
     }
 
     @Override
-    public void render(int x, int y, @NotNull RenderBatch renderBatch) {
+    public void draw(int x, int y, @NotNull RenderBatch renderBatch) {
         final var xF = (x / Tile.SIZE.x) * Tile.SIZE.x;
         final var yF = (y / Tile.SIZE.y) * Tile.SIZE.y;
         renderBatch.draw(sprite, xF, yF, Tile.SIZE.x, Tile.SIZE.y);
 
-        if (spriteAtlas != AssetData.EDITOR_HIGHLITER_ATLAS)
+        if (spriteAtlas != AssetData.EDITOR_HIGHLITER_ATLAS) {
             renderBatch.draw(AssetData.EDITOR_HIGHLITER_TEXTURE, xF, yF, Tile.SIZE.x, Tile.SIZE.y);
+        }
     }
+
+    @Override
+    public void debugDraw(int x, int y, boolean inEditor, @NotNull RenderBatch renderBatch) { }
 }

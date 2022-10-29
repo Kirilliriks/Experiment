@@ -78,15 +78,24 @@ public abstract class AABB extends Component {
                 (objectPosition.x + secondBound.x) < aabb.getPosition().x  + aabb.getFirstBound().x));
     }
 
-    public abstract void debugRender(@NotNull DebugBatch debugBatch);
+    public abstract void debugRender(boolean inEditor, @NotNull DebugBatch debugBatch);
 
-    public void debugRender(@NotNull DebugBatch debugBatch, Color color){
+    public void debugRender(boolean inEditor, @NotNull DebugBatch debugBatch, Color color) {
         final int x = objectPosition.x + offSet.x;
         final int y = objectPosition.y + offSet.y;
-        final var v1 = GameScreen.toWindowPos(new Vector2f(x +  firstBound.x, y +  firstBound.y));
-        final var v2 = GameScreen.toWindowPos(new Vector2f(x +  firstBound.x, y + secondBound.y));
-        final var v3 = GameScreen.toWindowPos(new Vector2f(x + secondBound.x, y + secondBound.y));
-        final var v4 = GameScreen.toWindowPos(new Vector2f(x + secondBound.x, y +  firstBound.y));
+
+        var v1 = new Vector2f(x + firstBound.x, y + firstBound.y);
+        var v2 = new Vector2f(x + firstBound.x, y + secondBound.y);
+        var v3 = new Vector2f(x + secondBound.x, y + secondBound.y);
+        var v4 = new Vector2f(x + secondBound.x, y + firstBound.y);
+
+        if (!inEditor) {
+            GameScreen.toWindowPos(v1);
+            GameScreen.toWindowPos(v2);
+            GameScreen.toWindowPos(v3);
+            GameScreen.toWindowPos(v4);
+        }
+
         debugBatch.drawLine(v1, v2, color);
         debugBatch.drawLine(v2, v3, color);
         debugBatch.drawLine(v3, v4, color);

@@ -164,6 +164,15 @@ public final class Editor extends Widget {
 
         if (DIALOG_WINDOW != null) DIALOG_WINDOW.render(editorBatch);
 
+        if (GameScreen.draggedThing != null) {
+            if (GameScreen.inGameWindowMouseX() == -1 || GameScreen.inGameWindowMouseY() == -1) {
+                final var x = (int) Input.getMouseX();
+                final var y = (int) Input.getMouseY();
+                GameScreen.draggedThing.draw(x, y, editorBatch);
+                GameScreen.draggedThing.debugDraw(x, y, true, editorBatch);
+            }
+        }
+
         editorBatch.end();
         editorFrame.end();
     }

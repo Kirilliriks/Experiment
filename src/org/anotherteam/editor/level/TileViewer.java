@@ -10,7 +10,6 @@ import org.anotherteam.editor.gui.menu.sprite.SpriteMenu;
 import org.anotherteam.editor.gui.menu.text.SwitchButton;
 import org.anotherteam.editor.gui.menu.text.TextMenu;
 import org.anotherteam.editor.gui.menu.text.SwitchMenu;
-import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.editor.screen.DraggedTile;
 import org.anotherteam.editor.screen.DraggedTiles;
 import org.anotherteam.screen.GameScreen;
@@ -83,7 +82,9 @@ public final class TileViewer extends GUIElement {
     @Override
     public void setVisible(boolean visible) {
         super.setVisible(visible);
+
         draggedTiles = null;
+
         if (visible) {
             GameScreen.draggedThing = highliter;
         }
@@ -104,23 +105,15 @@ public final class TileViewer extends GUIElement {
             }
             return;
         }
+
         if (!Input.isAnyButtonDown()) return;
+
         final var x = GameScreen.onMouseTileX();
         final var y = GameScreen.onMouseTileY();
         if (x < 0 || y < 0) return;
+
         if (Input.isKeyDown(Input.KEY_SHIFT) && Input.isButtonDown(Input.MOUSE_RIGHT_BUTTON) || Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
             Game.LEVEL_MANAGER.getCurrentRoom().removeTile(x, y);
         }
-    }
-
-    @Override
-    public void render(@NotNull EditorBatch editorBatch) {
-        if (!visible) return;
-
-        super.render(editorBatch);
-
-        if (GameScreen.draggedThing == null || draggedTiles == null) return;
-        if (GameScreen.inGameWindowMouseX() != -1 && GameScreen.inGameWindowMouseY() != -1) return;
-        draggedTiles.editorRender(Input.getMouseX(), Input.getMouseY(), editorBatch);
     }
 }

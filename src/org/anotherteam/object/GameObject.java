@@ -153,22 +153,23 @@ public class GameObject {
         }
     }
 
-    public void debugDraw(@NotNull RenderBatch renderBatch) {
+    public void debugDraw(RenderBatch renderBatch, boolean inEditor) {
         if (!Game.DEBUG_MODE) return;
 
         final Vector2i pos = getPosition();
-        final float x = GameScreen.toWindowPosX(pos.x);
-        final float y = GameScreen.toWindowPosY(pos.y);
+        final float x = inEditor ? pos.x : GameScreen.toWindowPosX(pos.x);
+        final float y = inEditor ? pos.y : GameScreen.toWindowPosY(pos.y);
         renderBatch.drawText("Pos: " + pos.x + " : " + pos.y, x, y, false, true, true);
 
-        getCollider().debugRender(renderBatch.debugBatch);
+        getCollider().debugRender(inEditor, renderBatch.debugBatch);
     }
 
     //TODO make another method, maybe uze Z?
     public int getRenderPriority() {
-        if (getComponent(SpriteController.class) == null) return -1;
+        final SpriteController controller = getComponent(SpriteController.class);
+        if (controller == null) return -1;
 
-        return getComponent(SpriteController.class).getRenderPriority();
+        return controller.getRenderPriority();
     }
 
     public GameObject copy() {

@@ -21,8 +21,14 @@ public final class DraggedGameObject extends DraggedSprite {
     }
 
     @Override
-    public void render(int x, int y, @NotNull RenderBatch renderBatch) {
+    public void draw(int x, int y, @NotNull RenderBatch renderBatch) {
         gameObject.setPosition(x, y);
         gameObject.draw(renderBatch, false);
+
+    }
+
+    @Override
+    public void debugDraw(int x, int y, boolean inEditor, @NotNull RenderBatch renderBatch) {
+        gameObject.debugDraw(renderBatch, inEditor);
     }
 }
