@@ -135,6 +135,7 @@ public final class InputPart extends TextButton {
 
     private void handleInput() {
         if (!Input.isAnyKeyDown()) return;
+
         final var key = Input.getLastPrintedKey();
         if (key == null) return;
 
@@ -145,6 +146,7 @@ public final class InputPart extends TextButton {
             width = getLabelWidth() + valueInput.getWidth();
             return;
         }
+
         if (!key.isPrintable()) return;
 
         final String newText = text + key.getChar();
