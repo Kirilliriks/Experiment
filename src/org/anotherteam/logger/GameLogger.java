@@ -1,7 +1,7 @@
 package org.anotherteam.logger;
 
 import org.anotherteam.Game;
-import org.anotherteam.editor.Editor;
+import org.anotherteam.oldeditor.Editor;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

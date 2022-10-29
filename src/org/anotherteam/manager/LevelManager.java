@@ -2,6 +2,7 @@ package org.anotherteam.manager;
 
 import org.anotherteam.Game;
 import org.anotherteam.GameState;
+import org.anotherteam.render.frame.RenderFrame;
 import org.anotherteam.util.FileUtils;
 import org.anotherteam.level.Level;
 import org.anotherteam.level.room.Room;
@@ -56,8 +57,8 @@ public final class LevelManager extends AbstractManager {
         return getCurrentLevel().getCurrentRoom();
     }
 
-    public void renderLevel(@NotNull RenderBatch renderBatch) {
-        currentLevel.render(renderBatch);
+    public void renderLevel(@NotNull RenderFrame windowFrame) {
+        currentLevel.render(windowFrame);
     }
 
     @Override

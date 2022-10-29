@@ -21,7 +21,7 @@ public final class Game {
         window.setFullscreen(true);
 
         LEVEL_MANAGER = new LevelManager();
-        STATE_MANAGER = new StateManager(this, GameState.ON_EDITOR);
+        STATE_MANAGER = new StateManager(this, GameState.ON_LEVEL);
 
         GameScreen.init(window);
         GAME_RENDER = new GameRender();
@@ -43,7 +43,7 @@ public final class Game {
     }
 
     public void render(float dt) {
-        LEVEL_MANAGER.renderLevel(GameScreen.windowBatch);
+        LEVEL_MANAGER.renderLevel(GameScreen.windowFrame);
     }
 
     public void destroy() { }

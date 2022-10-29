@@ -4,6 +4,7 @@ import org.anotherteam.Input;
 import org.anotherteam.data.AssetData;
 import org.anotherteam.level.room.tile.Tile;
 import org.anotherteam.render.batch.RenderBatch;
+import org.anotherteam.render.frame.RenderFrame;
 import org.anotherteam.render.screen.Camera;
 import org.anotherteam.render.window.Window;
 import org.anotherteam.util.exception.LifeException;
@@ -24,6 +25,7 @@ public final class GameScreen {
     public static final Camera WINDOW_CAMERA = new Camera();
 
     public static RenderBatch windowBatch = null;
+    public static RenderFrame windowFrame = null;
     public static Window window = null;
     public static DraggedThing draggedThing = null;
 
@@ -36,6 +38,7 @@ public final class GameScreen {
         WINDOW_CAMERA.setProjection(window.getWidth(), window.getHeight());
 
         windowBatch = new RenderBatch(AssetData.DEFAULT_SHADER, WINDOW_CAMERA);
+        windowFrame = new RenderFrame(windowBatch, window.getWidth(), window.getHeight());
     }
 
     /**

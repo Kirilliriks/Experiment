@@ -1,24 +1,22 @@
 package org.anotherteam;
 
 import org.anotherteam.editor.Editor;
-import org.anotherteam.imgui.ImGuiMain;
 import org.anotherteam.render.window.Window;
-import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.Time;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
 
 import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.opengl.GL11.glViewport;
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengles.GLES20.GL_COLOR_BUFFER_BIT;
 
 public final class Experimental implements Runnable {
 
     private Thread thread;
     private Game game;
-    public  Editor editor;
+    public Editor editor;
     private Window window;
 
-    private ImGuiMain imGuiMain;
 
     public void start() {
         thread = new Thread(this, "thread");
@@ -31,12 +29,8 @@ public final class Experimental implements Runnable {
         GL.createCapabilities(); // CRITICAL
 
         game = new Game(window);
-        //editor = new Editor();
+        editor = new Editor(game);
         game.init();
-        //editor.init();
-
-        imGuiMain = new ImGuiMain();
-        imGuiMain.initImGui(window.getHandler(), "#version 130");
 
         double frameRateDelta = 1.0f / window.getFpsMax();
 
@@ -60,9 +54,6 @@ public final class Experimental implements Runnable {
                 unprocessedTime -= frameRateDelta;
 
                 window.update();
-                if (editor != null) {
-                    editor.update(dtF);
-                }
                 game.update(dtF);
                 updates++;
 
@@ -73,12 +64,12 @@ public final class Experimental implements Runnable {
             //TODO Cursor deformation BUG in RENDER!!!
             if (canRender) {
 
+                glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+                glClear(GL_COLOR_BUFFER_BIT);
                 game.render(dtF);
                 if (editor != null) {
-                    editor.renderFrame(GameScreen.windowBatch);
+                    editor.draw();
                 }
-
-                imGuiMain.start();
 
                 frames++;
 
@@ -119,8 +110,6 @@ public final class Experimental implements Runnable {
     }
 
     private void end() {
-        if (editor != null)
-            editor.destroy();
         game.destroy();
         window.destroy();
         glfwSetErrorCallback(null).free();

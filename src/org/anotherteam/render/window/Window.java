@@ -90,7 +90,7 @@ public final class Window {
     public void create() {
         glfwDefaultWindowHints();
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
-        glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+        glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
         glfwWindowHint(GLFW_MAXIMIZED, GLFW_FALSE);
 
         handler = glfwCreateWindow(width, height, title, fullscreen ? GLFW.glfwGetPrimaryMonitor() : 0, NULL);
@@ -108,6 +108,10 @@ public final class Window {
         glfwWindowHint(GLFW_GREEN_BITS, videoMode.greenBits());
         glfwWindowHint(GLFW_BLUE_BITS, videoMode.blueBits());
         glfwWindowHint(GLFW_REFRESH_RATE, videoMode.refreshRate());
+        glfwSetWindowSizeCallback(handler, (w, newWidth, newHeight) -> {
+            width = newWidth;
+            height = newHeight;
+        });
 
         windowX[0] = (videoMode.width() - width) / 2;
         windowY[0] = (videoMode.height() - height) / 2;
@@ -125,6 +129,9 @@ public final class Window {
         glfwShowWindow(handler);
 
         setFullscreen(fullscreen);
+
+        //glEnable(GL_BLEND);
+        //glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
     }
 
     public long getHandler() {

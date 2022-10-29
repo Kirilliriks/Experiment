@@ -4,6 +4,7 @@ import org.anotherteam.Game;
 import org.anotherteam.level.room.Room;
 import org.anotherteam.render.GameRender;
 import org.anotherteam.render.batch.RenderBatch;
+import org.anotherteam.render.frame.RenderFrame;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -36,8 +37,8 @@ public final class Level {
         currentRoom.update(dt);
     }
 
-    public void render(@NotNull RenderBatch windowBatch) {
-        gameRender.render(windowBatch, currentRoom);
+    public void render(@NotNull RenderFrame windowFrame) {
+        gameRender.render(windowFrame, currentRoom);
     }
 
     public void setName(String name) {
