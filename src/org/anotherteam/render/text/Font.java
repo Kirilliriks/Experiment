@@ -12,7 +12,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Font {
+public final class Font {
     private final String filepath;
     private final int fontSize;
     private final Map<Integer, Glyph> characterMap;
@@ -54,6 +54,10 @@ public class Font {
 
     public void generateBitmap() {
         java.awt.Font font = registerFont();
+        if (font == null) {
+            throw new LifeException("Bad font registering " + filepath);
+        }
+
         font = new java.awt.Font(font.getName(), java.awt.Font.PLAIN, fontSize);
 
         var img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
@@ -122,10 +126,12 @@ public class Font {
 
     public int getTextWidth(String text, float scale) {
         int width = 0;
+
         for (int i = 0; i < text.length(); i++) {
             final var charInfo = getCharacter(text.charAt(i));
-            if (charInfo.width == 0)
+            if (charInfo.width == 0) {
                 throw new LifeException("Unknown font character " + text.charAt(i));
+            }
 
             width += charInfo.width * scale;
         }
@@ -133,9 +139,11 @@ public class Font {
     }
 
     public int getTextHeight(String text, float scale) {
-        final var charInfo = getCharacter(text.charAt(text.charAt(0)));
-        if (charInfo.width == 0)
+        final var charInfo = getCharacter(text.charAt(0));
+        if (charInfo.width == 0) {
             throw new LifeException("Unknown font character " + text.charAt(0));
-        return (int)(charInfo.height * scale);
+        }
+
+        return (int) (charInfo.height * scale);
     }
 }

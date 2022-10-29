@@ -159,7 +159,7 @@ public class GameObject {
         final Vector2i pos = getPosition();
         final float x = GameScreen.toWindowPosX(pos.x);
         final float y = GameScreen.toWindowPosY(pos.y);
-        renderBatch.drawText("Pos: " + pos.x + " : " + pos.y, x, y, false, true);
+        renderBatch.drawText("Pos: " + pos.x + " : " + pos.y, x, y, false, true, true);
 
         getCollider().debugRender(renderBatch.debugBatch);
     }

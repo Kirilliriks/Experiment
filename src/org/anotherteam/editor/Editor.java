@@ -160,7 +160,7 @@ public final class Editor extends Widget {
         super.render(editorBatch);
         final var text = "GamePos: " + GameScreen.inGameMouseX() + " " + GameScreen.inGameMouseY() + " | WindowPos: " + Input.getMousePos().x + " " + Input.getMousePos().y + " | GameWindowPos: " + GameScreen.inGameWindowMouseX() + " " + GameScreen.inGameWindowMouseY();
         editorBatch.drawText(EDITOR_FONT, text,
-                width, (int) pos.y + 5, 1.0f, Color.WHITE, true, false);
+                width, (int) pos.y + 5, 1.0f, Color.WHITE, true,  false, false);
 
         if (DIALOG_WINDOW != null) DIALOG_WINDOW.render(editorBatch);
 
