@@ -2,19 +2,19 @@ package org.anotherteam.editor.gui.menu.sprite;
 
 import org.anotherteam.Input;
 import org.anotherteam.editor.render.EditorBatch;
-import org.anotherteam.render.sprite.Sprite;
+import org.anotherteam.render.texture.Texture;
 import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
 
-public final class SpriteButton extends DrawableButton {
+public final class TextureButton extends DrawableButton {
 
-    private final Sprite sprite;
+    private final Texture texture;
 
-    public SpriteButton(@NotNull Sprite sprite, float x, float y, SpriteMenu ownerElement) {
+    public TextureButton(@NotNull Texture texture, float x, float y, SpriteMenu ownerElement) {
         super(x, y, ownerElement);
-        this.sprite = sprite;
-        width = SpriteMenu.ICON_SIZE;
-        height = SpriteMenu.ICON_SIZE;
+        this.texture = texture;
+        width = texture.getWidth();
+        height = texture.getHeight();
         setColor(Color.BLACK);
     }
 
@@ -48,12 +48,12 @@ public final class SpriteButton extends DrawableButton {
         if (!visible) return;
 
         super.render(editorBatch);
-        editorBatch.draw(sprite, getPosX(), getPosY(), SpriteMenu.ICON_SIZE, SpriteMenu.ICON_SIZE);
+        editorBatch.draw(texture, getPosX(), getPosY(), texture.getWidth(), texture.getHeight());
     }
 
     @Override
     public void drawPreview(@NotNull EditorBatch editorBatch) {
-        editorBatch.draw(sprite, getPosX() + SpriteMenu.ICON_SIZE, getPosY() - SpriteMenu.ICON_SIZE * PREVIEW_SCALE,
-                SpriteMenu.ICON_SIZE * PREVIEW_SCALE, SpriteMenu.ICON_SIZE * PREVIEW_SCALE);
+        editorBatch.draw(texture, getPosX() + texture.getWidth(), getPosY() - texture.getHeight() * PREVIEW_SCALE,
+                texture.getWidth() * PREVIEW_SCALE, texture.getHeight() * PREVIEW_SCALE);
     }
 }

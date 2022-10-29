@@ -1,6 +1,11 @@
 package org.anotherteam.object.component.type.sprite;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+import org.anotherteam.data.AssetData;
 import org.anotherteam.object.component.Component;
+import org.anotherteam.object.component.fieldcontroller.FieldController;
 import org.anotherteam.object.component.type.sprite.animation.AnimationData;
 import org.anotherteam.object.component.type.sprite.animation.AnimationTimer;
 import org.anotherteam.render.batch.RenderBatch;
@@ -10,9 +15,16 @@ import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public final class SpriteController extends Component {
 
     private int drawPriority;
+
+    // Info for texture
+    private String atlasPath;
+    private int frameWidth, frameHeight;
 
     private SpriteAtlas spriteAtlas;
     private Sprite textureSprite;
@@ -26,11 +38,13 @@ public final class SpriteController extends Component {
     /**
      * Draw object from center of sprite or edge
      */
-    private final boolean center;
+    private boolean center;
 
     public SpriteController() {
         drawPriority = 0;
 
+        atlasPath = null;
+        spriteAtlas = null;
         textureSprite = null;
         heightSprite = null;
         animation = null;
@@ -39,12 +53,23 @@ public final class SpriteController extends Component {
         center = true;
     }
 
+    @Override
+    public List<FieldController> getFields() {
+        final List<FieldController> list = new ArrayList<>();
+        list.add(new FieldController("Select sprite", textureSprite, (value) -> textureSprite = (Sprite) value));
+        return list;
+    }
+
     public void setDrawPriority(int drawPriority) {
         this.drawPriority = drawPriority;
     }
 
-    public void setSpriteAtlas(SpriteAtlas spriteAtlas) {
-        this.spriteAtlas = spriteAtlas;
+    public void setSpriteAtlas(String atlasPath, int frameWidth, int frameHeight) {
+        this.atlasPath = atlasPath;
+        this.frameWidth = frameWidth;
+        this.frameHeight = frameHeight;
+
+        spriteAtlas = AssetData.getOrLoadSpriteAtlas(atlasPath, frameWidth, frameHeight);
         frameX = 0;
         frameY = 0;
         textureSprite = spriteAtlas.getTextureSprite(frameX, frameY);
@@ -118,5 +143,23 @@ public final class SpriteController extends Component {
 
     public void setFlipX(boolean flipX) {
         this.flipX = flipX;
+    }
+
+    @Override
+    public @NotNull JsonElement serialize(JsonObject result) {
+        result.add("atlasPath", new JsonPrimitive(atlasPath));
+        result.add("width", new JsonPrimitive(frameWidth));
+        result.add("height", new JsonPrimitive(frameHeight));
+        return result;
+    }
+
+    public static SpriteController deserialize(JsonObject object) {
+        final var atlasPath = object.get("atlasPath").getAsString();
+        final var width = object.get("width").getAsInt();
+        final var height = object.get("height").getAsInt();
+
+        final var spriteController = new SpriteController();
+        spriteController.setSpriteAtlas(atlasPath, width, height);
+        return spriteController;
     }
 }

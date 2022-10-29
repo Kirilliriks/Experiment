@@ -25,13 +25,6 @@ public abstract class AABB extends Component {
     }
 
     @Override
-    public void instanceBy(Component component) {
-        final var col = (Collider) component;
-        firstBound.set(col.getFirstBound());
-        secondBound.set(col.getSecondBound());
-    }
-
-    @Override
     public void setOwnerObject(@NotNull GameObject ownerObject) {
         super.setOwnerObject(ownerObject);
         objectPosition = ownerObject.getPosition();
@@ -78,6 +71,7 @@ public abstract class AABB extends Component {
                 (objectPosition.x + secondBound.x) < aabb.getPosition().x  + aabb.getFirstBound().x));
     }
 
+    // Debug
     public abstract void debugRender(boolean inEditor, @NotNull DebugBatch debugBatch);
 
     public void debugRender(boolean inEditor, @NotNull DebugBatch debugBatch, Color color) {

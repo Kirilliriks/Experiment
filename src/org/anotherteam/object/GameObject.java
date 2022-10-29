@@ -8,6 +8,7 @@ import org.anotherteam.object.component.type.collider.Collider;
 import org.anotherteam.object.component.type.sprite.SpriteController;
 import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.screen.GameScreen;
+import org.anotherteam.util.SerializeUtil;
 import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
@@ -108,13 +109,23 @@ public class GameObject {
         return null;
     }
 
+    public <T extends Component> int getComponentIndex(Class<T> componentClass) {
+        for (int i = 0 ; i < components.size(); i++) {
+            final Component component = components.get(i);
+            if (componentClass.isAssignableFrom(component.getClass())) return i;
+        }
+        return -1;
+    }
+
     public <T extends Component> void addComponent(T component) {
-        if (hasComponent(component.getClass())) {
-            getComponent(component.getClass()).instanceBy(component);
-            return;
+
+        final int index = getComponentIndex(component.getClass());
+        if (index != -1) {
+            components.set(index, component);
+        } else {
+            components.add(component);
         }
 
-        components.add(component);
         component.setOwnerObject(this);
         component.setDependencies(); // TODO уже вызывается в Prepare, может можно отказаться?*
     }
@@ -124,6 +135,7 @@ public class GameObject {
             GameLogger.sendMessage("Collider is static component");
             return;
         }
+
         if (componentClass.isAssignableFrom(Collider.InteractAABB.class)) {
             GameLogger.sendMessage("InteractAABB is static component");
             return;
@@ -173,6 +185,7 @@ public class GameObject {
     }
 
     public GameObject copy() {
-        return new GameObject(position.x, position.y, name); // TODO copy components
+        final String json = SerializeUtil.GSON.toJson(this);
+        return SerializeUtil.GSON.fromJson(json, GameObject.class);
     }
 }

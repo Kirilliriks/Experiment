@@ -18,6 +18,7 @@ public abstract class GUIElement {
     protected final List<GUIElement> childElements;
     protected final GUIElement ownerElement;
     protected final Vector2f pos; // If (ownerElement != null) pos work's like offset
+    protected final Vector2f offset; // If (ownerElement != null) pos work's like offset
     protected int width, height;
     protected final Color color;
 
@@ -30,6 +31,7 @@ public abstract class GUIElement {
 
     public GUIElement(float x, float y, int width, int height, GUIElement ownerElement) {
         this.pos = new Vector2f(x, y);
+        this.offset = new Vector2f();
         this.width = width;
         this.height = height;
         this.color = new Color(DEFAULT_COLOR);
@@ -99,13 +101,13 @@ public abstract class GUIElement {
     }
 
     public float getPosX() {
-        if (ownerElement == null) return pos.x;
-        return ownerElement.getPosX() + pos.x;
+        if (ownerElement == null) return pos.x + offset.x;
+        return ownerElement.getPosX() + pos.x + offset.x;
     }
 
     public float getPosY() {
-        if (ownerElement == null) return pos.y;
-        return ownerElement.getPosY() + pos.y + (inverted ? (-height + ownerElement.height) : 0);
+        if (ownerElement == null) return pos.y + offset.y;
+        return ownerElement.getPosY() + pos.y + offset.y + (inverted ? (-height + ownerElement.height) : 0);
     }
 
     public int getWidth() {
@@ -118,8 +120,9 @@ public abstract class GUIElement {
 
     public boolean isMouseOnWidget() {
         final var mouseX = Input.getMousePos().x;
-        final var mouseY = Input.getMousePos().y;
         if (mouseX < getPosX() || mouseX > getPosX() + width) return false;
+
+        final var mouseY = Input.getMousePos().y;
         return (!(mouseY < getPosY() || mouseY > getPosY() + height));
     }
 
@@ -138,8 +141,9 @@ public abstract class GUIElement {
     public void render(@NotNull EditorBatch editorBatch) {
         if (!visible) return;
 
-        if (width > 0 || height > 0)
+        if (width > 0 || height > 0) {
             editorBatch.draw(AssetData.EDITOR_TEXTURE, getPosX(), getPosY(), width, height, false, false, color);
+        }
 
         for (final var element : childElements) {
             element.render(editorBatch);

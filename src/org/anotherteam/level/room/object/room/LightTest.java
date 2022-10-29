@@ -9,8 +9,7 @@ public final class LightTest extends StaticObject {
     public LightTest(int x, int y) {
         super(x, y);
         final var spriteController = new SpriteController();
-        final var asset = AssetData.getOrLoadSpriteAtlas(AssetData.ROOM_OBJECTS_PATH + "LIGHT_TEST.png", 32, 32);
-        spriteController.setSpriteAtlas(asset);
+        spriteController.setSpriteAtlas(AssetData.ROOM_OBJECTS_PATH + "LIGHT_TEST.png", 32, 32);
         addComponent(spriteController);
     }
 }

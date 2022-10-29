@@ -8,6 +8,8 @@ import org.anotherteam.screen.GameScreen;
 import org.jetbrains.annotations.NotNull;
 
 public final class Game {
+
+    public static final String GAME_NAME = "Experiment";
     public static final String START_LEVEL_NAME = "StartLevel";
     public static boolean DEBUG_MODE = false;
 

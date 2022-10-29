@@ -9,8 +9,7 @@ public final class DuctCorridorRoom extends StaticObject {
     public DuctCorridorRoom(int x, int y) {
         super(x, y);
         final var spriteController = new SpriteController();
-        final var asset = AssetData.getOrLoadSpriteAtlas(AssetData.ROOM_OBJECTS_PATH + "duct_corridor_room.png", 31, 49);
-        spriteController.setSpriteAtlas(asset);
+        spriteController.setSpriteAtlas(AssetData.ROOM_OBJECTS_PATH + "duct_corridor_room.png", 31, 49);
         addComponent(spriteController);
     }
 }

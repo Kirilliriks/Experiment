@@ -28,15 +28,6 @@ import static org.lwjgl.system.MemoryUtil.memSlice;
 
 public final class FileUtils {
 
-    public static final Gson LEVEL_GSON = new GsonBuilder()
-            .setPrettyPrinting()
-            .registerTypeAdapter(Tile.class, new TileDeserializer())
-            .registerTypeAdapter(Component.class, new ComponentDeserializer())
-            .registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
-            .registerTypeAdapter(Room.class, new RoomDeserializer())
-            .registerTypeAdapter(Level.class, new LevelDeserializer())
-            .create();
-
     public static Level loadLevel(String levelName) {
         String inFile = "";
         try {
@@ -58,13 +49,13 @@ public final class FileUtils {
         }
 
         GameLogger.sendMessage("Level " + levelName + " loaded");
-        return LEVEL_GSON.fromJson(inFile, Level.class);
+        return SerializeUtil.GSON.fromJson(inFile, Level.class);
     }
 
     public static void saveEditableLevel(@NotNull Level level) {
         try {
             final var writer = new FileWriter("levels/" + level.getName()  + "." + Level.LEVEL_FILE_EXTENSION);
-            writer.write(LEVEL_GSON.toJson(level));
+            writer.write(SerializeUtil.GSON.toJson(level));
             writer.close();
         } catch(IOException e) {
             e.printStackTrace();
@@ -122,6 +113,7 @@ public final class FileUtils {
         ByteBuffer buffer;
 
         final var path = Paths.get(resource);
+
         if (Files.isReadable(path)) {
             try (final var fc = Files.newByteChannel(path)) {
                 buffer = BufferUtils.createByteBuffer((int) fc.size() + 1);
@@ -130,7 +122,7 @@ public final class FileUtils {
         } else {
             try {
                 final var source = PixmapUtil.class.getClassLoader().getResourceAsStream(resource);
-                if (source == null) throw new LifeException("Null input");
+                if (source == null) throw new LifeException("Null input " + resource);
 
                 final var rbc = Channels.newChannel(source);
                 buffer = BufferUtils.createByteBuffer(bufferSize);
@@ -141,7 +133,7 @@ public final class FileUtils {
                     buffer = resizeBuffer(buffer, buffer.capacity() * 3 / 2); // 50%
                 }
             } catch (Exception e) {
-                throw new LifeException("Bad file loading");
+                throw new LifeException("Bad file loading " + resource);
             }
         }
 

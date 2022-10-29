@@ -8,7 +8,7 @@ import org.anotherteam.util.exception.LifeException;
 
 import java.lang.reflect.Type;
 
-public class GameObjectDeserializer implements JsonDeserializer<GameObject>, JsonSerializer<GameObject> {
+public final class GameObjectDeserializer implements JsonDeserializer<GameObject>, JsonSerializer<GameObject> {
 
     @Override
     public GameObject deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
@@ -29,6 +29,7 @@ public class GameObjectDeserializer implements JsonDeserializer<GameObject>, Jso
         for (final var componentJSON : object.getAsJsonArray("components")) {
             gameObject.addComponent(context.deserialize(componentJSON, Component.class));
         }
+
         return gameObject;
     }
 
@@ -38,11 +39,14 @@ public class GameObjectDeserializer implements JsonDeserializer<GameObject>, Jso
         result.add("name", new JsonPrimitive(gameObject.getName()));
         result.add("type", new JsonPrimitive(gameObject.getClass().getCanonicalName()));
         result.add("pos", SerializeUtil.serialize(gameObject.getPosition()));
+
         final var components = new JsonArray(gameObject.getComponents().size());
         for (final var component : gameObject.getComponents()) {
             if (!component.isSerializable()) continue;
+
             components.add(context.serialize(component, Component.class));
         }
+
         result.add("components", components);
         return result;
     }

@@ -13,11 +13,13 @@ public final class RoomDeserializer implements JsonDeserializer<Room>, JsonSeria
     public Room deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         final var jsonObject = json.getAsJsonObject();
         final var name = jsonObject.get("name").getAsString();
+
         final var room = new Room(name);
         for (final var tileJSON : jsonObject.get("tiles").getAsJsonArray()) {
             final var tile = (Tile) context.deserialize(tileJSON, Tile.class);
             room.setTile(tile);
         }
+
         for (final var tileJSON : jsonObject.get("gameObjects").getAsJsonArray()) {
             final var gameObject = (GameObject) context.deserialize(tileJSON, GameObject.class);
             room.addObject(gameObject);

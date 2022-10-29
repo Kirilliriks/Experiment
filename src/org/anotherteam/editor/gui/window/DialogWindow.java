@@ -11,17 +11,31 @@ public abstract class DialogWindow extends GUIElement {
     private Runnable afterClose;
 
     public DialogWindow(int width, int height) {
-        super(GameScreen.window.getWidth() / 2.0f, GameScreen.window.getHeight() * 0.8f, null);
-        this.width = width;
-        this.height = height;
-        pos.x -= width / 2.0f;
-        pos.y -= height / 2.0f;
+        this(GameScreen.window.getWidth() / 2, (int) (GameScreen.window.getHeight() * 0.7f), width, height);
+    }
+
+    public DialogWindow(int x, int y, int width, int height) {
+        super(x, y, null);
+        setWidth(width);
+        setHeight(height);
         color.set(DEFAULT_COLOR);
         afterClose = null;
     }
 
     public void setOnAfterClose(@Nullable Runnable afterClose) {
         this.afterClose = afterClose;
+    }
+
+    @Override
+    public void setWidth(int width) {
+        this.width = width;
+        offset.x = -width / 2f;
+    }
+
+    @Override
+    public void setHeight(int height) {
+        this.height = height;
+        offset.y = -height / 2f;
     }
 
     @Override

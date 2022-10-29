@@ -7,6 +7,9 @@ import org.jetbrains.annotations.NotNull;
 
 public final class StateController extends Component {
 
+    private String stateName;
+    private String defaultStateName;
+
     private SpriteController sprite;
     private State defaultState;
     private State state;
@@ -40,7 +43,6 @@ public final class StateController extends Component {
     public void setState(@NotNull State state) {
         this.state = state;
 
-        state.onStart(this);
         if (state.getAnimation() == null) {
             sprite.stopAnimation();
             return;
@@ -50,10 +52,6 @@ public final class StateController extends Component {
 
     public void setDefaultState() {
         setState(defaultState);
-    }
-
-    public void onAnimationEnd(){
-        state.onEnd(this);
     }
 
     @NotNull

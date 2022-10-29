@@ -197,7 +197,7 @@ public final class Editor extends Widget {
     }
 
     public static void sendLogMessage(String text) {
-        EDITOR.editorLog.addMessage(text);
+        if (EDITOR != null) EDITOR.editorLog.addMessage(text);
     }
 
     @NotNull

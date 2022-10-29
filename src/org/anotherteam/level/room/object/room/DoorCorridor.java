@@ -9,8 +9,7 @@ public final class DoorCorridor extends GameObject {
     public DoorCorridor(int x, int y) {
         super(x, y);
         final var spriteController = new SpriteController();
-        final var asset = AssetData.getOrLoadSpriteAtlas(AssetData.ROOM_OBJECTS_PATH + "door_corridor_room.png", 21, 30);
-        spriteController.setSpriteAtlas(asset);
+        spriteController.setSpriteAtlas(AssetData.ROOM_OBJECTS_PATH + "door_corridor_room.png", 21, 30);
         addComponent(spriteController);
     }
 }

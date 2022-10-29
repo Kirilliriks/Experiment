@@ -64,8 +64,10 @@ public final class DebugBatch {
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
 
-        // Draw the batch
+        // Draw the lines
+        glLineWidth(2);
         glDrawArrays(GL_LINES, 0, linesCount * 2);
+        glLineWidth(0);
 
         // Disable Location
         glDisableVertexAttribArray(0);

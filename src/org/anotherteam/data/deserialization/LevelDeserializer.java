@@ -12,6 +12,7 @@ public final class LevelDeserializer implements JsonDeserializer<Level>, JsonSer
     public Level deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         final var jsonObject = json.getAsJsonObject();
         final var name = jsonObject.get("name").getAsString();
+
         final var level = new Level(name);
         for (final var roomJSON : jsonObject.get("rooms").getAsJsonArray()) {
             final var room = (Room) context.deserialize(roomJSON, Room.class);
@@ -24,6 +25,7 @@ public final class LevelDeserializer implements JsonDeserializer<Level>, JsonSer
     public JsonElement serialize(Level level, Type typeOfSrc, JsonSerializationContext context) {
         final var result = new JsonObject();
         result.add("name", new JsonPrimitive(level.getName()));
+
         final var rooms = new JsonArray(level.getRooms().size());
         for (final var room : level.getRooms()) {
             rooms.add(context.serialize(room, Room.class));

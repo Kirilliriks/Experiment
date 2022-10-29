@@ -9,8 +9,7 @@ public final class Bed218 extends StaticObject {
     public Bed218(int x, int y) {
         super(x, y);
         final var spriteController = new SpriteController();
-        final var asset = AssetData.getOrLoadSpriteAtlas(AssetData.ROOM_OBJECTS_PATH + "BED_218.png", 31, 12);
-        spriteController.setSpriteAtlas(asset);
+        spriteController.setSpriteAtlas(AssetData.ROOM_OBJECTS_PATH + "BED_218.png", 31, 12);
         addComponent(spriteController);
     }
 }

@@ -1,6 +1,7 @@
 package org.anotherteam.data;
 
 import org.anotherteam.level.room.tile.Tile;
+import org.anotherteam.logger.GameLogger;
 import org.anotherteam.render.shader.Shader;
 import org.anotherteam.render.sprite.Sprite;
 import org.anotherteam.render.sprite.SpriteAtlas;
@@ -27,28 +28,32 @@ public final class AssetData {
         public static final SpriteAtlas EDITOR_NULL_ICON_ATLAS = loadSpriteAtlas("nullIcon.png", Sprite.SIZE.x,  Sprite.SIZE.y);
         //
 
-        public static final SpriteAtlas TEST_PLAYER_ATLAS = loadSpriteAtlas(ENTITY_PATH + "testPlayerAtlas.png", Sprite.SIZE.x,  Sprite.SIZE.y);
-
         public static final Shader DEFAULT_SHADER = new Shader("shader/defaultVertexShader.glsl", "shader/defaultFragmentShader.glsl");
         public static final Shader DEBUG_SHADER = new Shader("shader/debugVS.glsl", "shader/debugFS.glsl");
 
         public static final Font DEBUG_FONT = new Font("font/font.ttf", 16);
 
         @NotNull
-        private static Texture getTexture(String textureName) {
-                if (textures.containsKey(textureName)) return textures.get(textureName);
+        public static Texture getTexture(String textureName) {
+                if (textures.containsKey(textureName)) {
+                        GameLogger.sendMessage("Loaded " + textureName);
+                        return textures.get(textureName);
+                }
 
                 final var path = ASSETS_PATH + textureName;
                 final var texture = Texture.create(path);
                 texture.setName(textureName);
                 textures.put(textureName, texture);
+
+                GameLogger.sendMessage("Created " + textureName);
+
                 return texture;
         }
 
         @NotNull
         private static SpriteAtlas loadSpriteAtlas(String atlasName, int frameWidth, int frameHeight) {
                 final var texture = getTexture(atlasName);
-                final var atlas = SpriteAtlas.create(getTexture(atlasName), frameWidth, frameHeight, (texture.getHeight() / 2) / frameHeight);
+                final var atlas = SpriteAtlas.create(texture, frameWidth, frameHeight, (texture.getHeight() / 2) / frameHeight);
                 spriteAtlases.put(atlasName, atlas);
                 return atlas;
         }

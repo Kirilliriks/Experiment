@@ -21,7 +21,7 @@ public final class Pixmap {
         ByteBuffer imageBuffer;
         try {
             imageBuffer = FileUtils.ioResourceToByteBuffer(filePath, 8 * 1024);
-        } catch (IOException exception) {
+        } catch (IOException | LifeException exception) {
             throw new LifeException("Not found image " + filePath);
         }
 

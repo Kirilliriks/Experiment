@@ -9,8 +9,7 @@ public final class Lamp218 extends StaticObject {
     public Lamp218(int x, int y) {
         super(x, y);
         final var spriteController = new SpriteController();
-        final var asset = AssetData.getOrLoadSpriteAtlas(AssetData.ROOM_OBJECTS_PATH + "LAMP_218.png", 12, 18);
-        spriteController.setSpriteAtlas(asset);
+        spriteController.setSpriteAtlas(AssetData.ROOM_OBJECTS_PATH + "LAMP_218.png", 12, 18);
         addComponent(spriteController);
     }
 }

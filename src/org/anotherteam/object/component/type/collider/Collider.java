@@ -1,14 +1,17 @@
 package org.anotherteam.object.component.type.collider;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import org.anotherteam.debug.DebugBatch;
 import org.anotherteam.object.GameObject;
-import org.anotherteam.object.component.Component;
 import org.anotherteam.object.component.fieldcontroller.FieldController;
 import org.anotherteam.object.component.type.sprite.SpriteController;
 import org.anotherteam.object.type.level.InteractiveObject;
 import org.anotherteam.render.sprite.Sprite;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.Color;
+import org.anotherteam.util.SerializeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
 
@@ -48,16 +51,6 @@ public final class Collider extends AABB {
         final var sprite = ownerObject.getComponent(SpriteController.class);
         final var texture = sprite.getTextureSprite();
         setBounds(texture.getWidth(), texture.getHeight());
-    }
-
-    @Override
-    public void instanceBy(Component component) {
-        super.instanceBy(component);
-        final var collider = ((Collider)component);
-        solid = collider.solid;
-        interactive = collider.interactive;
-        final var intAABB = collider.getInteractAABB();
-        interactAABB.setBounds(intAABB.firstBound.x, intAABB.firstBound.y, intAABB.secondBound.x, intAABB.secondBound.y);
     }
 
     @Override
@@ -151,18 +144,44 @@ public final class Collider extends AABB {
         super.debugRender(inEditor, debugBatch, color);
     }
 
+    @Override
+    public @NotNull JsonElement serialize(JsonObject result) {
+        result.add("firstBound", SerializeUtil.serialize(firstBound));
+        result.add("secondBound", SerializeUtil.serialize(secondBound));
+        result.add("solid", new JsonPrimitive(solid));
+        result.add("interactive", new JsonPrimitive(interactive));
+
+        result.add("interactFirstBound", SerializeUtil.serialize(interactAABB.getFirstBound()));
+        result.add("interactSecondBound", SerializeUtil.serialize(interactAABB.getSecondBound()));
+        return result;
+    }
+
+    public static Collider deserialize(JsonObject object) {
+        final var firstBound = SerializeUtil.deserialize(object.get("firstBound").getAsJsonObject());
+        final var secondBound = SerializeUtil.deserialize(object.get("secondBound").getAsJsonObject());
+        final var interactFirstBound = SerializeUtil.deserialize(object.get("interactFirstBound").getAsJsonObject());
+        final var interactSecondBound = SerializeUtil.deserialize(object.get("interactSecondBound").getAsJsonObject());
+
+        final var collider = new Collider();
+        collider.setBounds(firstBound.x, firstBound.y, secondBound.x, secondBound.y);
+        collider.setInteractBounds(interactFirstBound.x, interactFirstBound.y, interactSecondBound.x, interactSecondBound.y);
+        collider.setSolid(object.get("solid").getAsBoolean());
+        collider.setInteractive(object.get("interactive").getAsBoolean());
+        return collider;
+    }
+
     public static class InteractAABB extends AABB {
 
         private final Collider ownerCollider;
 
-        public InteractAABB(@NotNull Collider ownerCollider){
+        public InteractAABB(@NotNull Collider ownerCollider) {
             super();
             this.ownerCollider = ownerCollider;
             setBounds(ownerCollider.firstBound.x, ownerCollider.firstBound.y, ownerCollider.secondBound.x, ownerCollider.secondBound.y);
             serializable = false;
         }
 
-        public boolean isInteract(@NotNull Collider otherCollider){
+        public boolean isInteract(@NotNull Collider otherCollider) {
             final var otherInteractAABB = otherCollider.interactAABB;
             return  (!((otherCollider.objectPosition.x + otherCollider.secondBound.x) < otherInteractAABB.objectPosition.x + otherInteractAABB.offSet.x + firstBound.x ||
                     (otherInteractAABB.objectPosition.x + otherInteractAABB.offSet.x + otherInteractAABB.secondBound.x) < otherCollider.objectPosition.x  + otherCollider.firstBound.x));

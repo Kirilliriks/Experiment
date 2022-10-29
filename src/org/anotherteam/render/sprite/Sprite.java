@@ -18,13 +18,17 @@ public final class Sprite {
     public Sprite(SpriteAtlas spriteAtlas, int frameX, int frameY, int width, int height) {
         this.spriteAtlas = spriteAtlas;
         this.texture = spriteAtlas.getTexture();
+
         textCoords = new Vector2f[4];
-        for (short i = 0; i < 4; i++)
+        for (short i = 0; i < 4; i++) {
             textCoords[i] = new Vector2f(0, 0);
+        }
+
         this.frameX = frameX;
         this.frameY = frameY;
         this.width = width;
         this.height = height;
+
         changeTextureCoords();
     }
 

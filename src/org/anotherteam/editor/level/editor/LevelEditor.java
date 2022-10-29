@@ -10,6 +10,7 @@ import org.anotherteam.editor.gui.menu.text.TextButton;
 import org.anotherteam.editor.gui.window.SaveLevelDialog;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.level.Level;
+import org.anotherteam.util.SerializeUtil;
 import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
 
@@ -97,11 +98,11 @@ public final class LevelEditor extends GUIElement {
     }
 
     public void storeLevel() {
-        storedLevel = FileUtils.LEVEL_GSON.toJson(Game.LEVEL_MANAGER.getCurrentLevel());
+        storedLevel = SerializeUtil.GSON.toJson(Game.LEVEL_MANAGER.getCurrentLevel());
     }
 
     public void restoreLevel() {
-        level = Game.LEVEL_MANAGER.setLevel(FileUtils.LEVEL_GSON.fromJson(storedLevel, Level.class));
+        level = Game.LEVEL_MANAGER.setLevel(SerializeUtil.GSON.fromJson(storedLevel, Level.class));
 
         RoomEditor.editor().resetRoom();
 

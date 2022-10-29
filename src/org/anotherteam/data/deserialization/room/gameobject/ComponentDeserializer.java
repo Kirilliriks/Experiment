@@ -1,10 +1,10 @@
 package org.anotherteam.data.deserialization.room.gameobject;
 
 import com.google.gson.*;
-import org.anotherteam.util.SerializeUtil;
 import org.anotherteam.object.component.Component;
-import org.anotherteam.object.component.type.collider.AABB;
 import org.anotherteam.object.component.type.collider.Collider;
+import org.anotherteam.object.component.type.player.PlayerController;
+import org.anotherteam.object.component.type.sprite.SpriteController;
 import org.anotherteam.object.component.type.transform.Transform;
 import org.anotherteam.util.exception.LifeException;
 
@@ -22,72 +22,37 @@ public final class ComponentDeserializer implements JsonDeserializer<Component>,
         return ComponentFabric.serialize(component);
     }
 
-    private static class ComponentFabric {
+    public static class ComponentFabric {
+
+        private static JsonElement serialize(Component component) {
+            final var result = new JsonObject();
+            result.add("type", new JsonPrimitive(component.getClass().getSimpleName()));
+            final JsonElement jsonElement = component.serialize(result);
+
+            if (jsonElement == null) {
+                throw new LifeException("Unknown component " + result.get("type").getAsString());
+            }
+
+            return jsonElement;
+        }
 
         private static Component deserialize(JsonElement json) {
             final var object = json.getAsJsonObject();
             switch (object.get("type").getAsString()) {
                 case "Collider" -> {
-                   return deserializeCollider(object);
+                    return Collider.deserialize(object);
                 }
                 case "Transform" -> {
-                    return deserializeTransform(object);
+                    return Transform.deserialize(object);
+                }
+                case "PlayerController" -> {
+                    return PlayerController.deserialize(object);
+                }
+                case "SpriteController" -> {
+                    return SpriteController.deserialize(object);
                 }
             }
             throw new LifeException("Unknown component " + object.get("type").getAsString());
-        }
-
-        private static JsonElement serialize(Component component) {
-            final var result = new JsonObject();
-            result.add("type", new JsonPrimitive(component.getClass().getSimpleName()));
-            switch (result.get("type").getAsString()) {
-                case "Collider" -> {
-                    return serialize(result, (Collider) component);
-                }
-                case "Transform" -> {
-                    return serialize(result, (Transform) component);
-                }
-            }
-            throw new LifeException("Unknown component " + result.get("type").getAsString());
-        }
-
-
-        public static Collider deserializeCollider(JsonObject object) {
-            final var firstBound = SerializeUtil.deserialize(object.get("firstBound").getAsJsonObject());
-            final var secondBound = SerializeUtil.deserialize(object.get("secondBound").getAsJsonObject());
-            final var interactFirstBound = SerializeUtil.deserialize(object.get("interactFirstBound").getAsJsonObject());
-            final var interactSecondBound = SerializeUtil.deserialize(object.get("interactSecondBound").getAsJsonObject());
-            final var collider = new Collider();
-            collider.setBounds(firstBound.x, firstBound.y, secondBound.x, secondBound.y);
-            collider.setInteractBounds(interactFirstBound.x, interactFirstBound.y, interactSecondBound.x, interactSecondBound.y);
-            collider.setSolid(object.get("solid").getAsBoolean());
-            collider.setInteractive(object.get("interactive").getAsBoolean());
-            return collider;
-        }
-
-        public static JsonElement serialize(JsonObject result, Collider collider) {
-            result.add("firstBound", SerializeUtil.serialize(collider.getFirstBound()));
-            result.add("secondBound", SerializeUtil.serialize(collider.getSecondBound()));
-            result.add("solid", new JsonPrimitive(collider.isSolid()));
-            result.add("interactive", new JsonPrimitive(collider.isInteractive()));
-            final var interactAABB = (AABB) collider.getInteractAABB();
-            result.add("interactFirstBound", SerializeUtil.serialize(interactAABB.getFirstBound()));
-            result.add("interactSecondBound", SerializeUtil.serialize(interactAABB.getSecondBound()));
-            return result;
-        }
-
-        public static Transform deserializeTransform(JsonObject object) {
-            final var maxSpeed = object.get("maxSpeed").getAsInt();
-            final var speed = object.get("speed").getAsInt();
-            final var transform = new Transform(maxSpeed);
-            transform.setSpeed(speed);
-            return transform;
-        }
-
-        public static JsonElement serialize(JsonObject result, Transform transform) {
-            result.add("maxSpeed", new JsonPrimitive(transform.getMaxSpeed()));
-            result.add("speed", new JsonPrimitive(transform.getSpeed()));
-            return result;
         }
     }
 }

@@ -3,6 +3,7 @@ package org.anotherteam.editor.gui.menu.sprite;
 import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.render.sprite.Sprite;
+import org.anotherteam.render.texture.Texture;
 import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -14,12 +15,12 @@ public class SpriteMenu extends GUIElement {
 
     public static final int ICON_SIZE = 32;
 
-    private final List<SpriteButton> buttons;
+    private final List<DrawableButton> buttons;
 
     private int offsetIcon;
     private int sizeX, sizeY;
 
-    protected SpriteButton lastClicked;
+    protected DrawableButton lastClicked;
 
     public SpriteMenu(float x, float y, int width, int height, GUIElement ownerElement) {
         super(x, y, width, height, ownerElement);
@@ -31,7 +32,7 @@ public class SpriteMenu extends GUIElement {
     }
 
     @Nullable
-    public SpriteButton getLastClicked() {
+    public DrawableButton getLastClicked() {
         return lastClicked;
     }
 
@@ -63,21 +64,43 @@ public class SpriteMenu extends GUIElement {
         return spriteButton;
     }
 
+    @NotNull
+    public TextureButton addButton(@NotNull Texture texture) {
+        final var index = buttons.size();
+        if (index >= sizeX * sizeY) throw new LifeException("Need create pages mechanic");
+
+        int x = index % sizeX;
+        int y = (index - x) / sizeY;
+        return addButton(x, y, texture);
+    }
+
+    @NotNull
+    public TextureButton addButton(int x, int y, @NotNull Texture texture) {
+        if (x * y >= sizeX * sizeY) throw new LifeException("Need create pages mechanic");
+
+        final var textureButton = new TextureButton(texture, 0, 0, this);
+
+        textureButton.setPos(x * ICON_SIZE                + (x + 1) * offsetIcon,
+                height - (y + 1) * ICON_SIZE - (y + 1) * offsetIcon);
+        buttons.add(textureButton);
+        return textureButton;
+    }
+
     public void removeLastButton() {
-        final SpriteButton last = getLastClicked();
+        final DrawableButton last = getLastClicked();
         if (last == null) return;
 
         removeButton(last);
     }
 
-    public void removeButton(SpriteButton button) {
+    public void removeButton(DrawableButton button) {
         buttons.remove(button);
         removeChild(button);
 
         if (lastClicked == button) lastClicked = null;
     }
 
-    public void setClicked(SpriteButton button, boolean left) {
+    public void setClicked(DrawableButton button, boolean left) {
         if (button == null) return;
 
         if (lastClicked != null && button != lastClicked) {

@@ -1,5 +1,8 @@
 package org.anotherteam.object.component.type.transform;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.Component;
 import org.anotherteam.object.component.type.collider.Collider;
@@ -49,12 +52,6 @@ public final class Transform extends Component {
     @Override
     public void init() {
         checkFlip();
-    }
-
-    @Override
-    public void instanceBy(Component component) {
-        final var transform = (Transform) component;
-        speed = transform.speed;
     }
 
     @Override
@@ -124,5 +121,21 @@ public final class Transform extends Component {
 
     public boolean isCanMove() {
         return ((EntityState)stateController.getState()).isCanWalk();
+    }
+
+    @Override
+    public @NotNull JsonElement serialize(JsonObject result) {
+        result.add("maxSpeed", new JsonPrimitive(maxSpeed));
+        result.add("speed", new JsonPrimitive(speed));
+        return result;
+    }
+
+    public static Transform deserialize(JsonObject object) {
+        final var maxSpeed = object.get("maxSpeed").getAsInt();
+        final var speed = object.get("speed").getAsInt();
+
+        final var transform = new Transform(maxSpeed);
+        transform.setSpeed(speed);
+        return transform;
     }
 }

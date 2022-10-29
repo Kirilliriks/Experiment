@@ -12,7 +12,6 @@ import org.anotherteam.editor.gui.menu.text.SwitchButton;
 import org.anotherteam.editor.gui.menu.text.TextMenu;
 import org.anotherteam.editor.gui.menu.text.SwitchMenu;
 import org.anotherteam.editor.object.objectedit.GameObjectEditor;
-import org.anotherteam.editor.render.EditorBatch;
 import org.anotherteam.editor.screen.DraggedGameObject;
 import org.anotherteam.level.room.object.prefab.RoomPrefab;
 import org.anotherteam.object.GameObject;
@@ -64,6 +63,7 @@ public final class PrefabObjectMenu extends GUIElement {
         removePrefabButton.setOnClick((click) -> removePrefab());
     }
 
+    // TODO new GameObject from JSON
     private void addPrefab() {
         final var object = new GameObject(0, 0);
 
@@ -77,7 +77,7 @@ public final class PrefabObjectMenu extends GUIElement {
                 return;
             }
 
-            draggedGameObject = new DraggedGameObject(sprite, new GameObject(0, 0));
+            draggedGameObject = new DraggedGameObject(sprite, object.copy());
             GameScreen.draggedThing = draggedGameObject;
         });
     }
@@ -130,6 +130,7 @@ public final class PrefabObjectMenu extends GUIElement {
 
     @Override
     public void update(float dt) {
+        // If draggedGameObject isn't null
         if (draggedGameObject != null) {
             if (Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) {
                 final var x = GameScreen.inGameMouseX();

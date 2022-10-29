@@ -14,8 +14,4 @@ public abstract class State {
     public AnimationData getAnimation() {
         return animationData;
     }
-
-    public void onEnd(@NotNull StateController stateController) { }
-
-    public void onStart(@NotNull StateController stateController){ }
 }

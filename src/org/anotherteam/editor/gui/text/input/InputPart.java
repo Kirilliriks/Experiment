@@ -5,7 +5,9 @@ import org.anotherteam.editor.Editor;
 import org.anotherteam.editor.gui.GUIElement;
 import org.anotherteam.editor.gui.menu.text.TextButton;
 import org.anotherteam.editor.gui.text.Label;
+import org.anotherteam.editor.gui.window.SpriteSelectWindow;
 import org.anotherteam.object.component.fieldcontroller.FieldController;
+import org.anotherteam.render.sprite.Sprite;
 import org.anotherteam.util.Color;
 import org.anotherteam.util.StringUtil;
 
@@ -32,18 +34,6 @@ public final class InputPart extends TextButton {
         setColor(Color.VOID);
     }
 
-    public String getValue() {
-        return valueInput.getText();
-    }
-
-    public boolean getBoolValue() {
-        return Boolean.parseBoolean(valueInput.getText());
-    }
-
-    public int getIntValue() {
-        return Integer.parseInt(valueInput.getText());
-    }
-
     public void setValue(String text) {
         valueInput.setText(text);
         width = getLabelWidth() + valueInput.getWidth();
@@ -56,6 +46,8 @@ public final class InputPart extends TextButton {
             setType(Type.INTEGER);
         } else if (clazz == String.class) {
             setType(Type.STRING);
+        } else if (clazz == Sprite.class) {
+            setType(Type.SPRITE);
         }
     }
 
@@ -69,11 +61,16 @@ public final class InputPart extends TextButton {
                 setClicked(false);
                 unFocus();
             };
+            case SPRITE -> onClick = (click) -> Editor.callWindow(new SpriteSelectWindow(0, 0));
         }
     }
 
     public void setOnUnFocus(Runnable onUnFocus) {
         this.onUnFocus = onUnFocus;
+    }
+
+    public void setAfterUnFocus(Runnable afterClick) {
+        setOnUnFocus(afterClick);
     }
 
     @Override
@@ -117,8 +114,14 @@ public final class InputPart extends TextButton {
                 handleInput();
             }
 
-            if (!Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) return;
-            if (!isMouseOnWidget()) unFocus();
+            if (Input.isKeyPressed(Input.KEY_ENTER)) {
+                unFocus();
+            }
+
+            if (Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON) && !isMouseOnWidget()) {
+                unFocus();
+            }
+
             return;
         }
         if (!isMouseOnWidget()) return;
@@ -163,8 +166,16 @@ public final class InputPart extends TextButton {
         return true;
     }
 
-    public void setAfterUnFocus(Runnable afterClick) {
-        setOnUnFocus(afterClick);
+    public String getValue() {
+        return valueInput.getText();
+    }
+
+    public boolean getBoolValue() {
+        return Boolean.parseBoolean(valueInput.getText());
+    }
+
+    public int getIntValue() {
+        return Integer.parseInt(valueInput.getText());
     }
 
     public void setField(FieldController field) {
@@ -179,7 +190,9 @@ public final class InputPart extends TextButton {
 
     public enum Type {
         STRING,
+        STRING_LIST,
         BOOLEAN,
-        INTEGER
+        INTEGER,
+        SPRITE
     }
 }
