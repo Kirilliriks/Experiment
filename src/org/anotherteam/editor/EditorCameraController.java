@@ -12,6 +12,11 @@ public final class EditorCameraController {
     private final Vector2f impulse = new Vector2f(0, 0);
 
     public void handle(float dt) {
+        if (GameScreen.draggedThing != null || (GameScreen.inGameWindowMouseX() == -1 || GameScreen.inGameMouseY() == -1)) {
+            lastPos.set(0, 0);
+            return;
+        }
+        
         float speed = 75.0f;
 
         if (Input.isKeyDown(Input.KEY_SHIFT)) {
@@ -31,10 +36,6 @@ public final class EditorCameraController {
             impulse.x += speed * dt;
         }
 
-        if (GameScreen.draggedThing != null || (GameScreen.inGameWindowMouseX() == -1 || GameScreen.inGameMouseY() == -1)) {
-            lastPos.set(0, 0);
-            return;
-        }
         if (Input.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
             if (lastPos.equals(0, 0)) {
                 lastPos.set(Input.getMousePos());
@@ -51,7 +52,7 @@ public final class EditorCameraController {
         }
 
         if (impulse.length() >= 1) {
-            GameScreen.gameCamera.addPosition(impulse.x, impulse.y);
+            GameScreen.GAME_CAMERA.addPosition(impulse.x, impulse.y);
             impulse.zero();
         }
     }

@@ -11,7 +11,7 @@ public abstract class DialogWindow extends GUIElement {
     private Runnable afterClose;
 
     public DialogWindow(int width, int height) {
-        super(GameScreen.WINDOW.getWidth() / 2.0f, GameScreen.WINDOW.getHeight() * 0.8f, null);
+        super(GameScreen.window.getWidth() / 2.0f, GameScreen.window.getHeight() * 0.8f, null);
         this.width = width;
         this.height = height;
         pos.x -= width / 2.0f;
@@ -31,8 +31,10 @@ public abstract class DialogWindow extends GUIElement {
 
     @Override
     public void destroy() {
-        if (afterClose != null)
+        if (afterClose != null) {
             afterClose.run();
+        }
+
         super.destroy();
     }
 }

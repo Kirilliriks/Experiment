@@ -49,7 +49,7 @@ public final class PlayerController extends Component {
 
     @Override
     public void update(float dt) {
-        GameScreen.gameCamera.setPosition(position.x, GameScreen.HEIGHT / 2.0f);
+        GameScreen.GAME_CAMERA.setPosition(position.x, GameScreen.HEIGHT / 2.0f);
 
         float newMove = 0;
 

@@ -7,6 +7,7 @@ import org.anotherteam.object.component.Component;
 import org.anotherteam.object.component.type.collider.Collider;
 import org.anotherteam.object.component.type.sprite.SpriteController;
 import org.anotherteam.render.batch.RenderBatch;
+import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
@@ -150,8 +151,15 @@ public class GameObject {
         if (spriteComponent != null) {
             spriteComponent.draw(position, renderBatch, height);
         }
+    }
 
-        if (!Game.DEBUG_MODE || height) return;
+    public void debugDraw(@NotNull RenderBatch renderBatch) {
+        if (!Game.DEBUG_MODE) return;
+
+        final Vector2i pos = getPosition();
+        final float x = GameScreen.toWindowPosX(pos.x);
+        final float y = GameScreen.toWindowPosY(pos.y);
+        renderBatch.drawText("Pos: " + pos.x + " : " + pos.y, x, y, false, true);
 
         getCollider().debugRender(renderBatch.debugBatch);
     }

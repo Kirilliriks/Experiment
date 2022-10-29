@@ -1,5 +1,6 @@
 package org.anotherteam.level.room;
 
+import org.anotherteam.Game;
 import org.anotherteam.level.room.object.entity.Player;
 import org.anotherteam.level.room.tile.Tile;
 import org.anotherteam.object.GameObject;
@@ -43,6 +44,14 @@ public final class Room {
 
         for (final var gameObject : gameObjects) {
             gameObject.draw(renderBatch, height);
+        }
+    }
+
+    public void debugDraw(@NotNull RenderBatch renderBatch) {
+        if (!Game.DEBUG_MODE) return;
+
+        for (final var gameObject : gameObjects) {
+            gameObject.debugDraw(renderBatch);
         }
     }
 

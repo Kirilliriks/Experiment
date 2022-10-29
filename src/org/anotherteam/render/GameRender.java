@@ -6,7 +6,6 @@ import org.anotherteam.GameState;
 import org.anotherteam.Input;
 import org.anotherteam.data.AssetData;
 import org.anotherteam.level.room.Room;
-import org.anotherteam.object.GameObject;
 import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.frame.EffectFrame;
 import org.anotherteam.render.frame.HeightFrame;
@@ -17,7 +16,6 @@ import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
-import org.joml.Vector2i;
 
 public final class GameRender {
 
@@ -37,7 +35,7 @@ public final class GameRender {
 
         raycastShader = new Shader("shader/vsInvert.glsl", "shader/fsInvert.glsl");
 
-        textureBatch = new RenderBatch(AssetData.DEFAULT_SHADER, GameScreen.gameCamera);
+        textureBatch = new RenderBatch(AssetData.DEFAULT_SHADER, GameScreen.GAME_CAMERA);
         effectBatch = new RenderBatch(raycastShader, renderCamera);
 
         textureFrame = new TextureFrame(textureBatch);
@@ -51,8 +49,8 @@ public final class GameRender {
         effectFrame.changeBufferSize(GameScreen.WIDTH, GameScreen.HEIGHT);
 
         renderCamera.setProjection(GameScreen.WIDTH, GameScreen.HEIGHT);
-        GameScreen.gameCamera.setProjection(GameScreen.WIDTH, GameScreen.HEIGHT);
-        GameScreen.gameCamera.setPosition(GameScreen.WIDTH / 2.0f, GameScreen.HEIGHT / 2.0f);
+        GameScreen.GAME_CAMERA.setProjection(GameScreen.WIDTH, GameScreen.HEIGHT);
+        GameScreen.GAME_CAMERA.setPosition(GameScreen.WIDTH / 2.0f, GameScreen.HEIGHT / 2.0f);
     }
 
     public void render(@NotNull RenderBatch windowBatch, @NotNull Room room) {
@@ -67,10 +65,10 @@ public final class GameRender {
 
         effectFrame.begin();
 
-        raycastShader.setUniform("real_view", GameScreen.gameCamera.getViewMatrix());
+        raycastShader.setUniform("real_view", GameScreen.GAME_CAMERA.getViewMatrix());
 
-        final var preparedX = GameScreen.gameCamera.translateX(room.getPlayer().getPosition().x);
-        final var preparedY = GameScreen.gameCamera.translateY(room.getPlayer().getPosition().y + 15);
+        final var preparedX = GameScreen.GAME_CAMERA.translateX(room.getPlayer().getPosition().x);
+        final var preparedY = GameScreen.GAME_CAMERA.translateY(room.getPlayer().getPosition().y + 15);
         raycastShader.setUniform("player_pos",
                 preparedX, preparedY);
 
@@ -84,7 +82,7 @@ public final class GameRender {
         effectFrame.end();
         //Finish frames
 
-        glViewport(0, 0, GameScreen.WINDOW.getWidth(), GameScreen.WINDOW.getHeight());
+        glViewport(0, 0, GameScreen.window.getWidth(), GameScreen.window.getHeight());
         windowBatch.begin();
         if (Game.STATE_MANAGER.getState() == GameState.ON_LEVEL) {
             windowBatch.draw(
@@ -134,17 +132,12 @@ public final class GameRender {
         room.draw(textureBatch, true);
     }
 
-    private void debugRender(RenderBatch windowBatch, Room room) {
+    private void debugRender(RenderBatch renderBatch, Room room) {
         int x = GameScreen.inGameMouseX();
         int y = GameScreen.inGameMouseY();
-        windowBatch.drawText("Pos : " + x + " " + y,
+        renderBatch.drawText("Pos: " + x + " " + y,
                 (int) (Input.getMousePos().x + 15), (int) (Input.getMousePos().y - 25));
 
-        for (final GameObject object : room.getGameObjects()) {
-            final Vector2i pos = object.getPosition();
-            x = GameScreen.toWindowPosX(pos.x);
-            y = GameScreen.toWindowPosY(pos.y);
-            windowBatch.drawText("Pos: " + pos.x + " : " + pos.y, x, y);
-        }
+        room.debugDraw(renderBatch);
     }
 }

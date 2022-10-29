@@ -3,6 +3,7 @@ package org.anotherteam.object.component.type.collider;
 import org.anotherteam.debug.DebugBatch;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.Component;
+import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
@@ -82,10 +83,10 @@ public abstract class AABB extends Component {
     public void debugRender(@NotNull DebugBatch debugBatch, Color color){
         final int x = objectPosition.x + offSet.x;
         final int y = objectPosition.y + offSet.y;
-        final var v1 = new Vector2f(x +  firstBound.x - 1, y +  firstBound.y);
-        final var v2 = new Vector2f(x +  firstBound.x, y + secondBound.y);
-        final var v3 = new Vector2f(x + secondBound.x, y + secondBound.y);
-        final var v4 = new Vector2f(x + secondBound.x, y +  firstBound.y);
+        final var v1 = GameScreen.toWindowPos(new Vector2f(x +  firstBound.x, y +  firstBound.y));
+        final var v2 = GameScreen.toWindowPos(new Vector2f(x +  firstBound.x, y + secondBound.y));
+        final var v3 = GameScreen.toWindowPos(new Vector2f(x + secondBound.x, y + secondBound.y));
+        final var v4 = GameScreen.toWindowPos(new Vector2f(x + secondBound.x, y +  firstBound.y));
         debugBatch.drawLine(v1, v2, color);
         debugBatch.drawLine(v2, v3, color);
         debugBatch.drawLine(v3, v4, color);

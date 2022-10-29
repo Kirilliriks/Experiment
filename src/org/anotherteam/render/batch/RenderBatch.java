@@ -230,20 +230,24 @@ public class RenderBatch extends Batch {
         vertices[offset + 6] = b;
     }
 
-    public void drawText(String text, int x, int y) {
-        drawText(AssetData.DEBUG_FONT, text, x, y, 1.0f, Color.WHITE, false);
+    public void drawText(String text, float x, float y) {
+        drawText(AssetData.DEBUG_FONT, text, x, y, 1.0f, Color.WHITE, false, false);
     }
 
-    public void drawText(String text, int x, int y, float scale, Color color) {
-        drawText(AssetData.DEBUG_FONT, text, x, y, scale, color, false);
+    public void drawText(String text, float x, float y, boolean invertWidth, boolean center) {
+        drawText(AssetData.DEBUG_FONT, text, x, y, 1.0f, Color.WHITE, invertWidth, center);
     }
 
-    public void drawText(Font font, String text, int x, int y, float scale, Color color) {
-       drawText(font, text, x, y, scale, color, false);
+    public void drawText(String text, float x, float y, float scale, Color color) {
+        drawText(AssetData.DEBUG_FONT, text, x, y, scale, color, false, false);
     }
 
-    public void drawText(Font font, String text, int x, int y, float scale, Color color, boolean invertWidth) {
-        final int offsetX = invertWidth ? -font.getTextWidth(text, scale) : 0;
+    public void drawText(Font font, String text, float x, float y, float scale, Color color) {
+       drawText(font, text, x, y, scale, color, false, false);
+    }
+
+    public void drawText(Font font, String text, float x, float y, float scale, Color color, boolean invertWidth, boolean center) {
+        final int offsetX = invertWidth ? -font.getTextWidth(text, scale) : (center ? -font.getTextWidth(text, scale) / 2: 0);
         for (int i = 0; i < text.length(); i++) {
             final Glyph charInfo = font.getCharacter(text.charAt(i));
             if (charInfo.width == 0) throw new LifeException("Unknown font character " + text.charAt(i));

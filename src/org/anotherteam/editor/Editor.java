@@ -43,8 +43,8 @@ public final class Editor extends Widget {
 
     public Editor() {
         super("Another Editor",
-                10, GameScreen.WINDOW.getHeight() / 2.0f,
-                GameScreen.WINDOW.getWidth() - 10, GameScreen.WINDOW.getHeight() / 2 - 40, null);
+                10, GameScreen.window.getHeight() / 2.0f,
+                GameScreen.window.getWidth() - 10, GameScreen.window.getHeight() / 2 - 40, null);
         EDITOR = this;
 
         Game.DEBUG_MODE = true;
@@ -54,8 +54,8 @@ public final class Editor extends Widget {
         EDITOR_FONT.setScale(2.0f);
 
         editorCameraController = new EditorCameraController();
-        editorBatch = new EditorBatch(AssetData.DEFAULT_SHADER, GameScreen.windowCamera);
-        editorFrame = new FrameBuffer(GameScreen.WINDOW.getWidth(), GameScreen.WINDOW.getHeight());
+        editorBatch = new EditorBatch(AssetData.DEFAULT_SHADER, GameScreen.WINDOW_CAMERA);
+        editorFrame = new FrameBuffer(GameScreen.window.getWidth(), GameScreen.window.getHeight());
 
         // GUI
         editorLog = new EditorLog(0,  -height , 200, 200, this);
@@ -105,16 +105,15 @@ public final class Editor extends Widget {
 
     private void switchGameView(boolean onEditor) {
         if (onEditor) {
-            final int viewWidth = GameScreen.WINDOW.getWidth() - getBorderSize() * 2;
+            final int viewWidth = GameScreen.window.getWidth() - getBorderSize() * 2;
             GameScreen.WIDTH = viewWidth / GameScreen.RENDER_SCALE;
             GameScreen.RENDER_WIDTH = viewWidth;
             GameScreen.RENDER_HEIGHT = GameScreen.HEIGHT * GameScreen.RENDER_SCALE;
-            GameScreen.POSITION.set((int) (GameScreen.WINDOW.getWidth() / 2.0f - (GameScreen.RENDER_WIDTH) / 2.0f), getDownBorderSize() / 2);
-
+            GameScreen.POSITION.set((int) (GameScreen.window.getWidth() / 2.0f - (GameScreen.RENDER_WIDTH) / 2.0f), getDownBorderSize() / 2);
         } else {
             GameScreen.WIDTH = 160; // TODO make static constant
-            GameScreen.RENDER_WIDTH = GameScreen.WINDOW.getWidth();
-            GameScreen.RENDER_HEIGHT = GameScreen.WINDOW.getHeight();
+            GameScreen.RENDER_WIDTH = GameScreen.window.getWidth();
+            GameScreen.RENDER_HEIGHT = GameScreen.window.getHeight();
             GameScreen.POSITION.set(0, 0);
         }
 
@@ -157,11 +156,14 @@ public final class Editor extends Widget {
     private void renderGUI() {
         editorFrame.begin();
         editorBatch.begin();
+
         super.render(editorBatch);
-        final var text = "GamePos: " + GameScreen.inGameMouseX() + " " + GameScreen.inGameMouseY() + " | WindowPos: " + Input.getMousePos().x + " " + Input.getMousePos().y;
+        final var text = "GamePos: " + GameScreen.inGameMouseX() + " " + GameScreen.inGameMouseY() + " | WindowPos: " + Input.getMousePos().x + " " + Input.getMousePos().y + " | GameWindowPos: " + GameScreen.inGameWindowMouseX() + " " + GameScreen.inGameWindowMouseY();
         editorBatch.drawText(EDITOR_FONT, text,
-                width, (int) pos.y + 5, 1.0f, Color.WHITE, true);
+                width, (int) pos.y + 5, 1.0f, Color.WHITE, true, false);
+
         if (DIALOG_WINDOW != null) DIALOG_WINDOW.render(editorBatch);
+
         editorBatch.end();
         editorFrame.end();
     }
@@ -171,7 +173,7 @@ public final class Editor extends Widget {
 
         renderGUI();
         renderBatch.begin(false);
-        renderBatch.draw(editorFrame.getTexture(), 0, 0, GameScreen.WINDOW.getWidth(), GameScreen.WINDOW.getHeight(), false, true);
+        renderBatch.draw(editorFrame.getTexture(), 0, 0, GameScreen.window.getWidth(), GameScreen.window.getHeight(), false, true);
         renderBatch.end();
     }
 

@@ -51,6 +51,14 @@ public final class Camera {
         return position;
     }
 
+    public float getPositionX() {
+        return position.x;
+    }
+
+    public float getPositionY() {
+        return position.y;
+    }
+
     @NotNull
     public Matrix4f getViewMatrix() {
         return view.setLookAt(position.x, position.y, position.z, position.x, position.y, -1.0f, up.x, up.y, up.z);
