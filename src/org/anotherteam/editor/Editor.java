@@ -33,7 +33,9 @@ public final class Editor {
      */
     public void draw(float dt) {
         tileViewer.imgui();
+        GameViewWindow.imgui(GameScreen.windowFrame);
         Console.imgui();
+
 
         editorCameraController.handle(dt);
     }
