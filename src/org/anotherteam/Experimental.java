@@ -110,6 +110,9 @@ public final class Experimental implements Runnable {
     }
 
     private void end() {
+        if (editor != null) {
+            editor.destroy();
+        }
         game.destroy();
         window.destroy();
         glfwSetErrorCallback(null).free();

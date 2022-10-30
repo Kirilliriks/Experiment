@@ -62,4 +62,9 @@ public final class ImGuiLayer {
             GLFW.glfwMakeContextCurrent(backupWindowPtr);
         }
     }
+
+    public void destroy() {
+        imGuiGl3.dispose();
+        ImGui.destroyContext();
+    }
 }

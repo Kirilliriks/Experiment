@@ -33,4 +33,8 @@ public final class Editor {
     public void render() {
         imGui.imgui();
     }
+
+    public void destroy() {
+        imGui.destroy();
+    }
 }
