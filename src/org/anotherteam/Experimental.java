@@ -68,7 +68,7 @@ public final class Experimental implements Runnable {
                 glClear(GL_COLOR_BUFFER_BIT);
                 game.render(dtF);
                 if (editor != null) {
-                    editor.draw();
+                    editor.render();
                 }
 
                 frames++;
