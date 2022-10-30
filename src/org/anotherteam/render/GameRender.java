@@ -119,9 +119,6 @@ public final class GameRender {
                 GameScreen.RENDER_WIDTH,
                 GameScreen.RENDER_HEIGHT,
                 false, true);
-//        if (Game.DEBUG_MODE) {
-//            debugRender(windowFrame.renderBatch, room);
-//        }
         windowFrame.renderBatch.end();
     }
 

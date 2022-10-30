@@ -74,4 +74,20 @@ public final class Sprite {
     public int getFrameY() {
         return frameY;
     }
+
+    public float getU0() {
+        return textCoords[0].x;
+    }
+
+    public float getV0() {
+        return textCoords[0].y;
+    }
+
+    public float getU1() {
+        return textCoords[2].x;
+    }
+
+    public float getV1() {
+        return textCoords[2].y;
+    }
 }

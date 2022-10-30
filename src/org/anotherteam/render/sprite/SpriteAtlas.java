@@ -41,6 +41,10 @@ public final class SpriteAtlas {
         return new SpriteAtlas(texture, frameWidth, frameHeight, heightOffset);
     }
 
+    public int getSizeX() {
+        return sizeX;
+    }
+
     public int getSizeY() {
         return sizeY;
     }
@@ -75,5 +79,21 @@ public final class SpriteAtlas {
     @NotNull
     public Texture getTexture() {
         return texture;
+    }
+
+    public int getFrameWidth() {
+        return frameWidth;
+    }
+
+    public int getFrameHeight() {
+        return frameHeight;
+    }
+
+    public int getTextureWidth() {
+        return texture.getWidth();
+    }
+
+    public int getTextureHeight() {
+        return texture.getHeight() / 2;
     }
 }
