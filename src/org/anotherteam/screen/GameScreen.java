@@ -13,13 +13,15 @@ import org.joml.Vector2f;
 import org.joml.Vector2i;
 
 public final class GameScreen {
-    public static final Vector2i POSITION = new Vector2i(0, 0);
-    public static final int RENDER_SCALE = 5;
-    public static int WIDTH = 160;
-    public static int HEIGHT = 90;
 
-    public static int RENDER_WIDTH = WIDTH * RENDER_SCALE;
-    public static int RENDER_HEIGHT = HEIGHT * RENDER_SCALE;
+    public static final int DEFAULT_WIDTH = 160;
+    public static final int DEFAULT_HEIGHT = 90;
+    public static final Vector2i POSITION = new Vector2i(0, 0);
+    public static int WIDTH = DEFAULT_WIDTH;
+    public static int HEIGHT = DEFAULT_HEIGHT;
+
+    public static int RENDER_WIDTH = WIDTH;
+    public static int RENDER_HEIGHT = HEIGHT;
 
     public static final Camera GAME_CAMERA = new Camera(WIDTH / 2, HEIGHT / 2, WIDTH, HEIGHT);
     public static final Camera WINDOW_CAMERA = new Camera();

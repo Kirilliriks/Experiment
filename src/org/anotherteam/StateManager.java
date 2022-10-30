@@ -8,9 +8,9 @@ public final class StateManager extends AbstractManager {
     private final Game game;
     private GameState state;
 
-    public StateManager(Game game, GameState firstState) {
+    public StateManager(Game game, GameState state) {
         this.game = game;
-        this.state = firstState;
+        setState(state);
     }
 
     public void setState(GameState state) {

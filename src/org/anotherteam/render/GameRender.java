@@ -41,14 +41,13 @@ public final class GameRender {
         effectFrame = new RenderFrame(effectBatch);
     }
 
-    public void updateFrames() {
-        textureFrame.changeBufferSize(GameScreen.WIDTH, GameScreen.HEIGHT);
-        heightFrame.changeBufferSize(GameScreen.WIDTH, GameScreen.HEIGHT);
-        effectFrame.changeBufferSize(GameScreen.WIDTH, GameScreen.HEIGHT);
+    public void updateFrames(int width, int height) {
+        textureFrame.changeBufferSize(width, height);
+        heightFrame.changeBufferSize(width, height);
+        effectFrame.changeBufferSize(width, height);
 
-        renderCamera.setProjection(GameScreen.WIDTH, GameScreen.HEIGHT);
-        GameScreen.GAME_CAMERA.setProjection(GameScreen.WIDTH, GameScreen.HEIGHT);
-        GameScreen.GAME_CAMERA.setPosition(GameScreen.WIDTH / 2.0f, GameScreen.HEIGHT / 2.0f);
+        renderCamera.setProjection(width, height);
+        GameScreen.GAME_CAMERA.setProjection(width, height);
     }
 
     public void render(@NotNull RenderFrame windowFrame, @NotNull Room room) {
@@ -95,14 +94,14 @@ public final class GameRender {
                     GameScreen.RENDER_WIDTH,
                     GameScreen.RENDER_HEIGHT,
                     false, true);
-            final var v1 = new Vector2f(GameScreen.POSITION);
-            final var v2 = new Vector2f(GameScreen.POSITION.x + GameScreen.RENDER_WIDTH, GameScreen.POSITION.y);
-            final var v3 = new Vector2f(GameScreen.POSITION.x + GameScreen.RENDER_WIDTH, GameScreen.POSITION.y + GameScreen.RENDER_HEIGHT);
-            final var v4 = new Vector2f(GameScreen.POSITION.x, GameScreen.POSITION.y + GameScreen.RENDER_HEIGHT);
-            windowFrame.renderBatch.debugBatch.drawLine(v1, v2, Color.RED);
-            windowFrame.renderBatch.debugBatch.drawLine(v2, v3, Color.RED);
-            windowFrame.renderBatch.debugBatch.drawLine(v3, v4, Color.RED);
-            windowFrame.renderBatch.debugBatch.drawLine(v4, v1, Color.RED);
+//            final var v1 = new Vector2f(GameScreen.POSITION);
+//            final var v2 = new Vector2f(GameScreen.POSITION.x + GameScreen.RENDER_WIDTH, GameScreen.POSITION.y);
+//            final var v3 = new Vector2f(GameScreen.POSITION.x + GameScreen.RENDER_WIDTH, GameScreen.POSITION.y + GameScreen.RENDER_HEIGHT);
+//            final var v4 = new Vector2f(GameScreen.POSITION.x, GameScreen.POSITION.y + GameScreen.RENDER_HEIGHT);
+//            windowFrame.renderBatch.debugBatch.drawLine(v1, v2, Color.RED);
+//            windowFrame.renderBatch.debugBatch.drawLine(v2, v3, Color.RED);
+//            windowFrame.renderBatch.debugBatch.drawLine(v3, v4, Color.RED);
+//            windowFrame.renderBatch.debugBatch.drawLine(v4, v1, Color.RED);
         }
 
         if (Game.DEBUG_MODE) {

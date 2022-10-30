@@ -30,7 +30,7 @@ public final class ImGuiLayer {
         imGuiGl3.init(glslVersion);
     }
 
-    public void imgui() {
+    public void imgui(float dt) {
         imGuiGlfw.newFrame();
         ImGui.newFrame();
 
@@ -48,7 +48,7 @@ public final class ImGuiLayer {
             }
         }
 
-        editor.draw();
+        editor.draw(dt);
 
         ImGui.end();
 

@@ -31,12 +31,13 @@ public final class Experimental implements Runnable {
         game = new Game(window);
         editor = new Editor(game);
         game.init();
+        editor.init();
 
         double frameRateDelta = 1.0f / window.getFpsMax();
 
         double beginTime = Time.getTime();
         double endTime;
-        float dt;
+        float dt = 0;
         float timeCount = 0.0f;
         double unprocessedTime = 0.0f;
 
@@ -68,7 +69,7 @@ public final class Experimental implements Runnable {
                 glClear(GL_COLOR_BUFFER_BIT);
                 game.render(dtF);
                 if (editor != null) {
-                    editor.render();
+                    editor.render(dtF);
                 }
 
                 frames++;

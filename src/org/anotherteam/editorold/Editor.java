@@ -106,9 +106,9 @@ public final class Editor extends Widget {
     private void switchGameView(boolean onEditor) {
         if (onEditor) {
             final int viewWidth = GameScreen.window.getWidth() - getBorderSize() * 2;
-            GameScreen.WIDTH = viewWidth / GameScreen.RENDER_SCALE;
+            GameScreen.WIDTH = viewWidth / 5;
             GameScreen.RENDER_WIDTH = viewWidth;
-            GameScreen.RENDER_HEIGHT = GameScreen.HEIGHT * GameScreen.RENDER_SCALE;
+            GameScreen.RENDER_HEIGHT = GameScreen.HEIGHT * 5;
             GameScreen.POSITION.set((int) (GameScreen.window.getWidth() / 2.0f - (GameScreen.RENDER_WIDTH) / 2.0f), getDownBorderSize() / 2);
         } else {
             GameScreen.WIDTH = 160; // TODO make static constant
@@ -117,7 +117,7 @@ public final class Editor extends Widget {
             GameScreen.POSITION.set(0, 0);
         }
 
-        Game.getGameRender().updateFrames();
+        Game.getGameRender().updateFrames(GameScreen.WIDTH, GameScreen.HEIGHT);
     }
 
     @Override

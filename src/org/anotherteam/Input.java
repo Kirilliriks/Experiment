@@ -5,10 +5,7 @@ import org.anotherteam.util.CharUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector2f;
-import org.lwjgl.glfw.GLFW;
-import org.lwjgl.glfw.GLFWCursorPosCallback;
-import org.lwjgl.glfw.GLFWKeyCallback;
-import org.lwjgl.glfw.GLFWMouseButtonCallback;
+import org.lwjgl.glfw.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +17,8 @@ public final class Input {
 
     private static Key lastPrintedKey = null;
     public static Map<Integer, Key> keys = new HashMap<>();
+
+    private static float mouseWheelVelocity = 0.0f;
 
     public final static Key KEY_W = new Key(GLFW.GLFW_KEY_W);
     public final static Key KEY_A = new Key(GLFW.GLFW_KEY_A);
@@ -41,6 +40,7 @@ public final class Input {
     private final GLFWKeyCallback keyboard;
     private final GLFWCursorPosCallback mouseMove;
     private final GLFWMouseButtonCallback mouseButton;
+    private final GLFWScrollCallback mouseScroll;
 
     public static boolean isAnyKeyDown() {
         if (lastPrintedKey == null) return false;
@@ -119,6 +119,10 @@ public final class Input {
         return lastMousePos;
     }
 
+    public static float getMouseWheelVelocity() {
+        return mouseWheelVelocity;
+    }
+
     public Input(@NotNull Window ownerWindow) {
         keyboard = new GLFWKeyCallback() {
             @Override
@@ -154,6 +158,13 @@ public final class Input {
                 buttons.get(button).toggle(action != GLFW.GLFW_RELEASE);
             }
         };
+
+        mouseScroll = new GLFWScrollCallback() {
+            @Override
+            public void invoke (long win, double dx, double dy) {
+                mouseWheelVelocity = (float) dy;
+            }
+        };
     }
 
     @NotNull
@@ -171,20 +182,30 @@ public final class Input {
         return mouseButton;
     }
 
+    @NotNull
+    public GLFWScrollCallback getMouseScroll() {
+        return mouseScroll;
+    }
+
     public void tick() {
         for (final var key : keys.values()) {
             key.tick();
         }
+
         for (final var button : buttons.values()) {
             button.tick();
         }
+
         lastPrintedKey = null;
+
+        mouseWheelVelocity = 0.0f;
     }
 
     public void destroy() {
         keyboard.free();
         mouseMove.free();
         mouseButton.free();
+        mouseScroll.free();
     }
 
     public static class MouseButton {

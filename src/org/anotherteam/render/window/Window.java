@@ -5,6 +5,9 @@ import static org.lwjgl.opengl.GL42.*;
 import org.anotherteam.Input;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.exception.RenderException;
+import org.jetbrains.annotations.NotNull;
+import org.joml.Vector2f;
+import org.joml.Vector2i;
 import org.lwjgl.glfw.GLFW;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -14,6 +17,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 public final class Window {
 
     private final Input input;
+    private final Vector2i aspectRatio;
 
     private long handler;
 
@@ -31,6 +35,7 @@ public final class Window {
 
     public Window(int width, int height, String title) {
         this.input = new Input(this);
+        this.aspectRatio = new Vector2i(16, 9);
         this.width = width;
         this.height = height;
         this.title = title;
@@ -76,6 +81,7 @@ public final class Window {
         glfwSetKeyCallback(handler, input.getKeyboard());
         glfwSetCursorPosCallback(handler, input.getMouseMove());
         glfwSetMouseButtonCallback(handler, input.getMouseButton());
+        glfwSetScrollCallback(handler, input.getMouseScroll());
         glfwSetWindowSizeCallback(handler, (w, newWidth, newHeight) -> {
             width = newWidth;
             height = newHeight;
@@ -152,5 +158,18 @@ public final class Window {
 
     public boolean isFpsLocked() {
         return fpsLocked;
+    }
+
+    public int getAspect() {
+        return aspectRatio.x;
+    }
+
+    public int getRatio() {
+        return aspectRatio.y;
+    }
+
+    @NotNull
+    public Vector2i getAspectRatio() {
+        return aspectRatio;
     }
 }
