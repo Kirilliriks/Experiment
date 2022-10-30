@@ -1,8 +1,14 @@
 package org.anotherteam.editor;
 
+import imgui.ImGui;
+import imgui.flag.ImGuiCond;
+import imgui.flag.ImGuiStyleVar;
+import imgui.flag.ImGuiWindowFlags;
+import imgui.type.ImBoolean;
 import org.anotherteam.Game;
 import org.anotherteam.GameState;
 import org.anotherteam.editor.level.TileViewer;
+import org.anotherteam.render.window.Window;
 import org.anotherteam.screen.GameScreen;
 
 public final class Editor {
@@ -32,12 +38,30 @@ public final class Editor {
      * Draw and update editor elements
      */
     public void draw(float dt) {
+
+        ImGui.setNextWindowPos(0.0f, 0.0f, ImGuiCond.Always);
+        ImGui.setNextWindowSize(GameScreen.window.getWidth(), GameScreen.window.getHeight());
+        ImGui.pushStyleVar(ImGuiStyleVar.WindowRounding, 0.0f);
+        ImGui.pushStyleVar(ImGuiStyleVar.WindowBorderSize, 0.0f);
+        final int windowFlags = ImGuiWindowFlags.MenuBar | ImGuiWindowFlags.NoDocking | ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoCollapse |
+                ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove |
+                ImGuiWindowFlags.NoBringToFrontOnFocus | ImGuiWindowFlags.NoNavFocus | ImGuiWindowFlags.NoBackground;
+
+        ImGui.begin("Dockspace Demo", new ImBoolean(true), windowFlags);
+        ImGui.popStyleVar(2);
+
+        // Dockspace
+        ImGui.dockSpace(ImGui.getID("Dockspace"));
+
         tileViewer.imgui();
+//        ImGui.begin("Game Viewport", ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse | ImGuiWindowFlags.NoBackground);
+//        ImGui.end();
         GameViewWindow.imgui(GameScreen.windowFrame);
         Console.imgui();
 
-
         editorCameraController.handle(dt);
+
+        ImGui.end();
     }
 
     /**

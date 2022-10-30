@@ -16,10 +16,14 @@ public final class GameViewWindow {
 
         ImGui.setCursorPos(windowPos.x, windowPos.y);
 
-        final float U0 = windowPos.x / GameScreen.RENDER_WIDTH;
-        final float V0 = windowPos.y / GameScreen.RENDER_HEIGHT;
-        final float U1 = (windowPos.x + windowSize.x) / GameScreen.RENDER_WIDTH;
-        final float V1 = (windowPos.y + windowSize.y) / GameScreen.RENDER_HEIGHT;
+        final ImVec2 pos = ImGui.getCursorScreenPos();
+        pos.x -= ImGui.getScrollX();
+        pos.y += ImGui.getScrollY();
+
+        final float U0 = pos.x / GameScreen.RENDER_WIDTH;
+        final float V0 = pos.y / GameScreen.RENDER_HEIGHT;
+        final float U1 = (pos.x + windowSize.x) / GameScreen.RENDER_WIDTH;
+        final float V1 = (pos.y / 2 + windowSize.y) / GameScreen.RENDER_HEIGHT;
 
         ImGui.image(frame.texture.getId(), windowSize.x, windowSize.y, U0, V1, U1, V0);
 
@@ -29,8 +33,8 @@ public final class GameViewWindow {
     private static ImVec2 getLargestSizeForViewport() {
         ImVec2 windowSize = new ImVec2();
         ImGui.getContentRegionAvail(windowSize);
-        //windowSize.x -= ImGui.getScrollX();
-        //windowSize.y -= ImGui.getScrollY();
+        windowSize.x -= ImGui.getScrollX();
+        windowSize.y -= ImGui.getScrollY();
 
 //        float aspectWidth = windowSize.x;
 //        float aspectHeight = aspectWidth / (16.0f / 9.0f);
@@ -46,8 +50,8 @@ public final class GameViewWindow {
     private static ImVec2 getCenteredPositionForViewport(ImVec2 aspectSize) {
         ImVec2 windowSize = new ImVec2();
         ImGui.getContentRegionAvail(windowSize);
-        //windowSize.x -= ImGui.getScrollX();
-        //windowSize.y -= ImGui.getScrollY();
+        windowSize.x -= ImGui.getScrollX();
+        windowSize.y -= ImGui.getScrollY();
 
         float viewportX = (windowSize.x / 2.0f) - (aspectSize.x / 2.0f);
         float viewportY = (windowSize.y / 2.0f) - (aspectSize.y / 2.0f);
