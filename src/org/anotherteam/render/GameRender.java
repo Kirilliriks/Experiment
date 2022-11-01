@@ -11,9 +11,7 @@ import org.anotherteam.render.frame.RenderFrame;
 import org.anotherteam.render.screen.Camera;
 import org.anotherteam.render.shader.Shader;
 import org.anotherteam.screen.GameScreen;
-import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector2f;
 
 public final class GameRender {
 
@@ -57,6 +55,7 @@ public final class GameRender {
         heightFrame.end();
 
         textureFrame.begin();
+        textureFrame.fillBackground(0.0f, 0.0f, 0.0f, 1.0f);
         drawTextures(room);
         textureFrame.end();
 
@@ -75,7 +74,6 @@ public final class GameRender {
 
         effectBatch.draw(
                 textureFrame.texture, 0, 0, false, true);
-
         effectFrame.end();
         //Finish frames
 
@@ -94,14 +92,6 @@ public final class GameRender {
                     GameScreen.RENDER_WIDTH,
                     GameScreen.RENDER_HEIGHT,
                     false, true);
-//            final var v1 = new Vector2f(GameScreen.POSITION);
-//            final var v2 = new Vector2f(GameScreen.POSITION.x + GameScreen.RENDER_WIDTH, GameScreen.POSITION.y);
-//            final var v3 = new Vector2f(GameScreen.POSITION.x + GameScreen.RENDER_WIDTH, GameScreen.POSITION.y + GameScreen.RENDER_HEIGHT);
-//            final var v4 = new Vector2f(GameScreen.POSITION.x, GameScreen.POSITION.y + GameScreen.RENDER_HEIGHT);
-//            windowFrame.renderBatch.debugBatch.drawLine(v1, v2, Color.RED);
-//            windowFrame.renderBatch.debugBatch.drawLine(v2, v3, Color.RED);
-//            windowFrame.renderBatch.debugBatch.drawLine(v3, v4, Color.RED);
-//            windowFrame.renderBatch.debugBatch.drawLine(v4, v1, Color.RED);
         }
 
         if (Game.DEBUG_MODE) {
@@ -110,15 +100,17 @@ public final class GameRender {
 
         windowFrame.end();
 
-        glViewport(0, 0, GameScreen.window.getWidth(), GameScreen.window.getHeight());
-        windowFrame.renderBatch.begin();
-        windowFrame.renderBatch.draw(
-                windowFrame.texture,
-                GameScreen.POSITION.x, GameScreen.POSITION.y,
-                GameScreen.RENDER_WIDTH,
-                GameScreen.RENDER_HEIGHT,
-                false, true);
-        windowFrame.renderBatch.end();
+        if (Game.STATE_MANAGER.getState() == GameState.ON_LEVEL) {
+            glViewport(0, 0, GameScreen.window.getWidth(), GameScreen.window.getHeight());
+            windowFrame.renderBatch.begin();
+            windowFrame.renderBatch.draw(
+                    windowFrame.texture,
+                    GameScreen.POSITION.x, GameScreen.POSITION.y,
+                    GameScreen.RENDER_WIDTH,
+                    GameScreen.RENDER_HEIGHT,
+                    false, true);
+            windowFrame.renderBatch.end();
+        }
     }
 
     private void drawTextures(@NotNull Room room) {

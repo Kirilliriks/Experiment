@@ -8,7 +8,6 @@ import imgui.type.ImBoolean;
 import org.anotherteam.Game;
 import org.anotherteam.GameState;
 import org.anotherteam.editor.level.TileViewer;
-import org.anotherteam.render.window.Window;
 import org.anotherteam.screen.GameScreen;
 
 public final class Editor {
@@ -45,7 +44,7 @@ public final class Editor {
         ImGui.pushStyleVar(ImGuiStyleVar.WindowBorderSize, 0.0f);
         final int windowFlags = ImGuiWindowFlags.MenuBar | ImGuiWindowFlags.NoDocking | ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoCollapse |
                 ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove |
-                ImGuiWindowFlags.NoBringToFrontOnFocus | ImGuiWindowFlags.NoNavFocus | ImGuiWindowFlags.NoBackground;
+                ImGuiWindowFlags.NoBringToFrontOnFocus | ImGuiWindowFlags.NoNavFocus;
 
         ImGui.begin("Dockspace Demo", new ImBoolean(true), windowFlags);
         ImGui.popStyleVar(2);
@@ -54,8 +53,6 @@ public final class Editor {
         ImGui.dockSpace(ImGui.getID("Dockspace"));
 
         tileViewer.imgui();
-//        ImGui.begin("Game Viewport", ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse | ImGuiWindowFlags.NoBackground);
-//        ImGui.end();
         GameViewWindow.imgui(GameScreen.windowFrame);
         Console.imgui();
 

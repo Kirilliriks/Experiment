@@ -11,19 +11,20 @@ layout (binding = 1, rgba8) uniform readonly image2D u_texture1;
 out vec4 out_Color;
 
 void main() {
+
+    // TODO refactor
+
     // constants
     vec2 endPosition;
     vec2 startPosition;
 
-    endPosition.x = int(tex_positions.x); // TODO КОНКРЕТНО ДЕЛО В ЭТОМ
-    endPosition.y = int(tex_positions.y); // TODO Или в ином моменте хм
+    endPosition.x = int(tex_positions.x);
+    endPosition.y = int(tex_positions.y);
 
     startPosition.x = int(player_pos.x);
     startPosition.y = int(player_pos.y);
     //
     vec4 color = texture2D(u_texture, tex_coord);
-
-    // TODO СЛОМАЛСЯ РЕЙТРЕСИНГ
 
     // Float;
     vec2 directionVector, rayVector;
