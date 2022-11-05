@@ -1,5 +1,6 @@
 package org.anotherteam;
 
+import imgui.ImGui;
 import org.anotherteam.editor.Editor;
 import org.anotherteam.render.window.Window;
 import org.anotherteam.util.Time;
@@ -31,7 +32,10 @@ public final class Experimental implements Runnable {
         game = new Game(window);
         editor = new Editor(game);
         game.init();
-        editor.init();
+        if (editor != null) {
+            editor.init();
+            Input.imGuiIO = ImGui.getIO();
+        }
 
         double frameRateDelta = 1.0f / window.getFpsMax();
 

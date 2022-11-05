@@ -1,6 +1,7 @@
 package org.anotherteam.editor;
 
 import imgui.ImGui;
+import imgui.ImGuiIO;
 import imgui.flag.ImGuiCond;
 import imgui.flag.ImGuiStyleVar;
 import imgui.flag.ImGuiWindowFlags;
@@ -43,13 +44,20 @@ public final class Editor {
         ImGui.pushStyleVar(ImGuiStyleVar.WindowRounding, 0.0f);
         ImGui.pushStyleVar(ImGuiStyleVar.WindowBorderSize, 0.0f);
         final int windowFlags = ImGuiWindowFlags.MenuBar | ImGuiWindowFlags.NoDocking | ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoCollapse |
-                ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove |
-                ImGuiWindowFlags.NoBringToFrontOnFocus | ImGuiWindowFlags.NoNavFocus;
+                                ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove |
+                                ImGuiWindowFlags.NoBringToFrontOnFocus | ImGuiWindowFlags.NoNavFocus;
 
-        ImGui.begin("Dockspace Demo", new ImBoolean(true), windowFlags);
+        ImGui.begin("Dockspace", new ImBoolean(true), windowFlags);
         ImGui.popStyleVar(2);
 
-        // Dockspace
+        if (ImGui.isWindowFocused()) {
+            final ImGuiIO io = ImGui.getIO();
+            io.setWantCaptureKeyboard(false);
+            io.setWantCaptureMouse(false);
+            io.setWantTextInput(false);
+            io.setWantSetMousePos(false);
+        }
+
         ImGui.dockSpace(ImGui.getID("Dockspace"));
 
         tileViewer.imgui();

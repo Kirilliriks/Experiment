@@ -63,6 +63,12 @@ public final class GameScreen {
         return (int) (GAME_CAMERA.getPositionY() + y - HEIGHT / 2.0f);
     }
 
+    public static boolean isMouseOnGameWindow() {
+        if (Input.getMouseX() < POSITION.x || Input.getMouseX() > POSITION.x + RENDER_WIDTH) return false;
+        if (Input.getMouseY() < POSITION.y || Input.getMouseY() > POSITION.y + RENDER_HEIGHT) return false;
+        return true;
+    }
+
     /**
      * Method return in game window position mouse X
      * (That is, it returns the cursor in game coordinates without taking into account the camera offset)

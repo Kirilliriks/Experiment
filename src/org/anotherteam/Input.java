@@ -1,5 +1,6 @@
 package org.anotherteam;
 
+import imgui.ImGuiIO;
 import org.anotherteam.render.window.Window;
 import org.anotherteam.util.CharUtil;
 import org.jetbrains.annotations.NotNull;
@@ -11,6 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class Input {
+
+    public static ImGuiIO imGuiIO = null;
     private final static Map<Integer, MouseButton> buttons = new HashMap<>();
     private final static Vector2f mousePos = new Vector2f(0, 0);
     private final static Vector2f lastMousePos = new Vector2f(0, 0);
@@ -43,11 +46,15 @@ public final class Input {
     private final GLFWScrollCallback mouseScroll;
 
     public static boolean isAnyKeyDown() {
+        if (isImGuiHandleKeyboard()) return false;
+
         if (lastPrintedKey == null) return false;
         return lastPrintedKey.down;
     }
 
     public static boolean isAnyKeyPressed() {
+        if (isImGuiHandleKeyboard()) return false;
+
         if (lastPrintedKey == null) return false;
         return lastPrintedKey.pressed;
     }
@@ -58,6 +65,8 @@ public final class Input {
     }
 
     public static boolean isKeyDown(Key key) {
+        if (isImGuiHandleKeyboard()) return false;
+
         if (key.isLetter()) {
             final int anotherChar = CharUtil.toAnotherCase(key.keyCode);
 
@@ -68,6 +77,8 @@ public final class Input {
     }
 
     public static boolean isKeyPressed(Key key) {
+        if (isImGuiHandleKeyboard()) return false;
+
         if (key.isLetter()) {
             final int anotherChar = CharUtil.toAnotherCase(key.keyCode);
 
@@ -123,7 +134,20 @@ public final class Input {
         return mouseWheelVelocity;
     }
 
+    public static boolean isImGuiHandle() {
+        return isImGuiHandleKeyboard() || isImGuiHandleMouse();
+    }
+
+    public static boolean isImGuiHandleKeyboard() {
+        return imGuiIO != null && (imGuiIO.getWantCaptureKeyboard() || imGuiIO.getWantTextInput());
+    }
+
+    public static boolean isImGuiHandleMouse() {
+        return imGuiIO != null && (imGuiIO.getWantSetMousePos() || imGuiIO.getWantCaptureMouse());
+    }
+
     public Input(@NotNull Window ownerWindow) {
+
         keyboard = new GLFWKeyCallback() {
             @Override
             public void invoke(long window, int key, int scancode, int action, int mods) {

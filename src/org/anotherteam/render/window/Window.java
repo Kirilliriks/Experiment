@@ -6,7 +6,6 @@ import org.anotherteam.Input;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.exception.RenderException;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector2f;
 import org.joml.Vector2i;
 import org.lwjgl.glfw.GLFW;
 
@@ -97,17 +96,19 @@ public final class Window {
         glfwDefaultWindowHints();
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
-        glfwWindowHint(GLFW_MAXIMIZED, GLFW_FALSE);
+        glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
 
         handler = glfwCreateWindow(width, height, title, fullscreen ? GLFW.glfwGetPrimaryMonitor() : 0, NULL);
-        if (handler == NULL)
+        if (handler == NULL) {
             throw new RenderException("Failed to create the GLFW window");
+        }
 
         createCallbacks();
 
         final var videoMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-        if (videoMode == null)
+        if (videoMode == null) {
             throw new RenderException("Error with get video mode");
+        }
 
         windowFPSRate = videoMode.refreshRate();
         glfwWindowHint(GLFW_RED_BITS, videoMode.redBits());

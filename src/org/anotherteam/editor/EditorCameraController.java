@@ -3,7 +3,6 @@ package org.anotherteam.editor;
 import org.anotherteam.Game;
 import org.anotherteam.Input;
 import org.anotherteam.logger.GameLogger;
-import org.anotherteam.render.window.Window;
 import org.anotherteam.screen.GameScreen;
 import org.joml.Vector2f;
 
@@ -22,7 +21,7 @@ public final class EditorCameraController {
 
         final float mouseWheelVelocity = Input.getMouseWheelVelocity();
         if (mouseWheelVelocity != 0.0F) {
-            if (mouseWheelVelocity > 0) {
+            if (mouseWheelVelocity < 0) {
                 GameScreen.WIDTH += GameScreen.window.getAspect() * 2;
                 GameScreen.HEIGHT += GameScreen.window.getRatio() * 2;
             } else {
@@ -48,24 +47,26 @@ public final class EditorCameraController {
         if (Input.isKeyDown(Input.KEY_A)) {
             impulse.x -= speed * dt;
         }
+        GameLogger.sendMessage("FALSE");
         if (Input.isKeyDown(Input.KEY_D)) {
+            GameLogger.sendMessage("TRUE");
             impulse.x += speed * dt;
         }
 
-//        if (Input.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
-//            if (lastPos.equals(0, 0)) {
-//                lastPos.set(Input.getMousePos());
-//                return;
-//            }
-//
-//            final float diffX = lastPos.x - Input.getMouseX();
-//            final float diffY = lastPos.y - Input.getMouseY();
-//            impulse.x += diffX * DRAG_SCALE;
-//            impulse.y += diffY * DRAG_SCALE;
-//            lastPos.set(Input.getMousePos());
-//        } else {
-//            lastPos.set(0, 0);
-//        }
+        if (GameViewWindow.isMouseOnWindow() && Input.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
+            if (lastPos.equals(0, 0)) {
+                lastPos.set(Input.getMousePos());
+                return;
+            }
+
+            final float diffX = lastPos.x - Input.getMouseX();
+            final float diffY = lastPos.y - Input.getMouseY();
+            impulse.x += diffX * DRAG_SCALE;
+            impulse.y += diffY * DRAG_SCALE;
+            lastPos.set(Input.getMousePos());
+        } else {
+            lastPos.set(0, 0);
+        }
 
         if (impulse.length() >= 1) {
             GameScreen.GAME_CAMERA.addPosition(impulse.x, impulse.y);
