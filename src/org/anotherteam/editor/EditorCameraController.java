@@ -1,7 +1,9 @@
 package org.anotherteam.editor;
 
 import org.anotherteam.Game;
+import org.anotherteam.GameState;
 import org.anotherteam.Input;
+import org.anotherteam.editorold.level.editor.LevelEditor;
 import org.anotherteam.logger.GameLogger;
 import org.anotherteam.screen.GameScreen;
 import org.joml.Vector2f;
@@ -16,6 +18,11 @@ public final class EditorCameraController {
     public void handle(float dt) {
         if (GameScreen.draggedThing != null || (GameScreen.inGameWindowMouseX() == -1 || GameScreen.inGameMouseY() == -1)) {
             lastPos.set(0, 0);
+            return;
+        }
+
+        if (Input.isKeyDown(Input.KEY_SPACE)) {
+            Editor.switchPlayStopMode();
             return;
         }
 
@@ -47,9 +54,8 @@ public final class EditorCameraController {
         if (Input.isKeyDown(Input.KEY_A)) {
             impulse.x -= speed * dt;
         }
-        GameLogger.sendMessage("FALSE");
+
         if (Input.isKeyDown(Input.KEY_D)) {
-            GameLogger.sendMessage("TRUE");
             impulse.x += speed * dt;
         }
 

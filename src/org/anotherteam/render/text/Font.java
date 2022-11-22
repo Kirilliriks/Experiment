@@ -1,6 +1,7 @@
 package org.anotherteam.render.text;
 
 import org.anotherteam.render.texture.Texture;
+import org.anotherteam.util.FileUtils;
 import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -42,8 +43,14 @@ public final class Font {
     @Nullable
     private java.awt.Font registerFont() {
         try {
+
+            final var source = Font.class.getClassLoader().getResourceAsStream(filepath);
+            if (source == null) {
+                throw new LifeException("Null font input " + filepath);
+            }
+
             final var ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            final var font = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, new File(filepath));
+            final var font = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, source);
             ge.registerFont(font);
             return font;
         } catch (Exception e) {

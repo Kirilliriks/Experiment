@@ -1,18 +1,8 @@
 package org.anotherteam.util;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import org.anotherteam.data.deserialization.LevelDeserializer;
-import org.anotherteam.data.deserialization.room.RoomDeserializer;
-import org.anotherteam.data.deserialization.room.gameobject.ComponentDeserializer;
-import org.anotherteam.data.deserialization.room.gameobject.GameObjectDeserializer;
-import org.anotherteam.data.deserialization.room.tile.TileDeserializer;
+import org.anotherteam.data.AssetData;
 import org.anotherteam.level.Level;
-import org.anotherteam.level.room.Room;
-import org.anotherteam.level.room.tile.Tile;
 import org.anotherteam.logger.GameLogger;
-import org.anotherteam.object.GameObject;
-import org.anotherteam.object.component.Component;
 import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.BufferUtils;
@@ -32,7 +22,7 @@ public final class FileUtils {
         String inFile = "";
         try {
             final String finalName = levelName  + (levelName.split("\\.").length > 1 ? "" : "." + Level.LEVEL_FILE_EXTENSION);
-            final Path path = Paths.get("levels/" + finalName);
+            final Path path = Paths.get(AssetData.ASSETS_PATH + "levels/" + finalName);
 
             if (!path.toFile().isFile()) {
                 GameLogger.sendMessage("Level " + levelName + " not found");
@@ -96,7 +86,11 @@ public final class FileUtils {
         final var builder = new StringBuilder();
         BufferedReader reader;
         try {
-            reader = new BufferedReader(new FileReader(fileName));
+            final var source = FileUtils.class.getClassLoader().getResourceAsStream(fileName);
+            if (source == null) {
+                throw new LifeException("Null input " + fileName);
+            }
+            reader = new BufferedReader(new InputStreamReader(source));
             String line;
             while((line = reader.readLine()) != null) {
                 builder.append(line);
@@ -121,8 +115,10 @@ public final class FileUtils {
             }
         } else {
             try {
-                final var source = PixmapUtil.class.getClassLoader().getResourceAsStream(resource);
-                if (source == null) throw new LifeException("Null input " + resource);
+                final var source = FileUtils.class.getClassLoader().getResourceAsStream(resource);
+                if (source == null) {
+                    throw new LifeException("Null input " + resource);
+                }
 
                 final var rbc = Channels.newChannel(source);
                 buffer = BufferUtils.createByteBuffer(bufferSize);

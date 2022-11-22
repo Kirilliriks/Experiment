@@ -2,9 +2,10 @@ package org.anotherteam.object.component.type.player;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
 import org.anotherteam.Game;
+import org.anotherteam.GameState;
 import org.anotherteam.Input;
+import org.anotherteam.editor.Editor;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.Component;
 import org.anotherteam.object.component.fieldcontroller.FieldController;
@@ -14,7 +15,6 @@ import org.anotherteam.object.component.type.state.type.PlayerState;
 import org.anotherteam.object.component.type.transform.Transform;
 import org.anotherteam.screen.GameScreen;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.joml.Vector2i;
 
 import java.util.ArrayList;
@@ -89,6 +89,10 @@ public final class PlayerController extends Component {
 
         if (Input.isKeyPressed(Input.KEY_SPACE)) {
             Game.DEBUG_MODE = !Game.DEBUG_MODE;
+        }
+
+        if (Editor.getInstance() != null && Input.isKeyDown(Input.KEY_ESCAPE)) {
+            Editor.switchPlayStopMode();
         }
     }
 
