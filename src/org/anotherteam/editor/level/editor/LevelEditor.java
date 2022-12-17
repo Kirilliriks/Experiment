@@ -1,6 +1,7 @@
 package org.anotherteam.editor.level.editor;
 
 import org.anotherteam.Game;
+import org.anotherteam.data.AssetData;
 import org.anotherteam.editor.level.room.RoomEditor;
 import org.anotherteam.util.FileUtils;
 import org.anotherteam.editor.Editor;
@@ -65,7 +66,7 @@ public final class LevelEditor extends GUIElement {
     }
 
     public void updateButtons(String currentLevelName) {
-        final var files = new File("levels/").listFiles();
+        final var files = new File(AssetData.ASSETS_PATH + "levels/").listFiles();
         if (files == null) throw new LifeException("Level's not found");
 
         selector.clearChild();

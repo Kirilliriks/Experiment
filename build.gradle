@@ -24,7 +24,7 @@ project.ext.imguiVersion = '1.77-0.17.2'
 sourceSets.main.java.srcDirs = [ "src/" ]
 sourceSets.main.resources.srcDirs = ["src/assets/"]
 
-project.ext.mainClassName = "com.anotherteam.Game"
+project.ext.mainClassName = "org.anotherteam.Experimental"
 project.ext.assetsDir = new File("src/assets/")
 
 task runApp(type: JavaExec) {
@@ -130,4 +130,21 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    manifest {
+        attributes "Main-Class": project.ext.mainClassName
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+
+    task copyDocs(type: Copy) {
+        from 'src/assets'
+        into 'build/libs/assets'
+    }
 }

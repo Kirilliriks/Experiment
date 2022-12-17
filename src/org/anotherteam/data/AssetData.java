@@ -13,10 +13,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class AssetData {
-        public static final String ASSETS_PATH = "../assets/";
-        public static final String ROOM_PATH = "atlases/room/";
-        public static final String ENTITY_PATH = "atlases/entity/";
-        public static final String ROOM_OBJECTS_PATH = "atlases/object/";
+
+        public static final String ASSETS_PATH = "assets/";
+        public static final String ATLASES_PATH = ASSETS_PATH + "atlases/";
+        public static final String ROOM_PATH = ATLASES_PATH + "room/";
+        public static final String ENTITY_PATH = ATLASES_PATH + "entity/";
+        public static final String ROOM_OBJECTS_PATH = ATLASES_PATH + "object/";
 
         public static final Map<String, SpriteAtlas> spriteAtlases = new HashMap<>();
         public static final Map<String, Texture> textures = new HashMap<>();
@@ -40,8 +42,7 @@ public final class AssetData {
                         return textures.get(textureName);
                 }
 
-                final var path = ASSETS_PATH + textureName;
-                final var texture = Texture.create(path);
+                final var texture = Texture.create(textureName);
                 texture.setName(textureName);
                 textures.put(textureName, texture);
 
