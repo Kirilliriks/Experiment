@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'org.anotherteam'
-version '1.0-SNAPSHOT'
+version '0.1'
 
 repositories {
     jcenter()
@@ -33,7 +33,7 @@ project.ext.assetsDir = new File("src/assets/")
 task runApp(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
 
-    mainClass = 'org.anotherteam.Experimental'
+    mainClass = project.ext.mainClassName
     standardInput = System.in
     workingDir = project.assetsDir
     ignoreExitValue = true
@@ -139,6 +139,10 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+task runDebug(type: GradleBuild) {
+    tasks = ['clean', 'build', 'copyDocs']
 }
 
 jar {
