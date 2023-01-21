@@ -30,7 +30,7 @@ public final class TileViewer {
         loadAtlases();
     }
 
-    public void imgui() {
+    public void update() {
         ImGui.begin("Tile Viewer");
 
         if (ImGui.beginListBox("Select pack")) {

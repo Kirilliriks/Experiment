@@ -49,6 +49,7 @@ public final class GameRender {
     }
 
     public void render(@NotNull RenderFrame windowFrame, @NotNull Room room) {
+
         // Start frames
         heightFrame.begin();
         drawHeightMap(room);
@@ -75,24 +76,17 @@ public final class GameRender {
         effectBatch.draw(
                 textureFrame.texture, 0, 0, false, true);
         effectFrame.end();
-        //Finish frames
 
+        //Finish frames
         windowFrame.begin();
-        if (Game.STATE_MANAGER.getState() == GameState.ON_LEVEL) {
-            windowFrame.renderBatch.draw(
-                    effectFrame.texture,
-                    GameScreen.POSITION.x, GameScreen.POSITION.y,
-                    GameScreen.RENDER_WIDTH,
-                    GameScreen.RENDER_HEIGHT,
-                    false, true);
-        } else if (Game.STATE_MANAGER.getState() == GameState.ON_EDITOR) {
-            windowFrame.renderBatch.draw(
-                    textureFrame.texture,
-                    GameScreen.POSITION.x, GameScreen.POSITION.y,
-                    GameScreen.RENDER_WIDTH,
-                    GameScreen.RENDER_HEIGHT,
-                    false, true);
-        }
+
+        final boolean onLevel = Game.STATE_MANAGER.getState() == GameState.ON_LEVEL;
+        windowFrame.renderBatch.draw(
+                onLevel ? effectFrame.texture : textureFrame.texture,
+                GameScreen.POSITION.x, GameScreen.POSITION.y,
+                GameScreen.RENDER_WIDTH,
+                GameScreen.RENDER_HEIGHT,
+                false, true);
 
         if (Game.DEBUG_MODE) {
             debugRender(windowFrame.renderBatch, room);
@@ -100,30 +94,27 @@ public final class GameRender {
 
         windowFrame.end();
 
-        if (Game.STATE_MANAGER.getState() == GameState.ON_LEVEL) {
-            glViewport(0, 0, GameScreen.window.getWidth(), GameScreen.window.getHeight());
-            windowFrame.renderBatch.begin();
-            windowFrame.renderBatch.draw(
-                    windowFrame.texture,
-                    GameScreen.POSITION.x, GameScreen.POSITION.y,
-                    GameScreen.RENDER_WIDTH,
-                    GameScreen.RENDER_HEIGHT,
-                    false, true);
-            windowFrame.renderBatch.end();
-        }
+        windowFrame.renderBatch.begin();
+        windowFrame.renderBatch.draw(
+                windowFrame.texture,
+                GameScreen.POSITION.x, GameScreen.POSITION.y,
+                GameScreen.RENDER_WIDTH,
+                GameScreen.RENDER_HEIGHT,
+                false, true);
+        windowFrame.renderBatch.end();
     }
 
     private void drawTextures(@NotNull Room room) {
         room.draw(textureBatch, false);
 
         if (Game.STATE_MANAGER.getState() != GameState.ON_EDITOR) return;
-        if (GameScreen.draggedThing == null) return;
+        if (GameScreen.getDraggedThing() == null) return;
 
         final int x = GameScreen.inGameMouseX();
         final int y = GameScreen.inGameMouseY();
         if (x < 0 || y < 0) return;
 
-        GameScreen.draggedThing.draw(x, y, textureBatch);
+        GameScreen.getDraggedThing().draw(x, y, textureBatch);
     }
 
     private void drawHeightMap(@NotNull Room room) {
@@ -139,9 +130,9 @@ public final class GameRender {
         room.debugDraw(renderBatch);
 
         if (Game.STATE_MANAGER.getState() != GameState.ON_EDITOR) return;
-        if (GameScreen.draggedThing == null) return;
+        if (GameScreen.getDraggedThing() == null) return;
         if (x < 0 || y < 0) return;
 
-        GameScreen.draggedThing.debugDraw(x, y, false, renderBatch);
+        GameScreen.getDraggedThing().debugDraw(x, y, false, renderBatch);
     }
 }

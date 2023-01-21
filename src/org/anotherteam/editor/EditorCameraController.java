@@ -1,10 +1,7 @@
 package org.anotherteam.editor;
 
 import org.anotherteam.Game;
-import org.anotherteam.GameState;
 import org.anotherteam.Input;
-import org.anotherteam.editorold.level.editor.LevelEditor;
-import org.anotherteam.logger.GameLogger;
 import org.anotherteam.screen.GameScreen;
 import org.joml.Vector2f;
 
@@ -16,7 +13,7 @@ public final class EditorCameraController {
     private final Vector2f impulse = new Vector2f(0, 0);
 
     public void handle(float dt) {
-        if (GameScreen.draggedThing != null || (GameScreen.inGameWindowMouseX() == -1 || GameScreen.inGameMouseY() == -1)) {
+        if (GameScreen.getDraggedThing() != null || (GameScreen.inGameWindowMouseX() == -1 || GameScreen.inGameMouseY() == -1)) {
             lastPos.set(0, 0);
             return;
         }
@@ -29,11 +26,11 @@ public final class EditorCameraController {
         final float mouseWheelVelocity = Input.getMouseWheelVelocity();
         if (mouseWheelVelocity != 0.0F) {
             if (mouseWheelVelocity < 0) {
-                GameScreen.WIDTH += GameScreen.window.getAspect() * 2;
-                GameScreen.HEIGHT += GameScreen.window.getRatio() * 2;
+                GameScreen.WIDTH += GameScreen.getWindow().getAspect() * 2;
+                GameScreen.HEIGHT += GameScreen.getWindow().getRatio() * 2;
             } else {
-                GameScreen.WIDTH -= GameScreen.window.getAspect() * 2;
-                GameScreen.HEIGHT -= GameScreen.window.getRatio() * 2;
+                GameScreen.WIDTH -= GameScreen.getWindow().getAspect() * 2;
+                GameScreen.HEIGHT -= GameScreen.getWindow().getRatio() * 2;
             }
 
             Game.getGameRender().updateFrames(GameScreen.WIDTH, GameScreen.HEIGHT);
@@ -59,7 +56,7 @@ public final class EditorCameraController {
             impulse.x += speed * dt;
         }
 
-        if (GameViewWindow.isMouseOnWindow() && Input.isButtonDown(Input.MOUSE_LEFT_BUTTON)) {
+        if (Input.isButtonDown(Input.MOUSE_MIDDLE_BUTTON)) {
             if (lastPos.equals(0, 0)) {
                 lastPos.set(Input.getMousePos());
                 return;

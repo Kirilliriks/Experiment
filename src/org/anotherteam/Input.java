@@ -14,11 +14,13 @@ import java.util.Map;
 public final class Input {
 
     public static ImGuiIO imGuiIO = null;
+
+    private static MouseButton lastButton = null;
     private final static Map<Integer, MouseButton> buttons = new HashMap<>();
     private final static Vector2f mousePos = new Vector2f(0, 0);
     private final static Vector2f lastMousePos = new Vector2f(0, 0);
 
-    private static Key lastPrintedKey = null;
+    private static Key lastKey = null;
     public static Map<Integer, Key> keys = new HashMap<>();
 
     private static float mouseWheelVelocity = 0.0f;
@@ -38,6 +40,7 @@ public final class Input {
     public final static Key KEY_BACKSPACE = new Key(GLFW.GLFW_KEY_BACKSPACE);
 
     public final static MouseButton MOUSE_LEFT_BUTTON = new MouseButton(GLFW.GLFW_MOUSE_BUTTON_LEFT);
+    public final static MouseButton MOUSE_MIDDLE_BUTTON = new MouseButton(GLFW.GLFW_MOUSE_BUTTON_MIDDLE);
     public final static MouseButton MOUSE_RIGHT_BUTTON = new MouseButton(GLFW.GLFW_MOUSE_BUTTON_RIGHT);
 
     private final GLFWKeyCallback keyboard;
@@ -48,20 +51,20 @@ public final class Input {
     public static boolean isAnyKeyDown() {
         if (isImGuiHandleKeyboard()) return false;
 
-        if (lastPrintedKey == null) return false;
-        return lastPrintedKey.down;
+        if (lastKey == null) return false;
+        return lastKey.down;
     }
 
     public static boolean isAnyKeyPressed() {
         if (isImGuiHandleKeyboard()) return false;
 
-        if (lastPrintedKey == null) return false;
-        return lastPrintedKey.pressed;
+        if (lastKey == null) return false;
+        return lastKey.pressed;
     }
 
     @Nullable
-    public static Key getLastPrintedKey() {
-        return lastPrintedKey;
+    public static Key getLastKey() {
+        return lastKey;
     }
 
     public static boolean isKeyDown(Key key) {
@@ -89,18 +92,28 @@ public final class Input {
     }
 
     public static boolean isAnyButtonPressed() {
-        return MOUSE_LEFT_BUTTON.pressed || MOUSE_RIGHT_BUTTON.pressed;
+        if (isImGuiHandleMouse()) return false;
+
+        if (lastButton == null) return false;
+        return lastButton.pressed;
     }
 
     public static boolean isAnyButtonDown() {
-        return MOUSE_LEFT_BUTTON.down || MOUSE_RIGHT_BUTTON.down;
+        if (isImGuiHandleMouse()) return false;
+
+        if (lastButton == null) return false;
+        return lastButton.down;
     }
 
     public static boolean isButtonPressed(MouseButton button) {
+        if (isImGuiHandleMouse()) return false;
+
         return button.pressed;
     }
 
     public static boolean isButtonDown(MouseButton button) {
+        if (isImGuiHandleMouse()) return false;
+
         return button.down;
     }
 
@@ -158,15 +171,20 @@ public final class Input {
                 }
 
                 final var bool = action != GLFW.GLFW_RELEASE;
-                lastPrintedKey = keys.get(key);
-                lastPrintedKey.toggle(bool);
+                lastKey = keys.get(key);
+                lastKey.toggle(bool);
 
-                if (CharUtil.isPrintable(key)) {
+                if (CharUtil.isPrintable(key)) { // TODO MAYBE CHECK SHIFT?
                     final int anotherKey = CharUtil.toAnotherCase(key);
-                    if (keys.containsKey(anotherKey)) keys.get(anotherKey).toggle(bool);
+
+                    final Key aKey = keys.get(anotherKey);
+                    if (aKey != null) {
+                        aKey.toggle(bool);
+                    }
                 }
             }
         };
+
         mouseMove = new GLFWCursorPosCallback() {
             @Override
             public void invoke(long window, double xpos, double ypos) {
@@ -174,12 +192,14 @@ public final class Input {
                 mousePos.set((float)xpos,  (float) (ownerWindow.getHeight() - ypos));
             }
         };
+
         mouseButton = new GLFWMouseButtonCallback() {
             @Override
             public void invoke(long window, int button, int action, int mods) {
                 if (!buttons.containsKey(button)) return;
 
-                buttons.get(button).toggle(action != GLFW.GLFW_RELEASE);
+                lastButton = buttons.get(button);
+                lastButton.toggle(action != GLFW.GLFW_RELEASE);
             }
         };
 
@@ -220,7 +240,7 @@ public final class Input {
             button.tick();
         }
 
-        lastPrintedKey = null;
+        lastKey = null;
 
         mouseWheelVelocity = 0.0f;
     }

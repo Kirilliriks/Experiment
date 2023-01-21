@@ -17,19 +17,18 @@ public final class GameScreen {
     public static final int DEFAULT_WIDTH = 160;
     public static final int DEFAULT_HEIGHT = 90;
     public static final Vector2i POSITION = new Vector2i(0, 0);
+    public static final Camera GAME_CAMERA = new Camera(DEFAULT_WIDTH / 2, DEFAULT_HEIGHT / 2, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+    public static final Camera WINDOW_CAMERA = new Camera();
+
     public static int WIDTH = DEFAULT_WIDTH;
     public static int HEIGHT = DEFAULT_HEIGHT;
 
     public static int RENDER_WIDTH = WIDTH;
     public static int RENDER_HEIGHT = HEIGHT;
 
-    public static final Camera GAME_CAMERA = new Camera(WIDTH / 2, HEIGHT / 2, WIDTH, HEIGHT);
-    public static final Camera WINDOW_CAMERA = new Camera();
-
-    public static RenderBatch windowBatch = null;
-    public static RenderFrame windowFrame = null;
-    public static Window window = null;
-    public static DraggedThing draggedThing = null;
+    private static RenderFrame windowFrame = null;
+    private static Window window = null;
+    private static DraggedThing draggedThing = null;
 
     private GameScreen() {
         throw new LifeException("Try create GameScreen object");
@@ -39,12 +38,13 @@ public final class GameScreen {
         WINDOW_CAMERA.setPosition(window.getWidth() / 2.0f, window.getHeight() / 2.0f);
         WINDOW_CAMERA.setProjection(window.getWidth(), window.getHeight());
 
-        windowBatch = new RenderBatch(AssetData.DEFAULT_SHADER, WINDOW_CAMERA);
+        final RenderBatch windowBatch = new RenderBatch(AssetData.DEFAULT_SHADER, WINDOW_CAMERA);
         windowFrame = new RenderFrame(windowBatch, window.getWidth(), window.getHeight());
     }
 
     /**
      * Method return in game position mouse X
+     *
      * @return in game position mouse X
      */
     public static int inGameMouseX() {
@@ -55,6 +55,7 @@ public final class GameScreen {
 
     /**
      * Method return in game position mouse Y
+     *
      * @return in game position mouse Y
      */
     public static int inGameMouseY() {
@@ -72,6 +73,7 @@ public final class GameScreen {
     /**
      * Method return in game window position mouse X
      * (That is, it returns the cursor in game coordinates without taking into account the camera offset)
+     *
      * @return in game window position mouse X
      */
     public static int inGameWindowMouseX() {
@@ -82,6 +84,7 @@ public final class GameScreen {
     /**
      * Method return in game window position mouse Y
      * (That is, it returns the cursor in game coordinates without taking into account the camera offset)
+     *
      * @return in game window position mouse Y
      */
     public static int inGameWindowMouseY() {
@@ -102,16 +105,36 @@ public final class GameScreen {
     }
 
     public static float toWindowPosX(float x) {
-        return (POSITION.x + ((x - GAME_CAMERA.getPositionX()) * RENDER_WIDTH) / WIDTH + RENDER_WIDTH / 2f);
+        return (POSITION.x + ((x - GAME_CAMERA.getPositionX()) * RENDER_WIDTH) / WIDTH + RENDER_WIDTH / 2.0f);
     }
 
     public static float toWindowPosY(int y) {
-        return (POSITION.y + ((y - GAME_CAMERA.getPositionY()) * RENDER_HEIGHT) / HEIGHT + RENDER_HEIGHT / 2f);
+        return (POSITION.y + ((y - GAME_CAMERA.getPositionY()) * RENDER_HEIGHT) / HEIGHT + RENDER_HEIGHT / 2.0f);
     }
 
     public static Vector2f toWindowPos(Vector2f vector) {
         vector.x = toWindowPosX((int) vector.x);
         vector.y = toWindowPosY((int) vector.y);
         return vector;
+    }
+
+    public static RenderFrame getWindowFrame() {
+        return windowFrame;
+    }
+
+    public static void setWindow(Window window) {
+        GameScreen.window = window;
+    }
+
+    public static Window getWindow() {
+        return window;
+    }
+
+    public static void setDraggedThing(DraggedThing draggedThing) {
+        GameScreen.draggedThing = draggedThing;
+    }
+
+    public static DraggedThing getDraggedThing() {
+        return draggedThing;
     }
 }

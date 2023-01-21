@@ -5,7 +5,7 @@ import org.anotherteam.logger.GameLogger;
 
 public final class Console {
 
-    public static void imgui() {
+    public static void update() {
         ImGui.begin("Console: " + GameLogger.STRINGS.size());
 
         for (final String string : GameLogger.STRINGS) {

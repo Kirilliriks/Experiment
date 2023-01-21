@@ -6,25 +6,24 @@ import imgui.flag.ImGuiBackendFlags;
 import imgui.flag.ImGuiConfigFlags;
 import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
-import org.lwjgl.glfw.GLFW;
 
-public final class ImGuiLayer {
+public final class ImGuiRender {
+
+    public static final String BACKEND_PLATFORM = "imgui_java_impl_glfw";
 
     private final Editor editor;
     private final ImGuiImplGlfw imGuiGlfw = new ImGuiImplGlfw();
     private final ImGuiImplGl3 imGuiGl3 = new ImGuiImplGl3();
 
-    boolean showText = false;
-
-    public ImGuiLayer(long windowPtr, String glslVersion, Editor editor) {
+    public ImGuiRender(long windowPtr, String glslVersion, Editor editor) {
         this.editor = editor;
 
         ImGui.createContext();
-        final ImGuiIO io = ImGui.getIO();
+        final ImGuiIO io = imgui.ImGui.getIO();
         io.addConfigFlags(ImGuiConfigFlags.NavEnableKeyboard);
-        io.addConfigFlags(ImGuiConfigFlags.DockingEnable);
         io.addBackendFlags(ImGuiBackendFlags.HasMouseCursors);
-        io.setBackendPlatformName("imgui_java_impl_glfw");
+        io.setBackendPlatformName(BACKEND_PLATFORM);
+        io.addConfigFlags(ImGuiConfigFlags.DockingEnable);
 
         imGuiGlfw.init(windowPtr, true);
         imGuiGl3.init(glslVersion);
@@ -34,17 +33,10 @@ public final class ImGuiLayer {
         imGuiGlfw.newFrame();
         ImGui.newFrame();
 
-        editor.draw(dt);
+        editor.update(dt);
 
         ImGui.render();
         imGuiGl3.renderDrawData(ImGui.getDrawData());
-
-        if (ImGui.getIO().hasConfigFlags(ImGuiConfigFlags.ViewportsEnable)) {
-            final long backupWindowPtr = org.lwjgl.glfw.GLFW.glfwGetCurrentContext();
-            ImGui.updatePlatformWindows();
-            ImGui.renderPlatformWindowsDefault();
-            GLFW.glfwMakeContextCurrent(backupWindowPtr);
-        }
     }
 
     public void destroy() {

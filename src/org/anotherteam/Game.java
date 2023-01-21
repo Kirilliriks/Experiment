@@ -43,7 +43,7 @@ public final class Game {
     }
 
     public void render(float dt) {
-        LEVEL_MANAGER.renderLevel(GameScreen.windowFrame);
+        LEVEL_MANAGER.renderLevel(GameScreen.getWindowFrame());
     }
 
     public void destroy() { }

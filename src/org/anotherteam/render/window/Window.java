@@ -39,7 +39,7 @@ public final class Window {
         this.height = height;
         this.title = title;
         this.vSync = false;
-        GameScreen.window = this;
+        GameScreen.setWindow(this);
     }
 
     public void destroy() {

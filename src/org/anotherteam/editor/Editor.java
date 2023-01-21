@@ -1,15 +1,9 @@
 package org.anotherteam.editor;
 
 import imgui.ImGui;
-import imgui.ImGuiIO;
-import imgui.flag.ImGuiCond;
-import imgui.flag.ImGuiStyleVar;
-import imgui.flag.ImGuiWindowFlags;
-import imgui.type.ImBoolean;
 import org.anotherteam.Game;
 import org.anotherteam.GameState;
 import org.anotherteam.editor.level.TileViewer;
-import org.anotherteam.editorold.level.editor.LevelEditor;
 import org.anotherteam.logger.GameLogger;
 import org.anotherteam.screen.GameScreen;
 
@@ -19,7 +13,7 @@ public final class Editor {
 
     private final Game game;
 
-    private final ImGuiLayer imGui;
+    private final ImGuiRender imGui;
 
     private final TileViewer tileViewer;
 
@@ -29,7 +23,7 @@ public final class Editor {
         instance = this;
 
         this.game = game;
-        imGui = new ImGuiLayer(GameScreen.window.getHandler(), "#version 430 core", this);
+        imGui = new ImGuiRender(GameScreen.getWindow().getHandler(), "#version 430 core", this);
 
         tileViewer = new TileViewer();
         editorCameraController = new EditorCameraController();
@@ -43,36 +37,13 @@ public final class Editor {
     /**
      * Draw and update editor elements
      */
-    public void draw(float dt) {
+    public void update(float dt) {
+        ImGui.beginMainMenuBar();
 
-        ImGui.setNextWindowPos(0.0f, 0.0f, ImGuiCond.Always);
-        ImGui.setNextWindowSize(GameScreen.window.getWidth(), GameScreen.window.getHeight());
-        ImGui.pushStyleVar(ImGuiStyleVar.WindowRounding, 0.0f);
-        ImGui.pushStyleVar(ImGuiStyleVar.WindowBorderSize, 0.0f);
-        final int windowFlags = ImGuiWindowFlags.MenuBar | ImGuiWindowFlags.NoDocking | ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoCollapse |
-                                ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove |
-                                ImGuiWindowFlags.NoBringToFrontOnFocus | ImGuiWindowFlags.NoNavFocus;
+        tileViewer.update();
+        Console.update();
 
-        ImGui.begin("Dockspace", new ImBoolean(true), windowFlags);
-        ImGui.popStyleVar(2);
-
-        if (ImGui.isWindowFocused()) {
-            final ImGuiIO io = ImGui.getIO();
-            io.setWantCaptureKeyboard(false);
-            io.setWantCaptureMouse(false);
-            io.setWantTextInput(false);
-            io.setWantSetMousePos(false);
-        }
-
-        ImGui.dockSpace(ImGui.getID("Dockspace"));
-
-        tileViewer.imgui();
-        GameViewWindow.imgui(GameScreen.windowFrame);
-        Console.imgui();
-
-        editorCameraController.handle(dt);
-
-        ImGui.end();
+        ImGui.endMainMenuBar();
     }
 
     /**
@@ -80,6 +51,7 @@ public final class Editor {
      */
     public void render(float dt) {
         if (Game.STATE_MANAGER.getState() != GameState.ON_EDITOR) return;
+        editorCameraController.handle(dt);
 
         imGui.imgui(dt);
     }
@@ -109,8 +81,8 @@ public final class Editor {
     private static void restoreGameView() {
         GameScreen.WIDTH = GameScreen.DEFAULT_WIDTH;
         GameScreen.HEIGHT = GameScreen.DEFAULT_HEIGHT;
-        GameScreen.RENDER_WIDTH = GameScreen.window.getWidth();
-        GameScreen.RENDER_HEIGHT = GameScreen.window.getHeight();
+        GameScreen.RENDER_WIDTH = GameScreen.getWindow().getWidth();
+        GameScreen.RENDER_HEIGHT = GameScreen.getWindow().getHeight();
         GameScreen.POSITION.set(0, 0);
 
         Game.getGameRender().updateFrames(GameScreen.WIDTH, GameScreen.HEIGHT);

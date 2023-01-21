@@ -32,7 +32,7 @@ public final class SpriteAtlas {
         }
 
         if (sprites.isEmpty()) {
-            throw new LifeException("Empty sprite atlas " + texture.getName() + " | texWidth " + texture.getWidth() + " | texHeight " + texture.getHeight());
+            throw new LifeException("Empty sprite atlas " + texture.getName() + " | width " + texture.getWidth() + " | height " + texture.getHeight());
         }
     }
 
