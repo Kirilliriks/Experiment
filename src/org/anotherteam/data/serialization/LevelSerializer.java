@@ -1,4 +1,4 @@
-package org.anotherteam.data.deserialization;
+package org.anotherteam.data.serialization;
 
 import com.google.gson.*;
 import org.anotherteam.level.Level;
@@ -6,7 +6,7 @@ import org.anotherteam.level.room.Room;
 
 import java.lang.reflect.Type;
 
-public final class LevelDeserializer implements JsonDeserializer<Level>, JsonSerializer<Level> {
+public final class LevelSerializer implements JsonDeserializer<Level>, JsonSerializer<Level> {
 
     @Override
     public Level deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {

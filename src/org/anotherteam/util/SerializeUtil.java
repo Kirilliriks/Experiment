@@ -4,11 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import org.anotherteam.data.deserialization.LevelDeserializer;
-import org.anotherteam.data.deserialization.room.RoomDeserializer;
-import org.anotherteam.data.deserialization.room.gameobject.ComponentDeserializer;
-import org.anotherteam.data.deserialization.room.gameobject.GameObjectDeserializer;
-import org.anotherteam.data.deserialization.room.tile.TileDeserializer;
+import org.anotherteam.data.serialization.LevelSerializer;
+import org.anotherteam.data.serialization.room.RoomSerializer;
+import org.anotherteam.data.serialization.room.gameobject.ComponentSerializer;
+import org.anotherteam.data.serialization.room.gameobject.GameObjectSerializer;
+import org.anotherteam.data.serialization.room.tile.TileSerializer;
 import org.anotherteam.level.Level;
 import org.anotherteam.level.room.Room;
 import org.anotherteam.level.room.tile.Tile;
@@ -20,11 +20,11 @@ public final class SerializeUtil {
 
     public static final Gson GSON = new GsonBuilder()
             .setPrettyPrinting()
-            .registerTypeAdapter(Tile.class, new TileDeserializer())
-            .registerTypeAdapter(Component.class, new ComponentDeserializer())
-            .registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
-            .registerTypeAdapter(Room.class, new RoomDeserializer())
-            .registerTypeAdapter(Level.class, new LevelDeserializer())
+            .registerTypeAdapter(Tile.class, new TileSerializer())
+            .registerTypeAdapter(Component.class, new ComponentSerializer())
+            .registerTypeAdapter(GameObject.class, new GameObjectSerializer())
+            .registerTypeAdapter(Room.class, new RoomSerializer())
+            .registerTypeAdapter(Level.class, new LevelSerializer())
             .create();
 
     public static JsonObject serialize(Vector2i vector2i) {

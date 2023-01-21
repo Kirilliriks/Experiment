@@ -1,4 +1,4 @@
-package org.anotherteam.data.deserialization.room.gameobject;
+package org.anotherteam.data.serialization.room.gameobject;
 
 import com.google.gson.*;
 import org.anotherteam.object.component.Component;
@@ -10,7 +10,7 @@ import org.anotherteam.util.exception.LifeException;
 
 import java.lang.reflect.Type;
 
-public final class ComponentDeserializer implements JsonDeserializer<Component>, JsonSerializer<Component> {
+public final class ComponentSerializer implements JsonDeserializer<Component>, JsonSerializer<Component> {
 
     @Override
     public Component deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {

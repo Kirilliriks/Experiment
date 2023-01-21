@@ -21,12 +21,8 @@ public final class Tile {
         this(x, y, frameX, frameY, AssetData.getOrLoadRoomAtlas(atlasName));
     }
 
-    public Tile(int x, int y, @NotNull SpriteAtlas atlas) {
-        this(x, y, x, y, atlas);
-    }
-
     public Tile(int x, int y, int frameX, int frameY, @NotNull SpriteAtlas atlas) {
-        this.position = new Vector2i(x, y);
+        position = new Vector2i(x, y);
         textureSprite = atlas.getTextureSprite(frameX, frameY);
         heightSprite = atlas.getHeightSprite(frameX, frameY);
         flipX = false;

@@ -1,4 +1,4 @@
-package org.anotherteam.data.deserialization.room.tile;
+package org.anotherteam.data.serialization.room.tile;
 
 import com.google.gson.*;
 import org.anotherteam.level.room.tile.Tile;
@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Type;
 
-public final class TileDeserializer implements JsonDeserializer<Tile>, JsonSerializer<Tile> {
+public final class TileSerializer implements JsonDeserializer<Tile>, JsonSerializer<Tile> {
 
     // int x, int y, int frameX, int frameY, String atlasName
 

@@ -20,6 +20,7 @@ public final class Room {
 
     public Room(String name) {
         this.name = name;
+
         tiles = new HashMap<>();
         gameObjects = new ArrayList<>();
         player = null;

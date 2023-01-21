@@ -12,7 +12,6 @@ public final class SpriteAtlas {
     private final Texture texture;
     private final List<Sprite> sprites;
 
-    private final int frameWidth, frameHeight;
     private final int sizeX, sizeY;
 
     private final int heightOffset;
@@ -20,8 +19,6 @@ public final class SpriteAtlas {
     private SpriteAtlas(Texture texture, int frameWidth, int frameHeight, int heightOffset) {
         this.texture = texture;
         this.sprites = new ArrayList<>();
-        this.frameWidth = frameWidth;
-        this.frameHeight = frameHeight;
         this.sizeX = texture.getWidth() / frameWidth;
         this.sizeY = texture.getHeight() / frameHeight;
         this.heightOffset = heightOffset;
@@ -79,21 +76,5 @@ public final class SpriteAtlas {
     @NotNull
     public Texture getTexture() {
         return texture;
-    }
-
-    public int getFrameWidth() {
-        return frameWidth;
-    }
-
-    public int getFrameHeight() {
-        return frameHeight;
-    }
-
-    public int getTextureWidth() {
-        return texture.getWidth();
-    }
-
-    public int getTextureHeight() {
-        return texture.getHeight() / 2;
     }
 }
