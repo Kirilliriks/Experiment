@@ -15,7 +15,7 @@ public final class GameLogger {
 
     public static final Logger logger = Logger.getLogger(Game.GAME_NAME);
 
-    public static void sendMessage(String text) {
+    public static void log(String text) {
         if (STRINGS.size() >= MAX_SIZE) {
             STRINGS.remove();
         }

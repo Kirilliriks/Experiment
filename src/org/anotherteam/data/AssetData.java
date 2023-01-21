@@ -37,7 +37,7 @@ public final class AssetData {
         @NotNull
         public static Texture getTexture(String textureName) {
                 if (textures.containsKey(textureName)) {
-                        GameLogger.sendMessage("Loaded " + textureName);
+                        GameLogger.log("Loaded " + textureName);
                         return textures.get(textureName);
                 }
 
@@ -45,7 +45,7 @@ public final class AssetData {
                 texture.setName(textureName);
                 textures.put(textureName, texture);
 
-                GameLogger.sendMessage("Created " + textureName);
+                GameLogger.log("Created " + textureName);
 
                 return texture;
         }

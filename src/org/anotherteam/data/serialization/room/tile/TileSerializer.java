@@ -29,7 +29,7 @@ public final class TileSerializer implements JsonDeserializer<Tile>, JsonSeriali
         result.add("yPos", new JsonPrimitive(tile.getPosition().y));
         result.add("frameX", new JsonPrimitive(tile.getFrameX()));
         result.add("frameY", new JsonPrimitive(tile.getFrameY()));
-        result.add("atlasName", new JsonPrimitive(tile.getAtlasName()));
+        result.add("atlasName", new JsonPrimitive(tile.getTextureName()));
         return result;
     }
 }

@@ -45,13 +45,17 @@ public final class Tile {
         return textureSprite.getFrameY();
     }
 
-    public String getAtlasName() {
+    public String getTextureName() {
         return textureSprite.getTexture().getName();
     }
 
     @NotNull
     public Vector2i getPosition() {
         return position;
+    }
+
+    public Sprite getTextureSprite() {
+        return textureSprite;
     }
 
     public void draw(@NotNull RenderBatch renderBatch, boolean height) {

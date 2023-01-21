@@ -92,13 +92,13 @@ public final class GameScreen {
         return (int) (((Input.getMouseY() - POSITION.y) / RENDER_HEIGHT) * HEIGHT);
     }
 
-    public static int onMouseTileX() {
+    public static int mouseOnTileX() {
         final var x = inGameMouseX();
         if (x < 0) return -1;
         return x / Tile.SIZE.x;
     }
 
-    public static int onMouseTileY() {
+    public static int mouseOnTileY() {
         final var y = inGameMouseY();
         if (y < 0) return -1;
         return y / Tile.SIZE.y;

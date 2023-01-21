@@ -12,6 +12,12 @@ public final class DraggedTile extends DraggedSprite {
 
     private final SpriteAtlas atlas;
 
+    public DraggedTile(Tile tile) {
+        super(tile.getTextureSprite());
+
+        this.atlas = AssetData.getOrLoadRoomAtlas(tile.getTextureName());
+    }
+
     public DraggedTile(int frameX, int frameY, @NotNull SpriteAtlas atlas) {
         super(atlas.getTextureSprite(frameX, frameY));
 
@@ -30,9 +36,7 @@ public final class DraggedTile extends DraggedSprite {
         final int yF = (y / Tile.SIZE.y) * Tile.SIZE.y;
         renderBatch.draw(sprite, xF, yF, Tile.SIZE.x, Tile.SIZE.y);
 
-        if (atlas != AssetData.EDITOR_HIGHLITER_ATLAS) {
-            renderBatch.draw(AssetData.EDITOR_HIGHLITER_TEXTURE, xF, yF, Tile.SIZE.x, Tile.SIZE.y);
-        }
+        renderBatch.draw(AssetData.EDITOR_HIGHLITER_TEXTURE, xF, yF, Tile.SIZE.x, Tile.SIZE.y);
     }
 
     @Override

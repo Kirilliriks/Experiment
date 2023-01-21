@@ -1,6 +1,7 @@
 package org.anotherteam.editor.widget;
 
 import imgui.ImGui;
+import org.joml.Vector2i;
 
 public abstract class Widget {
 
@@ -8,7 +9,7 @@ public abstract class Widget {
     protected final int widthInit, heightInit;
 
     protected boolean dirty;
-    protected int x, y;
+    protected Vector2i position;
     protected int width, height;
 
     public Widget(int x, int y, int width, int height) {
@@ -17,15 +18,16 @@ public abstract class Widget {
 
     public Widget(boolean dirty, int x, int y, int width, int height) {
         this.dirty = dirty;
-        this.x = xInit = x;
-        this.y = yInit = y;
+        this.xInit = x;
+        this.yInit = y;
+        this.position = new Vector2i(xInit, yInit);
         this.width = widthInit = width;
         this.height = heightInit = height;
     }
 
     protected void onDirty() {
         if (dirty) {
-            ImGui.setNextWindowPos(x, y);
+            ImGui.setNextWindowPos(position.x, position.y);
             ImGui.setNextWindowSize(width, height);
 
             dirty = false;
@@ -37,8 +39,8 @@ public abstract class Widget {
     public void reset() {
         dirty = true;
 
-        x = xInit;
-        y = yInit;
+        position.x = xInit;
+        position.y = yInit;
         width = widthInit;
         height = heightInit;
     }
@@ -49,20 +51,20 @@ public abstract class Widget {
 
     public void setX(int x) {
         dirty = true;
-        this.x = x;
+        position.x = x;
     }
 
     public int getX() {
-        return x;
+        return position.x;
     }
 
     public void setY(int y) {
         dirty = true;
-        this.y = y;
+        position.y = y;
     }
 
     public int getY() {
-        return y;
+        return position.y;
     }
 
     public int getWidth() {

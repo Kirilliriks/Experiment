@@ -25,7 +25,7 @@ public final class FileUtils {
             final Path path = Paths.get(AssetData.ASSETS_PATH + "levels/" + finalName);
 
             if (!path.toFile().isFile()) {
-                GameLogger.sendMessage("Level " + levelName + " not found");
+                GameLogger.log("Level " + levelName + " not found");
                 return null;
             }
 
@@ -34,11 +34,11 @@ public final class FileUtils {
             e.printStackTrace();
         }
         if (inFile.isEmpty()) {
-            GameLogger.sendMessage("Level " + levelName + " is empty");
+            GameLogger.log("Level " + levelName + " is empty");
             return null;
         }
 
-        GameLogger.sendMessage("Level " + levelName + " loaded");
+        GameLogger.log("Level " + levelName + " loaded");
         return SerializeUtil.GSON.fromJson(inFile, Level.class);
     }
 
@@ -50,7 +50,7 @@ public final class FileUtils {
         } catch(IOException e) {
             e.printStackTrace();
         }
-        GameLogger.sendMessage("Level " + level.getName() + " saved");
+        GameLogger.log("Level " + level.getName() + " saved");
     }
 
     public static void deleteLevel(@NotNull Level level) {
@@ -59,7 +59,7 @@ public final class FileUtils {
             throw new LifeException("Not find level: " + level.getName());
         if (!file.delete())
             throw new LifeException("Can't delete level: " + level.getName());
-        GameLogger.sendMessage("Level " + level.getName() + " deleted");
+        GameLogger.log("Level " + level.getName() + " deleted");
     }
 
     /**

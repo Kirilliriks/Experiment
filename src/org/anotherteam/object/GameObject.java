@@ -132,12 +132,12 @@ public class GameObject {
 
     public <T extends Component> void removeComponent(Class<T> componentClass) {
         if (componentClass.isAssignableFrom(Collider.class)) {
-            GameLogger.sendMessage("Collider is static component");
+            GameLogger.log("Collider is static component");
             return;
         }
 
         if (componentClass.isAssignableFrom(Collider.InteractAABB.class)) {
-            GameLogger.sendMessage("InteractAABB is static component");
+            GameLogger.log("InteractAABB is static component");
             return;
         }
 

@@ -33,7 +33,7 @@ public final class DraggedTiles extends DraggedThing {
 
         for (final var tile : tiles) {
             final int xOffset = tile.frameX - x0;
-            final int yOffset = tile.frameY - x0;
+            final int yOffset = tile.frameY - y0;
 
             room.setTile(new Tile(x + xOffset, y + yOffset, tile.frameX, tile.frameY, atlas));
         }

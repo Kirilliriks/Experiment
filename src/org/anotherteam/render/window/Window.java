@@ -27,7 +27,7 @@ public final class Window {
     private boolean vSync;
     private boolean fullscreen;
     private int windowFPSRate;
-    private int fpsMax = 120;
+    private int fpsMax = 165;
     private boolean fpsLocked = true;
 
     private final int[] windowX = new int[1], windowY = new int[1];

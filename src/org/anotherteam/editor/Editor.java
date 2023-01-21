@@ -94,7 +94,7 @@ public final class Editor {
         resetGameView();
         Game.LEVEL_MANAGER.load(Game.START_LEVEL_NAME); // TODO
 
-        GameLogger.sendMessage("Current state: " + Game.STATE_MANAGER.getState());
+        GameLogger.log("Current state: " + Game.STATE_MANAGER.getState());
     }
 
     private static void resetGameView() {

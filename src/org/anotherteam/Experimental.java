@@ -11,27 +11,33 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengles.GLES20.GL_COLOR_BUFFER_BIT;
 
-public final class Experimental implements Runnable {
+public final class Experimental {
 
-    private Thread thread;
-    private Game game;
-    public Editor editor;
-    private Window window;
+    private final Game game;
+    private final Editor editor;
+    private final Window window;
 
+    public Experimental() {
+        GLFWErrorCallback.createPrint(System.err).set();
 
-    public void start() {
-        thread = new Thread(this, "thread");
-        thread.start();
-    }
+        if (!glfwInit()) {
+            throw new IllegalStateException("Unable to initialize GLFW");
+        }
 
-    @Override
-    public void run() {
-        init();
+        window = new Window(1920, 1080, "Experimental");
+        window.create();
+
         GL.createCapabilities(); // CRITICAL
 
         game = new Game(window);
         editor = new Editor(game);
         game.init();
+
+        run();
+    }
+
+    public void run() {
+
         if (editor != null) {
             editor.init();
             Input.imGuiIO = ImGui.getIO();
@@ -41,7 +47,7 @@ public final class Experimental implements Runnable {
 
         double beginTime = Time.getTime();
         double endTime;
-        float dt = 0;
+        float dt;
         float timeCount = 0.0f;
         double unprocessedTime = 0.0f;
 
@@ -66,7 +72,6 @@ public final class Experimental implements Runnable {
                 if (!window.isFpsLocked()) break;
             }
 
-            //TODO Cursor deformation BUG in RENDER!!!
             if (canRender) {
 
                 glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -103,17 +108,6 @@ public final class Experimental implements Runnable {
         end();
     }
 
-    private void init() {
-        GLFWErrorCallback.createPrint(System.err).set();
-
-        if (!glfwInit()) {
-            throw new IllegalStateException("Unable to initialize GLFW");
-        }
-
-        window = new Window(1920, 1080, "Experimental");
-        window.create();
-    }
-
     private void end() {
         if (editor != null) {
             editor.destroy();
@@ -124,6 +118,6 @@ public final class Experimental implements Runnable {
     }
 
     public static void main(String[] args) {
-        new Experimental().start();
+        new Experimental();
     }
 }

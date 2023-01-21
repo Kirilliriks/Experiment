@@ -16,6 +16,10 @@ public final class Console extends Widget {
 
         ImGui.begin("Console: " + GameLogger.STRINGS.size(), ImGuiWindowFlags.HorizontalScrollbar);
 
+        if (!ImGui.isWindowFocused()) {
+            ImGui.setScrollY(ImGui.getScrollMaxY());
+        }
+
         for (final String string : GameLogger.STRINGS) {
             ImGui.text(string);
         }

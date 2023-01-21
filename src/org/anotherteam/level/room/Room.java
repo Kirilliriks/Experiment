@@ -93,6 +93,10 @@ public final class Room {
         tiles.put(tile.getPosition(), tile);
     }
 
+    public Tile getTile(int x, int y) {
+        return tiles.get(new Vector2i(x, y));
+    }
+
     public void removeTile(int x, int y) {
         tiles.remove(new Vector2i(x, y));
     }
@@ -103,7 +107,7 @@ public final class Room {
 
     @NotNull
     public static Room createEmpty() {
-        final Room room = new Room("EmptyRoom");
+        final var room = new Room("EmptyRoom");
         room.addObject(new Player(0, 0));
         return room;
     }
