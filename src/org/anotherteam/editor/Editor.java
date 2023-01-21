@@ -3,6 +3,7 @@ package org.anotherteam.editor;
 import imgui.ImGui;
 import org.anotherteam.Game;
 import org.anotherteam.GameState;
+import org.anotherteam.Input;
 import org.anotherteam.editor.level.TileViewer;
 import org.anotherteam.editor.render.ImGuiRender;
 import org.anotherteam.logger.GameLogger;
@@ -40,6 +41,10 @@ public final class Editor {
      * Draw and update editor elements
      */
     public void update(float dt) {
+        if (Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
+            GameScreen.setDraggedThing(null);
+        }
+
         ImGui.beginMainMenuBar();
 
         if (ImGui.beginMenu("Menu")) {
@@ -86,13 +91,13 @@ public final class Editor {
 
         Game.DEBUG_MODE = !onEditor;
 
-        restoreGameView();
-        Game.LEVEL_MANAGER.loadLevel(Game.START_LEVEL_NAME); // TODO
+        resetGameView();
+        Game.LEVEL_MANAGER.load(Game.START_LEVEL_NAME); // TODO
 
         GameLogger.sendMessage("Current state: " + Game.STATE_MANAGER.getState());
     }
 
-    private static void restoreGameView() {
+    private static void resetGameView() {
         GameScreen.WIDTH = GameScreen.DEFAULT_WIDTH;
         GameScreen.HEIGHT = GameScreen.DEFAULT_HEIGHT;
         GameScreen.RENDER_WIDTH = GameScreen.getWindow().getWidth();

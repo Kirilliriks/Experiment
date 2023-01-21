@@ -71,7 +71,7 @@ public final class Input {
         if (isImGuiHandleKeyboard()) return false;
 
         if (key.isLetter()) {
-            final int anotherChar = CharUtil.toAnotherCase(key.keyCode);
+            final int anotherChar = CharUtil.toAnotherCase(key.code);
 
             final Key anotherKey = keys.get(anotherChar);
             if (anotherKey != null && anotherKey.down) return true;
@@ -83,7 +83,7 @@ public final class Input {
         if (isImGuiHandleKeyboard()) return false;
 
         if (key.isLetter()) {
-            final int anotherChar = CharUtil.toAnotherCase(key.keyCode);
+            final int anotherChar = CharUtil.toAnotherCase(key.code);
 
             final Key anotherKey = keys.get(anotherChar);
             if (anotherKey != null && anotherKey.pressed) return true;
@@ -287,14 +287,14 @@ public final class Input {
     }
 
     public static class Key {
-        private final int keyCode;
+        public final int code;
 
         private boolean down = false;
         private boolean pressed = false;
         private boolean wasDown = false;
 
         public Key(int code) {
-            keyCode = code;
+            this.code = code;
             keys.put(code, this);
         }
 
@@ -308,19 +308,19 @@ public final class Input {
         }
 
         public char getChar() {
-            return (char) keyCode;
+            return (char) code;
         }
 
         public boolean isLetter() {
-            return CharUtil.isLetter(keyCode);
+            return CharUtil.isLetter(code);
         }
 
         public boolean isPrintable() {
-            return CharUtil.isPrintable(keyCode);
+            return CharUtil.isPrintable(code);
         }
 
         public boolean isLetterOrDigit() {
-            return CharUtil.isLetterOrDigit(keyCode);
+            return CharUtil.isLetterOrDigit(code);
         }
 
         public boolean isPressed() {

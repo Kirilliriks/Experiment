@@ -33,7 +33,7 @@ public final class Game {
     }
 
     public void init() {
-        LEVEL_MANAGER.loadLevel(START_LEVEL_NAME);
+        LEVEL_MANAGER.load(START_LEVEL_NAME);
     }
 
     public void update(float dt) {
@@ -43,7 +43,7 @@ public final class Game {
     }
 
     public void render(float dt) {
-        LEVEL_MANAGER.renderLevel(GameScreen.getWindowFrame());
+        LEVEL_MANAGER.render(GameScreen.getWindowFrame());
     }
 
     public void destroy() { }

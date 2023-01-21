@@ -6,7 +6,6 @@ import org.anotherteam.render.frame.RenderFrame;
 import org.anotherteam.util.FileUtils;
 import org.anotherteam.level.Level;
 import org.anotherteam.level.room.Room;
-import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
 
@@ -22,42 +21,42 @@ public final class LevelManager extends AbstractManager {
     /**
      * Save only on play, not on editor!
      */
-    public void saveCurrentLevel() {
+    public void saveCurrent() {
         if (Game.STATE_MANAGER.getState() == GameState.ON_EDITOR) throw new LifeException("Trying save playable level when state is ON_EDITOR!");
 
         FileUtils.saveEditableLevel(currentLevel); // TODO save to game profile directory
     }
 
     @NotNull
-    public Level setLevel(@NotNull Level level) {
+    public Level set(@NotNull Level level) {
         currentLevel = level;
         return currentLevel;
     }
 
     @NotNull
-    public Level setEmptyLevel() {
-        return setLevel(Level.createEmpty());
+    public Level setEmpty() {
+        return set(Level.createEmpty());
     }
 
     @NotNull
-    public Level loadLevel(@NotNull String levelName) {
+    public Level load(@NotNull String levelName) {
         final Level loadedLevel = FileUtils.loadLevel(levelName);
-        if (loadedLevel == null) return setEmptyLevel();
+        if (loadedLevel == null) return setEmpty();
 
-        return setLevel(loadedLevel);
+        return set(loadedLevel);
     }
 
     @NotNull
-    public Level getCurrentLevel() {
+    public Level getCurrent() {
         return currentLevel;
     }
 
     @NotNull
     public Room getCurrentRoom() {
-        return getCurrentLevel().getCurrentRoom();
+        return getCurrent().getCurrentRoom();
     }
 
-    public void renderLevel(@NotNull RenderFrame windowFrame) {
+    public void render(@NotNull RenderFrame windowFrame) {
         currentLevel.render(windowFrame);
     }
 
