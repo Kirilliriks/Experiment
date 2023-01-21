@@ -460,13 +460,6 @@
           "atlasName": "atlases/room/testTestRoom.png"
         },
         {
-          "xPos": 15,
-          "yPos": 4,
-          "frameX": 2,
-          "frameY": 3,
-          "atlasName": "atlases/room/testTestRoom.png"
-        },
-        {
           "xPos": 7,
           "yPos": 1,
           "frameX": 0,
@@ -562,13 +555,6 @@
           "yPos": 3,
           "frameX": 3,
           "frameY": 2,
-          "atlasName": "atlases/room/testTestRoom.png"
-        },
-        {
-          "xPos": 16,
-          "yPos": 4,
-          "frameX": 3,
-          "frameY": 3,
           "atlasName": "atlases/room/testTestRoom.png"
         },
         {
@@ -670,13 +656,6 @@
           "atlasName": "atlases/room/testTestRoom.png"
         },
         {
-          "xPos": 17,
-          "yPos": 4,
-          "frameX": 4,
-          "frameY": 3,
-          "atlasName": "atlases/room/testTestRoom.png"
-        },
-        {
           "xPos": 9,
           "yPos": 1,
           "frameX": 2,
@@ -772,13 +751,6 @@
           "yPos": 3,
           "frameX": 5,
           "frameY": 2,
-          "atlasName": "atlases/room/testTestRoom.png"
-        },
-        {
-          "xPos": 18,
-          "yPos": 4,
-          "frameX": 5,
-          "frameY": 3,
           "atlasName": "atlases/room/testTestRoom.png"
         },
         {

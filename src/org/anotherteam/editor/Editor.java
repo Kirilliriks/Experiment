@@ -6,7 +6,6 @@ import org.anotherteam.GameState;
 import org.anotherteam.Input;
 import org.anotherteam.editor.level.TileViewer;
 import org.anotherteam.editor.render.ImGuiRender;
-import org.anotherteam.level.Level;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.FileUtils;
 

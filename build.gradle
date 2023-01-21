@@ -35,7 +35,7 @@ task runApp(type: JavaExec) {
 
     mainClass = project.ext.mainClassName
     standardInput = System.in
-    workingDir = project.assetsDir
+    workingDir = new File("src/")
     ignoreExitValue = true
     // arguments to pass to the application
     args 'appArg1'
@@ -142,7 +142,7 @@ test {
 }
 
 task runDebug(type: GradleBuild) {
-    tasks = ['clean', 'build', 'copyDocs']
+    tasks = ['clean', 'build', 'copyTo']
 }
 
 jar {
@@ -156,8 +156,13 @@ jar {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
 
-    task copyDocs(type: Copy) {
+    task copyTo(type: Copy) {
         from 'src/assets'
         into 'build/libs/assets'
+    }
+
+    task copyFrom(type: Copy) {
+        from 'build/libs/assets'
+        into 'src/assets'
     }
 }
