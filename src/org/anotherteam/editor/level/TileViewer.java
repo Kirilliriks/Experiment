@@ -10,7 +10,6 @@ import org.anotherteam.editor.dragged.DraggedTiles;
 import org.anotherteam.editor.widget.Widget;
 import org.anotherteam.level.room.Room;
 import org.anotherteam.level.room.tile.Tile;
-import org.anotherteam.logger.GameLogger;
 import org.anotherteam.render.sprite.Sprite;
 import org.anotherteam.render.sprite.SpriteAtlas;
 import org.anotherteam.render.texture.Texture;
@@ -83,7 +82,7 @@ public final class TileViewer extends Widget {
 
         if (Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) {
 
-            if (Input.isKeyDown(Input.KEY_SHIFT)) {
+            if (thing == null && Input.isKeyDown(Input.KEY_SHIFT)) {
                 final Tile tile = room.getTile(tileX, tileY);
                 GameScreen.setDraggedThing(new DraggedTile(tile));
                 return;

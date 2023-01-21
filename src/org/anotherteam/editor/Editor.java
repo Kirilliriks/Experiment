@@ -6,8 +6,9 @@ import org.anotherteam.GameState;
 import org.anotherteam.Input;
 import org.anotherteam.editor.level.TileViewer;
 import org.anotherteam.editor.render.ImGuiRender;
-import org.anotherteam.logger.GameLogger;
+import org.anotherteam.level.Level;
 import org.anotherteam.screen.GameScreen;
+import org.anotherteam.util.FileUtils;
 
 public final class Editor {
 
@@ -57,6 +58,29 @@ public final class Editor {
                 console.reset();
             }
 
+            if (ImGui.menuItem("Exit")) {
+                Game.STATE_MANAGER.setState(GameState.ON_CLOSE_GAME);
+            }
+
+            ImGui.endMenu();
+        }
+
+        ImGui.dummy(8.0f, 00.0f);
+
+        if (ImGui.beginMenu("Level")) {
+
+            if (ImGui.menuItem("Save (CTRL+S)")) {
+                FileUtils.saveEditorLevel(Game.LEVEL_MANAGER.getCurrent());
+            }
+
+            if (ImGui.menuItem("Load")) {
+
+            }
+
+            if (ImGui.menuItem("Cancel changes")) {
+                Game.LEVEL_MANAGER.load(Game.LEVEL_MANAGER.getCurrent().getName());
+            }
+
             ImGui.endMenu();
         }
 
@@ -73,7 +97,7 @@ public final class Editor {
         if (Game.STATE_MANAGER.getState() != GameState.ON_EDITOR) return;
         editorCameraController.handle(dt);
 
-        imGui.imgui(dt);
+        imGui.render(dt);
     }
 
     public void destroy() {
@@ -93,8 +117,6 @@ public final class Editor {
 
         resetGameView();
         Game.LEVEL_MANAGER.load(Game.START_LEVEL_NAME); // TODO
-
-        GameLogger.log("Current state: " + Game.STATE_MANAGER.getState());
     }
 
     private static void resetGameView() {

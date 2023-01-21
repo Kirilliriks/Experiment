@@ -36,7 +36,7 @@ public final class ImGuiRender {
         imGuiGl3.init(glslVersion);
     }
 
-    public void imgui(float dt) {
+    public void render(float dt) {
         imGuiGlfw.newFrame();
         ImGui.newFrame();
 

@@ -21,7 +21,7 @@ public final class Game {
         window.setFullscreen(false);
 
         LEVEL_MANAGER = new LevelManager();
-        STATE_MANAGER = new StateManager(this, GameState.ON_LEVEL);
+        STATE_MANAGER = new StateManager(this, GameState.ON_MENU);
 
         GameScreen.init(window);
         GAME_RENDER = new GameRender();

@@ -22,7 +22,7 @@ public final class FileUtils {
         String inFile = "";
         try {
             final String finalName = levelName  + (levelName.split("\\.").length > 1 ? "" : "." + Level.LEVEL_FILE_EXTENSION);
-            final Path path = Paths.get(AssetData.ASSETS_PATH + "levels/" + finalName);
+            final Path path = Paths.get(AssetData.LEVELS_PATH + finalName);
 
             if (!path.toFile().isFile()) {
                 GameLogger.log("Level " + levelName + " not found");
@@ -32,7 +32,10 @@ public final class FileUtils {
             inFile = new String(Files.readAllBytes(path));
         } catch (IOException e) {
             e.printStackTrace();
+            GameLogger.log("Level " + levelName + " load call error " + e.getMessage());
+            return null;
         }
+
         if (inFile.isEmpty()) {
             GameLogger.log("Level " + levelName + " is empty");
             return null;
@@ -42,23 +45,29 @@ public final class FileUtils {
         return SerializeUtil.GSON.fromJson(inFile, Level.class);
     }
 
-    public static void saveEditableLevel(@NotNull Level level) {
+    public static void saveEditorLevel(@NotNull Level level) {
         try {
-            final var writer = new FileWriter("levels/" + level.getName()  + "." + Level.LEVEL_FILE_EXTENSION);
+            final var writer = new FileWriter(AssetData.LEVELS_PATH + level.getName() + "." + Level.LEVEL_FILE_EXTENSION);
             writer.write(SerializeUtil.GSON.toJson(level));
             writer.close();
         } catch(IOException e) {
             e.printStackTrace();
+            GameLogger.log("Level " + level.getName() + " save call error " + e.getMessage());
+            return;
         }
+
         GameLogger.log("Level " + level.getName() + " saved");
+
+
     }
 
     public static void deleteLevel(@NotNull Level level) {
-        final var file = new File("levels/" + level.getName()  + "." + Level.LEVEL_FILE_EXTENSION);
+        final var file = new File(AssetData.LEVELS_PATH + level.getName()  + "." + Level.LEVEL_FILE_EXTENSION);
         if (!file.isFile())
             throw new LifeException("Not find level: " + level.getName());
         if (!file.delete())
             throw new LifeException("Can't delete level: " + level.getName());
+
         GameLogger.log("Level " + level.getName() + " deleted");
     }
 
@@ -68,8 +77,8 @@ public final class FileUtils {
      * @param level level
      */
     public static void renameLevel(String newName, @NotNull Level level) {
-        final var oldPath = Paths.get("levels/" + level.getName()  + "." + Level.LEVEL_FILE_EXTENSION);
-        final var newPath = Paths.get("levels/" + newName  + "." + Level.LEVEL_FILE_EXTENSION);
+        final var oldPath = Paths.get(AssetData.LEVELS_PATH + level.getName()  + "." + Level.LEVEL_FILE_EXTENSION);
+        final var newPath = Paths.get(AssetData.LEVELS_PATH + newName  + "." + Level.LEVEL_FILE_EXTENSION);
         try {
             Files.move(oldPath, newPath);
         } catch (IOException e) {

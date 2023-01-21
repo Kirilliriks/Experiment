@@ -14,6 +14,8 @@ import java.util.Map;
 
 public final class AssetData {
         public static final String ASSETS_PATH = "assets/";
+
+        public static final String LEVELS_PATH = ASSETS_PATH + "levels/";
         public static final String ATLASES_PATH = ASSETS_PATH + "atlases/";
         public static final String ROOM_PATH = ATLASES_PATH + "room/";
         public static final String ENTITY_PATH = ATLASES_PATH + "entity/";

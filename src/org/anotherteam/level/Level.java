@@ -3,7 +3,6 @@ package org.anotherteam.level;
 import org.anotherteam.Game;
 import org.anotherteam.level.room.Room;
 import org.anotherteam.render.GameRender;
-import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.frame.RenderFrame;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -90,7 +89,7 @@ public final class Level {
     }
 
     @NotNull
-    public static Level createEmpty() {
+    public static Level empty() {
         final var level = new Level("Empty");
         level.addRoom(Room.createEmpty());
         return level;

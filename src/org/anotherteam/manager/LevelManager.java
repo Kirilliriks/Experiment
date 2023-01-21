@@ -11,11 +11,10 @@ import org.jetbrains.annotations.NotNull;
 
 public final class LevelManager extends AbstractManager {
 
-    @NotNull
     private Level currentLevel;
 
     public LevelManager() {
-        currentLevel = Level.createEmpty();
+        currentLevel = null;
     }
 
     /**
@@ -24,7 +23,7 @@ public final class LevelManager extends AbstractManager {
     public void saveCurrent() {
         if (Game.STATE_MANAGER.getState() == GameState.ON_EDITOR) throw new LifeException("Trying save playable level when state is ON_EDITOR!");
 
-        FileUtils.saveEditableLevel(currentLevel); // TODO save to game profile directory
+        FileUtils.saveEditorLevel(currentLevel); // TODO save to game profile directory
     }
 
     @NotNull
@@ -35,7 +34,7 @@ public final class LevelManager extends AbstractManager {
 
     @NotNull
     public Level setEmpty() {
-        return set(Level.createEmpty());
+        return set(Level.empty());
     }
 
     @NotNull

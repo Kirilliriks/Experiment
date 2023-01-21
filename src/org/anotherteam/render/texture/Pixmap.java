@@ -30,8 +30,6 @@ public final class Pixmap {
             final var height = stack.mallocInt(1);
             final var comp = stack.mallocInt(1);
 
-            // Use info to read image metadata without decoding the entire image.
-            // We don't need this for this demo, just testing the API.
             if (!stbi_info_from_memory(imageBuffer, width, height, comp)) {
                 throw new RuntimeException("Failed to read image information: " + stbi_failure_reason());
             }
