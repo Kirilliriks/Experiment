@@ -1,4 +1,4 @@
-package org.anotherteam.editor;
+package org.anotherteam.editor.render;
 
 import imgui.ImGui;
 import imgui.ImGuiIO;
@@ -6,10 +6,13 @@ import imgui.flag.ImGuiBackendFlags;
 import imgui.flag.ImGuiConfigFlags;
 import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
+import org.anotherteam.editor.Editor;
 
 public final class ImGuiRender {
 
     public static final String BACKEND_PLATFORM = "imgui_java_impl_glfw";
+
+    public static final boolean cyrillic = false;
 
     private final Editor editor;
     private final ImGuiImplGlfw imGuiGlfw = new ImGuiImplGlfw();
@@ -24,6 +27,10 @@ public final class ImGuiRender {
         io.addBackendFlags(ImGuiBackendFlags.HasMouseCursors);
         io.setBackendPlatformName(BACKEND_PLATFORM);
         io.addConfigFlags(ImGuiConfigFlags.DockingEnable);
+        if (cyrillic) {
+            io.getFonts().addFontFromFileTTF("C:\\Windows\\Fonts\\Arial.ttf", 20, io.getFonts().getGlyphRangesCyrillic());
+        }
+
 
         imGuiGlfw.init(windowPtr, true);
         imGuiGl3.init(glslVersion);
@@ -41,6 +48,7 @@ public final class ImGuiRender {
 
     public void destroy() {
         imGuiGl3.dispose();
+        imGuiGlfw.dispose();
         ImGui.destroyContext();
     }
 }

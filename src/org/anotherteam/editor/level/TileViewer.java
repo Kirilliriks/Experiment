@@ -2,6 +2,7 @@ package org.anotherteam.editor.level;
 
 import imgui.ImGui;
 import org.anotherteam.data.AssetData;
+import org.anotherteam.editor.widget.Widget;
 import org.anotherteam.render.sprite.Sprite;
 import org.anotherteam.render.sprite.SpriteAtlas;
 import org.anotherteam.render.texture.Texture;
@@ -11,9 +12,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class TileViewer {
+public final class TileViewer extends Widget {
 
-    public static final int TILE_SCALE = 2;
+    public static final int TILE_SCALE_MULTIPLAYER = 2;
 
     private final List<SpriteAtlas> atlases;
     private final List<Sprite> sprites;
@@ -21,7 +22,9 @@ public final class TileViewer {
     private SpriteAtlas selectedAtlas;
     private int highlightedSprite;
 
-    public TileViewer() {
+    public TileViewer(int x, int y, int width, int height) {
+        super(x, y, width, height);
+
         atlases = new ArrayList<>();
         sprites = new ArrayList<>();
         selectedAtlas = null;
@@ -31,6 +34,8 @@ public final class TileViewer {
     }
 
     public void update() {
+        onDirty();
+
         ImGui.begin("Tile Viewer");
 
         if (ImGui.beginListBox("Select pack")) {
@@ -69,15 +74,15 @@ public final class TileViewer {
 
                 ImGui.getStyle().setItemSpacing(0, 0);
                 if (highlightedSprite == index) {
-                    ImGui.image(texture.getId(), sprite.getWidth() * TILE_SCALE, sprite.getHeight() * TILE_SCALE, u0, v0, u1, v1, 128, 128, 0, 255);
+                    ImGui.image(texture.getId(), sprite.getWidth() * TILE_SCALE_MULTIPLAYER, sprite.getHeight() * TILE_SCALE_MULTIPLAYER, u0, v0, u1, v1, 128, 128, 0, 255);
                 } else {
-                    ImGui.image(texture.getId(), sprite.getWidth() * TILE_SCALE, sprite.getHeight() * TILE_SCALE, u0, v0, u1, v1);
+                    ImGui.image(texture.getId(), sprite.getWidth() * TILE_SCALE_MULTIPLAYER, sprite.getHeight() * TILE_SCALE_MULTIPLAYER, u0, v0, u1, v1);
                 }
 
                 if (ImGui.isItemHovered()) {
                     highlightedSprite = index;
                     ImGui.beginTooltip();
-                    ImGui.image(texture.getId(), sprite.getWidth() * TILE_SCALE * 2, sprite.getHeight() * TILE_SCALE * 2, u0, v0, u1, v1);
+                    ImGui.image(texture.getId(), sprite.getWidth() * TILE_SCALE_MULTIPLAYER * 2, sprite.getHeight() * TILE_SCALE_MULTIPLAYER * 2, u0, v0, u1, v1);
                     ImGui.endTooltip();
                 }
 
