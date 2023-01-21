@@ -29,7 +29,7 @@ public final class GameRender {
     public GameRender() {
         renderCamera = new Camera(GameScreen.WIDTH / 2, GameScreen.HEIGHT / 2, GameScreen.WIDTH, GameScreen.HEIGHT);
 
-        raycastShader = new Shader("shader/vsInvert.glsl", "shader/fsInvert.glsl");
+        raycastShader = new Shader(AssetData.SHADER_PATH + "vsInvert.glsl", AssetData.SHADER_PATH + "fsInvert.glsl");
 
         textureBatch = new RenderBatch(AssetData.DEFAULT_SHADER, GameScreen.GAME_CAMERA);
         effectBatch = new RenderBatch(raycastShader, renderCamera);

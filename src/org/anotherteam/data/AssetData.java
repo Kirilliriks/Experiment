@@ -3,7 +3,6 @@ package org.anotherteam.data;
 import org.anotherteam.level.room.tile.Tile;
 import org.anotherteam.logger.GameLogger;
 import org.anotherteam.render.shader.Shader;
-import org.anotherteam.render.sprite.Sprite;
 import org.anotherteam.render.sprite.SpriteAtlas;
 import org.anotherteam.render.text.Font;
 import org.anotherteam.render.texture.Texture;
@@ -16,6 +15,8 @@ public final class AssetData {
         public static final String ASSETS_PATH = "assets/";
 
         public static final String LEVELS_PATH = ASSETS_PATH + "levels/";
+        public static final String SHADER_PATH = ASSETS_PATH + "shader/";
+        public static final String FONT_PATH = ASSETS_PATH + "font/";
         public static final String ATLASES_PATH = ASSETS_PATH + "atlases/";
         public static final String ROOM_PATH = ATLASES_PATH + "room/";
         public static final String ENTITY_PATH = ATLASES_PATH + "entity/";
@@ -25,16 +26,13 @@ public final class AssetData {
         public static final Map<String, Texture> textures = new HashMap<>();
 
         // Editor textures
-        public static final Texture EDITOR_TEXTURE = getTexture("editorTexture.png");
-        public static final Texture EDITOR_HIGHLITER_TEXTURE = getTexture("editor_highliter_texture.png");
-        public static final SpriteAtlas EDITOR_HIGHLITER_ATLAS = loadSpriteAtlas("editor_highliter_texture.png", Tile.SIZE.x,  Tile.SIZE.y);
-        public static final SpriteAtlas EDITOR_NULL_ICON_ATLAS = loadSpriteAtlas("nullIcon.png", Sprite.SIZE.x,  Sprite.SIZE.y);
+        public static final Texture EDITOR_HIGHLITER_TEXTURE = getTexture(ASSETS_PATH + "editor_highliter_texture.png");
         //
 
-        public static final Shader DEFAULT_SHADER = new Shader("shader/defaultVertexShader.glsl", "shader/defaultFragmentShader.glsl");
-        public static final Shader DEBUG_SHADER = new Shader("shader/debugVS.glsl", "shader/debugFS.glsl");
+        public static final Shader DEFAULT_SHADER = new Shader(SHADER_PATH + "defaultVertexShader.glsl", SHADER_PATH + "defaultFragmentShader.glsl");
+        public static final Shader DEBUG_SHADER = new Shader(SHADER_PATH + "debugVS.glsl", SHADER_PATH + "debugFS.glsl");
 
-        public static final Font DEBUG_FONT = new Font("font/font.ttf", 16);
+        public static final Font DEBUG_FONT = new Font(FONT_PATH + "font.ttf", 16);
 
         @NotNull
         public static Texture getTexture(String textureName) {

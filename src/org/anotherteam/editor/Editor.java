@@ -1,9 +1,11 @@
 package org.anotherteam.editor;
 
 import imgui.ImGui;
+import imgui.type.ImBoolean;
 import org.anotherteam.Game;
 import org.anotherteam.GameState;
 import org.anotherteam.Input;
+import org.anotherteam.Popups;
 import org.anotherteam.editor.level.TileViewer;
 import org.anotherteam.editor.render.ImGuiRender;
 import org.anotherteam.screen.GameScreen;
@@ -66,6 +68,7 @@ public final class Editor {
 
         ImGui.dummy(8.0f, 00.0f);
 
+        boolean openPop = false;
         if (ImGui.beginMenu("Level")) {
 
             if (ImGui.menuItem("Save (CTRL+S)")) {
@@ -73,7 +76,7 @@ public final class Editor {
             }
 
             if (ImGui.menuItem("Load")) {
-
+                Popups.LOAD_LEVEL = true;
             }
 
             if (ImGui.menuItem("Cancel changes")) {
@@ -84,6 +87,22 @@ public final class Editor {
         }
 
         ImGui.endMainMenuBar();
+
+        if (Popups.LOAD_LEVEL) {
+            ImGui.openPopup("####load");
+        }
+
+        if (ImGui.beginPopupModal("Load level####load")) {
+
+
+
+            if (ImGui.button("Close")) {
+                Popups.LOAD_LEVEL = false;
+                ImGui.closeCurrentPopup();
+            }
+
+            ImGui.endPopup();
+        }
 
         tileViewer.update();
         console.update();

@@ -10,11 +10,12 @@ import org.lwjgl.BufferUtils;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 public final class Font {
-    private final String filepath;
     private final int fontSize;
     private final Map<Integer, Glyph> characterMap;
 
@@ -24,11 +25,10 @@ public final class Font {
     public Texture texture;
 
     public Font(String filepath, int fontSize) {
-        this.filepath = filepath;
         this.fontSize = fontSize;
         this.scale = 1.0f;
         this.characterMap = new HashMap<>();
-        generateBitmap();
+        generateBitmap(filepath);
     }
 
     public void setScale(float scale) {
@@ -41,16 +41,17 @@ public final class Font {
     }
 
     @Nullable
-    private java.awt.Font registerFont() {
+    private java.awt.Font registerFont(String filepath) {
         try {
-
-            final var source = Font.class.getClassLoader().getResourceAsStream(filepath);
-            if (source == null) {
-                throw new LifeException("Null font input " + filepath);
+            final File file = new File(filepath);
+            if (!file.isFile()) {
+                throw new LifeException("Font " + filepath + " not found");
             }
 
+            final FileInputStream stream = new FileInputStream(file);
+
             final var ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            final var font = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, source);
+            final var font = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, stream);
             ge.registerFont(font);
             return font;
         } catch (Exception e) {
@@ -59,8 +60,8 @@ public final class Font {
         return null;
     }
 
-    public void generateBitmap() {
-        java.awt.Font font = registerFont();
+    public void generateBitmap(String filepath) {
+        java.awt.Font font = registerFont(filepath);
         if (font == null) {
             throw new LifeException("Bad font registering " + filepath);
         }

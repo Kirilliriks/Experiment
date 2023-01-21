@@ -19,7 +19,7 @@ import static org.lwjgl.system.MemoryUtil.memSlice;
 public final class FileUtils {
 
     public static Level loadLevel(String levelName) {
-        String inFile = "";
+        String inFile;
         try {
             final String finalName = levelName  + (levelName.split("\\.").length > 1 ? "" : "." + Level.LEVEL_FILE_EXTENSION);
             final Path path = Paths.get(AssetData.LEVELS_PATH + finalName);
@@ -95,11 +95,13 @@ public final class FileUtils {
         final var builder = new StringBuilder();
         BufferedReader reader;
         try {
-            final var source = FileUtils.class.getClassLoader().getResourceAsStream(fileName);
-            if (source == null) {
-                throw new LifeException("Null input " + fileName);
+            final File file = new File(fileName);
+            if (!file.isFile()) {
+                throw new LifeException("Shader not found " + fileName);
             }
-            reader = new BufferedReader(new InputStreamReader(source));
+
+            final FileReader fileReader = new FileReader(fileName);
+            reader = new BufferedReader(fileReader);
             String line;
             while((line = reader.readLine()) != null) {
                 builder.append(line);
@@ -121,6 +123,8 @@ public final class FileUtils {
             try (final var fc = Files.newByteChannel(path)) {
                 buffer = BufferUtils.createByteBuffer((int) fc.size() + 1);
                 while (fc.read(buffer) != -1) {}
+            } catch (Exception e) {
+                throw new LifeException("Bad file loading " + resource);
             }
         } else {
             try {
