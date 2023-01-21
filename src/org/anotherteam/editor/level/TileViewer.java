@@ -76,7 +76,7 @@ public final class TileViewer extends Widget {
         if (tileX < 0 || tileY < 0) return;
 
         final Room room = Game.LEVEL_MANAGER.getCurrentRoom();
-        if (Input.isButtonDown(Input.MOUSE_RIGHT_BUTTON) && thing == null) {
+        if (thing == null && Input.isButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
             room.removeTile(tileX, tileY);
         }
 
@@ -165,7 +165,9 @@ public final class TileViewer extends Widget {
 
     private void loadAtlases() {
         final var files = new File(AssetData.ROOM_PATH).listFiles();
-        if (files == null) throw new LifeException("Room's atlases not found");
+        if (files == null) {
+            throw new LifeException("Room's atlases not found");
+        }
 
         for (final var file : files) {
             final SpriteAtlas spriteAtlas = AssetData.getOrLoadRoomAtlas(AssetData.ROOM_PATH + file.getName());

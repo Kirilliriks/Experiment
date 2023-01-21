@@ -1,11 +1,11 @@
 package org.anotherteam.editor;
 
 import imgui.ImGui;
-import imgui.type.ImBoolean;
 import org.anotherteam.Game;
 import org.anotherteam.GameState;
 import org.anotherteam.Input;
 import org.anotherteam.Popups;
+import org.anotherteam.editor.level.LoadWindow;
 import org.anotherteam.editor.level.TileViewer;
 import org.anotherteam.editor.render.ImGuiRender;
 import org.anotherteam.screen.GameScreen;
@@ -20,6 +20,7 @@ public final class Editor {
     private final ImGuiRender imGui;
 
     private final TileViewer tileViewer;
+    private final LoadWindow loadWindow;
     private final Console console;
 
     private final EditorCameraController editorCameraController;
@@ -30,6 +31,7 @@ public final class Editor {
 
         imGui = new ImGuiRender(GameScreen.getWindow().getHandler(), "#version 430 core", this);
         tileViewer = new TileViewer(GameScreen.getWindow().getWidth() / 2 - 320, GameScreen.getWindow().getHeight() / 2 - 200, 640, 400);
+        loadWindow = new LoadWindow();
         console = new Console(GameScreen.getWindow().getWidth() / 2 - 320, GameScreen.getWindow().getHeight() / 2 - 200, 640, 400);
         editorCameraController = new EditorCameraController();
     }
@@ -68,7 +70,6 @@ public final class Editor {
 
         ImGui.dummy(8.0f, 00.0f);
 
-        boolean openPop = false;
         if (ImGui.beginMenu("Level")) {
 
             if (ImGui.menuItem("Save (CTRL+S)")) {
@@ -89,21 +90,10 @@ public final class Editor {
         ImGui.endMainMenuBar();
 
         if (Popups.LOAD_LEVEL) {
-            ImGui.openPopup("####load");
+            loadWindow.call();
         }
 
-        if (ImGui.beginPopupModal("Load level####load")) {
-
-
-
-            if (ImGui.button("Close")) {
-                Popups.LOAD_LEVEL = false;
-                ImGui.closeCurrentPopup();
-            }
-
-            ImGui.endPopup();
-        }
-
+        loadWindow.update();
         tileViewer.update();
         console.update();
     }
