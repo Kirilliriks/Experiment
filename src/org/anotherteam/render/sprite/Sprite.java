@@ -1,36 +1,36 @@
 package org.anotherteam.render.sprite;
 
+import lombok.Getter;
 import org.anotherteam.render.texture.Texture;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 
+@Getter
 public final class Sprite {
 
-    public static final Vector2i SIZE = new Vector2i(32, 32);
+    public static final Vector2i DEFAULT_SIZE = new Vector2i(32, 32);
 
+    private final Vector2f[] textCoords = new Vector2f[4];
     private final Texture texture;
-    private final Vector2f[] textCoords;
     private final int width, height;
     private final int frameX, frameY;
 
     public Sprite(SpriteAtlas spriteAtlas, int frameX, int frameY, int width, int height) {
         this.texture = spriteAtlas.getTexture();
-
-        textCoords = new Vector2f[4];
-        for (short i = 0; i < 4; i++) {
-            textCoords[i] = new Vector2f(0, 0);
-        }
-
         this.frameX = frameX;
         this.frameY = frameY;
         this.width = width;
         this.height = height;
 
-        changeTextureCoords(spriteAtlas);
+        for (short i = 0; i < 4; i++) {
+            textCoords[i] = new Vector2f(0, 0);
+        }
+
+        calculateTextureCoords(spriteAtlas);
     }
 
-    private void changeTextureCoords(SpriteAtlas spriteAtlas) {
+    private void calculateTextureCoords(SpriteAtlas spriteAtlas) {
         final var correctFrame = spriteAtlas.getSizeY() - frameY - 1;
         final var x0 = (float) (width * frameX) / texture.getWidth();
         final var x1 = (float) (width * (frameX + 1)) / texture.getWidth();
@@ -42,14 +42,6 @@ public final class Sprite {
         textCoords[3].set(x0, y1);
     }
 
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
     @NotNull
     public Vector2f[] getTextCoords() {
         return textCoords;
@@ -59,15 +51,6 @@ public final class Sprite {
     public Texture getTexture() {
         return texture;
     }
-
-    public int getFrameX() {
-        return frameX;
-    }
-
-    public int getFrameY() {
-        return frameY;
-    }
-
     public float getU0() {
         return textCoords[0].x;
     }

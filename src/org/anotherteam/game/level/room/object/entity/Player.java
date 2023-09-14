@@ -8,9 +8,9 @@ import org.anotherteam.render.sprite.Sprite;
 
 public final class Player extends EntityObject {
 
-    public Player(int x, int y) {
-        super(x, y, PlayerState.IDLE);
-        spriteController.setSpriteAtlas(AssetData.ENTITY_PATH + "testPlayerAtlas.png", Sprite.SIZE.x, Sprite.SIZE.y);
+    public Player() {
+        super(0, 0, PlayerState.IDLE);
+        spriteController.setSpriteAtlas(AssetData.ENTITY_PATH + "testPlayerAtlas.png", Sprite.DEFAULT_SIZE.x, Sprite.DEFAULT_SIZE.y);
         getCollider().setBounds(-6, 0, 6, 32);
         getCollider().setInteractBounds(0, 0, 16, 32);
         transform.setSpeed(25);

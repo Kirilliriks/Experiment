@@ -4,5 +4,5 @@ import org.anotherteam.game.object.GameObject;
 
 public interface Prefab {
 
-    Class<? extends GameObject> getPrefabClass();
+    GameObject getPrefab();
 }

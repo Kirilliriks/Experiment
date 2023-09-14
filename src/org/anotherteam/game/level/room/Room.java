@@ -1,5 +1,7 @@
 package org.anotherteam.game.level.room;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.anotherteam.game.Game;
 import org.anotherteam.game.level.room.object.entity.Player;
 import org.anotherteam.game.level.room.tile.Tile;
@@ -10,6 +12,8 @@ import org.joml.Vector2i;
 
 import java.util.*;
 
+@Getter
+@Setter
 public final class Room {
 
     private final Map<Vector2i, Tile> tiles;
@@ -56,15 +60,6 @@ public final class Room {
         }
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @NotNull
-    public List<GameObject> getGameObjects() {
-        return gameObjects;
-    }
-
     public void addObject(@NotNull GameObject object) {
         if (object instanceof Player) {
             player = (Player) object;
@@ -72,11 +67,6 @@ public final class Room {
         object.setRoom(this);
         gameObjects.add(object);
         gameObjects.sort(Comparator.comparingInt(GameObject::getRenderPriority));
-    }
-
-    @NotNull
-    public Player getPlayer() {
-        return player;
     }
 
     public void rewoveObject(@NotNull GameObject object) {
@@ -101,14 +91,10 @@ public final class Room {
         tiles.remove(new Vector2i(x, y));
     }
 
-    public String getName() {
-        return name;
-    }
-
     @NotNull
     public static Room createEmpty() {
         final var room = new Room("EmptyRoom");
-        room.addObject(new Player(0, 0));
+        room.addObject(new Player());
         return room;
     }
 }

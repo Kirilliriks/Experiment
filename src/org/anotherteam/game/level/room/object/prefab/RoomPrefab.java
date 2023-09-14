@@ -1,24 +1,23 @@
 package org.anotherteam.game.level.room.object.prefab;
 
+import lombok.RequiredArgsConstructor;
 import org.anotherteam.game.level.room.object.room.*;
 import org.anotherteam.game.object.GameObject;
 import org.anotherteam.game.object.prefab.Prefab;
 
+@RequiredArgsConstructor
 public enum RoomPrefab implements Prefab {
-    TEST_CUPBOARD(TestCupboard.class),
-    BED_218(Bed218.class),
-    LAMP_128(Lamp218.class),
-    LIGHT_TEST(LightTest.class),
-    DUCT_CORRIDOR_ROOM(DuctCorridorRoom.class),
-    DOOR_CORRIDOR(DoorCorridor.class);
+    TEST_CUPBOARD(new TestCupboard()),
+    BED_218(new Bed218()),
+    LAMP_128(new Lamp218()),
+    LIGHT_TEST(new LightTest()),
+    DUCT_CORRIDOR_ROOM(new DuctCorridorRoom()),
+    DOOR_CORRIDOR(new DoorCorridor());
 
-    final Class<? extends GameObject> clazz;
-    RoomPrefab(Class<? extends GameObject> clazz) {
-        this.clazz = clazz;
-    }
+    final GameObject gameObject;
 
     @Override
-    public Class<? extends GameObject> getPrefabClass() {
-        return clazz;
+    public GameObject getPrefab() {
+        return gameObject;
     }
 }

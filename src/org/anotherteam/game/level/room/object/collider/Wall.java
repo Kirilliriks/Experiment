@@ -4,9 +4,9 @@ import org.anotherteam.game.object.type.level.StaticObject;
 
 public final class Wall extends StaticObject {
 
-    public Wall(int x, int y) {
-        super(x, y);
-        getCollider().setBounds(2, 32);
-        getCollider().setSolid(true);
+    public Wall() {
+        super(0, 0);
+        collider.setBounds(2, 32);
+        collider.setSolid(true);
     }
 }

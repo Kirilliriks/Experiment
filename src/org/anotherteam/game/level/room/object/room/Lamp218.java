@@ -6,8 +6,8 @@ import org.anotherteam.game.object.type.level.StaticObject;
 
 public final class Lamp218 extends StaticObject {
 
-    public Lamp218(int x, int y) {
-        super(x, y);
+    public Lamp218() {
+        super(0, 0);
         final var spriteController = new SpriteController();
         spriteController.setSpriteAtlas(AssetData.ROOM_OBJECTS_PATH + "LAMP_218.png", 12, 18);
         addComponent(spriteController);

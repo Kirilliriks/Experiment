@@ -1,19 +1,18 @@
 package org.anotherteam.game.level.room.object.prefab;
 
+import lombok.RequiredArgsConstructor;
 import org.anotherteam.game.level.room.object.collider.Wall;
 import org.anotherteam.game.object.GameObject;
 import org.anotherteam.game.object.prefab.Prefab;
 
+@RequiredArgsConstructor
 public enum ColliderPrefab implements Prefab {
-    WALL(Wall.class);
+    WALL(new Wall());
 
-    final Class<? extends GameObject> clazz;
-    ColliderPrefab(Class<? extends GameObject> clazz) {
-        this.clazz = clazz;
-    }
+    private final GameObject gameObject;
 
     @Override
-    public Class<? extends GameObject> getPrefabClass() {
-        return clazz;
+    public GameObject getPrefab() {
+        return gameObject;
     }
 }

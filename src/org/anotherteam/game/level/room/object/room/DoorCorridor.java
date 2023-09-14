@@ -6,8 +6,8 @@ import org.anotherteam.game.object.component.type.sprite.SpriteController;
 
 public final class DoorCorridor extends GameObject {
 
-    public DoorCorridor(int x, int y) {
-        super(x, y);
+    public DoorCorridor() {
+        super(0, 0);
         final var spriteController = new SpriteController();
         spriteController.setSpriteAtlas(AssetData.ROOM_OBJECTS_PATH + "door_corridor_room.png", 21, 30);
         addComponent(spriteController);

@@ -6,8 +6,8 @@ import org.anotherteam.game.object.type.level.StaticObject;
 
 public final class DuctCorridorRoom extends StaticObject {
 
-    public DuctCorridorRoom(int x, int y) {
-        super(x, y);
+    public DuctCorridorRoom() {
+        super(0, 0);
         final var spriteController = new SpriteController();
         spriteController.setSpriteAtlas(AssetData.ROOM_OBJECTS_PATH + "duct_corridor_room.png", 31, 49);
         addComponent(spriteController);

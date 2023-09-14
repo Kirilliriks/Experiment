@@ -1,19 +1,18 @@
 package org.anotherteam.game.level.room.object.prefab;
 
+import lombok.RequiredArgsConstructor;
 import org.anotherteam.game.object.GameObject;
 import org.anotherteam.game.level.room.object.entity.Player;
 import org.anotherteam.game.object.prefab.Prefab;
 
+@RequiredArgsConstructor
 public enum EntityPrefab implements Prefab {
-    PLAYER(Player.class);
+    PLAYER(new Player());
 
-    final Class<? extends GameObject> clazz;
-    EntityPrefab(Class<? extends GameObject> clazz) {
-        this.clazz = clazz;
-    }
+    final GameObject gameObject;
 
     @Override
-    public Class<? extends GameObject> getPrefabClass() {
-        return clazz;
+    public GameObject getPrefab() {
+        return gameObject;
     }
 }

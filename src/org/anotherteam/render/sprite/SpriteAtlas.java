@@ -1,5 +1,6 @@
 package org.anotherteam.render.sprite;
 
+import lombok.Getter;
 import org.anotherteam.render.texture.Texture;
 import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
@@ -7,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public final class SpriteAtlas {
 
     private final Texture texture;
@@ -38,26 +40,15 @@ public final class SpriteAtlas {
         return new SpriteAtlas(texture, frameWidth, frameHeight, heightOffset);
     }
 
-    public int getSizeX() {
-        return sizeX;
-    }
-
-    public int getSizeY() {
-        return sizeY;
-    }
-
     public String getName() {
         return texture.getName();
-    }
-
-    public int getHeightOffset() {
-        return heightOffset;
     }
 
     @NotNull
     public Sprite getTextureSprite(int x, int y) {
         final var index = x + y * sizeX;
-        if (index >= sizeX * sizeY) throw new LifeException("Bad sprite index: " + index + " | x: " + x + " | y: " + y + " | spritesSize: " + sprites.size());
+        if (index >= sizeX * sizeY)
+            throw new LifeException("Bad sprite index: " + index + " | x: " + x + " | y: " + y + " | spritesSize: " + sprites.size());
         return sprites.get(index);
     }
 
@@ -66,15 +57,5 @@ public final class SpriteAtlas {
         final var index = x + (y + getHeightOffset()) * sizeX;
         if (index >= sizeX * sizeY) throw new LifeException("Bad sprite index: " + index + " | x: " + x + " | y: " + y);
         return sprites.get(index);
-    }
-
-    @NotNull
-    public List<Sprite> getSprites() {
-        return sprites;
-    }
-
-    @NotNull
-    public Texture getTexture() {
-        return texture;
     }
 }

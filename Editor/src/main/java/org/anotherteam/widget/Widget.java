@@ -34,7 +34,9 @@ public abstract class Widget {
         }
     }
 
-    public abstract void update();
+    public void update() {
+        onDirty();
+    }
 
     public void reset() {
         dirty = true;

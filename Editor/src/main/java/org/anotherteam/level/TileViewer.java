@@ -44,7 +44,7 @@ public final class TileViewer extends Widget {
     }
 
     public void update() {
-        onDirty();
+        super.update();
 
         ImGui.begin("Tile Viewer");
 
@@ -65,8 +65,6 @@ public final class TileViewer extends Widget {
         if (selectedAtlas != null) {
             updatePicker();
         }
-
-        ImGui.getStyle().setItemSpacing(0.5f, 0.5f);
 
         ImGui.end();
 

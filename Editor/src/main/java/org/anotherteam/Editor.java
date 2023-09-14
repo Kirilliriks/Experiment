@@ -2,12 +2,14 @@ package org.anotherteam;
 
 import imgui.ImGui;
 import imgui.flag.ImGuiDockNodeFlags;
+import lombok.Getter;
 import org.anotherteam.core.Core;
 import org.anotherteam.game.Game;
 import org.anotherteam.game.GameState;
 import org.anotherteam.input.Input;
 import org.anotherteam.level.EditorCameraController;
 import org.anotherteam.level.LoadWindow;
+import org.anotherteam.level.PrefabViewer;
 import org.anotherteam.level.TileViewer;
 import org.anotherteam.render.ImGuiRender;
 import org.anotherteam.render.window.Window;
@@ -16,6 +18,7 @@ import org.anotherteam.util.FileUtils;
 import org.anotherteam.util.Popups;
 import org.anotherteam.widget.Console;
 
+@Getter
 public final class Editor implements Core {
 
     private static Editor instance;
@@ -26,6 +29,7 @@ public final class Editor implements Core {
     private final ImGuiRender imGui;
 
     private final TileViewer tileViewer;
+    private final PrefabViewer prefabViewer;
     private final LoadWindow loadWindow;
     private final Console console;
 
@@ -38,6 +42,7 @@ public final class Editor implements Core {
 
         imGui = new ImGuiRender(GameScreen.getWindow().getHandler(), "#version 430 core", this);
         tileViewer = new TileViewer(GameScreen.getWindow().getWidth() / 2 - 320, GameScreen.getWindow().getHeight() / 2 - 200, 640, 400);
+        prefabViewer = new PrefabViewer(GameScreen.getWindow().getWidth() / 2 - 320, GameScreen.getWindow().getHeight() / 2 - 200, 640, 400);
         loadWindow = new LoadWindow();
         console = new Console(GameScreen.getWindow().getWidth() / 2 - 320, GameScreen.getWindow().getHeight() / 2 - 200, 640, 400);
         editorCameraController = new EditorCameraController();
@@ -56,9 +61,6 @@ public final class Editor implements Core {
         game.update(dt);
     }
 
-    /**
-     * Render imgui frame
-     */
     @Override
     public void render(float dt) {
         game.render(dt);
@@ -127,6 +129,7 @@ public final class Editor implements Core {
 
         loadWindow.update();
         tileViewer.update();
+        prefabViewer.update();
         console.update();
     }
 
@@ -152,9 +155,5 @@ public final class Editor implements Core {
         GameScreen.RENDER_HEIGHT = GameScreen.getWindow().getHeight();
 
         Game.getGameRender().updateFrames(GameScreen.WIDTH, GameScreen.HEIGHT);
-    }
-
-    public static Editor getInstance() {
-        return instance;
     }
 }
