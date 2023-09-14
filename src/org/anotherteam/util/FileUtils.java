@@ -41,8 +41,9 @@ public final class FileUtils {
             return null;
         }
 
-        GameLogger.log("Level " + levelName + " loaded");
-        return SerializeUtil.GSON.fromJson(inFile, Level.class);
+        final var level = SerializeUtil.GSON.fromJson(inFile, Level.class);
+        GameLogger.log("Level " + level.getName() + " loaded");
+        return level;
     }
 
     public static void saveEditorLevel(@NotNull Level level) {

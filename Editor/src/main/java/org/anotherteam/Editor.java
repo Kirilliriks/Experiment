@@ -1,6 +1,7 @@
 package org.anotherteam;
 
 import imgui.ImGui;
+import imgui.flag.ImGuiDockNodeFlags;
 import org.anotherteam.core.Core;
 import org.anotherteam.game.Game;
 import org.anotherteam.game.GameState;
@@ -78,6 +79,7 @@ public final class Editor implements Core {
             GameScreen.setDraggedThing(null);
         }
 
+        ImGui.dockSpaceOverViewport(ImGui.getMainViewport(), ImGuiDockNodeFlags.PassthruCentralNode);
         ImGui.beginMainMenuBar();
 
         if (ImGui.beginMenu("Menu")) {

@@ -31,7 +31,6 @@ public final class ImGuiRender {
             io.getFonts().addFontFromFileTTF("C:\\Windows\\Fonts\\Arial.ttf", 20, io.getFonts().getGlyphRangesCyrillic());
         }
 
-
         imGuiGlfw.init(windowPtr, true);
         imGuiGl3.init(glslVersion);
     }
