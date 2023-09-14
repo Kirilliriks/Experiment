@@ -2,19 +2,20 @@ package org.anotherteam.game.object.component;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import lombok.Getter;
 import org.anotherteam.game.object.GameObject;
 import org.anotherteam.game.object.component.fieldcontroller.FieldController;
 import org.anotherteam.game.object.component.type.player.PlayerController;
 import org.anotherteam.game.object.component.type.sprite.SpriteController;
 import org.anotherteam.game.object.component.type.state.StateController;
 import org.anotherteam.game.object.component.type.transform.Transform;
-import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public abstract class Component {
 
     public static final List<Class<? extends Component>> components = new ArrayList<>();
@@ -49,10 +50,6 @@ public abstract class Component {
 
     public void setDependencies() { }
 
-    public boolean isSerializable() {
-        return serializable;
-    }
-
     public List<FieldController> getFields() {
         return null;
     }
@@ -65,16 +62,5 @@ public abstract class Component {
     @Nullable
     public JsonElement serialize(JsonObject result) {
         return null;
-    }
-
-    public static <T extends Component> T create(@NotNull Class<T> componentClass) {
-        try {
-            return componentClass.cast(componentClass
-                    .getDeclaredConstructor()
-                    .newInstance());
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new LifeException("Unknown Component class " + componentClass.getSimpleName());
-        }
     }
 }

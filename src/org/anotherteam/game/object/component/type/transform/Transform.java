@@ -3,50 +3,45 @@ package org.anotherteam.game.object.component.type.transform;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import org.anotherteam.game.object.GameObject;
+import lombok.Getter;
+import lombok.Setter;
 import org.anotherteam.game.object.component.Component;
 import org.anotherteam.game.object.component.type.collider.Collider;
 import org.anotherteam.game.object.component.type.sprite.SpriteController;
 import org.anotherteam.game.object.component.type.state.StateController;
 import org.anotherteam.game.object.component.type.state.type.EntityState;
+import org.anotherteam.util.SerializeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 
+@Getter
+@Setter
 public final class Transform extends Component {
 
     public static final int DEFAULT_SPEED = 25;
 
+    private final Vector2i position;
+    public final Vector2f moveImpulse;
     private int maxSpeed;
+    private int speed;
+    private boolean moving;
 
     private StateController stateController;
     private Collider collider;
     private SpriteController sprite;
-
-    public final Vector2f moveImpulse;
-
-    /**
-     * Link to GameObject's position
-     */
-    private Vector2i position;
-    private int speed;
-
-    private boolean moving;
 
     public Transform() {
         this(DEFAULT_SPEED);
     }
 
     public Transform(int maxSpeed) {
+        this.position = new Vector2i(0, 0);
         this.maxSpeed = maxSpeed;
-        moveImpulse = new Vector2f(0.0f, 0.0f);
-        speed = maxSpeed;
-        moving = false;
-        serializable = true;
-    }
-
-    public void setMaxSpeed(int maxSpeed) {
-        this.maxSpeed = maxSpeed;
+        this.moveImpulse = new Vector2f(0.0f, 0.0f);
+        this.speed = maxSpeed;
+        this.moving = false;
+        this.serializable = true;
     }
 
     @Override
@@ -60,18 +55,16 @@ public final class Transform extends Component {
     }
 
     @Override
-    public void setOwnerObject(@NotNull GameObject ownerObject) {
-        super.setOwnerObject(ownerObject);
-        position = ownerObject.getPosition();
-    }
-
-    @Override
     public void setDependencies() {
         if (sprite != null && collider != null && stateController != null) return;
 
         collider = getDependsComponent(Collider.class);
         stateController = getDependsComponent(StateController.class);
         sprite = getDependsComponent(SpriteController.class);
+    }
+
+    public void setPosition(int x, int y) {
+        position.set(x, y);
     }
 
     public boolean move() {
@@ -101,22 +94,10 @@ public final class Transform extends Component {
         this.speed = speed;
     }
 
-    public int getSpeed() {
-        return speed;
-    }
-
-    public int getMaxSpeed() {
-        return maxSpeed;
-    }
-
     public void checkFlip() {
         final var flip = (moveImpulse.x < 0);
         sprite.setFlipX(flip);
         collider.setFlipX(flip);
-    }
-
-    public boolean isMoving() {
-        return moving;
     }
 
     public boolean isCanMove() {
@@ -125,17 +106,20 @@ public final class Transform extends Component {
 
     @Override
     public @NotNull JsonElement serialize(JsonObject result) {
+        result.add("posion", SerializeUtil.serialize(position));
         result.add("maxSpeed", new JsonPrimitive(maxSpeed));
         result.add("speed", new JsonPrimitive(speed));
         return result;
     }
 
     public static Transform deserialize(JsonObject object) {
+        final Vector2i position = SerializeUtil.deserialize(object.getAsJsonObject("position"));
         final var maxSpeed = object.get("maxSpeed").getAsInt();
         final var speed = object.get("speed").getAsInt();
 
         final var transform = new Transform(maxSpeed);
         transform.setSpeed(speed);
+        transform.setPosition(position.x, position.y);
         return transform;
     }
 }

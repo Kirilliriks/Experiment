@@ -1,10 +1,12 @@
 package org.anotherteam.game.object.component.fieldcontroller;
 
+import lombok.Getter;
+
+@Getter
 public final class FieldController {
 
     private final UpdateField onSaveValue;
-
-    private String fieldName;
+    private final String fieldName;
     private Object value;
 
     public FieldController(String fieldName, Object value, UpdateField onSaveValue) {
@@ -13,17 +15,9 @@ public final class FieldController {
         this.onSaveValue = onSaveValue;
     }
 
-    public Object getValue() {
-        return value;
-    }
-
     public void setValue(Object value) {
         this.value = value;
         onSaveValue.save(value);
-    }
-
-    public String getFieldName() {
-        return fieldName;
     }
 
     public Class<?> getValueClass() {

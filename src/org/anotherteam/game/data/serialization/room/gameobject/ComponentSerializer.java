@@ -27,8 +27,8 @@ public final class ComponentSerializer implements JsonDeserializer<Component>, J
         private static JsonElement serialize(Component component) {
             final var result = new JsonObject();
             result.add("type", new JsonPrimitive(component.getClass().getSimpleName()));
-            final JsonElement jsonElement = component.serialize(result);
 
+            final JsonElement jsonElement = component.serialize(result);
             if (jsonElement == null) {
                 throw new LifeException("Unknown component " + result.get("type").getAsString());
             }
@@ -51,8 +51,8 @@ public final class ComponentSerializer implements JsonDeserializer<Component>, J
                 case "SpriteController" -> {
                     return SpriteController.deserialize(object);
                 }
+                default -> throw new LifeException("Unknown component " + object.get("type").getAsString());
             }
-            throw new LifeException("Unknown component " + object.get("type").getAsString());
         }
     }
 }

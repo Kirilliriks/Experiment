@@ -94,17 +94,14 @@ public final class SpriteController extends Component {
         frameX++;
     }
 
-    public void draw(@NotNull Vector2i position, @NotNull RenderBatch batch, boolean height) {
-        if (textureSprite == null || (height && heightSprite == null)) throw new LifeException("Try draw null texture");
-
-        final var centerOffset = center ? (int)(textureSprite.getWidth() / 2f) : 0;
-        if (height) {
-            batch.draw(heightSprite,
-                    position.x - centerOffset, position.y, flipX);
-        } else {
-            batch.draw(textureSprite,
-                    position.x - centerOffset, position.y, flipX);
+    public void draw(@NotNull RenderBatch batch, boolean height) {
+        if (textureSprite == null || (height && heightSprite == null)) {
+            throw new LifeException("Try draw null texture");
         }
+
+        final int centerOffset = center ? (int)(textureSprite.getWidth() / 2f) : 0;
+        final Vector2i position = ownerObject.getTransform().getPosition();
+        batch.draw(height ? heightSprite : textureSprite, position.x - centerOffset, position.y, flipX);
     }
 
     public int getRenderPriority() {

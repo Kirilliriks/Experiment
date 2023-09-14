@@ -58,8 +58,6 @@ public final class FileUtils {
         }
 
         GameLogger.log("Level " + level.getName() + " saved");
-
-
     }
 
     public static void deleteLevel(@NotNull Level level) {

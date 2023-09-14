@@ -126,6 +126,9 @@ allprojects {
         runtimeOnly("org.lwjgl:lwjgl-xxhash::$lwjglNatives")
         runtimeOnly("org.lwjgl:lwjgl-yoga::$lwjglNatives")
         runtimeOnly("org.lwjgl:lwjgl-zstd::$lwjglNatives")
+
+        compileOnly("org.projectlombok:lombok:1.18.28")
+        annotationProcessor("org.projectlombok:lombok:1.18.28")
     }
 }
 
