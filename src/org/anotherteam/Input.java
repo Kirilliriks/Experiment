@@ -245,13 +245,6 @@ public final class Input {
         mouseWheelVelocity = 0.0f;
     }
 
-    public void destroy() {
-        keyboard.free();
-        mouseMove.free();
-        mouseButton.free();
-        mouseScroll.free();
-    }
-
     public static class MouseButton {
         private final int buttonCode;
 

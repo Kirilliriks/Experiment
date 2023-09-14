@@ -43,7 +43,6 @@ public final class Window {
     }
 
     public void destroy() {
-        input.destroy();
         glfwSetWindowShouldClose(handler, true);
         glfwFreeCallbacks(handler);
         glfwDestroyWindow(handler);
