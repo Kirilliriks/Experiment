@@ -40,7 +40,7 @@ public final class ImGuiRender {
         imGuiGlfw.newFrame();
         ImGui.newFrame();
 
-        editor.update(dt);
+        editor.imgui(dt);
 
         ImGui.render();
         imGuiGl3.renderDrawData(ImGui.getDrawData());

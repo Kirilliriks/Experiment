@@ -43,12 +43,37 @@ public final class Editor implements Core {
 
     @Override
     public void init() {
+        game.init();
+
         Game.DEBUG_MODE = true;
         Game.STATE_MANAGER.setState(GameState.ON_EDITOR);
     }
 
     @Override
     public void update(float dt) {
+        game.update(dt);
+    }
+
+    /**
+     * Render imgui frame
+     */
+    @Override
+    public void render(float dt) {
+        game.render(dt);
+
+        if (Game.STATE_MANAGER.getState() != GameState.ON_EDITOR) return;
+        editorCameraController.handle(dt);
+
+        imGui.render(dt);
+    }
+
+    @Override
+    public void destroy() {
+        game.destroy();
+        imGui.destroy();
+    }
+
+    public void imgui(float dt) {
         if (Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
             GameScreen.setDraggedThing(null);
         }
@@ -100,22 +125,6 @@ public final class Editor implements Core {
         loadWindow.update();
         tileViewer.update();
         console.update();
-    }
-
-    /**
-     * Render imgui frame
-     */
-    @Override
-    public void render(float dt) {
-        if (Game.STATE_MANAGER.getState() != GameState.ON_EDITOR) return;
-        editorCameraController.handle(dt);
-
-        imGui.render(dt);
-    }
-
-    @Override
-    public void destroy() {
-        imGui.destroy();
     }
 
     public static void switchPlayStopMode() {
