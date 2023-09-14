@@ -6,7 +6,6 @@ import com.google.gson.JsonPrimitive;
 import lombok.Getter;
 import lombok.Setter;
 import org.anotherteam.game.object.component.Component;
-import org.anotherteam.game.object.component.type.collider.Collider;
 import org.anotherteam.game.object.component.type.sprite.SpriteController;
 import org.anotherteam.game.object.component.type.state.StateController;
 import org.anotherteam.game.object.component.type.state.type.EntityState;
@@ -28,7 +27,6 @@ public final class Transform extends Component {
     private boolean moving;
 
     private StateController stateController;
-    private Collider collider;
     private SpriteController sprite;
 
     public Transform() {
@@ -46,19 +44,24 @@ public final class Transform extends Component {
 
     @Override
     public void init() {
-        checkFlip();
+        updateFlip();
     }
 
     @Override
     public void update(float dt) {
+        if (!isCanMove()) {
+            return;
+        }
+
         moving = move();
     }
 
     @Override
     public void setDependencies() {
-        if (sprite != null && collider != null && stateController != null) return;
+        if (sprite != null && stateController != null) {
+            return;
+        }
 
-        collider = getDependsComponent(Collider.class);
         stateController = getDependsComponent(StateController.class);
         sprite = getDependsComponent(SpriteController.class);
     }
@@ -68,23 +71,19 @@ public final class Transform extends Component {
     }
 
     public boolean move() {
-        if (!isCanMove()) return false;
-
         if (moveImpulse.equals(0, 0)) {
             stateController.setDefaultState();
             return false;
         }
 
-        if (collider.checkCollide(moveImpulse)) {
+        if (ownerObject.getCollider().checkCollide(moveImpulse)) {
             moveImpulse.set(0, 0);
             return false;
         }
 
         if (moveImpulse.x >= 1 || moveImpulse.x <= -1) {
-            checkFlip();
-            final var x = (int) moveImpulse.x;
-            final var y = (int) moveImpulse.y;
-            position.add(x, y);
+            updateFlip();
+            position.add((int) moveImpulse.x, (int) moveImpulse.y);
             moveImpulse.set(0, 0);
         }
         return true;
@@ -94,10 +93,10 @@ public final class Transform extends Component {
         this.speed = speed;
     }
 
-    public void checkFlip() {
-        final var flip = (moveImpulse.x < 0);
+    public void updateFlip() {
+        final boolean flip = (moveImpulse.x < 0);
         sprite.setFlipX(flip);
-        collider.setFlipX(flip);
+        ownerObject.getCollider().setFlipX(flip);
     }
 
     public boolean isCanMove() {
@@ -106,7 +105,7 @@ public final class Transform extends Component {
 
     @Override
     public @NotNull JsonElement serialize(JsonObject result) {
-        result.add("posion", SerializeUtil.serialize(position));
+        result.add("position", SerializeUtil.serialize(position));
         result.add("maxSpeed", new JsonPrimitive(maxSpeed));
         result.add("speed", new JsonPrimitive(speed));
         return result;
