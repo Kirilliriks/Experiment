@@ -37,7 +37,7 @@ public final class ComponentSerializer implements JsonDeserializer<Component>, J
         }
 
         private static Component deserialize(JsonElement json) {
-            final var object = json.getAsJsonObject();
+            final JsonObject object = json.getAsJsonObject();
             switch (object.get("type").getAsString()) {
                 case "Collider" -> {
                     return Collider.deserialize(object);

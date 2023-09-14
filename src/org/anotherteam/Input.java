@@ -15,13 +15,13 @@ public final class Input {
 
     public static ImGuiIO imGuiIO = null;
 
-    private static MouseButton lastButton = null;
     private final static Map<Integer, MouseButton> buttons = new HashMap<>();
+    public final static Map<Integer, Key> keys = new HashMap<>();
     private final static Vector2f mousePos = new Vector2f(0, 0);
     private final static Vector2f lastMousePos = new Vector2f(0, 0);
 
     private static Key lastKey = null;
-    public static Map<Integer, Key> keys = new HashMap<>();
+    private static MouseButton lastButton = null;
 
     private static float mouseWheelVelocity = 0.0f;
 
