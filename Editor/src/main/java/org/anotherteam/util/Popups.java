@@ -1,4 +1,4 @@
-package org.anotherteam;
+package org.anotherteam.util;
 
 public final class Popups {
 

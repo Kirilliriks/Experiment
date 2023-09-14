@@ -1,6 +1,6 @@
 package org.anotherteam.object;
 
-import org.anotherteam.Game;
+import org.anotherteam.game.Game;
 import org.anotherteam.level.room.Room;
 import org.anotherteam.logger.GameLogger;
 import org.anotherteam.object.component.Component;

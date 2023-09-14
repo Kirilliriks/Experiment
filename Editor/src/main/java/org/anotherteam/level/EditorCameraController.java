@@ -1,7 +1,8 @@
-package org.anotherteam.editor;
+package org.anotherteam.level;
 
-import org.anotherteam.Game;
+import org.anotherteam.Editor;
 import org.anotherteam.Input;
+import org.anotherteam.game.Game;
 import org.anotherteam.screen.GameScreen;
 import org.joml.Vector2f;
 

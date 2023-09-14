@@ -1,5 +1,7 @@
-package org.anotherteam;
+package org.anotherteam.game;
 
+import org.anotherteam.game.Game;
+import org.anotherteam.game.GameState;
 import org.anotherteam.manager.AbstractManager;
 import org.jetbrains.annotations.NotNull;
 

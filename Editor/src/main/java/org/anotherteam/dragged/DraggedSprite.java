@@ -1,4 +1,4 @@
-package org.anotherteam.editor.dragged;
+package org.anotherteam.dragged;
 
 import org.anotherteam.render.sprite.Sprite;
 import org.anotherteam.screen.DraggedThing;

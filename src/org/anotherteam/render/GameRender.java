@@ -1,8 +1,8 @@
 package org.anotherteam.render;
 import static org.lwjgl.opengl.GL42.*;
 
-import org.anotherteam.Game;
-import org.anotherteam.GameState;
+import org.anotherteam.game.Game;
+import org.anotherteam.game.GameState;
 import org.anotherteam.Input;
 import org.anotherteam.data.AssetData;
 import org.anotherteam.level.room.Room;

@@ -2,10 +2,8 @@ package org.anotherteam.object.component.type.player;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import org.anotherteam.Game;
-import org.anotherteam.GameState;
+import org.anotherteam.game.Game;
 import org.anotherteam.Input;
-import org.anotherteam.editor.Editor;
 import org.anotherteam.object.GameObject;
 import org.anotherteam.object.component.Component;
 import org.anotherteam.object.component.fieldcontroller.FieldController;
@@ -91,9 +89,9 @@ public final class PlayerController extends Component {
             Game.DEBUG_MODE = !Game.DEBUG_MODE;
         }
 
-        if (Editor.getInstance() != null && Input.isKeyDown(Input.KEY_ESCAPE)) {
-            Editor.switchPlayStopMode();
-        }
+//        if (Editor.getInstance() != null && Input.isKeyDown(Input.KEY_ESCAPE)) { TODO EDITOR
+//            Editor.switchPlayStopMode();
+//        }
     }
 
     @Override

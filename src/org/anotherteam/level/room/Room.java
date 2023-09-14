@@ -1,6 +1,6 @@
 package org.anotherteam.level.room;
 
-import org.anotherteam.Game;
+import org.anotherteam.game.Game;
 import org.anotherteam.level.room.object.entity.Player;
 import org.anotherteam.level.room.tile.Tile;
 import org.anotherteam.object.GameObject;

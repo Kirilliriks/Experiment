@@ -1,6 +1,6 @@
 package org.anotherteam.level;
 
-import org.anotherteam.Game;
+import org.anotherteam.game.Game;
 import org.anotherteam.level.room.Room;
 import org.anotherteam.render.GameRender;
 import org.anotherteam.render.frame.RenderFrame;

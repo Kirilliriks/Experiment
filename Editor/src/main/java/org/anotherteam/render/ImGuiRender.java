@@ -1,4 +1,4 @@
-package org.anotherteam.editor.render;
+package org.anotherteam.render;
 
 import imgui.ImGui;
 import imgui.ImGuiIO;
@@ -6,7 +6,7 @@ import imgui.flag.ImGuiBackendFlags;
 import imgui.flag.ImGuiConfigFlags;
 import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
-import org.anotherteam.editor.Editor;
+import org.anotherteam.Editor;
 
 public final class ImGuiRender {
 

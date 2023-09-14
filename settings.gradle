@@ -1,2 +1,3 @@
 rootProject.name = 'Experiment'
+include 'Editor'
 

@@ -1,20 +1,24 @@
-package org.anotherteam.editor;
+package org.anotherteam;
 
 import imgui.ImGui;
-import org.anotherteam.Game;
-import org.anotherteam.GameState;
-import org.anotherteam.Input;
-import org.anotherteam.Popups;
-import org.anotherteam.editor.level.LoadWindow;
-import org.anotherteam.editor.level.TileViewer;
-import org.anotherteam.editor.render.ImGuiRender;
+import org.anotherteam.core.Core;
+import org.anotherteam.game.Game;
+import org.anotherteam.game.GameState;
+import org.anotherteam.level.EditorCameraController;
+import org.anotherteam.level.LoadWindow;
+import org.anotherteam.level.TileViewer;
+import org.anotherteam.render.ImGuiRender;
+import org.anotherteam.render.window.Window;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.FileUtils;
+import org.anotherteam.util.Popups;
+import org.anotherteam.widget.Console;
 
-public final class Editor {
+public final class Editor implements Core {
 
     private static Editor instance;
 
+    private final Window window;
     private final Game game;
 
     private final ImGuiRender imGui;
@@ -25,9 +29,10 @@ public final class Editor {
 
     private final EditorCameraController editorCameraController;
 
-    public Editor(Game game) {
+    public Editor(Window window) {
         instance = this;
-        this.game = game;
+        this.window = window;
+        this.game = new Game(window);
 
         imGui = new ImGuiRender(GameScreen.getWindow().getHandler(), "#version 430 core", this);
         tileViewer = new TileViewer(GameScreen.getWindow().getWidth() / 2 - 320, GameScreen.getWindow().getHeight() / 2 - 200, 640, 400);
@@ -36,14 +41,13 @@ public final class Editor {
         editorCameraController = new EditorCameraController();
     }
 
+    @Override
     public void init() {
         Game.DEBUG_MODE = true;
         Game.STATE_MANAGER.setState(GameState.ON_EDITOR);
     }
 
-    /**
-     * Draw and update editor elements
-     */
+    @Override
     public void update(float dt) {
         if (Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
             GameScreen.setDraggedThing(null);
@@ -101,6 +105,7 @@ public final class Editor {
     /**
      * Render imgui frame
      */
+    @Override
     public void render(float dt) {
         if (Game.STATE_MANAGER.getState() != GameState.ON_EDITOR) return;
         editorCameraController.handle(dt);
@@ -108,6 +113,7 @@ public final class Editor {
         imGui.render(dt);
     }
 
+    @Override
     public void destroy() {
         imGui.destroy();
     }

@@ -1,4 +1,4 @@
-package org.anotherteam;
+package org.anotherteam.game;
 
 public enum GameState {
     ON_MENU,

@@ -1,8 +1,8 @@
-package org.anotherteam.editor.level;
+package org.anotherteam.level;
 
 import imgui.ImGui;
-import org.anotherteam.Game;
-import org.anotherteam.Popups;
+import org.anotherteam.game.Game;
+import org.anotherteam.util.Popups;
 import org.anotherteam.data.AssetData;
 import org.anotherteam.util.exception.LifeException;
 

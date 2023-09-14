@@ -1,7 +1,7 @@
 package org.anotherteam.manager;
 
-import org.anotherteam.Game;
-import org.anotherteam.GameState;
+import org.anotherteam.game.Game;
+import org.anotherteam.game.GameState;
 import org.anotherteam.render.frame.RenderFrame;
 import org.anotherteam.util.FileUtils;
 import org.anotherteam.level.Level;

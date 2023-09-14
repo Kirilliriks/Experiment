@@ -1,6 +1,6 @@
 package org.anotherteam.logger;
 
-import org.anotherteam.Game;
+import org.anotherteam.game.Game;
 
 import java.util.ArrayDeque;
 import java.util.Queue;

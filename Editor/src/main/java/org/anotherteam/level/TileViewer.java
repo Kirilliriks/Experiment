@@ -1,13 +1,13 @@
-package org.anotherteam.editor.level;
+package org.anotherteam.level;
 
 import imgui.ImGui;
 import imgui.flag.ImGuiWindowFlags;
-import org.anotherteam.Game;
+import org.anotherteam.game.Game;
 import org.anotherteam.Input;
 import org.anotherteam.data.AssetData;
-import org.anotherteam.editor.dragged.DraggedTile;
-import org.anotherteam.editor.dragged.DraggedTiles;
-import org.anotherteam.editor.widget.Widget;
+import org.anotherteam.dragged.DraggedTile;
+import org.anotherteam.dragged.DraggedTiles;
+import org.anotherteam.widget.Widget;
 import org.anotherteam.level.room.Room;
 import org.anotherteam.level.room.tile.Tile;
 import org.anotherteam.render.sprite.Sprite;

@@ -1,8 +1,8 @@
-package org.anotherteam.editor;
+package org.anotherteam.widget;
 
 import imgui.ImGui;
 import imgui.flag.ImGuiWindowFlags;
-import org.anotherteam.editor.widget.Widget;
+import org.anotherteam.widget.Widget;
 import org.anotherteam.logger.GameLogger;
 
 public final class Console extends Widget {

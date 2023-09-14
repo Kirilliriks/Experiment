@@ -1,6 +1,6 @@
-package org.anotherteam.editor.dragged;
+package org.anotherteam.dragged;
 
-import org.anotherteam.Game;
+import org.anotherteam.game.Game;
 import org.anotherteam.level.room.Room;
 import org.anotherteam.level.room.tile.Tile;
 import org.anotherteam.render.batch.RenderBatch;

@@ -1,4 +1,4 @@
-package org.anotherteam.editor.widget;
+package org.anotherteam.widget;
 
 import imgui.ImGui;
 import org.joml.Vector2i;

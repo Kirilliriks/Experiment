@@ -1,48 +1,33 @@
 package org.anotherteam;
 
-import imgui.ImGui;
-import org.anotherteam.editor.Editor;
+import org.anotherteam.core.Core;
+import org.anotherteam.game.Game;
+import org.anotherteam.game.GameState;
 import org.anotherteam.render.window.Window;
+import org.anotherteam.util.GLUtils;
 import org.anotherteam.util.Time;
-import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengles.GLES20.GL_COLOR_BUFFER_BIT;
 
-public final class Experimental {
+public final class CoreLauncher {
 
-    private final Game game;
-    private final Editor editor;
+    private final Core core;
     private final Window window;
 
-    public Experimental() {
-        GLFWErrorCallback.createPrint(System.err).set();
-
-        if (!glfwInit()) {
-            throw new IllegalStateException("Unable to initialize GLFW");
-        }
-
-        window = new Window(1920, 1080, "Experimental");
-        window.create();
-
+    public CoreLauncher(Core core, Window window) {
         GL.createCapabilities(); // CRITICAL
 
-        game = new Game(window);
-        editor = new Editor(game);
-        game.init();
+        this.core = core;
+        this.window = window;
 
+        core.init();
         run();
     }
 
     public void run() {
-
-        if (editor != null) {
-            editor.init();
-            Input.imGuiIO = ImGui.getIO();
-        }
-
         double frameRateDelta = 1.0f / window.getFpsMax();
 
         double beginTime = Time.getTime();
@@ -65,7 +50,7 @@ public final class Experimental {
                 unprocessedTime -= frameRateDelta;
 
                 window.update();
-                game.update(dtF);
+                core.update(dtF);
                 updates++;
 
                 canRender = true;
@@ -76,10 +61,7 @@ public final class Experimental {
 
                 glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
                 glClear(GL_COLOR_BUFFER_BIT);
-                game.render(dtF);
-                if (editor != null) {
-                    editor.render(dtF);
-                }
+                core.render(dtF);
 
                 frames++;
 
@@ -109,15 +91,16 @@ public final class Experimental {
     }
 
     private void end() {
-        if (editor != null) {
-            editor.destroy();
-        }
-        game.destroy();
+        core.destroy();
         window.destroy();
         glfwSetErrorCallback(null).free();
     }
 
     public static void main(String[] args) {
-        new Experimental();
+        GLUtils.init();
+
+        final var window = new Window(1920, 1080, "Experimental");
+        window.create();
+        new CoreLauncher(new Game(window), window);
     }
 }
