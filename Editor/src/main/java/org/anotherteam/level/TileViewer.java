@@ -7,6 +7,7 @@ import org.anotherteam.Input;
 import org.anotherteam.data.AssetData;
 import org.anotherteam.dragged.DraggedTile;
 import org.anotherteam.dragged.DraggedTiles;
+import org.anotherteam.util.EditorInput;
 import org.anotherteam.widget.Widget;
 import org.anotherteam.level.room.Room;
 import org.anotherteam.level.room.tile.Tile;
@@ -70,29 +71,26 @@ public final class TileViewer extends Widget {
 
         ImGui.end();
 
-        final DraggedThing thing = GameScreen.getDraggedThing();
         final int tileX = GameScreen.mouseOnTileX();
         final int tileY = GameScreen.mouseOnTileY();
         if (tileX < 0 || tileY < 0) return;
 
+        final DraggedThing thing = GameScreen.getDraggedThing();
         final Room room = Game.LEVEL_MANAGER.getCurrentRoom();
-        if (thing == null && Input.isButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
+        if (thing == null && EditorInput.isButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
             room.removeTile(tileX, tileY);
         }
 
-        if (Input.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) {
-
-            if (thing == null && Input.isKeyDown(Input.KEY_SHIFT)) {
+        if (EditorInput.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) {
+            if (thing == null && EditorInput.isKeyDown(Input.KEY_SHIFT)) {
                 final Tile tile = room.getTile(tileX, tileY);
                 GameScreen.setDraggedThing(new DraggedTile(tile));
                 return;
             }
 
             if (thing instanceof DraggedTile draggedTile) {
-
                 draggedTile.placeTile(tileX, tileY);
             } else if (thing instanceof DraggedTiles draggedTiles) {
-
                 draggedTiles.placeTiles(tileX, tileY);
             }
         }

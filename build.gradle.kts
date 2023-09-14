@@ -39,7 +39,6 @@ tasks.register<JavaExec>("runApp") {
 
 val lwjglVersion = "3.3.1"
 val lwjglNatives = "natives-windows"
-val imguiVersion = "1.86.4"
 
 allprojects {
     group = "org.anotherteam"
@@ -127,11 +126,6 @@ allprojects {
         runtimeOnly("org.lwjgl:lwjgl-xxhash::$lwjglNatives")
         runtimeOnly("org.lwjgl:lwjgl-yoga::$lwjglNatives")
         runtimeOnly("org.lwjgl:lwjgl-zstd::$lwjglNatives")
-
-        implementation("io.github.spair:imgui-java-binding:$imguiVersion")
-        implementation("io.github.spair:imgui-java-lwjgl3:$imguiVersion")
-
-        implementation("io.github.spair:imgui-java-natives-windows:$imguiVersion")
     }
 }
 

@@ -4,6 +4,7 @@ import org.anotherteam.Editor;
 import org.anotherteam.Input;
 import org.anotherteam.game.Game;
 import org.anotherteam.screen.GameScreen;
+import org.anotherteam.util.EditorInput;
 import org.joml.Vector2f;
 
 public final class EditorCameraController {
@@ -19,7 +20,7 @@ public final class EditorCameraController {
             return;
         }
 
-        if (Input.isKeyDown(Input.KEY_SPACE)) {
+        if (EditorInput.isKeyDown(Input.KEY_SPACE)) {
             Editor.switchPlayStopMode();
             return;
         }
@@ -39,24 +40,24 @@ public final class EditorCameraController {
         
         float speed = 125.0f;
 
-        if (Input.isKeyDown(Input.KEY_SHIFT)) {
+        if (EditorInput.isKeyDown(Input.KEY_SHIFT)) {
             speed = 225.0f;
         }
 
-        if (Input.isKeyDown(Input.KEY_A)) {
+        if (EditorInput.isKeyDown(Input.KEY_A)) {
             impulse.x -= speed * dt;
         }
-        if (Input.isKeyDown(Input.KEY_D)) {
+        if (EditorInput.isKeyDown(Input.KEY_D)) {
             impulse.x += speed * dt;
         }
-        if (Input.isKeyDown(Input.KEY_W)) {
+        if (EditorInput.isKeyDown(Input.KEY_W)) {
             impulse.y += speed * dt;
         }
-        if (Input.isKeyDown(Input.KEY_S)) {
+        if (EditorInput.isKeyDown(Input.KEY_S)) {
             impulse.y -= speed * dt;
         }
 
-        if (Input.isButtonDown(Input.MOUSE_MIDDLE_BUTTON)) {
+        if (EditorInput.isButtonDown(Input.MOUSE_MIDDLE_BUTTON)) {
             if (lastPos.equals(0, 0)) {
                 lastPos.set(Input.getMousePos());
                 return;

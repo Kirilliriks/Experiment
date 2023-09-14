@@ -1,6 +1,5 @@
 package org.anotherteam;
 
-import imgui.ImGuiIO;
 import org.anotherteam.render.window.Window;
 import org.anotherteam.util.CharUtil;
 import org.jetbrains.annotations.NotNull;
@@ -12,8 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class Input {
-
-    public static ImGuiIO imGuiIO = null;
 
     private final static Map<Integer, MouseButton> buttons = new HashMap<>();
     public final static Map<Integer, Key> keys = new HashMap<>();
@@ -49,15 +46,11 @@ public final class Input {
     private final GLFWScrollCallback mouseScroll;
 
     public static boolean isAnyKeyDown() {
-        if (isImGuiHandleKeyboard()) return false;
-
         if (lastKey == null) return false;
         return lastKey.down;
     }
 
     public static boolean isAnyKeyPressed() {
-        if (isImGuiHandleKeyboard()) return false;
-
         if (lastKey == null) return false;
         return lastKey.pressed;
     }
@@ -68,8 +61,6 @@ public final class Input {
     }
 
     public static boolean isKeyDown(Key key) {
-        if (isImGuiHandleKeyboard()) return false;
-
         if (key.isLetter()) {
             final int anotherChar = CharUtil.toAnotherCase(key.code);
 
@@ -80,8 +71,6 @@ public final class Input {
     }
 
     public static boolean isKeyPressed(Key key) {
-        if (isImGuiHandleKeyboard()) return false;
-
         if (key.isLetter()) {
             final int anotherChar = CharUtil.toAnotherCase(key.code);
 
@@ -92,28 +81,20 @@ public final class Input {
     }
 
     public static boolean isAnyButtonPressed() {
-        if (isImGuiHandleMouse()) return false;
-
         if (lastButton == null) return false;
         return lastButton.pressed;
     }
 
     public static boolean isAnyButtonDown() {
-        if (isImGuiHandleMouse()) return false;
-
         if (lastButton == null) return false;
         return lastButton.down;
     }
 
     public static boolean isButtonPressed(MouseButton button) {
-        if (isImGuiHandleMouse()) return false;
-
         return button.pressed;
     }
 
     public static boolean isButtonDown(MouseButton button) {
-        if (isImGuiHandleMouse()) return false;
-
         return button.down;
     }
 
@@ -145,18 +126,6 @@ public final class Input {
 
     public static float getMouseWheelVelocity() {
         return mouseWheelVelocity;
-    }
-
-    public static boolean isImGuiHandle() {
-        return isImGuiHandleKeyboard() || isImGuiHandleMouse();
-    }
-
-    public static boolean isImGuiHandleKeyboard() {
-        return imGuiIO != null && (imGuiIO.getWantCaptureKeyboard() || imGuiIO.getWantTextInput());
-    }
-
-    public static boolean isImGuiHandleMouse() {
-        return imGuiIO != null && (imGuiIO.getWantSetMousePos() || imGuiIO.getWantCaptureMouse());
     }
 
     public Input(@NotNull Window ownerWindow) {
