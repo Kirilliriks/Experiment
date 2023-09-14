@@ -1,6 +1,6 @@
 package org.anotherteam.util;
 
-import org.anotherteam.Input;
+import org.anotherteam.input.Input;
 
 public final class EditorInput {
 

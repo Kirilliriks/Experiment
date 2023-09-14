@@ -1,7 +1,7 @@
 package org.anotherteam.level;
 
 import org.anotherteam.Editor;
-import org.anotherteam.Input;
+import org.anotherteam.input.Input;
 import org.anotherteam.game.Game;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.EditorInput;

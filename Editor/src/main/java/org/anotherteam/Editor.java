@@ -5,6 +5,7 @@ import imgui.flag.ImGuiDockNodeFlags;
 import org.anotherteam.core.Core;
 import org.anotherteam.game.Game;
 import org.anotherteam.game.GameState;
+import org.anotherteam.input.Input;
 import org.anotherteam.level.EditorCameraController;
 import org.anotherteam.level.LoadWindow;
 import org.anotherteam.level.TileViewer;

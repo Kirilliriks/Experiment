@@ -4,16 +4,16 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import org.anotherteam.data.serialization.LevelSerializer;
-import org.anotherteam.data.serialization.room.RoomSerializer;
-import org.anotherteam.data.serialization.room.gameobject.ComponentSerializer;
-import org.anotherteam.data.serialization.room.gameobject.GameObjectSerializer;
-import org.anotherteam.data.serialization.room.tile.TileSerializer;
-import org.anotherteam.level.Level;
-import org.anotherteam.level.room.Room;
-import org.anotherteam.level.room.tile.Tile;
-import org.anotherteam.object.GameObject;
-import org.anotherteam.object.component.Component;
+import org.anotherteam.game.data.serialization.LevelSerializer;
+import org.anotherteam.game.data.serialization.room.RoomSerializer;
+import org.anotherteam.game.data.serialization.room.gameobject.ComponentSerializer;
+import org.anotherteam.game.data.serialization.room.gameobject.GameObjectSerializer;
+import org.anotherteam.game.data.serialization.room.tile.TileSerializer;
+import org.anotherteam.game.level.Level;
+import org.anotherteam.game.level.room.Room;
+import org.anotherteam.game.level.room.tile.Tile;
+import org.anotherteam.game.object.GameObject;
+import org.anotherteam.game.object.component.Component;
 import org.joml.Vector2i;
 
 public final class SerializeUtil {

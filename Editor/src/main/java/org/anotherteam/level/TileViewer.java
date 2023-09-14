@@ -1,16 +1,15 @@
 package org.anotherteam.level;
 
 import imgui.ImGui;
-import imgui.flag.ImGuiWindowFlags;
 import org.anotherteam.game.Game;
-import org.anotherteam.Input;
-import org.anotherteam.data.AssetData;
+import org.anotherteam.input.Input;
+import org.anotherteam.game.data.AssetData;
 import org.anotherteam.dragged.DraggedTile;
 import org.anotherteam.dragged.DraggedTiles;
 import org.anotherteam.util.EditorInput;
 import org.anotherteam.widget.Widget;
-import org.anotherteam.level.room.Room;
-import org.anotherteam.level.room.tile.Tile;
+import org.anotherteam.game.level.room.Room;
+import org.anotherteam.game.level.room.tile.Tile;
 import org.anotherteam.render.sprite.Sprite;
 import org.anotherteam.render.sprite.SpriteAtlas;
 import org.anotherteam.render.texture.Texture;
@@ -47,7 +46,7 @@ public final class TileViewer extends Widget {
     public void update() {
         onDirty();
 
-        ImGui.begin("Tile Viewer", ImGuiWindowFlags.HorizontalScrollbar);
+        ImGui.begin("Tile Viewer");
 
         ImGui.text("Select atlas");
         if (ImGui.beginListBox("##select_atlas")) {

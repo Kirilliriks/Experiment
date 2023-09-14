@@ -3,9 +3,9 @@ import static org.lwjgl.opengl.GL42.*;
 
 import org.anotherteam.game.Game;
 import org.anotherteam.game.GameState;
-import org.anotherteam.Input;
-import org.anotherteam.data.AssetData;
-import org.anotherteam.level.room.Room;
+import org.anotherteam.input.Input;
+import org.anotherteam.game.data.AssetData;
+import org.anotherteam.game.level.room.Room;
 import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.frame.RenderFrame;
 import org.anotherteam.render.screen.Camera;

@@ -1,7 +1,7 @@
 package org.anotherteam.util;
 
-import org.anotherteam.data.AssetData;
-import org.anotherteam.level.Level;
+import org.anotherteam.game.data.AssetData;
+import org.anotherteam.game.level.Level;
 import org.anotherteam.logger.GameLogger;
 import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;

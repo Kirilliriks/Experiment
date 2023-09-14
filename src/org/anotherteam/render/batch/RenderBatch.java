@@ -1,7 +1,7 @@
 package org.anotherteam.render.batch;
 import static org.lwjgl.opengl.GL42.*;
 
-import org.anotherteam.data.AssetData;
+import org.anotherteam.game.data.AssetData;
 import org.anotherteam.render.screen.Camera;
 import org.anotherteam.render.shader.Shader;
 import org.anotherteam.render.sprite.Sprite;

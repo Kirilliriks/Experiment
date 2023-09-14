@@ -1,9 +1,9 @@
 package org.anotherteam.dragged;
 
 import org.anotherteam.game.Game;
-import org.anotherteam.data.AssetData;
-import org.anotherteam.level.room.Room;
-import org.anotherteam.level.room.tile.Tile;
+import org.anotherteam.game.data.AssetData;
+import org.anotherteam.game.level.room.Room;
+import org.anotherteam.game.level.room.tile.Tile;
 import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.sprite.SpriteAtlas;
 import org.jetbrains.annotations.NotNull;

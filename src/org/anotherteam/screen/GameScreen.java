@@ -1,8 +1,8 @@
 package org.anotherteam.screen;
 
-import org.anotherteam.Input;
-import org.anotherteam.data.AssetData;
-import org.anotherteam.level.room.tile.Tile;
+import org.anotherteam.input.Input;
+import org.anotherteam.game.data.AssetData;
+import org.anotherteam.game.level.room.tile.Tile;
 import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.frame.RenderFrame;
 import org.anotherteam.render.screen.Camera;

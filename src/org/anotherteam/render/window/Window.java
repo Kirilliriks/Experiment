@@ -2,7 +2,7 @@ package org.anotherteam.render.window;
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.opengl.GL42.*;
 
-import org.anotherteam.Input;
+import org.anotherteam.input.Input;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.exception.RenderException;
 import org.jetbrains.annotations.NotNull;

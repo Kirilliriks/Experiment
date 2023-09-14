@@ -4,8 +4,8 @@ import org.anotherteam.game.Game;
 import org.anotherteam.game.GameState;
 import org.anotherteam.render.frame.RenderFrame;
 import org.anotherteam.util.FileUtils;
-import org.anotherteam.level.Level;
-import org.anotherteam.level.room.Room;
+import org.anotherteam.game.level.Level;
+import org.anotherteam.game.level.room.Room;
 import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
 
