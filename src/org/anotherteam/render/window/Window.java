@@ -7,10 +7,8 @@ import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.exception.RenderException;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
-import org.lwjgl.glfw.GLFW;
 
 import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.glfw.GLFW.glfwShowWindow;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 public final class Window {
@@ -60,10 +58,10 @@ public final class Window {
     public void setFullscreen(boolean isFullscreen) {
         this.fullscreen = isFullscreen;
         if (isFullscreen) {
-            GLFW.glfwGetWindowPos(handler, windowX, windowY);
-            GLFW.glfwSetWindowMonitor(handler, GLFW.glfwGetPrimaryMonitor(), 0, 0, width, height, windowFPSRate);
+            glfwGetWindowPos(handler, windowX, windowY);
+            glfwSetWindowMonitor(handler, glfwGetPrimaryMonitor(), 0, 0, width, height, windowFPSRate);
         } else {
-            GLFW.glfwSetWindowMonitor(handler, 0, windowX[0], windowY[0], width, height, windowFPSRate);
+            glfwSetWindowMonitor(handler, 0, windowX[0], windowY[0], width, height, windowFPSRate);
         }
     }
 
@@ -72,7 +70,7 @@ public final class Window {
     }
 
     public boolean shouldClose() {
-        return GLFW.glfwWindowShouldClose(handler);
+        return glfwWindowShouldClose(handler);
     }
 
     private void createCallbacks() {
@@ -97,7 +95,7 @@ public final class Window {
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
         glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
 
-        handler = glfwCreateWindow(width, height, title, fullscreen ? GLFW.glfwGetPrimaryMonitor() : 0, NULL);
+        handler = glfwCreateWindow(width, height, title, fullscreen ? glfwGetPrimaryMonitor() : 0, NULL);
         if (handler == NULL) {
             throw new RenderException("Failed to create the GLFW window");
         }
