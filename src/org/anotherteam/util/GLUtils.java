@@ -6,7 +6,7 @@ import static org.lwjgl.glfw.GLFW.glfwInit;
 
 public final class GLUtils {
 
-    public static void init() {
+    public static void init() {  // CRITICAL
         GLFWErrorCallback.createPrint(System.err).set();
 
         if (!glfwInit()) {

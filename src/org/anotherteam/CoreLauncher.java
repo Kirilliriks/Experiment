@@ -6,7 +6,6 @@ import org.anotherteam.game.GameState;
 import org.anotherteam.render.window.Window;
 import org.anotherteam.util.GLUtils;
 import org.anotherteam.util.Time;
-import org.lwjgl.opengl.*;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -18,8 +17,6 @@ public final class CoreLauncher {
     private final Window window;
 
     public CoreLauncher(Core core, Window window) {
-        GL.createCapabilities(); // CRITICAL
-
         this.core = core;
         this.window = window;
 

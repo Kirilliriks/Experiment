@@ -21,7 +21,7 @@ public final class Pixmap {
         ByteBuffer imageBuffer;
         try {
             imageBuffer = FileUtils.ioResourceToByteBuffer(filePath, 8 * 1024);
-        } catch (IOException | LifeException exception) {
+        } catch (Throwable exception) {
             throw new LifeException("Not found image " + filePath);
         }
 
@@ -41,6 +41,8 @@ public final class Pixmap {
             if (buffer == null) {
                 throw new RuntimeException("Failed to load image: " + stbi_failure_reason());
             }
+        } catch (Throwable exception) {
+            throw new LifeException("Image loading bug " + filePath);
         }
     }
 

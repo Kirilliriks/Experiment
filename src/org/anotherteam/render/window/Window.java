@@ -7,6 +7,7 @@ import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.exception.RenderException;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
+import org.lwjgl.opengl.GL;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
@@ -133,6 +134,8 @@ public final class Window {
         glfwShowWindow(handler);
 
         setFullscreen(fullscreen);
+
+        GL.createCapabilities(); // CRITICAL
 
         //glEnable(GL_BLEND);
         //glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
