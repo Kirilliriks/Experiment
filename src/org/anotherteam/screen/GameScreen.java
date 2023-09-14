@@ -10,21 +10,19 @@ import org.anotherteam.render.window.Window;
 import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
-import org.joml.Vector2i;
 
 public final class GameScreen {
 
     public static final int DEFAULT_WIDTH = 160;
     public static final int DEFAULT_HEIGHT = 90;
-    public static final Vector2i POSITION = new Vector2i(0, 0);
     public static final Camera GAME_CAMERA = new Camera(DEFAULT_WIDTH / 2, DEFAULT_HEIGHT / 2, DEFAULT_WIDTH, DEFAULT_HEIGHT);
     public static final Camera WINDOW_CAMERA = new Camera();
 
+    public static int RENDER_WIDTH = DEFAULT_WIDTH;
+    public static int RENDER_HEIGHT = DEFAULT_HEIGHT;
+
     public static int WIDTH = DEFAULT_WIDTH;
     public static int HEIGHT = DEFAULT_HEIGHT;
-
-    public static int RENDER_WIDTH = WIDTH;
-    public static int RENDER_HEIGHT = HEIGHT;
 
     private static RenderFrame windowFrame = null;
     private static Window window = null;
@@ -65,8 +63,8 @@ public final class GameScreen {
     }
 
     public static boolean isMouseOnGameWindow() {
-        if (Input.getMouseX() < POSITION.x || Input.getMouseX() > POSITION.x + RENDER_WIDTH) return false;
-        if (Input.getMouseY() < POSITION.y || Input.getMouseY() > POSITION.y + RENDER_HEIGHT) return false;
+        if (Input.getMouseX() < 0 || Input.getMouseX() > RENDER_WIDTH) return false;
+        if (Input.getMouseY() < 0 || Input.getMouseY() > RENDER_HEIGHT) return false;
         return true;
     }
 
@@ -77,8 +75,8 @@ public final class GameScreen {
      * @return in game window position mouse X
      */
     public static int inGameWindowMouseX() {
-        if (Input.getMouseX() < POSITION.x || Input.getMouseX() > POSITION.x + RENDER_WIDTH) return -1;
-        return (int) (((Input.getMouseX() - POSITION.x) / RENDER_WIDTH) * WIDTH);
+        if (Input.getMouseX() < 0 || Input.getMouseX() > RENDER_WIDTH) return -1;
+        return (int) (((Input.getMouseX() - 0) / RENDER_WIDTH) * WIDTH);
     }
 
     /**
@@ -88,8 +86,8 @@ public final class GameScreen {
      * @return in game window position mouse Y
      */
     public static int inGameWindowMouseY() {
-        if (Input.getMouseY() < POSITION.y || Input.getMouseY() > POSITION.y + RENDER_HEIGHT) return -1;
-        return (int) (((Input.getMouseY() - POSITION.y) / RENDER_HEIGHT) * HEIGHT);
+        if (Input.getMouseY() < 0 || Input.getMouseY() > RENDER_HEIGHT) return -1;
+        return (int) (((Input.getMouseY()) / RENDER_HEIGHT) * HEIGHT);
     }
 
     public static int mouseOnTileX() {
@@ -105,11 +103,11 @@ public final class GameScreen {
     }
 
     public static float toWindowPosX(float x) {
-        return (POSITION.x + ((x - GAME_CAMERA.getPositionX()) * RENDER_WIDTH) / WIDTH + RENDER_WIDTH / 2.0f);
+        return (((x - GAME_CAMERA.getPositionX()) * RENDER_WIDTH) / WIDTH + RENDER_WIDTH / 2.0f);
     }
 
     public static float toWindowPosY(int y) {
-        return (POSITION.y + ((y - GAME_CAMERA.getPositionY()) * RENDER_HEIGHT) / HEIGHT + RENDER_HEIGHT / 2.0f);
+        return (((y - GAME_CAMERA.getPositionY()) * RENDER_HEIGHT) / HEIGHT + RENDER_HEIGHT / 2.0f);
     }
 
     public static Vector2f toWindowPos(Vector2f vector) {

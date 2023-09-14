@@ -149,7 +149,6 @@ public final class Editor implements Core {
         GameScreen.HEIGHT = GameScreen.DEFAULT_HEIGHT;
         GameScreen.RENDER_WIDTH = GameScreen.getWindow().getWidth();
         GameScreen.RENDER_HEIGHT = GameScreen.getWindow().getHeight();
-        GameScreen.POSITION.set(0, 0);
 
         Game.getGameRender().updateFrames(GameScreen.WIDTH, GameScreen.HEIGHT);
     }

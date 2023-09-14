@@ -51,10 +51,10 @@ public final class RenderFrame {
     }
 
     public void renderBorders() {
-        final var v1 = new Vector2f(GameScreen.POSITION);
-        final var v2 = new Vector2f(GameScreen.POSITION.x + GameScreen.RENDER_WIDTH, GameScreen.POSITION.y);
-        final var v3 = new Vector2f(GameScreen.POSITION.x + GameScreen.RENDER_WIDTH, GameScreen.POSITION.y + GameScreen.RENDER_HEIGHT);
-        final var v4 = new Vector2f(GameScreen.POSITION.x, GameScreen.POSITION.y + GameScreen.RENDER_HEIGHT);
+        final var v1 = new Vector2f(0, 0);
+        final var v2 = new Vector2f(GameScreen.RENDER_WIDTH, 0);
+        final var v3 = new Vector2f(GameScreen.RENDER_WIDTH, GameScreen.RENDER_HEIGHT);
+        final var v4 = new Vector2f(0, GameScreen.RENDER_HEIGHT);
         renderBatch.debugBatch.drawLine(v1, v2, Color.RED);
         renderBatch.debugBatch.drawLine(v2, v3, Color.RED);
         renderBatch.debugBatch.drawLine(v3, v4, Color.RED);

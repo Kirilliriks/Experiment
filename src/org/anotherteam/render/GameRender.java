@@ -83,7 +83,7 @@ public final class GameRender {
         final boolean onLevel = Game.STATE_MANAGER.getState() == GameState.ON_LEVEL;
         windowFrame.renderBatch.draw(
                 onLevel ? effectFrame.texture : textureFrame.texture,
-                GameScreen.POSITION.x, GameScreen.POSITION.y,
+                0, 0,
                 GameScreen.RENDER_WIDTH,
                 GameScreen.RENDER_HEIGHT,
                 false, true);
@@ -97,7 +97,7 @@ public final class GameRender {
         windowFrame.renderBatch.begin();
         windowFrame.renderBatch.draw(
                 windowFrame.texture,
-                GameScreen.POSITION.x, GameScreen.POSITION.y,
+                0, 0,
                 GameScreen.RENDER_WIDTH,
                 GameScreen.RENDER_HEIGHT,
                 false, true);
