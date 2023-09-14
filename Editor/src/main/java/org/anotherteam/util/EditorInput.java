@@ -37,10 +37,18 @@ public final class EditorInput {
     }
 
     public static boolean isButtonPressed(Input.MouseButton button) {
+        if (ImGuiUtils.imGuiHandle()) {
+            return false;
+        }
+
         return Input.isButtonPressed(button);
     }
 
     public static boolean isButtonDown(Input.MouseButton button) {
+        if (ImGuiUtils.imGuiHandle()) {
+            return false;
+        }
+
         return Input.isButtonDown(button);
     }
 }
