@@ -7,6 +7,8 @@ import org.anotherteam.render.window.Window;
 import org.anotherteam.util.GLUtils;
 import org.anotherteam.util.Time;
 
+import java.nio.file.Paths;
+
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengles.GLES20.GL_COLOR_BUFFER_BIT;
@@ -94,6 +96,7 @@ public final class CoreLauncher {
     }
 
     public static void main(String[] args) {
+        System.out.println("Current working path " + Paths.get("").toAbsolutePath());
         GLUtils.init();
 
         final var window = new Window(1920, 1080, "Experimental");

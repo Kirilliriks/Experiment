@@ -1,3 +1,5 @@
+import java.util.*
+
 plugins {
     id("java")
     id("java-library")
@@ -134,7 +136,7 @@ allprojects {
 }
 
 tasks.register<GradleBuild>("runDebug") {
-    //tasks = ['clean', 'build', 'copyTo']
+    tasks = listOf("clean", "build", "copyTo")
 }
 
 tasks.withType<Jar> {
