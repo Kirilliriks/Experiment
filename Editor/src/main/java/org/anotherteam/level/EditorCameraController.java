@@ -5,6 +5,7 @@ import org.anotherteam.input.Input;
 import org.anotherteam.game.Game;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.EditorInput;
+import org.anotherteam.util.ImGuiUtils;
 import org.joml.Vector2f;
 
 public final class EditorCameraController {
@@ -26,13 +27,21 @@ public final class EditorCameraController {
         }
 
         final float mouseWheelVelocity = Input.getMouseWheelVelocity();
-        if (mouseWheelVelocity != 0.0F) {
+        if (mouseWheelVelocity != 0.0F && !ImGuiUtils.imGuiHandle()) {
             if (mouseWheelVelocity < 0) {
                 GameScreen.WIDTH += GameScreen.getWindow().getAspect() * 2;
                 GameScreen.HEIGHT += GameScreen.getWindow().getRatio() * 2;
             } else {
                 GameScreen.WIDTH -= GameScreen.getWindow().getAspect() * 2;
                 GameScreen.HEIGHT -= GameScreen.getWindow().getRatio() * 2;
+            }
+
+            if (GameScreen.WIDTH < GameScreen.DEFAULT_WIDTH) {
+                GameScreen.WIDTH = GameScreen.DEFAULT_WIDTH;
+            }
+
+            if (GameScreen.HEIGHT < GameScreen.DEFAULT_HEIGHT) {
+                GameScreen.HEIGHT = GameScreen.DEFAULT_HEIGHT;
             }
 
             Game.getGameRender().updateFrames(GameScreen.WIDTH, GameScreen.HEIGHT);

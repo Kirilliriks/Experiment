@@ -1,5 +1,6 @@
 package org.anotherteam.input;
 
+import lombok.Getter;
 import org.anotherteam.render.window.Window;
 import org.anotherteam.util.CharUtil;
 import org.jetbrains.annotations.NotNull;
@@ -20,6 +21,7 @@ public final class Input {
     private static Key lastKey = null;
     private static MouseButton lastButton = null;
 
+    @Getter
     private static float mouseWheelVelocity = 0.0f;
 
     public final static Key KEY_W = new Key(GLFW.GLFW_KEY_W);
@@ -122,10 +124,6 @@ public final class Input {
     @NotNull
     public static Vector2f getLastMousePos() {
         return lastMousePos;
-    }
-
-    public static float getMouseWheelVelocity() {
-        return mouseWheelVelocity;
     }
 
     public Input(@NotNull Window ownerWindow) {

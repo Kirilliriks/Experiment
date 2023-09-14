@@ -1,5 +1,6 @@
 package org.anotherteam.dragged;
 
+import lombok.Getter;
 import org.anotherteam.game.Game;
 import org.anotherteam.game.level.room.Room;
 import org.anotherteam.game.level.room.tile.Tile;
@@ -10,6 +11,7 @@ import org.anotherteam.screen.DraggedThing;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public final class DraggedTiles extends DraggedThing {
 
     private final SpriteAtlas atlas;
@@ -32,10 +34,13 @@ public final class DraggedTiles extends DraggedThing {
         final Room room = Game.LEVEL_MANAGER.getCurrentRoom();
 
         for (final var tile : tiles) {
-            final int xOffset = tile.frameX - x0;
-            final int yOffset = tile.frameY - y0;
+            final int xFinal = x + tile.frameX - x0;
+            final int yFinal = y + tile.frameY - y0;
+            if (xFinal < 0 || yFinal < 0) {
+                continue;
+            }
 
-            room.setTile(new Tile(x + xOffset, y + yOffset, tile.frameX, tile.frameY, atlas));
+            room.setTile(new Tile(xFinal, yFinal, tile.frameX, tile.frameY, atlas));
         }
     }
 
@@ -57,28 +62,26 @@ public final class DraggedTiles extends DraggedThing {
     @Override
     public void draw(int x, int y, RenderBatch renderBatch) {
         for (final var tile : tiles) {
-            final int xOffset = (tile.frameX - x0) * Tile.SIZE.x;
-            final int yOffset = (tile.frameY - y0) * Tile.SIZE.y;
+            final int xFinal = x + (tile.frameX - x0) * Tile.SIZE.x;
+            final int yFinal = y + (tile.frameY - y0) * Tile.SIZE.y;
+            if (xFinal < 0 || yFinal < 0) {
+                continue;
+            }
 
-            tile.draw(x + xOffset, y + yOffset, renderBatch);
+            tile.draw(xFinal, yFinal, renderBatch);
         }
     }
 
     @Override
     public void debugDraw(int x, int y, boolean inEditor,  RenderBatch renderBatch) {
         for (final var tile : tiles) {
-            final int xOffset = (tile.frameX - x0) * Tile.SIZE.x;
-            final int yOffset = (tile.frameY - y0) * Tile.SIZE.y;
+            final int xFinal = x + (tile.frameX - x0) * Tile.SIZE.x;
+            final int yFinal = y + (tile.frameY - y0) * Tile.SIZE.y;
+            if (xFinal < 0 || yFinal < 0) {
+                continue;
+            }
 
-            tile.debugDraw(x + xOffset, y + yOffset, inEditor, renderBatch);
+            tile.debugDraw(xFinal, yFinal, inEditor, renderBatch);
         }
-    }
-
-    public int getX0() {
-        return x0;
-    }
-
-    public int getY0() {
-        return y0;
     }
 }
