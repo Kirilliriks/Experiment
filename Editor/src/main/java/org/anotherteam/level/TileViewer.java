@@ -1,7 +1,7 @@
 package org.anotherteam.level;
 
 import imgui.ImGui;
-import org.anotherteam.game.Game;
+import org.anotherteam.Editor;
 import org.anotherteam.input.Input;
 import org.anotherteam.game.data.AssetData;
 import org.anotherteam.dragged.DraggedTile;
@@ -73,7 +73,7 @@ public final class TileViewer extends Widget {
         if (tileX < 0 || tileY < 0) return;
 
         final DraggedThing thing = GameScreen.getDraggedThing();
-        final Room room = Game.LEVEL_MANAGER.getCurrentRoom();
+        final Room room = Editor.getInstance().getGame().levelManager.getCurrentRoom();
         if (thing == null && EditorInput.isButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
             room.removeTile(tileX, tileY);
         }
@@ -86,9 +86,9 @@ public final class TileViewer extends Widget {
             }
 
             if (thing instanceof DraggedTile draggedTile) {
-                draggedTile.placeTile(tileX, tileY);
+                draggedTile.placeTile(room, tileX, tileY);
             } else if (thing instanceof DraggedTiles draggedTiles) {
-                draggedTiles.placeTiles(tileX, tileY);
+                draggedTiles.placeTiles(room, tileX, tileY);
             }
         }
     }

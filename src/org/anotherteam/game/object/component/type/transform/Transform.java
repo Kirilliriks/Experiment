@@ -95,12 +95,20 @@ public final class Transform extends Component {
 
     public void updateFlip() {
         final boolean flip = (moveImpulse.x < 0);
-        sprite.setFlipX(flip);
+
+        if (sprite != null) {
+            sprite.setFlipX(flip);
+        }
+
         ownerObject.getCollider().setFlipX(flip);
     }
 
     public boolean isCanMove() {
-        return ((EntityState)stateController.getState()).isCanWalk();
+        if (stateController.getState() instanceof EntityState entityState) {
+            return entityState.isCanWalk();
+        }
+
+        return false;
     }
 
     @Override

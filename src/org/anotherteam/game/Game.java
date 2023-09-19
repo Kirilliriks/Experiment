@@ -10,22 +10,26 @@ import org.jetbrains.annotations.NotNull;
 
 public final class Game implements Core {
 
+    private static Game instance;
+
     public static final String GAME_NAME = "Experiment";
     public static final String START_LEVEL_NAME = "StartLevel";
     public static boolean DEBUG_MODE = false;
 
-    public static LevelManager LEVEL_MANAGER;
-    public static StateManager STATE_MANAGER;
-    public static GameRender GAME_RENDER;
+    public final LevelManager levelManager;
+    public final StateManager stateManager;
+    public final GameRender render;
 
     public Game(@NotNull Window window) {
+        instance = this;
+
         window.setFullscreen(false);
 
-        LEVEL_MANAGER = new LevelManager();
-        STATE_MANAGER = new StateManager(this, GameState.ON_MENU);
+        levelManager = new LevelManager(this);
+        stateManager = new StateManager(this, GameState.ON_MENU);
 
         GameScreen.init(window);
-        GAME_RENDER = new GameRender();
+        render = new GameRender(this);
 
         DebugBatch.GLOBAL = new DebugBatch(GameScreen.WINDOW_CAMERA);
 
@@ -35,26 +39,31 @@ public final class Game implements Core {
 
     @Override
     public void init() {
-        LEVEL_MANAGER.load(START_LEVEL_NAME);
+        levelManager.load(START_LEVEL_NAME);
     }
 
     @Override
     public void update(float dt) {
-        if (Game.STATE_MANAGER.getState() == GameState.ON_EDITOR) return;
+        if (stateManager.getState() == GameState.ON_EDITOR) return;
 
-        LEVEL_MANAGER.update(dt);
+        levelManager.update(dt);
     }
 
     @Override
     public void render(float dt) {
-        LEVEL_MANAGER.render(GameScreen.getWindowFrame());
+        levelManager.render(GameScreen.getWindowFrame());
     }
 
     @Override
     public void destroy() {
     }
 
-    public static GameRender getGameRender() {
-        return GAME_RENDER;
+    @Override
+    public boolean needClose() {
+        return stateManager.getState() == GameState.ON_CLOSE_GAME;
+    }
+
+    public static GameRender getRender() {
+        return instance.render;
     }
 }

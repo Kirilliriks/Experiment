@@ -44,7 +44,7 @@ public final class EditorCameraController {
                 GameScreen.HEIGHT = GameScreen.DEFAULT_HEIGHT;
             }
 
-            Game.getGameRender().updateFrames(GameScreen.WIDTH, GameScreen.HEIGHT);
+            Game.getRender().updateFrames(GameScreen.WIDTH, GameScreen.HEIGHT);
         }
         
         float speed = 125.0f;

@@ -82,7 +82,9 @@ public final class CoreLauncher {
             timeCount += dt;
             unprocessedTime += dt;
 
-            if (Game.STATE_MANAGER.getState() == GameState.ON_CLOSE_GAME) break;
+            if (core.needClose()) {
+                break;
+            }
         }
         end();
     }

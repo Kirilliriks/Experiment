@@ -1,7 +1,5 @@
 package org.anotherteam.game;
 
-import org.anotherteam.game.Game;
-import org.anotherteam.game.GameState;
 import org.anotherteam.manager.AbstractManager;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,7 +17,7 @@ public final class StateManager extends AbstractManager {
         this.state = state;
 
         if (state == GameState.ON_LEVEL) {
-            Game.LEVEL_MANAGER.getCurrent().prepare();
+            game.levelManager.getCurrent().prepare();
         }
     }
 

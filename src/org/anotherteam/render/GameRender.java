@@ -16,6 +16,7 @@ import static org.lwjgl.opengl.GL42.*;
 
 public final class GameRender {
 
+    private final Game game;
     private final RenderBatch textureBatch;
     private final RenderBatch effectBatch;
 
@@ -27,7 +28,9 @@ public final class GameRender {
 
     private final Camera renderCamera;
 
-    public GameRender() {
+    public GameRender(Game game) {
+        this.game = game;
+
         renderCamera = new Camera(GameScreen.WIDTH / 2, GameScreen.HEIGHT / 2, GameScreen.WIDTH, GameScreen.HEIGHT);
 
         raycastShader = new Shader(AssetData.SHADER_PATH + "vsInvert.glsl", AssetData.SHADER_PATH + "fsInvert.glsl");
@@ -81,7 +84,7 @@ public final class GameRender {
         //Finish frames
         windowFrame.begin();
 
-        final boolean onLevel = Game.STATE_MANAGER.getState() == GameState.ON_LEVEL;
+        final boolean onLevel = game.stateManager.getState() == GameState.ON_LEVEL;
         windowFrame.renderBatch.draw(
                 onLevel ? effectFrame.texture : textureFrame.texture,
                 0, 0,
@@ -108,7 +111,7 @@ public final class GameRender {
     private void drawTextures(@NotNull Room room) {
         room.draw(textureBatch, false);
 
-        if (Game.STATE_MANAGER.getState() != GameState.ON_EDITOR) return;
+        if (game.stateManager.getState() != GameState.ON_EDITOR) return;
         if (GameScreen.getDraggedThing() == null) return;
 
         final int x = GameScreen.inGameMouseX();
@@ -130,7 +133,7 @@ public final class GameRender {
 
         room.debugDraw(renderBatch);
 
-        if (Game.STATE_MANAGER.getState() != GameState.ON_EDITOR) return;
+        if (game.stateManager.getState() != GameState.ON_EDITOR) return;
         if (GameScreen.getDraggedThing() == null) return;
         if (x < 0 || y < 0) return;
 

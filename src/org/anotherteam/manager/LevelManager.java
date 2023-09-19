@@ -1,5 +1,6 @@
 package org.anotherteam.manager;
 
+import lombok.RequiredArgsConstructor;
 import org.anotherteam.game.Game;
 import org.anotherteam.game.GameState;
 import org.anotherteam.render.frame.RenderFrame;
@@ -9,19 +10,17 @@ import org.anotherteam.game.level.room.Room;
 import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
 
+@RequiredArgsConstructor
 public final class LevelManager extends AbstractManager {
 
-    private Level currentLevel;
-
-    public LevelManager() {
-        currentLevel = null;
-    }
+    private final Game game;
+    private Level currentLevel = null;
 
     /**
      * Save only on play, not on editor!
      */
     public void saveCurrent() {
-        if (Game.STATE_MANAGER.getState() == GameState.ON_EDITOR) throw new LifeException("Trying save playable level when state is ON_EDITOR!");
+        if (game.stateManager.getState() == GameState.ON_EDITOR) throw new LifeException("Trying save playable level when state is ON_EDITOR!");
 
         FileUtils.saveEditorLevel(currentLevel); // TODO save to game profile directory
     }

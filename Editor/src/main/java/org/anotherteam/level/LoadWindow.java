@@ -1,7 +1,7 @@
 package org.anotherteam.level;
 
 import imgui.ImGui;
-import org.anotherteam.game.Game;
+import org.anotherteam.Editor;
 import org.anotherteam.game.data.AssetData;
 import org.anotherteam.util.exception.LifeException;
 import org.anotherteam.widget.popup.Popup;
@@ -30,7 +30,7 @@ public final class LoadWindow extends Popup {
             ImGui.beginListBox("##level box");
             for (final String level : levels) {
                 if (ImGui.selectable(level)) {
-                    Game.LEVEL_MANAGER.load(level);
+                    Editor.getInstance().getGame().levelManager.load(level);
 
                     close();
                 }

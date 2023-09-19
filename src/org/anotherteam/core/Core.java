@@ -6,5 +6,6 @@ public interface Core {
     void update(float dt);
     void render(float dt);
     void destroy();
+    boolean needClose();
 
 }

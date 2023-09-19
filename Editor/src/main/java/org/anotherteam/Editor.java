@@ -20,7 +20,32 @@ import org.anotherteam.widget.Console;
 @Getter
 public final class Editor implements Core {
 
+    @Getter
     private static Editor instance;
+
+    public static void switchPlayStopMode() {
+        final boolean onEditor = instance.game.stateManager.getState() == GameState.ON_EDITOR;
+
+        Game.DEBUG_MODE = !onEditor;
+
+        resetGameView();
+        instance.game.levelManager.load(Game.START_LEVEL_NAME); // TODO
+
+        if (onEditor) {
+            instance.game.stateManager.setState(GameState.ON_LEVEL);
+        } else {
+            instance.game.stateManager.setState(GameState.ON_EDITOR);
+        }
+    }
+
+    private static void resetGameView() {
+        GameScreen.WIDTH = GameScreen.DEFAULT_WIDTH;
+        GameScreen.HEIGHT = GameScreen.DEFAULT_HEIGHT;
+        GameScreen.RENDER_WIDTH = GameScreen.getWindow().getWidth();
+        GameScreen.RENDER_HEIGHT = GameScreen.getWindow().getHeight();
+
+        instance.game.render.updateFrames(GameScreen.WIDTH, GameScreen.HEIGHT);
+    }
 
     private final Window window;
     private final Game game;
@@ -36,8 +61,8 @@ public final class Editor implements Core {
     public Editor(Window window) {
         instance = this;
         this.window = window;
-        this.game = new Game(window);
 
+        game = new Game(window);
         imGui = new ImGuiRender(GameScreen.getWindow().getHandler(), "#version 430 core", this);
         tileViewer = new TileViewer(GameScreen.getWindow().getWidth() / 2 - 320, GameScreen.getWindow().getHeight() / 2 - 200, 640, 400);
         prefabViewer = new PrefabViewer(GameScreen.getWindow().getWidth() / 2 - 320, GameScreen.getWindow().getHeight() / 2 - 200, 640, 400);
@@ -50,7 +75,7 @@ public final class Editor implements Core {
         game.init();
 
         Game.DEBUG_MODE = true;
-        Game.STATE_MANAGER.setState(GameState.ON_EDITOR);
+        game.stateManager.setState(GameState.ON_EDITOR);
     }
 
     @Override
@@ -62,7 +87,7 @@ public final class Editor implements Core {
     public void render(float dt) {
         game.render(dt);
 
-        if (Game.STATE_MANAGER.getState() != GameState.ON_EDITOR) return;
+        if (game.stateManager.getState() != GameState.ON_EDITOR) return;
         editorCameraController.handle(dt);
 
         imGui.render(dt);
@@ -93,7 +118,7 @@ public final class Editor implements Core {
             }
 
             if (ImGui.menuItem("Exit")) {
-                Game.STATE_MANAGER.setState(GameState.ON_CLOSE_GAME);
+                game.stateManager.setState(GameState.ON_CLOSE_GAME);
             }
 
             ImGui.endMenu();
@@ -104,7 +129,7 @@ public final class Editor implements Core {
         if (ImGui.beginMenu("Level")) {
 
             if (ImGui.menuItem("Save (CTRL+S)")) {
-                FileUtils.saveEditorLevel(Game.LEVEL_MANAGER.getCurrent());
+                FileUtils.saveEditorLevel(game.levelManager.getCurrent());
             }
 
             if (ImGui.menuItem("Load")) {
@@ -112,7 +137,7 @@ public final class Editor implements Core {
             }
 
             if (ImGui.menuItem("Cancel changes")) {
-                Game.LEVEL_MANAGER.load(Game.LEVEL_MANAGER.getCurrent().getName());
+                game.levelManager.load(game.levelManager.getCurrent().getName());
             }
 
             ImGui.endMenu();
@@ -127,27 +152,8 @@ public final class Editor implements Core {
         console.update();
     }
 
-    public static void switchPlayStopMode() {
-        final boolean onEditor = Game.STATE_MANAGER.getState() == GameState.ON_EDITOR;
-
-        if (onEditor) {
-            Game.STATE_MANAGER.setState(GameState.ON_LEVEL);
-        } else {
-            Game.STATE_MANAGER.setState(GameState.ON_EDITOR);
-        }
-
-        Game.DEBUG_MODE = !onEditor;
-
-        resetGameView();
-        Game.LEVEL_MANAGER.load(Game.START_LEVEL_NAME); // TODO
-    }
-
-    private static void resetGameView() {
-        GameScreen.WIDTH = GameScreen.DEFAULT_WIDTH;
-        GameScreen.HEIGHT = GameScreen.DEFAULT_HEIGHT;
-        GameScreen.RENDER_WIDTH = GameScreen.getWindow().getWidth();
-        GameScreen.RENDER_HEIGHT = GameScreen.getWindow().getHeight();
-
-        Game.getGameRender().updateFrames(GameScreen.WIDTH, GameScreen.HEIGHT);
+    @Override
+    public boolean needClose() {
+        return false;
     }
 }

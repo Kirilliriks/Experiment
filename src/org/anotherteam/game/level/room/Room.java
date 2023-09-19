@@ -18,8 +18,8 @@ public final class Room {
 
     private final Map<Vector2i, Tile> tiles;
     private final List<GameObject> gameObjects; // TODO make Nested List to fast DrawPriority sorting
-    private String name;
 
+    private String name;
     private Player player;
 
     public Room(String name) {
@@ -72,6 +72,14 @@ public final class Room {
     public void rewoveObject(@NotNull GameObject object) {
         gameObjects.remove(object);
         object.setRoom(null);
+    }
+
+    public Player getPlayer() {
+        if (player == null) {
+            addObject(new Player());
+        }
+
+        return player;
     }
 
     @NotNull

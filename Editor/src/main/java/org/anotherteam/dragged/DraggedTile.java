@@ -24,9 +24,7 @@ public final class DraggedTile extends DraggedSprite {
         this.atlas = atlas;
     }
 
-    public void placeTile(int x, int y) {
-        final Room room = Game.LEVEL_MANAGER.getCurrentRoom();
-
+    public void placeTile(Room room, int x, int y) {
         room.setTile(new Tile(x, y, frameX, frameY, atlas));
     }
 

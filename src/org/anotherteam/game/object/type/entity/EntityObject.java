@@ -15,12 +15,15 @@ public abstract class EntityObject extends GameObject {
 
     public EntityObject(int x, int y, @NotNull State defaultState) {
         super(x, y);
+
         spriteController = new SpriteController();
         spriteController.setDrawPriority(1);
         addComponent(spriteController);
+
         stateController = new StateController();
         stateController.setDefaultState(defaultState);
         addComponent(stateController);
+
         transform = new Transform();
         addComponent(transform);
     }

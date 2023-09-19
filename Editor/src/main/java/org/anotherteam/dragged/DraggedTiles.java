@@ -30,9 +30,7 @@ public final class DraggedTiles extends DraggedThing {
         fillTiles(x0, y0, x1, y1);
     }
 
-    public void placeTiles(int x, int y) {
-        final Room room = Game.LEVEL_MANAGER.getCurrentRoom();
-
+    public void placeTiles(Room room, int x, int y) {
         for (final var tile : tiles) {
             final int xFinal = x + tile.frameX - x0;
             final int yFinal = y + tile.frameY - y0;
