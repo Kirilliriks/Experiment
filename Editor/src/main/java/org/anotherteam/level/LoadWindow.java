@@ -2,36 +2,30 @@ package org.anotherteam.level;
 
 import imgui.ImGui;
 import org.anotherteam.game.Game;
-import org.anotherteam.util.Popups;
 import org.anotherteam.game.data.AssetData;
 import org.anotherteam.util.exception.LifeException;
+import org.anotherteam.widget.popup.Popup;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class LoadWindow {
+public final class LoadWindow extends Popup {
 
-    private final List<String> levels;
-
-    private  boolean opened = false;
+    private final List<String> levels = new ArrayList<>();
 
     public LoadWindow() {
-        this.levels = new ArrayList<>();
+        super("Load window");
     }
 
     public void call() {
-        if (opened) return;
-
-        opened = true;
-
-        ImGui.openPopup("####load");
+        super.call();
 
         loadLevels();
     }
 
     public void update() {
-        if (ImGui.beginPopupModal("Load level####load")) {
+        if (ImGui.beginPopupModal("Load level####" + id)) {
 
             ImGui.beginListBox("##level box");
             for (final String level : levels) {
@@ -49,13 +43,6 @@ public final class LoadWindow {
 
             ImGui.endPopup();
         }
-    }
-
-    private void close() {
-        ImGui.closeCurrentPopup();
-
-        opened = false;
-        Popups.LOAD_LEVEL = false;
     }
 
     private void loadLevels() {

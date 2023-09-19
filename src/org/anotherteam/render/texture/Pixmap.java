@@ -1,30 +1,25 @@
 package org.anotherteam.render.texture;
 
+import lombok.Getter;
 import org.anotherteam.util.Color;
 import org.anotherteam.util.FileUtils;
 import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.BufferUtils;
 
-import java.io.IOException;
 import java.nio.ByteBuffer;
 
 import static org.lwjgl.stb.STBImage.*;
 import static org.lwjgl.system.MemoryStack.stackPush;
 
+@Getter
 public final class Pixmap {
 
     private final ByteBuffer buffer;
     private final int width, height;
 
     public Pixmap(String filePath) {
-        ByteBuffer imageBuffer;
-        try {
-            imageBuffer = FileUtils.ioResourceToByteBuffer(filePath, 8 * 1024);
-        } catch (Throwable exception) {
-            throw new LifeException("Not found image " + filePath);
-        }
-
+        final ByteBuffer imageBuffer = FileUtils.ioResourceToByteBuffer(filePath, 8 * 1024);
         try (final var stack = stackPush()) {
             final var width = stack.mallocInt(1);
             final var height = stack.mallocInt(1);
@@ -57,14 +52,6 @@ public final class Pixmap {
         this.buffer = buffer;
         this.width = width;
         this.height = height;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
     }
 
     public void drawPixmap(@NotNull Pixmap pix, int xOwner, int yOwner) {

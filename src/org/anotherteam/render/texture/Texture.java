@@ -1,19 +1,21 @@
 package org.anotherteam.render.texture;
-import static org.lwjgl.opengl.GL42.*;
 
+import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
 
 import java.nio.ByteBuffer;
 
+import static org.lwjgl.opengl.GL42.*;
 
+@Getter
 public final class Texture {
 
-    public static final Vector2f[] DEFAULT_COORDS = new Vector2f[] {
-                new Vector2f(0, 0),
-                new Vector2f(1, 0),
-                new Vector2f(1, 1),
-                new Vector2f(0, 1)
+    public static final Vector2f[] DEFAULT_COORDS = new Vector2f[]{
+            new Vector2f(0, 0),
+            new Vector2f(1, 0),
+            new Vector2f(1, 1),
+            new Vector2f(0, 1)
     };
 
     private String name;
@@ -70,22 +72,6 @@ public final class Texture {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
     }
 
     @NotNull

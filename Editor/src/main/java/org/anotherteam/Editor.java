@@ -8,7 +8,6 @@ import org.anotherteam.game.Game;
 import org.anotherteam.game.GameState;
 import org.anotherteam.input.Input;
 import org.anotherteam.level.EditorCameraController;
-import org.anotherteam.level.LoadWindow;
 import org.anotherteam.level.PrefabViewer;
 import org.anotherteam.level.TileViewer;
 import org.anotherteam.render.ImGuiRender;
@@ -30,7 +29,6 @@ public final class Editor implements Core {
 
     private final TileViewer tileViewer;
     private final PrefabViewer prefabViewer;
-    private final LoadWindow loadWindow;
     private final Console console;
 
     private final EditorCameraController editorCameraController;
@@ -43,7 +41,6 @@ public final class Editor implements Core {
         imGui = new ImGuiRender(GameScreen.getWindow().getHandler(), "#version 430 core", this);
         tileViewer = new TileViewer(GameScreen.getWindow().getWidth() / 2 - 320, GameScreen.getWindow().getHeight() / 2 - 200, 640, 400);
         prefabViewer = new PrefabViewer(GameScreen.getWindow().getWidth() / 2 - 320, GameScreen.getWindow().getHeight() / 2 - 200, 640, 400);
-        loadWindow = new LoadWindow();
         console = new Console(GameScreen.getWindow().getWidth() / 2 - 320, GameScreen.getWindow().getHeight() / 2 - 200, 640, 400);
         editorCameraController = new EditorCameraController();
     }
@@ -111,7 +108,7 @@ public final class Editor implements Core {
             }
 
             if (ImGui.menuItem("Load")) {
-                Popups.LOAD_LEVEL = true;
+                Popups.LOAD_WINDOW.setSelected(true);
             }
 
             if (ImGui.menuItem("Cancel changes")) {
@@ -123,11 +120,8 @@ public final class Editor implements Core {
 
         ImGui.endMainMenuBar();
 
-        if (Popups.LOAD_LEVEL) {
-            loadWindow.call();
-        }
+        Popups.update();
 
-        loadWindow.update();
         tileViewer.update();
         prefabViewer.update();
         console.update();

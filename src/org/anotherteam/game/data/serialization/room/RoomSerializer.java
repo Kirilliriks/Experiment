@@ -15,15 +15,16 @@ public final class RoomSerializer implements JsonDeserializer<Room>, JsonSeriali
         final var name = jsonObject.get("name").getAsString();
 
         final var room = new Room(name);
-        for (final var tileJSON : jsonObject.get("tiles").getAsJsonArray()) {
+        for (final JsonElement tileJSON : jsonObject.get("tiles").getAsJsonArray()) {
             final var tile = (Tile) context.deserialize(tileJSON, Tile.class);
             room.setTile(tile);
         }
 
-        for (final var tileJSON : jsonObject.get("gameObjects").getAsJsonArray()) {
+        for (final JsonElement tileJSON : jsonObject.get("gameObjects").getAsJsonArray()) {
             final var gameObject = (GameObject) context.deserialize(tileJSON, GameObject.class);
             room.addObject(gameObject);
         }
+
         return room;
     }
 
@@ -33,16 +34,17 @@ public final class RoomSerializer implements JsonDeserializer<Room>, JsonSeriali
         result.add("name", new JsonPrimitive(room.getName()));
 
         final var tiles = new JsonArray(room.getTiles().size());
-        for (final var tile : room.getTiles()) {
+        for (final Tile tile : room.getTiles()) {
             tiles.add(context.serialize(tile, Tile.class));
         }
         result.add("tiles", tiles);
 
         final var objects = new JsonArray(room.getGameObjects().size());
-        for (final var object : room.getGameObjects()) {
+        for (final GameObject object : room.getGameObjects()) {
             objects.add(context.serialize(object, GameObject.class));
         }
         result.add("gameObjects", objects);
+
         return result;
     }
 }

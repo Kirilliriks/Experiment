@@ -1,5 +1,4 @@
 package org.anotherteam.render;
-import static org.lwjgl.opengl.GL42.*;
 
 import org.anotherteam.game.Game;
 import org.anotherteam.game.GameState;
@@ -12,6 +11,8 @@ import org.anotherteam.render.screen.Camera;
 import org.anotherteam.render.shader.Shader;
 import org.anotherteam.screen.GameScreen;
 import org.jetbrains.annotations.NotNull;
+
+import static org.lwjgl.opengl.GL42.*;
 
 public final class GameRender {
 
@@ -64,8 +65,8 @@ public final class GameRender {
 
         raycastShader.setUniform("real_view", GameScreen.GAME_CAMERA.getViewMatrix());
 
-        final var preparedX = GameScreen.GAME_CAMERA.translateX(room.getPlayer().getPosition().x);
-        final var preparedY = GameScreen.GAME_CAMERA.translateY(room.getPlayer().getPosition().y + 15);
+        final int preparedX = GameScreen.GAME_CAMERA.translateX(room.getPlayer().getPosition().x);
+        final int preparedY = GameScreen.GAME_CAMERA.translateY(room.getPlayer().getPosition().y + 15);
         raycastShader.setUniform("player_pos",
                 preparedX, preparedY);
 

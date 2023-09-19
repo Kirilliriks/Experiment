@@ -113,7 +113,7 @@ public final class FileUtils {
         return builder.toString();
     }
 
-    public static ByteBuffer ioResourceToByteBuffer(String resource, int bufferSize) throws IOException {
+    public static ByteBuffer ioResourceToByteBuffer(String resource, int bufferSize) {
         ByteBuffer buffer;
 
         final var path = Paths.get(resource);

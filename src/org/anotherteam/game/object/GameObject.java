@@ -46,7 +46,6 @@ public class GameObject {
 
     public void setRoom(Room room) {
         this.room = room;
-        prepare();
     }
 
     public void prepare() {
