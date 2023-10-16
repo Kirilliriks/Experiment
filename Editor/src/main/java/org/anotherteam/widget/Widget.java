@@ -20,7 +20,7 @@ public abstract class Widget {
         this.dirty = dirty;
         this.xInit = x;
         this.yInit = y;
-        this.position = new Vector2i(xInit, yInit);
+        this.position = new Vector2i(x, y);
         this.width = widthInit = width;
         this.height = heightInit = height;
     }
@@ -45,45 +45,5 @@ public abstract class Widget {
         position.y = yInit;
         width = widthInit;
         height = heightInit;
-    }
-
-    public boolean isDirty() {
-        return dirty;
-    }
-
-    public void setX(int x) {
-        dirty = true;
-        position.x = x;
-    }
-
-    public int getX() {
-        return position.x;
-    }
-
-    public void setY(int y) {
-        dirty = true;
-        position.y = y;
-    }
-
-    public int getY() {
-        return position.y;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        dirty = true;
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        dirty = true;
-        this.height = height;
     }
 }

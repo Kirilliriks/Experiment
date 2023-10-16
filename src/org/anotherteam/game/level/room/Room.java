@@ -3,9 +3,10 @@ package org.anotherteam.game.level.room;
 import lombok.Getter;
 import lombok.Setter;
 import org.anotherteam.game.Game;
-import org.anotherteam.game.level.room.object.entity.Player;
+import org.anotherteam.game.level.room.object.Prefabs;
 import org.anotherteam.game.level.room.tile.Tile;
 import org.anotherteam.game.object.GameObject;
+import org.anotherteam.game.object.component.type.player.PlayerController;
 import org.anotherteam.render.batch.RenderBatch;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
@@ -20,7 +21,7 @@ public final class Room {
     private final List<GameObject> gameObjects; // TODO make Nested List to fast DrawPriority sorting
 
     private String name;
-    private Player player;
+    private GameObject player;
 
     public Room(String name) {
         this.name = name;
@@ -61,8 +62,9 @@ public final class Room {
     }
 
     public void addObject(@NotNull GameObject object) {
-        if (object instanceof Player) {
-            player = (Player) object;
+        final var playerController = object.getComponent(PlayerController.class);
+        if (playerController != null) {
+            player = object;
         }
         object.setRoom(this);
         gameObjects.add(object);
@@ -74,9 +76,9 @@ public final class Room {
         object.setRoom(null);
     }
 
-    public Player getPlayer() {
+    public GameObject getPlayer() {
         if (player == null) {
-            addObject(new Player());
+            addObject(Prefabs.PLAYER.copy());
         }
 
         return player;
@@ -102,7 +104,7 @@ public final class Room {
     @NotNull
     public static Room createEmpty() {
         final var room = new Room("EmptyRoom");
-        room.addObject(new Player());
+        room.addObject(Prefabs.PLAYER.copy());
         return room;
     }
 }

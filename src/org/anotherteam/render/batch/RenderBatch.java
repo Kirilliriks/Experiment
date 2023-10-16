@@ -1,4 +1,5 @@
 package org.anotherteam.render.batch;
+
 import static org.lwjgl.opengl.GL42.*;
 
 import org.anotherteam.game.data.AssetData;
@@ -20,8 +21,8 @@ public class RenderBatch extends Batch {
     private static final short COLOR_COORDS_OFFSET = TEX_COORDS_OFFSET + TEX_COORDS_SIZE * Float.BYTES;
     private static final short VERTEX_SIZE = 7;
 
-    protected Texture lastTexture;
-    public boolean blend;
+    protected Texture lastTexture = null;
+    public boolean blend = true;
 
     public RenderBatch(@NotNull Shader shader, @NotNull Camera camera) {
         super(shader, camera, VERTEX_SIZE);
@@ -29,14 +30,13 @@ public class RenderBatch extends Batch {
         glEnableVertexAttribArray(1);
         glVertexAttribPointer(2, COLOR_SIZE, GL_FLOAT, false, vertexSizeBytes, COLOR_COORDS_OFFSET);
         glEnableVertexAttribArray(2);
-        blend = true;
-        lastTexture = null;
     }
 
     @Override
     public void end() {
-        if (numQuads > 0)
+        if (numQuads > 0) {
             render();
+        }
 
         lastTexture = null;
         shader.unbind();
@@ -92,29 +92,32 @@ public class RenderBatch extends Batch {
     }
 
     public void draw(Sprite sprite, float x, float y) {
-        draw(sprite.getTexture(), x, y, sprite.getWidth(),
-                sprite.getHeight(),
+        draw(sprite.getTexture(),
+                x, y,
+                sprite.getWidth(), sprite.getHeight(),
                 false, false,
                 Color.WHITE, sprite.getTextCoords());
     }
 
     public void draw(Sprite sprite, float x, float y, int width, int height) {
-        draw(sprite.getTexture(), x, y, width,
+        draw(sprite.getTexture(), x, y,
+                width,
                 height,
                 false, false,
                 Color.WHITE, sprite.getTextCoords());
     }
 
     public void draw(Sprite sprite, float x, float y, boolean flipX) {
-        draw(sprite.getTexture(), x, y, sprite.getWidth(),
-                sprite.getHeight(),
+        draw(sprite.getTexture(),
+                x, y,
+                sprite.getWidth(), sprite.getHeight(),
                 flipX, false,
                 Color.WHITE, sprite.getTextCoords());
     }
 
     public void draw(Sprite sprite, float x, float y, boolean flipX, boolean flipY) {
-        draw(sprite.getTexture(), x, y, sprite.getWidth(),
-                sprite.getHeight(),
+        draw(sprite.getTexture(), x, y,
+                sprite.getWidth(), sprite.getHeight(),
                 flipX, flipY,
                 Color.WHITE, sprite.getTextCoords());
     }
@@ -166,8 +169,7 @@ public class RenderBatch extends Batch {
             changeTexture(texture); // Before changeTexture calls - render()
         } else if (numQuads + 1 > batchSize) render();
 
-        genQuad(x, y, width, height, texCoords, flipX, flipY, color, numQuads);
-        numQuads++;
+        genQuad(x, y, width, height, texCoords, flipX, flipY, color, numQuads++);
     }
 
     private void genQuad(float x, float y,
@@ -191,7 +193,7 @@ public class RenderBatch extends Batch {
         // TODO Maybe for?
         // Load position
         vertices[offset] = x + QUAD_OFFSET[0].x * width;
-        vertices[offset + 1] = y + QUAD_OFFSET[0].y  * height;
+        vertices[offset + 1] = y + QUAD_OFFSET[0].y * height;
 
         // Load texture coords
         vertices[offset + 2] = x0;
@@ -204,7 +206,7 @@ public class RenderBatch extends Batch {
         offset += VERTEX_SIZE;
 
         vertices[offset] = x + QUAD_OFFSET[1].x * width;
-        vertices[offset + 1] = y + QUAD_OFFSET[1].y  * height;
+        vertices[offset + 1] = y + QUAD_OFFSET[1].y * height;
         vertices[offset + 2] = x1;
         vertices[offset + 3] = y0;
         vertices[offset + 4] = r;
@@ -213,7 +215,7 @@ public class RenderBatch extends Batch {
         offset += VERTEX_SIZE;
 
         vertices[offset] = x + QUAD_OFFSET[2].x * width;
-        vertices[offset + 1] = y + QUAD_OFFSET[2].y  * height;
+        vertices[offset + 1] = y + QUAD_OFFSET[2].y * height;
         vertices[offset + 2] = x1;
         vertices[offset + 3] = y1;
         vertices[offset + 4] = r;
@@ -222,7 +224,7 @@ public class RenderBatch extends Batch {
         offset += VERTEX_SIZE;
 
         vertices[offset] = x + QUAD_OFFSET[3].x * width;
-        vertices[offset + 1] = y + QUAD_OFFSET[3].y  * height;
+        vertices[offset + 1] = y + QUAD_OFFSET[3].y * height;
         vertices[offset + 2] = x0;
         vertices[offset + 3] = y1;
         vertices[offset + 4] = r;
@@ -243,11 +245,11 @@ public class RenderBatch extends Batch {
     }
 
     public void drawText(Font font, String text, float x, float y, float scale, Color color) {
-       drawText(font, text, x, y, scale, color, false, false, false);
+        drawText(font, text, x, y, scale, color, false, false, false);
     }
 
     public void drawText(Font font, String text, float x, float y, float scale, Color color, boolean invertWidth, boolean invertHeight, boolean center) {
-        final int offsetX = invertWidth ? -font.getTextWidth(text, scale) : (center ? -font.getTextWidth(text, scale) / 2: 0);
+        final int offsetX = invertWidth ? -font.getTextWidth(text, scale) : (center ? -font.getTextWidth(text, scale) / 2 : 0);
         final int offsetY = invertHeight ? -font.getTextHeight(text, scale) : 0;
 
         for (int i = 0; i < text.length(); i++) {
@@ -255,7 +257,7 @@ public class RenderBatch extends Batch {
             if (charInfo.width == 0) throw new LifeException("Unknown font character " + text.charAt(i));
 
             draw(font.texture, x + offsetX, y + offsetY,
-                    (int)(charInfo.width * scale), (int)(charInfo.height * scale),
+                    (int) (charInfo.width * scale), (int) (charInfo.height * scale),
                     false,
                     false,
                     color,

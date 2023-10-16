@@ -6,8 +6,8 @@ import lombok.Getter;
 import org.anotherteam.game.object.GameObject;
 import org.anotherteam.game.object.component.fieldcontroller.FieldController;
 import org.anotherteam.game.object.component.type.player.PlayerController;
-import org.anotherteam.game.object.component.type.sprite.SpriteController;
-import org.anotherteam.game.object.component.type.state.StateController;
+import org.anotherteam.game.object.component.type.sprite.SpriteComponent;
+import org.anotherteam.game.object.component.type.state.StateComponent;
 import org.anotherteam.game.object.component.type.transform.Transform;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -21,19 +21,14 @@ public abstract class Component {
     public static final List<Class<? extends Component>> components = new ArrayList<>();
 
     static {
-        components.add(SpriteController.class);
-        components.add(StateController.class);
+        components.add(SpriteComponent.class);
+        components.add(StateComponent.class);
         components.add(Transform.class);
         components.add(PlayerController.class);
     }
 
-    protected GameObject ownerObject;
-    protected boolean serializable;
-
-    public Component() {
-        ownerObject = null;
-        serializable = false;
-    }
+    protected GameObject ownerObject = null;
+    protected boolean serializable = true;
 
     public void init() { }
 
@@ -41,11 +36,6 @@ public abstract class Component {
 
     public void setOwnerObject(@NotNull GameObject ownerObject) {
         this.ownerObject = ownerObject;
-    }
-
-    @NotNull
-    public GameObject getOwnerObject() {
-        return ownerObject;
     }
 
     public void setDependencies() { }

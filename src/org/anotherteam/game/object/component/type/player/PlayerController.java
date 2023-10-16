@@ -7,10 +7,9 @@ import org.anotherteam.game.object.GameObject;
 import org.anotherteam.game.object.component.Component;
 import org.anotherteam.game.object.component.fieldcontroller.FieldController;
 import org.anotherteam.game.object.component.type.collider.Collider;
-import org.anotherteam.game.object.component.type.state.type.PlayerState;
 import org.anotherteam.game.object.component.type.transform.Transform;
 import org.anotherteam.input.Input;
-import org.anotherteam.game.object.component.type.state.StateController;
+import org.anotherteam.game.object.component.type.state.StateComponent;
 import org.anotherteam.screen.GameScreen;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
@@ -22,8 +21,7 @@ public final class PlayerController extends Component {
 
     private Transform transform;
     private Collider collider;
-    private StateController stateController;
-
+    private StateComponent stateComponent;
     private Vector2i position;
 
     public PlayerController() {
@@ -31,9 +29,8 @@ public final class PlayerController extends Component {
 
         transform = null;
         collider = null;
-        stateController = null;
+        stateComponent = null;
         position = null;
-
         serializable = true;
     }
 
@@ -53,11 +50,11 @@ public final class PlayerController extends Component {
 
     @Override
     public void setDependencies() {
-        if (transform != null && collider != null && stateController != null) return;
+        if (transform != null && collider != null && stateComponent != null) return;
 
         transform = getDependsComponent(Transform.class);
         collider = getDependsComponent(Collider.class);
-        stateController = getDependsComponent(StateController.class);
+        stateComponent = getDependsComponent(StateComponent.class);
     }
     @Override
     public void update(float dt) {
@@ -83,7 +80,7 @@ public final class PlayerController extends Component {
 
         if (Input.isKeyDown(Input.KEY_SHIFT)) transform.moveImpulse.x *= 2;
 
-        if (transform.isMoving()) stateController.setState(PlayerState.WALK);
+        if (transform.isMoving()) stateComponent.setState("walk");
 
         if (Input.isKeyPressed(Input.KEY_SPACE)) {
             Game.DEBUG_MODE = !Game.DEBUG_MODE;

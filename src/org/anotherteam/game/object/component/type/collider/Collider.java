@@ -3,11 +3,12 @@ package org.anotherteam.game.object.component.type.collider;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import lombok.Getter;
+import lombok.Setter;
 import org.anotherteam.debug.DebugBatch;
 import org.anotherteam.game.object.GameObject;
 import org.anotherteam.game.object.component.fieldcontroller.FieldController;
-import org.anotherteam.game.object.type.level.InteractiveObject;
-import org.anotherteam.game.object.component.type.sprite.SpriteController;
+import org.anotherteam.game.object.component.type.sprite.SpriteComponent;
 import org.anotherteam.render.sprite.Sprite;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.Color;
@@ -18,6 +19,8 @@ import org.joml.Vector2f;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@Setter
 public final class Collider extends AABB {
 
     private final InteractAABB interactAABB;
@@ -43,12 +46,12 @@ public final class Collider extends AABB {
     @Override
     public void init() {
         if (!firstBound.equals(secondBound)) return;
-        if (!ownerObject.hasComponent(SpriteController.class)) {
+        if (!ownerObject.hasComponent(SpriteComponent.class)) {
             setBounds(Sprite.DEFAULT_SIZE.x, Sprite.DEFAULT_SIZE.y);
             return;
         }
 
-        final var sprite = ownerObject.getComponent(SpriteController.class);
+        final var sprite = ownerObject.getComponent(SpriteComponent.class);
         final var texture = sprite.getTextureSprite();
         setBounds(texture.getWidth(), texture.getHeight());
     }
@@ -59,29 +62,8 @@ public final class Collider extends AABB {
         ownerObject.addComponent(interactAABB);
     }
 
-    public void setSolid(boolean solid) {
-        this.solid = solid;
-    }
-
-    public void setInteractive(boolean interactive) {
-        this.interactive = interactive;
-    }
-
     public void setInteractBounds(int firstX, int firstY, int secondX, int secondY) {
         interactAABB.setBounds(firstX, firstY, secondX, secondY);
-    }
-
-    @NotNull
-    public InteractAABB getInteractAABB() {
-        return interactAABB;
-    }
-
-    public boolean isSolid() {
-        return solid;
-    }
-
-    public boolean isInteractive() {
-        return interactive;
     }
 
     public boolean isCollide(@NotNull Collider aabb, @NotNull Vector2f moveVector){
@@ -111,12 +93,12 @@ public final class Collider extends AABB {
     }
 
     public void checkInteract() {
-        for (final var object : ownerObject.getRoom().getGameObjects()) {
-            if (!(object instanceof InteractiveObject)) continue;
-            final var collider = object.getCollider();
-            if (!isCanInteract(collider)) continue;
-            ((InteractiveObject)ownerObject).interactBy(object);
-        }
+//        for (final var object : ownerObject.getRoom().getGameObjects()) { TODO
+//            if (!(object instanceof InteractiveObject)) continue;
+//            final var collider = object.getCollider();
+//            if (!isCanInteract(collider)) continue;
+//            ((InteractiveObject)ownerObject).interactBy(object);
+//        }
     }
 
     public boolean checkCollide(@NotNull Vector2f moveVector) {

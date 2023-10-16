@@ -4,7 +4,8 @@ import com.google.gson.*;
 import org.anotherteam.game.object.component.Component;
 import org.anotherteam.game.object.component.type.collider.Collider;
 import org.anotherteam.game.object.component.type.player.PlayerController;
-import org.anotherteam.game.object.component.type.sprite.SpriteController;
+import org.anotherteam.game.object.component.type.sprite.SpriteComponent;
+import org.anotherteam.game.object.component.type.state.StateComponent;
 import org.anotherteam.game.object.component.type.transform.Transform;
 import org.anotherteam.util.exception.LifeException;
 
@@ -48,8 +49,11 @@ public final class ComponentSerializer implements JsonDeserializer<Component>, J
                 case "PlayerController" -> {
                     return PlayerController.deserialize(object);
                 }
-                case "SpriteController" -> {
-                    return SpriteController.deserialize(object);
+                case "SpriteComponent" -> {
+                    return SpriteComponent.deserialize(object);
+                }
+                case "StateComponent" -> {
+                    return StateComponent.deserialize(object);
                 }
                 default -> throw new LifeException("Unknown component " + object.get("type").getAsString());
             }

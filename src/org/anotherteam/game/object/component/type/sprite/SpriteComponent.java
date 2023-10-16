@@ -18,7 +18,7 @@ import org.joml.Vector2i;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class SpriteController extends Component {
+public final class SpriteComponent extends Component {
 
     private int drawPriority;
 
@@ -40,7 +40,7 @@ public final class SpriteController extends Component {
      */
     private boolean center;
 
-    public SpriteController() {
+    public SpriteComponent() {
         drawPriority = 0;
 
         atlasPath = null;
@@ -150,13 +150,13 @@ public final class SpriteController extends Component {
         return result;
     }
 
-    public static SpriteController deserialize(JsonObject object) {
+    public static SpriteComponent deserialize(JsonObject object) {
         final var atlasPath = object.get("atlasPath").getAsString();
         final var width = object.get("width").getAsInt();
         final var height = object.get("height").getAsInt();
 
-        final var spriteController = new SpriteController();
-        spriteController.setSpriteAtlas(atlasPath, width, height);
-        return spriteController;
+        final var spriteComponent = new SpriteComponent();
+        spriteComponent.setSpriteAtlas(atlasPath, width, height);
+        return spriteComponent;
     }
 }

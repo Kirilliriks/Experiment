@@ -1,12 +1,16 @@
 package org.anotherteam.game.object.component.type.state;
 
+import lombok.Getter;
 import org.anotherteam.game.object.component.type.sprite.animation.AnimationData;
 
-public abstract class State {
+@Getter
+public final class State {
 
+    private final String name;
     private final AnimationData animationData;
 
-    public State(AnimationData animationData){
+    public State(String name, AnimationData animationData) {
+        this.name = name;
         this.animationData = animationData;
     }
 

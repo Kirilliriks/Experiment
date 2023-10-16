@@ -1,6 +1,4 @@
 package org.anotherteam.render.window;
-import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
-import static org.lwjgl.opengl.GL42.*;
 
 import org.anotherteam.input.Input;
 import org.anotherteam.screen.GameScreen;
@@ -11,11 +9,14 @@ import org.lwjgl.opengl.GL;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
+import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
+import static org.lwjgl.opengl.GL42.*;
 
 public final class Window {
 
     private final Input input;
     private final Vector2i aspectRatio;
+    private final int[] windowX = new int[1], windowY = new int[1];
 
     private long handler;
 
@@ -28,8 +29,6 @@ public final class Window {
     private int windowFPSRate;
     private int fpsMax = 165;
     private boolean fpsLocked = true;
-
-    private final int[] windowX = new int[1], windowY = new int[1];
 
     public Window(int width, int height, String title) {
         this.input = new Input(this);

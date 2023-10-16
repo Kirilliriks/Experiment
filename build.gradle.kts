@@ -52,7 +52,7 @@ allprojects {
 
         implementation("org.joml:joml:1.10.4")
 
-        implementation("com.google.code.gson:gson:2.10")
+        implementation("com.google.code.gson:gson:2.10.1")
 
         implementation(platform("org.lwjgl:lwjgl-bom:$lwjglVersion"))
 

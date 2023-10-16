@@ -1,10 +1,16 @@
 package org.anotherteam.level;
 
 import imgui.ImGui;
-import org.anotherteam.game.level.room.object.prefab.RoomPrefab;
-import org.anotherteam.game.object.component.type.sprite.SpriteController;
+import org.anotherteam.Editor;
+import org.anotherteam.dragged.DraggedGameObject;
+import org.anotherteam.game.level.room.Room;
+import org.anotherteam.game.level.room.object.Prefabs;
+import org.anotherteam.game.object.component.type.sprite.SpriteComponent;
 import org.anotherteam.game.object.prefab.Prefab;
+import org.anotherteam.input.Input;
 import org.anotherteam.render.sprite.Sprite;
+import org.anotherteam.screen.GameScreen;
+import org.anotherteam.util.EditorInput;
 import org.anotherteam.widget.Widget;
 
 public final class PrefabViewer extends Widget {
@@ -18,8 +24,8 @@ public final class PrefabViewer extends Widget {
         super.update();
 
         ImGui.begin("Prefab viewer");
-        for (final Prefab prefab : RoomPrefab.values()) {
-            final SpriteController controller = prefab.getPrefab().getComponent(SpriteController.class);
+        for (final Prefab prefab : Prefabs.VALUES) {
+            final SpriteComponent controller = prefab.gameObject().getComponent(SpriteComponent.class);
             if (controller == null) {
                 continue;
             }
@@ -31,8 +37,20 @@ public final class PrefabViewer extends Widget {
                 continue;
             }
 
+            GameScreen.setDraggedThing(new DraggedGameObject(prefab.copy()));
         }
 
         ImGui.end();
+
+        if (EditorInput.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) {
+            if (!(GameScreen.getDraggedThing() instanceof DraggedGameObject draggedGameObject)) {
+                return;
+            }
+
+            final Room room = Editor.getInstance().getGame().levelManager.getCurrentRoom();
+            room.addObject(draggedGameObject.getGameObject());
+
+            GameScreen.setDraggedThing(null);
+        }
     }
 }

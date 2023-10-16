@@ -6,9 +6,8 @@ import com.google.gson.JsonPrimitive;
 import lombok.Getter;
 import lombok.Setter;
 import org.anotherteam.game.object.component.Component;
-import org.anotherteam.game.object.component.type.sprite.SpriteController;
-import org.anotherteam.game.object.component.type.state.StateController;
-import org.anotherteam.game.object.component.type.state.type.EntityState;
+import org.anotherteam.game.object.component.type.sprite.SpriteComponent;
+import org.anotherteam.game.object.component.type.state.StateComponent;
 import org.anotherteam.util.SerializeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
@@ -26,8 +25,8 @@ public final class Transform extends Component {
     private int speed;
     private boolean moving;
 
-    private StateController stateController;
-    private SpriteController sprite;
+    private StateComponent stateComponent;
+    private SpriteComponent sprite;
 
     public Transform() {
         this(DEFAULT_SPEED);
@@ -58,12 +57,12 @@ public final class Transform extends Component {
 
     @Override
     public void setDependencies() {
-        if (sprite != null && stateController != null) {
+        if (sprite != null && stateComponent != null) {
             return;
         }
 
-        stateController = getDependsComponent(StateController.class);
-        sprite = getDependsComponent(SpriteController.class);
+        stateComponent = getDependsComponent(StateComponent.class);
+        sprite = getDependsComponent(SpriteComponent.class);
     }
 
     public void setPosition(int x, int y) {
@@ -72,7 +71,7 @@ public final class Transform extends Component {
 
     public boolean move() {
         if (moveImpulse.equals(0, 0)) {
-            stateController.setDefaultState();
+            stateComponent.defaultState();
             return false;
         }
 
@@ -104,11 +103,11 @@ public final class Transform extends Component {
     }
 
     public boolean isCanMove() {
-        if (stateController.getState() instanceof EntityState entityState) {
-            return entityState.isCanWalk();
-        }
+//        if (stateComponent.getState() instanceof EntityState entityState) { TODO
+//            return entityState.isCanWalk();
+//        }
 
-        return false;
+        return true;
     }
 
     @Override

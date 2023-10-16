@@ -8,7 +8,7 @@ import org.anotherteam.game.level.room.Room;
 import org.anotherteam.game.object.component.type.transform.Transform;
 import org.anotherteam.logger.GameLogger;
 import org.anotherteam.game.object.component.type.collider.Collider;
-import org.anotherteam.game.object.component.type.sprite.SpriteController;
+import org.anotherteam.game.object.component.type.sprite.SpriteComponent;
 import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.SerializeUtil;
@@ -19,13 +19,13 @@ import java.util.*;
 
 @Getter
 @Setter
-public class GameObject {
+public final class GameObject {
 
-    protected final List<Component> components = new ArrayList<>();
-    protected final Transform transform = addComponent(new Transform());
-    protected final Collider collider = addComponent(new Collider());
-    protected Room room = null;
-    protected String name;
+    private final List<Component> components = new ArrayList<>();
+    private final Transform transform = addComponent(new Transform());
+    private final Collider collider = addComponent(new Collider());
+    private Room room = null;
+    private String name;
 
     /**
      * All GameObjects have Transform and Collider component (index 0) {Default size 32 x 32}
@@ -124,7 +124,7 @@ public class GameObject {
     }
 
     public void draw(@NotNull RenderBatch renderBatch, boolean height) {
-        final SpriteController spriteComponent = getComponent(SpriteController.class);
+        final SpriteComponent spriteComponent = getComponent(SpriteComponent.class);
         if (spriteComponent != null) {
             spriteComponent.draw(renderBatch, height);
         }
@@ -143,7 +143,7 @@ public class GameObject {
 
     //TODO make another method, maybe uze Z?
     public int getRenderPriority() {
-        final SpriteController controller = getComponent(SpriteController.class);
+        final SpriteComponent controller = getComponent(SpriteComponent.class);
         if (controller == null) return -1;
 
         return controller.getRenderPriority();
