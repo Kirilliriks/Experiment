@@ -24,13 +24,13 @@ public final class Editor implements Core {
     @Getter
     private static Editor instance;
 
-    public static void switchPlayStopMode() {
+    public static void switchPlayMode() {
         final boolean onEditor = instance.game.getStateManager().getState() == GameState.ON_EDITOR;
 
         Game.DEBUG_MODE = !onEditor;
 
         resetGameView();
-        instance.game.getLevelManager().load(Game.START_LEVEL_NAME); // TODO
+        instance.game.getLevelManager().load(Game.START_LEVEL_NAME);
 
         if (onEditor) {
             instance.game.getStateManager().setState(GameState.ON_LEVEL);
@@ -90,7 +90,7 @@ public final class Editor implements Core {
 
         if (game.getStateManager().getState() != GameState.ON_EDITOR) {
             if (EditorInput.isKeyPressed(Input.KEY_ESCAPE)) {
-                switchPlayStopMode();
+                switchPlayMode();
             }
             return;
         }
@@ -160,6 +160,6 @@ public final class Editor implements Core {
 
     @Override
     public boolean needClose() {
-        return false;
+        return game.needClose();
     }
 }

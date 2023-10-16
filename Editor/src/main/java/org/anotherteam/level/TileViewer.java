@@ -81,6 +81,10 @@ public final class TileViewer extends Widget {
         if (EditorInput.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) {
             if (thing == null && EditorInput.isKeyDown(Input.KEY_SHIFT)) {
                 final Tile tile = room.getTile(tileX, tileY);
+                if (tile == null) {
+                    return;
+                }
+
                 GameScreen.setDraggedThing(new DraggedTile(tile));
                 return;
             }

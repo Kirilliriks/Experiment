@@ -9,6 +9,7 @@ import org.anotherteam.game.object.component.Component;
 import org.anotherteam.game.object.component.type.StaticComponent;
 import org.anotherteam.game.object.component.type.sprite.SpriteComponent;
 import org.anotherteam.game.object.component.type.state.StateComponent;
+import org.anotherteam.logger.GameLogger;
 import org.anotherteam.util.SerializeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
@@ -20,25 +21,23 @@ public final class Transform extends StaticComponent {
 
     public static final int DEFAULT_SPEED = 25;
 
-    private final Vector2i position;
-    public final Vector2f moveImpulse;
-    private int maxSpeed;
-    private int speed;
-    private boolean moving;
-
     private StateComponent stateComponent;
     private SpriteComponent sprite;
+
+    private final Vector2i position = new Vector2i();
+    private int maxSpeed;
+    private int speed;
+    private boolean movable = false;
+
+    private final Vector2f moveImpulse = new Vector2f();
+    private boolean moving = false;
 
     public Transform() {
         this(DEFAULT_SPEED);
     }
 
     public Transform(int maxSpeed) {
-        this.position = new Vector2i(0, 0);
-        this.maxSpeed = maxSpeed;
-        this.moveImpulse = new Vector2f(0.0f, 0.0f);
-        this.speed = maxSpeed;
-        this.moving = false;
+        this.maxSpeed = this.speed = maxSpeed;
         this.serializable = true;
     }
 
@@ -55,6 +54,7 @@ public final class Transform extends StaticComponent {
             maxSpeed = transform.maxSpeed;
             speed = transform.speed;
             moving = transform.moving;
+            movable = transform.movable;
         }
     }
 
@@ -83,6 +83,11 @@ public final class Transform extends StaticComponent {
 
     public boolean move() {
         if (moveImpulse.equals(0, 0)) {
+            if (stateComponent == null) {
+                GameLogger.log("NAME " + ownerObject.getName());
+                return false;
+            }
+
             stateComponent.defaultState();
             return false;
         }
@@ -119,7 +124,7 @@ public final class Transform extends StaticComponent {
 //            return entityState.isCanWalk();
 //        }
 
-        return true;
+        return movable;
     }
 
     @Override
@@ -127,6 +132,7 @@ public final class Transform extends StaticComponent {
         result.add("position", SerializeUtil.serialize(position));
         result.add("maxSpeed", new JsonPrimitive(maxSpeed));
         result.add("speed", new JsonPrimitive(speed));
+        result.add("movable", new JsonPrimitive(movable));
         return result;
     }
 
@@ -134,10 +140,12 @@ public final class Transform extends StaticComponent {
         final Vector2i position = SerializeUtil.deserialize(object.getAsJsonObject("position"));
         final var maxSpeed = object.get("maxSpeed").getAsInt();
         final var speed = object.get("speed").getAsInt();
+        final var movable = object.get("movable").getAsBoolean();
 
         final var transform = new Transform(maxSpeed);
         transform.setSpeed(speed);
         transform.setPosition(position.x, position.y);
+        transform.setMovable(movable);
         return transform;
     }
 }

@@ -97,6 +97,7 @@ public final class Prefabs {
         player.getCollider().setBounds(-6, 0, 6, 32);
         player.getCollider().setInteractBounds(0, 0, 16, 32);
         player.getTransform().setSpeed(25);
+        player.getTransform().setMovable(true);
         player.addComponent(new PlayerController());
 
         return player;

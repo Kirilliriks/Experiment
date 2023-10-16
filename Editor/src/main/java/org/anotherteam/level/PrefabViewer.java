@@ -5,10 +5,12 @@ import org.anotherteam.Editor;
 import org.anotherteam.dragged.DraggedGameObject;
 import org.anotherteam.game.level.room.Room;
 import org.anotherteam.game.level.room.object.Prefabs;
+import org.anotherteam.game.object.GameObject;
 import org.anotherteam.game.object.component.type.sprite.SpriteComponent;
 import org.anotherteam.game.object.prefab.Prefab;
 import org.anotherteam.input.Input;
 import org.anotherteam.render.sprite.Sprite;
+import org.anotherteam.screen.DraggedThing;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.EditorInput;
 import org.anotherteam.widget.Widget;
@@ -42,12 +44,25 @@ public final class PrefabViewer extends Widget {
 
         ImGui.end();
 
+        final DraggedThing thing = GameScreen.getDraggedThing();
         if (EditorInput.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) {
-            if (!(GameScreen.getDraggedThing() instanceof DraggedGameObject draggedGameObject)) {
+            final Room room = Editor.getInstance().getGame().getLevelManager().getCurrentRoom();
+
+            if (thing == null) {
+                for (final GameObject gameObject : room.getGameObjects()) {
+                    if (gameObject.getCollider().isOnMouse(GameScreen.inGameMouseX(), GameScreen.inGameMouseY())) {
+                        room.rewoveObject(gameObject);
+                        GameScreen.setDraggedThing(new DraggedGameObject(gameObject));
+                        return;
+                    }
+                }
                 return;
             }
 
-            final Room room = Editor.getInstance().getGame().getLevelManager().getCurrentRoom();
+            if (!(thing instanceof DraggedGameObject draggedGameObject)) {
+                return;
+            }
+
             room.addObject(draggedGameObject.getGameObject());
 
             GameScreen.setDraggedThing(null);

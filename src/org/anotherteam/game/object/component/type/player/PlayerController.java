@@ -73,12 +73,12 @@ public final class PlayerController extends Component {
         }
 
         if (newMove != 0) {
-            transform.moveImpulse.add(newMove * 2, 0);
+            transform.getMoveImpulse().add(newMove * 2, 0);
         } else {
-            transform.moveImpulse.set(0, 0);
+            transform.getMoveImpulse().set(0, 0);
         }
 
-        if (Input.isKeyDown(Input.KEY_SHIFT)) transform.moveImpulse.x *= 2;
+        if (Input.isKeyDown(Input.KEY_SHIFT)) transform.getMoveImpulse().x *= 2;
 
         if (transform.isMoving()) stateComponent.setState("walk");
 

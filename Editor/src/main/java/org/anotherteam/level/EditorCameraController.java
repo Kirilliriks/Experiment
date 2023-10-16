@@ -2,7 +2,6 @@ package org.anotherteam.level;
 
 import org.anotherteam.Editor;
 import org.anotherteam.input.Input;
-import org.anotherteam.game.Game;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.EditorInput;
 import org.anotherteam.util.FileUtils;
@@ -24,7 +23,7 @@ public final class EditorCameraController {
 
         if (EditorInput.isKeyDown(Input.KEY_SPACE)) {
             FileUtils.saveEditorLevel(Editor.getInstance().getGame().getLevelManager().getCurrent());
-            Editor.switchPlayStopMode();
+            Editor.switchPlayMode();
             return;
         }
 
