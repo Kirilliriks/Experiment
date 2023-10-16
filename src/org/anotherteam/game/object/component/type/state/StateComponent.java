@@ -52,11 +52,11 @@ public final class StateComponent extends Component {
     public void setState(@NotNull State state) {
         this.state = state;
 
-        if (state.getAnimation() == null) {
+        if (state.animation() == null) {
             sprite.stopAnimation();
             return;
         }
-        sprite.setAnimation(state.getAnimation());
+        sprite.setAnimation(state.animation());
     }
 
     public void defaultState() {

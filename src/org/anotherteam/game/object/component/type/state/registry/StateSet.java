@@ -20,7 +20,7 @@ public final class StateSet {
     }
 
     public StateSet addState(State state) {
-        values.put(state.getName(), state);
+        values.put(state.name(), state);
         return this;
     }
 }
