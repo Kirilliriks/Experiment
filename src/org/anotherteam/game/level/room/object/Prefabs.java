@@ -99,8 +99,6 @@ public final class Prefabs {
         player.getTransform().setSpeed(25);
         player.addComponent(new PlayerController());
 
-        System.out.println("WTF " + player.getComponents().size());
-
         return player;
     }
 }
