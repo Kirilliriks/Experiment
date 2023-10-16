@@ -17,7 +17,7 @@ public final class StateManager extends AbstractManager {
         this.state = state;
 
         if (state == GameState.ON_LEVEL) {
-            game.levelManager.getCurrent().prepare();
+            game.getLevelManager().getCurrent().prepare();
         }
     }
 

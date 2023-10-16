@@ -84,7 +84,7 @@ public final class GameRender {
         //Finish frames
         windowFrame.begin();
 
-        final boolean onLevel = game.stateManager.getState() == GameState.ON_LEVEL;
+        final boolean onLevel = game.getStateManager().getState() == GameState.ON_LEVEL;
         windowFrame.renderBatch.draw(
                 onLevel ? effectFrame.texture : textureFrame.texture,
                 0, 0,
@@ -111,7 +111,7 @@ public final class GameRender {
     private void drawTextures(@NotNull Room room) {
         room.draw(textureBatch, false);
 
-        if (game.stateManager.getState() != GameState.ON_EDITOR) return;
+        if (game.getStateManager().getState() != GameState.ON_EDITOR) return;
         if (GameScreen.getDraggedThing() == null) return;
 
         final int x = GameScreen.inGameMouseX();
@@ -133,7 +133,7 @@ public final class GameRender {
 
         room.debugDraw(renderBatch);
 
-        if (game.stateManager.getState() != GameState.ON_EDITOR) return;
+        if (game.getStateManager().getState() != GameState.ON_EDITOR) return;
         if (GameScreen.getDraggedThing() == null) return;
         if (x < 0 || y < 0) return;
 

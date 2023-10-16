@@ -3,13 +3,15 @@ package org.anotherteam.game.object.component.type.collider;
 import org.anotherteam.debug.DebugBatch;
 import org.anotherteam.game.object.GameObject;
 import org.anotherteam.game.object.component.Component;
+import org.anotherteam.game.object.component.type.StaticComponent;
+import org.anotherteam.input.Input;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 
-public abstract class AABB extends Component {
+public abstract class AABB extends StaticComponent {
 
     protected final Vector2i firstBound;
     protected final Vector2i secondBound;
@@ -18,10 +20,20 @@ public abstract class AABB extends Component {
     protected Vector2i objectPosition;
 
     public AABB() {
-        this.firstBound = new Vector2i(0, 0);
-        this.secondBound = new Vector2i(0, 0);
-        this.offSet = new Vector2i(0, 0);
+        this.firstBound = new Vector2i();
+        this.secondBound = new Vector2i();
+        this.offSet = new Vector2i();
         objectPosition = null;
+    }
+
+    @Override
+    public void init(Component component) {
+        if (component instanceof AABB aabb) {
+            setBounds(
+                    aabb.firstBound.x, aabb.firstBound.y,
+                    aabb.secondBound.x, aabb.secondBound.y
+            );
+        }
     }
 
     @Override

@@ -13,6 +13,7 @@ import org.anotherteam.level.TileViewer;
 import org.anotherteam.render.ImGuiRender;
 import org.anotherteam.render.window.Window;
 import org.anotherteam.screen.GameScreen;
+import org.anotherteam.util.EditorInput;
 import org.anotherteam.util.FileUtils;
 import org.anotherteam.util.Popups;
 import org.anotherteam.widget.Console;
@@ -24,17 +25,17 @@ public final class Editor implements Core {
     private static Editor instance;
 
     public static void switchPlayStopMode() {
-        final boolean onEditor = instance.game.stateManager.getState() == GameState.ON_EDITOR;
+        final boolean onEditor = instance.game.getStateManager().getState() == GameState.ON_EDITOR;
 
         Game.DEBUG_MODE = !onEditor;
 
         resetGameView();
-        instance.game.levelManager.load(Game.START_LEVEL_NAME); // TODO
+        instance.game.getLevelManager().load(Game.START_LEVEL_NAME); // TODO
 
         if (onEditor) {
-            instance.game.stateManager.setState(GameState.ON_LEVEL);
+            instance.game.getStateManager().setState(GameState.ON_LEVEL);
         } else {
-            instance.game.stateManager.setState(GameState.ON_EDITOR);
+            instance.game.getStateManager().setState(GameState.ON_EDITOR);
         }
     }
 
@@ -44,7 +45,7 @@ public final class Editor implements Core {
         GameScreen.RENDER_WIDTH = GameScreen.getWindow().getWidth();
         GameScreen.RENDER_HEIGHT = GameScreen.getWindow().getHeight();
 
-        instance.game.render.updateFrames(GameScreen.WIDTH, GameScreen.HEIGHT);
+        instance.game.getRender().updateFrames(GameScreen.WIDTH, GameScreen.HEIGHT);
     }
 
     private final Window window;
@@ -75,7 +76,7 @@ public final class Editor implements Core {
         game.init();
 
         Game.DEBUG_MODE = true;
-        game.stateManager.setState(GameState.ON_EDITOR);
+        game.getStateManager().setState(GameState.ON_EDITOR);
     }
 
     @Override
@@ -87,7 +88,12 @@ public final class Editor implements Core {
     public void render(float dt) {
         game.render(dt);
 
-        if (game.stateManager.getState() != GameState.ON_EDITOR) return;
+        if (game.getStateManager().getState() != GameState.ON_EDITOR) {
+            if (EditorInput.isKeyPressed(Input.KEY_ESCAPE)) {
+                switchPlayStopMode();
+            }
+            return;
+        }
         editorCameraController.handle(dt);
 
         imGui.render(dt);
@@ -118,7 +124,7 @@ public final class Editor implements Core {
             }
 
             if (ImGui.menuItem("Exit")) {
-                game.stateManager.setState(GameState.ON_CLOSE_GAME);
+                game.getStateManager().setState(GameState.ON_CLOSE_GAME);
             }
 
             ImGui.endMenu();
@@ -126,10 +132,10 @@ public final class Editor implements Core {
 
         ImGui.dummy(8.0f, 00.0f);
 
-        if (ImGui.beginMenu("Level")) {
+        if (ImGui.beginMenu("Level [" + game.getLevelManager().getCurrent().getName() + "]")) {
 
             if (ImGui.menuItem("Save (CTRL+S)")) {
-                FileUtils.saveEditorLevel(game.levelManager.getCurrent());
+                FileUtils.saveEditorLevel(game.getLevelManager().getCurrent());
             }
 
             if (ImGui.menuItem("Load")) {
@@ -137,7 +143,7 @@ public final class Editor implements Core {
             }
 
             if (ImGui.menuItem("Cancel changes")) {
-                game.levelManager.load(game.levelManager.getCurrent().getName());
+                game.getLevelManager().load(game.getLevelManager().getCurrent().getName());
             }
 
             ImGui.endMenu();

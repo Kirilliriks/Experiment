@@ -47,7 +47,7 @@ public final class PrefabViewer extends Widget {
                 return;
             }
 
-            final Room room = Editor.getInstance().getGame().levelManager.getCurrentRoom();
+            final Room room = Editor.getInstance().getGame().getLevelManager().getCurrentRoom();
             room.addObject(draggedGameObject.getGameObject());
 
             GameScreen.setDraggedThing(null);

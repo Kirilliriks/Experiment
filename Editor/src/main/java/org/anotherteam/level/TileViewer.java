@@ -73,7 +73,7 @@ public final class TileViewer extends Widget {
         if (tileX < 0 || tileY < 0) return;
 
         final DraggedThing thing = GameScreen.getDraggedThing();
-        final Room room = Editor.getInstance().getGame().levelManager.getCurrentRoom();
+        final Room room = Editor.getInstance().getGame().getLevelManager().getCurrentRoom();
         if (thing == null && EditorInput.isButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
             room.removeTile(tileX, tileY);
         }

@@ -30,7 +30,7 @@ public final class LoadWindow extends Popup {
             ImGui.beginListBox("##level box");
             for (final String level : levels) {
                 if (ImGui.selectable(level)) {
-                    Editor.getInstance().getGame().levelManager.load(level);
+                    Editor.getInstance().getGame().getLevelManager().load(level);
 
                     close();
                 }

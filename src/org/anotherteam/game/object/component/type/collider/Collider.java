@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.anotherteam.debug.DebugBatch;
 import org.anotherteam.game.object.GameObject;
+import org.anotherteam.game.object.component.Component;
 import org.anotherteam.game.object.component.fieldcontroller.FieldController;
 import org.anotherteam.game.object.component.type.sprite.SpriteComponent;
 import org.anotherteam.render.sprite.Sprite;
@@ -57,6 +58,15 @@ public final class Collider extends AABB {
     }
 
     @Override
+    public void init(Component component) {
+        super.init(component);
+
+        if (component instanceof Collider collider) {
+            interactAABB.init(collider.interactAABB);
+        }
+    }
+
+    @Override
     public void setOwnerObject(@NotNull GameObject ownerObject) {
         super.setOwnerObject(ownerObject);
         ownerObject.addComponent(interactAABB);
@@ -66,17 +76,17 @@ public final class Collider extends AABB {
         interactAABB.setBounds(firstX, firstY, secondX, secondY);
     }
 
-    public boolean isCollide(@NotNull Collider aabb, @NotNull Vector2f moveVector){
+    public boolean isCollide(@NotNull Collider aabb, @NotNull Vector2f moveVector) {
         return isCollide(aabb, moveVector.x, moveVector.y);
     }
 
-    public boolean isCollide(@NotNull Collider aabb, float x, float y){
+    public boolean isCollide(@NotNull Collider aabb, float x, float y) {
         if (!aabb.isSolid()) return false;
-        final var collisionX =  objectPosition.x + secondBound.x + x >= aabb.getPosition().x  + aabb.getFirstBound().x &&
-                objectPosition.x + firstBound.x + x <= aabb.getPosition().x  + aabb.getSecondBound().x;
+        final var collisionX = objectPosition.x + secondBound.x + x >= aabb.getPosition().x + aabb.getFirstBound().x &&
+                objectPosition.x + firstBound.x + x <= aabb.getPosition().x + aabb.getSecondBound().x;
 
-        final var collisionY =  objectPosition.y + secondBound.y + y >= aabb.getPosition().y  + aabb.getFirstBound().y &&
-                objectPosition.y + firstBound.y + y <= aabb.getPosition().y  + aabb.getSecondBound().y;
+        final var collisionY = objectPosition.y + secondBound.y + y >= aabb.getPosition().y + aabb.getFirstBound().y &&
+                objectPosition.y + firstBound.y + y <= aabb.getPosition().y + aabb.getSecondBound().y;
         return collisionX && collisionY;
     }
 
@@ -84,10 +94,10 @@ public final class Collider extends AABB {
         if (x < 0 || y < 0) return false;
 
         return objectPosition.x + firstBound.x <= x && x <= objectPosition.x + secondBound.x &&
-               objectPosition.y + firstBound.y <= y && y <= objectPosition.y + secondBound.y;
+                objectPosition.y + firstBound.y <= y && y <= objectPosition.y + secondBound.y;
     }
 
-    public boolean isCanInteract(@NotNull Collider collider){
+    public boolean isCanInteract(@NotNull Collider collider) {
         if (!interactive) return false;
         return interactAABB.isInteract(collider);
     }
@@ -165,8 +175,8 @@ public final class Collider extends AABB {
 
         public boolean isInteract(@NotNull Collider otherCollider) {
             final var otherInteractAABB = otherCollider.interactAABB;
-            return  (!((otherCollider.objectPosition.x + otherCollider.secondBound.x) < otherInteractAABB.objectPosition.x + otherInteractAABB.offSet.x + firstBound.x ||
-                    (otherInteractAABB.objectPosition.x + otherInteractAABB.offSet.x + otherInteractAABB.secondBound.x) < otherCollider.objectPosition.x  + otherCollider.firstBound.x));
+            return (!((otherCollider.objectPosition.x + otherCollider.secondBound.x) < otherInteractAABB.objectPosition.x + otherInteractAABB.offSet.x + firstBound.x ||
+                    (otherInteractAABB.objectPosition.x + otherInteractAABB.offSet.x + otherInteractAABB.secondBound.x) < otherCollider.objectPosition.x + otherCollider.firstBound.x));
         }
 
         public void flip(boolean flip) {

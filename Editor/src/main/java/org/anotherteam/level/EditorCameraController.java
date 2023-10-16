@@ -5,6 +5,7 @@ import org.anotherteam.input.Input;
 import org.anotherteam.game.Game;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.EditorInput;
+import org.anotherteam.util.FileUtils;
 import org.anotherteam.util.ImGuiUtils;
 import org.joml.Vector2f;
 
@@ -22,6 +23,7 @@ public final class EditorCameraController {
         }
 
         if (EditorInput.isKeyDown(Input.KEY_SPACE)) {
+            FileUtils.saveEditorLevel(Editor.getInstance().getGame().getLevelManager().getCurrent());
             Editor.switchPlayStopMode();
             return;
         }
@@ -44,7 +46,7 @@ public final class EditorCameraController {
                 GameScreen.HEIGHT = GameScreen.DEFAULT_HEIGHT;
             }
 
-            Game.getRender().updateFrames(GameScreen.WIDTH, GameScreen.HEIGHT);
+            Editor.getInstance().getGame().getRender().updateFrames(GameScreen.WIDTH, GameScreen.HEIGHT);
         }
         
         float speed = 125.0f;

@@ -2,7 +2,6 @@ package org.anotherteam.game.level;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.anotherteam.game.Game;
 import org.anotherteam.game.level.room.Room;
 import org.anotherteam.render.GameRender;
 import org.anotherteam.render.frame.RenderFrame;
@@ -24,7 +23,6 @@ public final class Level {
         return level;
     }
 
-    private final GameRender gameRender = Game.getRender();
     private final List<Room> rooms = new ArrayList<>();
 
     @Setter
@@ -47,7 +45,7 @@ public final class Level {
         currentRoom.update(dt);
     }
 
-    public void render(@NotNull RenderFrame windowFrame) {
+    public void render(GameRender gameRender, @NotNull RenderFrame windowFrame) {
         gameRender.render(windowFrame, currentRoom);
     }
 

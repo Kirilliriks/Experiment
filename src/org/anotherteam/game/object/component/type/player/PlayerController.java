@@ -85,10 +85,6 @@ public final class PlayerController extends Component {
         if (Input.isKeyPressed(Input.KEY_SPACE)) {
             Game.DEBUG_MODE = !Game.DEBUG_MODE;
         }
-
-//        if (Editor.getInstance() != null && Input.isKeyDown(Input.KEY_ESCAPE)) { TODO EDITOR
-//            Editor.switchPlayStopMode();
-//        }
     }
 
     @Override

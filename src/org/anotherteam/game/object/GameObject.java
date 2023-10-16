@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.anotherteam.game.Game;
 import org.anotherteam.game.object.component.Component;
 import org.anotherteam.game.level.room.Room;
+import org.anotherteam.game.object.component.type.StaticComponent;
 import org.anotherteam.game.object.component.type.transform.Transform;
 import org.anotherteam.logger.GameLogger;
 import org.anotherteam.game.object.component.type.collider.Collider;
@@ -30,10 +31,6 @@ public final class GameObject {
     /**
      * All GameObjects have Transform and Collider component (index 0) {Default size 32 x 32}
      */
-
-    public GameObject(int x, int y) {
-        this("unnamed", x, y);
-    }
 
     public GameObject(String name, int x, int y) {
         this.name = name;
@@ -85,7 +82,11 @@ public final class GameObject {
 
         final int index = getComponentIndex(component.getClass());
         if (index != -1) {
-            components.set(index, component);
+            if (!(components.get(index) instanceof StaticComponent staticComponent)) {
+                throw new IllegalStateException("Trying to add a non-default component");
+            }
+
+            staticComponent.init(component);
         } else {
             components.add(component);
         }

@@ -38,6 +38,9 @@ public final class GameScreen {
 
         final var windowBatch = new RenderBatch(AssetData.DEFAULT_SHADER, WINDOW_CAMERA);
         windowFrame = new RenderFrame(windowBatch, window.getWidth(), window.getHeight());
+
+        RENDER_WIDTH = window.getWidth();
+        RENDER_HEIGHT = window.getHeight();
     }
 
     /**

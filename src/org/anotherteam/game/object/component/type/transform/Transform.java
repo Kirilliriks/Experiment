@@ -6,6 +6,7 @@ import com.google.gson.JsonPrimitive;
 import lombok.Getter;
 import lombok.Setter;
 import org.anotherteam.game.object.component.Component;
+import org.anotherteam.game.object.component.type.StaticComponent;
 import org.anotherteam.game.object.component.type.sprite.SpriteComponent;
 import org.anotherteam.game.object.component.type.state.StateComponent;
 import org.anotherteam.util.SerializeUtil;
@@ -15,7 +16,7 @@ import org.joml.Vector2i;
 
 @Getter
 @Setter
-public final class Transform extends Component {
+public final class Transform extends StaticComponent {
 
     public static final int DEFAULT_SPEED = 25;
 
@@ -44,6 +45,17 @@ public final class Transform extends Component {
     @Override
     public void init() {
         updateFlip();
+    }
+
+    @Override
+    public void init(Component component) {
+        if (component instanceof Transform transform) {
+            position.set(transform.position);
+            moveImpulse.set(transform.moveImpulse);
+            maxSpeed = transform.maxSpeed;
+            speed = transform.speed;
+            moving = transform.moving;
+        }
     }
 
     @Override
