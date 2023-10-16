@@ -1,7 +1,6 @@
 package org.anotherteam.dragged;
 
 import lombok.Getter;
-import org.anotherteam.game.Game;
 import org.anotherteam.game.level.room.Room;
 import org.anotherteam.game.level.room.tile.Tile;
 import org.anotherteam.render.batch.RenderBatch;
@@ -32,13 +31,13 @@ public final class DraggedTiles extends DraggedThing {
 
     public void placeTiles(Room room, int x, int y) {
         for (final var tile : tiles) {
-            final int xFinal = x + tile.frameX - x0;
-            final int yFinal = y + tile.frameY - y0;
+            final int xFinal = x + tile.getFrameX() - x0;
+            final int yFinal = y + tile.getFrameY() - y0;
             if (xFinal < 0 || yFinal < 0) {
                 continue;
             }
 
-            room.setTile(new Tile(xFinal, yFinal, tile.frameX, tile.frameY, atlas));
+            room.setTile(new Tile(xFinal, yFinal, tile.getFrameX(), tile.getFrameY(), atlas));
         }
     }
 
@@ -50,7 +49,6 @@ public final class DraggedTiles extends DraggedThing {
 
         for (int x = xMin; x <= xMax; x++) {
             for (int y = yMin; y <= yMax; y++) {
-
                 tiles.add(new DraggedTile(x, y, atlas));
             }
         }
@@ -60,8 +58,8 @@ public final class DraggedTiles extends DraggedThing {
     @Override
     public void draw(int x, int y, RenderBatch renderBatch) {
         for (final var tile : tiles) {
-            final int xFinal = x + (tile.frameX - x0) * Tile.SIZE.x;
-            final int yFinal = y + (tile.frameY - y0) * Tile.SIZE.y;
+            final int xFinal = x + (tile.getFrameX() - x0) * Tile.SIZE.x;
+            final int yFinal = y + (tile.getFrameY() - y0) * Tile.SIZE.y;
             if (xFinal < 0 || yFinal < 0) {
                 continue;
             }
@@ -71,10 +69,10 @@ public final class DraggedTiles extends DraggedThing {
     }
 
     @Override
-    public void debugDraw(int x, int y, boolean inEditor,  RenderBatch renderBatch) {
+    public void debugDraw(int x, int y, boolean inEditor, RenderBatch renderBatch) {
         for (final var tile : tiles) {
-            final int xFinal = x + (tile.frameX - x0) * Tile.SIZE.x;
-            final int yFinal = y + (tile.frameY - y0) * Tile.SIZE.y;
+            final int xFinal = x + (tile.getFrameX() - x0) * Tile.SIZE.x;
+            final int yFinal = y + (tile.getFrameY() - y0) * Tile.SIZE.y;
             if (xFinal < 0 || yFinal < 0) {
                 continue;
             }

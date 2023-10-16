@@ -24,6 +24,8 @@ public final class PrefabViewer extends Widget {
                 continue;
             }
 
+            ImGui.spacing();
+
             final Sprite sprite = controller.getTextureSprite();
             if (!ImGui.imageButton(sprite.getTexture().getId(), sprite.getWidth(), sprite.getHeight(), sprite.getU0(), sprite.getV0(), sprite.getU1(), sprite.getV1())) {
                 continue;

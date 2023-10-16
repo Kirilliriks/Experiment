@@ -1,6 +1,5 @@
 package org.anotherteam.dragged;
 
-import org.anotherteam.game.Game;
 import org.anotherteam.game.data.AssetData;
 import org.anotherteam.game.level.room.Room;
 import org.anotherteam.game.level.room.tile.Tile;
@@ -25,7 +24,7 @@ public final class DraggedTile extends DraggedSprite {
     }
 
     public void placeTile(Room room, int x, int y) {
-        room.setTile(new Tile(x, y, frameX, frameY, atlas));
+        room.setTile(new Tile(x, y, getFrameX(), getFrameY(), atlas));
     }
 
     @Override
