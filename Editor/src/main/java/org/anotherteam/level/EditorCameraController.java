@@ -10,8 +10,6 @@ import org.joml.Vector2f;
 
 public final class EditorCameraController {
 
-    private static final float DRAG_SCALE = 0.2f;
-
     private final Vector2f lastPos = new Vector2f(0, 0);
     private final Vector2f impulse = new Vector2f(0, 0);
 
