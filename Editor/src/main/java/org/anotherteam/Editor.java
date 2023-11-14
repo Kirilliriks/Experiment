@@ -18,7 +18,7 @@ import org.anotherteam.render.window.Window;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.EditorInput;
 import org.anotherteam.util.FileUtils;
-import org.anotherteam.util.Popups;
+import org.anotherteam.widget.popup.Popups;
 import org.anotherteam.widget.Console;
 
 @Getter
@@ -148,16 +148,28 @@ public final class Editor implements Core {
 
         if (ImGui.beginMenu("Level [" + game.getLevelManager().getCurrent().getName() + "]")) {
 
+            if (ImGui.menuItem("New")) {
+                saveLevel();
+                game.getLevelManager().setEmpty();
+            }
+
             if (ImGui.menuItem("Save (CTRL+S)")) {
                 saveLevel();
             }
 
             if (ImGui.menuItem("Load")) {
-                Popups.LOAD_WINDOW.setSelected(true);
+                saveLevel();
+                Popups.LOAD_LEVEL.setSelected(true);
             }
 
-            if (ImGui.menuItem("Cancel changes")) {
-                game.getLevelManager().load(game.getLevelManager().getCurrent().getName());
+            if (ImGui.menuItem("Rename")) {
+                Popups.RENAME_LEVEL.setSelected(true);
+            }
+
+            if (ImGui.menuItem("Delete")) {
+                final String levelName = instance.getGame().getLevelManager().getCurrent().getName();
+                game.getLevelManager().setEmpty();
+                FileUtils.deleteLevel(levelName);
             }
 
             ImGui.endMenu();

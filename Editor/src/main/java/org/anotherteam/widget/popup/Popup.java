@@ -28,4 +28,12 @@ public abstract class Popup {
         opened = false;
         selected = false;
     }
+
+    public void setSelected(boolean selected) {
+        if (selected) {
+            Popups.closeAll();
+        }
+
+        this.selected = selected;
+    }
 }

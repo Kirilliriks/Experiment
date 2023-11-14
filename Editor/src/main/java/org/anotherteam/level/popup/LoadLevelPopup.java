@@ -1,4 +1,4 @@
-package org.anotherteam.level;
+package org.anotherteam.level.popup;
 
 import imgui.ImGui;
 import org.anotherteam.Editor;
@@ -10,12 +10,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class LoadWindow extends Popup {
+public final class LoadLevelPopup extends Popup {
 
     private final List<String> levels = new ArrayList<>();
 
-    public LoadWindow() {
-        super("Load window");
+    public LoadLevelPopup() {
+        super("Load level");
     }
 
     public void call() {
@@ -26,7 +26,6 @@ public final class LoadWindow extends Popup {
 
     public void update() {
         if (ImGui.beginPopupModal("Load level####" + id)) {
-
             ImGui.beginListBox("##level box");
             for (final String level : levels) {
                 if (ImGui.selectable(level)) {

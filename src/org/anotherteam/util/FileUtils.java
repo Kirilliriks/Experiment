@@ -60,14 +60,14 @@ public final class FileUtils {
         GameLogger.log("Level " + level.getName() + " saved");
     }
 
-    public static void deleteLevel(@NotNull Level level) {
-        final var file = new File(AssetData.LEVELS_PATH + level.getName()  + "." + Level.LEVEL_FILE_EXTENSION);
+    public static void deleteLevel(@NotNull String name) {
+        final var file = new File(AssetData.LEVELS_PATH + name  + "." + Level.LEVEL_FILE_EXTENSION);
         if (!file.isFile())
-            throw new LifeException("Not find level: " + level.getName());
+            throw new LifeException("Not find level: " + name);
         if (!file.delete())
-            throw new LifeException("Can't delete level: " + level.getName());
+            throw new LifeException("Can't delete level: " + name);
 
-        GameLogger.log("Level " + level.getName() + " deleted");
+        GameLogger.log("Level " + name + " deleted");
     }
 
     /**
