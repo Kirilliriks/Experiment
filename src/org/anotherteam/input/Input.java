@@ -233,6 +233,10 @@ public final class Input {
             wasDown = down;
         }
 
+        public int getButtonCode() {
+            return buttonCode;
+        }
+
         public boolean isPressed() {
             return isButtonPressed(this);
         }

@@ -26,6 +26,10 @@ public final class PrefabViewer extends Widget {
         super.update();
 
         ImGui.begin("Prefab viewer");
+        if (ImGui.isWindowHovered() && ImGui.isMouseClicked(Input.MOUSE_LEFT_BUTTON.getButtonCode()) && !ImGui.isWindowAppearing()) {
+            Editor.getInstance().setMode(Editor.Mode.GAME_OBJECT);
+        }
+
         for (final Prefab prefab : Prefabs.VALUES) {
             final SpriteComponent controller = prefab.gameObject().getComponent(SpriteComponent.class);
             if (controller == null) {
@@ -43,6 +47,10 @@ public final class PrefabViewer extends Widget {
         }
 
         ImGui.end();
+
+        if (Editor.getInstance().getMode() != Editor.Mode.GAME_OBJECT) {
+            return;
+        }
 
         final DraggedThing thing = GameScreen.getDraggedThing();
         if (EditorInput.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) {

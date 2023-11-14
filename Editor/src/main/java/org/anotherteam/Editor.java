@@ -3,6 +3,8 @@ package org.anotherteam;
 import imgui.ImGui;
 import imgui.flag.ImGuiDockNodeFlags;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.anotherteam.core.Core;
 import org.anotherteam.game.Game;
 import org.anotherteam.game.GameState;
@@ -11,6 +13,7 @@ import org.anotherteam.level.EditorCameraController;
 import org.anotherteam.level.PrefabViewer;
 import org.anotherteam.level.TileViewer;
 import org.anotherteam.render.ImGuiRender;
+import org.anotherteam.render.frame.RenderFrame;
 import org.anotherteam.render.window.Window;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.EditorInput;
@@ -25,17 +28,17 @@ public final class Editor implements Core {
     private static Editor instance;
 
     public static void switchPlayMode() {
-        final boolean onEditor = instance.game.getStateManager().getState() == GameState.ON_EDITOR;
+        final boolean onEditor = instance.getGame().getStateManager().getState() == GameState.ON_EDITOR;
 
         Game.DEBUG_MODE = !onEditor;
 
         resetGameView();
-        instance.game.getLevelManager().load(Game.START_LEVEL_NAME);
+        instance.getGame().getLevelManager().load(Game.START_LEVEL_NAME);
 
         if (onEditor) {
-            instance.game.getStateManager().setState(GameState.ON_LEVEL);
+            instance.getGame().getStateManager().setState(GameState.ON_LEVEL);
         } else {
-            instance.game.getStateManager().setState(GameState.ON_EDITOR);
+            instance.getGame().getStateManager().setState(GameState.ON_EDITOR);
         }
     }
 
@@ -45,7 +48,7 @@ public final class Editor implements Core {
         GameScreen.RENDER_WIDTH = GameScreen.getWindow().getWidth();
         GameScreen.RENDER_HEIGHT = GameScreen.getWindow().getHeight();
 
-        instance.game.getRender().updateFrames(GameScreen.WIDTH, GameScreen.HEIGHT);
+        instance.getGame().getRender().updateFrames(GameScreen.WIDTH, GameScreen.HEIGHT);
     }
 
     private final Window window;
@@ -58,6 +61,9 @@ public final class Editor implements Core {
     private final Console console;
 
     private final EditorCameraController editorCameraController;
+
+    @Setter
+    private Mode mode = Mode.VIEW;
 
     public Editor(Window window) {
         instance = this;
@@ -87,6 +93,11 @@ public final class Editor implements Core {
     @Override
     public void render(float dt) {
         game.render(dt);
+
+        final RenderFrame windowFrame = GameScreen.getWindowFrame();
+        windowFrame.renderBatch.begin(false);
+        windowFrame.renderBatch.drawText("[TEST]", 320, 200);
+        windowFrame.renderBatch.end();
 
         if (game.getStateManager().getState() != GameState.ON_EDITOR) {
             if (EditorInput.isKeyPressed(Input.KEY_ESCAPE)) {
@@ -149,6 +160,18 @@ public final class Editor implements Core {
             ImGui.endMenu();
         }
 
+        ImGui.dummy(8.0f, 00.0f);
+        if (ImGui.beginMenu("[MODE " + mode.getDescription() + "]")) {
+
+            for (final Mode md : Mode.values()) {
+                if (ImGui.menuItem(md.description)) {
+                    mode = md;
+                }
+            }
+
+            ImGui.endMenu();
+        }
+
         ImGui.endMainMenuBar();
 
         Popups.update();
@@ -161,5 +184,15 @@ public final class Editor implements Core {
     @Override
     public boolean needClose() {
         return game.needClose();
+    }
+
+    @RequiredArgsConstructor
+    @Getter
+    public enum Mode {
+        VIEW("VIEW"),
+        TILE("TILE"),
+        GAME_OBJECT("GAME OBJECT");
+
+        private final String description;
     }
 }

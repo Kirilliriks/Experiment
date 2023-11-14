@@ -43,10 +43,15 @@ public final class TileViewer extends Widget {
         loadAtlases();
     }
 
+    @Override
     public void update() {
         super.update();
 
         ImGui.begin("Tile Viewer");
+
+        if (ImGui.isWindowHovered() && ImGui.isMouseClicked(Input.MOUSE_LEFT_BUTTON.getButtonCode()) && !ImGui.isWindowAppearing()) {
+            Editor.getInstance().setMode(Editor.Mode.TILE);
+        }
 
         ImGui.text("Select atlas");
         if (ImGui.beginListBox("##select_atlas")) {
@@ -67,6 +72,10 @@ public final class TileViewer extends Widget {
         }
 
         ImGui.end();
+
+        if (Editor.getInstance().getMode() != Editor.Mode.TILE) {
+            return;
+        }
 
         final int tileX = GameScreen.mouseOnTileX();
         final int tileY = GameScreen.mouseOnTileY();

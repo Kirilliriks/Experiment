@@ -43,7 +43,8 @@ public abstract class AABB extends StaticComponent {
     }
 
     public void setBounds(int width, int height) {
-        setBounds(-width / 2, 0, width / 2, height);
+        final boolean plusX = width % 2 != 0;
+        setBounds(-width / 2, 0, width / 2 + (plusX ? 1 : 0), height);
     }
 
     public void setBounds(int firstX, int firstY, int secondX, int secondY) {

@@ -93,8 +93,8 @@ public final class Collider extends AABB {
     public boolean isOnMouse(float x, float y) {
         if (x < 0 || y < 0) return false;
 
-        return objectPosition.x + firstBound.x <= x && x <= objectPosition.x + secondBound.x &&
-                objectPosition.y + firstBound.y <= y && y <= objectPosition.y + secondBound.y;
+        return objectPosition.x + firstBound.x <= x && x < objectPosition.x + secondBound.x &&
+                objectPosition.y + firstBound.y <= y && y < objectPosition.y + secondBound.y;
     }
 
     public boolean isCanInteract(@NotNull Collider collider) {
