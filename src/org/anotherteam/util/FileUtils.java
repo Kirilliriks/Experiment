@@ -46,7 +46,7 @@ public final class FileUtils {
         return level;
     }
 
-    public static void saveEditorLevel(@NotNull Level level) {
+    public static void saveLevel(Level level) {
         try {
             final var writer = new FileWriter(AssetData.LEVELS_PATH + level.getName() + "." + Level.LEVEL_FILE_EXTENSION);
             writer.write(SerializeUtil.GSON.toJson(level));

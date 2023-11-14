@@ -37,6 +37,7 @@ public final class Input {
     public final static Key KEY_SPACE = new Key(GLFW.GLFW_KEY_SPACE);
     public final static Key KEY_SHIFT = new Key(GLFW.GLFW_KEY_LEFT_SHIFT);
     public final static Key KEY_BACKSPACE = new Key(GLFW.GLFW_KEY_BACKSPACE);
+    public final static Key KEY_LEFT_CTRL = new Key(GLFW.GLFW_KEY_LEFT_CONTROL);
 
     public final static MouseButton MOUSE_LEFT_BUTTON = new MouseButton(GLFW.GLFW_MOUSE_BUTTON_LEFT);
     public final static MouseButton MOUSE_MIDDLE_BUTTON = new MouseButton(GLFW.GLFW_MOUSE_BUTTON_MIDDLE);

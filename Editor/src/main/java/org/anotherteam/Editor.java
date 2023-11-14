@@ -51,6 +51,10 @@ public final class Editor implements Core {
         instance.getGame().getRender().updateFrames(GameScreen.WIDTH, GameScreen.HEIGHT);
     }
 
+    public static void saveLevel() {
+        FileUtils.saveLevel(instance.getGame().getLevelManager().getCurrent());
+    }
+
     private final Window window;
     private final Game game;
 
@@ -146,7 +150,7 @@ public final class Editor implements Core {
         if (ImGui.beginMenu("Level [" + game.getLevelManager().getCurrent().getName() + "]")) {
 
             if (ImGui.menuItem("Save (CTRL+S)")) {
-                FileUtils.saveEditorLevel(game.getLevelManager().getCurrent());
+                saveLevel();
             }
 
             if (ImGui.menuItem("Load")) {
@@ -173,6 +177,10 @@ public final class Editor implements Core {
         }
 
         ImGui.endMainMenuBar();
+
+        if (EditorInput.isKeyDown(Input.KEY_LEFT_CTRL) && EditorInput.isKeyPressed(Input.KEY_S)) {
+            saveLevel();
+        }
 
         Popups.update();
 

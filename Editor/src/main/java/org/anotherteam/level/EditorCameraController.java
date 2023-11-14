@@ -4,7 +4,6 @@ import org.anotherteam.Editor;
 import org.anotherteam.input.Input;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.EditorInput;
-import org.anotherteam.util.FileUtils;
 import org.anotherteam.util.ImGuiUtils;
 import org.joml.Vector2f;
 
@@ -20,7 +19,7 @@ public final class EditorCameraController {
         }
 
         if (EditorInput.isKeyDown(Input.KEY_SPACE)) {
-            FileUtils.saveEditorLevel(Editor.getInstance().getGame().getLevelManager().getCurrent());
+            Editor.saveLevel();
             Editor.switchPlayMode();
             return;
         }
