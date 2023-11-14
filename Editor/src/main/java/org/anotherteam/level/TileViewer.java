@@ -2,6 +2,7 @@ package org.anotherteam.level;
 
 import imgui.ImGui;
 import org.anotherteam.Editor;
+import org.anotherteam.dragged.DraggedHighliter;
 import org.anotherteam.input.Input;
 import org.anotherteam.game.data.AssetData;
 import org.anotherteam.dragged.DraggedTile;
@@ -24,6 +25,7 @@ import java.util.List;
 
 public final class TileViewer extends Widget {
 
+    public static final DraggedHighliter DRAGGED_HIGHLITER = new DraggedHighliter();
     public static final int SCALE_MULTIPLAYER = 2;
 
     private final List<SpriteAtlas> atlases;
@@ -77,11 +79,15 @@ public final class TileViewer extends Widget {
             return;
         }
 
+        if (GameScreen.getDraggedThing() == null) {
+            GameScreen.setDraggedThing(DRAGGED_HIGHLITER);
+        }
+
         final int tileX = GameScreen.mouseOnTileX();
         final int tileY = GameScreen.mouseOnTileY();
         if (tileX < 0 || tileY < 0) return;
 
-        final DraggedThing thing = GameScreen.getDraggedThing();
+        final DraggedThing thing = getDraggedTile();
         final Room room = Editor.getInstance().getGame().getLevelManager().getCurrentRoom();
         if (thing == null && EditorInput.isButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
             room.removeTile(tileX, tileY);
@@ -134,7 +140,7 @@ public final class TileViewer extends Widget {
 
                     if (ImGui.isItemClicked()) {
                         final boolean shift = ImGui.isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT);
-                        if (shift && GameScreen.getDraggedThing() instanceof DraggedTile dragged) {
+                        if (shift && getDraggedTile() instanceof DraggedTile dragged) {
                             GameScreen.setDraggedThing(new DraggedTiles(dragged.getFrameX(), dragged.getFrameY(), x, y, selectedAtlas));
                         } else {
                             GameScreen.setDraggedThing(new DraggedTile(x, y, selectedAtlas));
@@ -182,5 +188,14 @@ public final class TileViewer extends Widget {
 
             atlases.add(spriteAtlas);
         }
+    }
+
+    private DraggedThing getDraggedTile() {
+        final DraggedThing thing = GameScreen.getDraggedThing();
+        if (thing == DRAGGED_HIGHLITER) {
+            return null;
+        }
+
+        return thing;
     }
 }

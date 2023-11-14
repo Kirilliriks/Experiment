@@ -205,6 +205,12 @@ public final class Editor implements Core {
         return game.needClose();
     }
 
+    public void setMode(Mode mode) {
+        this.mode = mode;
+
+        GameScreen.setDraggedThing(null);
+    }
+
     @RequiredArgsConstructor
     @Getter
     public enum Mode {
