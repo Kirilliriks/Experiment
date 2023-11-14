@@ -5,7 +5,7 @@ import org.anotherteam.input.Input;
 public final class EditorInput {
 
     public static boolean isKeyDown(Input.Key key) {
-        if (ImGuiUtils.imGuiHandle()) {
+        if (ImGuiUtils.imGuiWantMouse()) {
             return false;
         }
 
@@ -13,7 +13,7 @@ public final class EditorInput {
     }
 
     public static boolean isKeyPressed(Input.Key key) {
-        if (ImGuiUtils.imGuiHandle()) {
+        if (ImGuiUtils.imGuiWantMouse()) {
             return false;
         }
 
@@ -21,7 +21,7 @@ public final class EditorInput {
     }
 
     public static boolean isAnyButtonPressed() {
-        if (ImGuiUtils.imGuiHandle()) {
+        if (ImGuiUtils.imGuiWantMouse()) {
             return false;
         }
 
@@ -29,7 +29,7 @@ public final class EditorInput {
     }
 
     public static boolean isAnyButtonDown() {
-        if (ImGuiUtils.imGuiHandle()) {
+        if (ImGuiUtils.imGuiWantMouse()) {
             return false;
         }
 
@@ -37,7 +37,7 @@ public final class EditorInput {
     }
 
     public static boolean isButtonPressed(Input.MouseButton button) {
-        if (ImGuiUtils.imGuiHandle()) {
+        if (ImGuiUtils.imGuiWantMouse()) {
             return false;
         }
 
@@ -45,7 +45,7 @@ public final class EditorInput {
     }
 
     public static boolean isButtonDown(Input.MouseButton button) {
-        if (ImGuiUtils.imGuiHandle()) {
+        if (ImGuiUtils.imGuiWantMouse()) {
             return false;
         }
 

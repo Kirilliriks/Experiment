@@ -28,7 +28,7 @@ public final class EditorCameraController {
         }
 
         final float mouseWheelVelocity = Input.getMouseWheelVelocity();
-        if (mouseWheelVelocity != 0.0F && !ImGuiUtils.imGuiHandle()) {
+        if (mouseWheelVelocity != 0.0F && !ImGuiUtils.imGuiWantMouse()) {
             if (mouseWheelVelocity < 0) {
                 GameScreen.WIDTH += GameScreen.getWindow().getAspect() * 2;
                 GameScreen.HEIGHT += GameScreen.getWindow().getRatio() * 2;
