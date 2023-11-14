@@ -18,7 +18,6 @@ public final class Prefabs {
 
     static {
         initStatics();
-        initEntity();
     }
 
     private static GameObject add(GameObject gameObject) {
@@ -54,10 +53,6 @@ public final class Prefabs {
         makeStatic("test_cupboard").getComponent(SpriteComponent.class).setSpriteAtlas(
                 AssetData.ROOM_OBJECTS_PATH + "cupboard_test.png", 20, 36
         );
-    }
-
-    public static void initEntity() {
-
     }
 
     private static GameObject makeStatic(String name) {

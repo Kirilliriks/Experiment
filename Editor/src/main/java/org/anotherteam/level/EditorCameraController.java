@@ -73,18 +73,16 @@ public final class EditorCameraController {
                 return;
             }
 
-            final float diffX = lastPos.x - Input.getMouseX();
-            final float diffY = lastPos.y - Input.getMouseY();
-            impulse.x += diffX * DRAG_SCALE;
-            impulse.y += diffY * DRAG_SCALE;
+            final float diffX = (float) Math.floor(lastPos.x - Input.getMouseX());
+            final float diffY = (float) Math.floor(lastPos.y - Input.getMouseY());
+            impulse.x += GameScreen.WIDTH * (diffX / (float) GameScreen.getWindow().getWidth());
+            impulse.y += GameScreen.HEIGHT * (diffY / (float) GameScreen.getWindow().getHeight());
             lastPos.set(Input.getMousePos());
         } else {
             lastPos.set(0, 0);
         }
 
-        if (impulse.length() >= 1) {
-            GameScreen.GAME_CAMERA.addPosition(impulse.x, impulse.y);
-            impulse.zero();
-        }
+        GameScreen.GAME_CAMERA.addPosition(impulse.x, impulse.y);
+        impulse.zero();
     }
 }
