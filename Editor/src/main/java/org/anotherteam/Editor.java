@@ -28,17 +28,16 @@ public final class Editor implements Core {
     private static Editor instance;
 
     public static void switchPlayMode() {
-        final boolean onEditor = instance.getGame().getStateManager().getState() == GameState.ON_EDITOR;
+        final Game game = instance.getGame();
+        final boolean onEditor = game.getStateManager().getState() == GameState.ON_EDITOR;
 
         Game.DEBUG_MODE = !onEditor;
 
         resetGameView();
-        instance.getGame().getLevelManager().load(Game.START_LEVEL_NAME);
+        game.getLevelManager().load(Game.START_LEVEL_NAME);
 
         if (onEditor) {
-            instance.getGame().getStateManager().setState(GameState.ON_LEVEL);
-        } else {
-            instance.getGame().getStateManager().setState(GameState.ON_EDITOR);
+            game.getStateManager().setState(GameState.ON_LEVEL);
         }
     }
 
