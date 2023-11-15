@@ -138,9 +138,10 @@ public final class TileViewer extends Widget {
 
                 if (ImGui.isItemHovered()) {
                     if (ImGui.isItemClicked()) {
-                        final boolean shift = Input.isKeyDown(Input.KEY_SHIFT);
-                        if (shift && getDraggedTile() instanceof DraggedTile dragged) {
-                            GameScreen.setDraggedThing(new DraggedTiles(dragged.getFrameX(), dragged.getFrameY(), x, y, selectedAtlas));
+                        if (Input.isKeyDown(Input.KEY_SHIFT) && getDraggedTile() instanceof DraggedTile dragged) {
+                            GameScreen.setDraggedThing(
+                                    new DraggedTiles(dragged.getFrameX(), dragged.getFrameY(), x, y, selectedAtlas)
+                            );
                         } else {
                             GameScreen.setDraggedThing(new DraggedTile(x, y, selectedAtlas));
                         }
@@ -148,6 +149,7 @@ public final class TileViewer extends Widget {
 
                     highlighted = true;
                     highlightedSprite = index;
+
                     ImGui.beginTooltip();
                     ImGui.image(texture.getId(), sprite.getWidth() * SCALE_MULTIPLAYER * 2, sprite.getHeight() * SCALE_MULTIPLAYER * 2, u0, v0, u1, v1);
                     ImGui.endTooltip();
