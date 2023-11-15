@@ -63,10 +63,6 @@ public final class Input {
         return lastKey;
     }
 
-    public static void blockButton(MouseButton button) {
-        button.blocked = true;
-    }
-
     public static boolean isKeyDown(Key key) {
         if (key.isLetter()) {
             final int anotherChar = CharUtil.toAnotherCase(key.code);
@@ -241,6 +237,10 @@ public final class Input {
             if (pressed && this.equals(MOUSE_RIGHT_BUTTON)) {
                 blocked = false;
             }
+        }
+
+        public void block() {
+            this.blocked = true;
         }
 
         public int getButtonCode() {

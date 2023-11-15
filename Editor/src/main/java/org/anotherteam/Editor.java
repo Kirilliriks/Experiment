@@ -107,7 +107,7 @@ public final class Editor implements Core {
             }
 
             Screen.setDraggedObject(null);
-            Input.blockButton(Input.MOUSE_RIGHT_BUTTON);
+            Input.MOUSE_RIGHT_BUTTON.block();
         }
     }
 
