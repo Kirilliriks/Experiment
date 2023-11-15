@@ -26,7 +26,7 @@ public final class PrefabViewer extends Widget {
         super.update();
 
         ImGui.begin("Prefab viewer");
-        if (ImGui.isWindowHovered() && ImGui.isMouseClicked(Input.MOUSE_LEFT_BUTTON.getButtonCode()) && !ImGui.isWindowAppearing()) {
+        if (isClicked()) {
             Editor.getInstance().setMode(Editor.Mode.GAME_OBJECT);
         }
 

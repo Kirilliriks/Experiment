@@ -1,6 +1,7 @@
 package org.anotherteam.widget;
 
 import imgui.ImGui;
+import org.anotherteam.input.Input;
 import org.joml.Vector2i;
 
 public abstract class Widget {
@@ -36,6 +37,10 @@ public abstract class Widget {
 
     public void update() {
         onDirty();
+    }
+
+    public boolean isClicked() {
+        return ImGui.isWindowHovered() && ImGui.isMouseClicked(Input.MOUSE_LEFT_BUTTON.getButtonCode()) && !ImGui.isWindowAppearing();
     }
 
     public void reset() {

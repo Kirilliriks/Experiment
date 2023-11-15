@@ -7,6 +7,7 @@ import org.anotherteam.input.Input;
 import org.anotherteam.game.data.AssetData;
 import org.anotherteam.dragged.DraggedTile;
 import org.anotherteam.dragged.DraggedTiles;
+import org.anotherteam.logger.GameLogger;
 import org.anotherteam.util.EditorInput;
 import org.anotherteam.widget.Widget;
 import org.anotherteam.game.level.room.Room;
@@ -17,7 +18,6 @@ import org.anotherteam.render.texture.Texture;
 import org.anotherteam.screen.DraggedThing;
 import org.anotherteam.screen.GameScreen;
 import org.anotherteam.util.exception.LifeException;
-import org.lwjgl.glfw.GLFW;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -51,7 +51,7 @@ public final class TileViewer extends Widget {
 
         ImGui.begin("Tile Viewer");
 
-        if (ImGui.isWindowHovered() && ImGui.isMouseClicked(Input.MOUSE_LEFT_BUTTON.getButtonCode()) && !ImGui.isWindowAppearing()) {
+        if (isClicked()) {
             Editor.getInstance().setMode(Editor.Mode.TILE);
         }
 
@@ -137,9 +137,8 @@ public final class TileViewer extends Widget {
                 }
 
                 if (ImGui.isItemHovered()) {
-
                     if (ImGui.isItemClicked()) {
-                        final boolean shift = ImGui.isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT);
+                        final boolean shift = Input.isKeyDown(Input.KEY_SHIFT);
                         if (shift && getDraggedTile() instanceof DraggedTile dragged) {
                             GameScreen.setDraggedThing(new DraggedTiles(dragged.getFrameX(), dragged.getFrameY(), x, y, selectedAtlas));
                         } else {
@@ -192,7 +191,7 @@ public final class TileViewer extends Widget {
 
     private DraggedThing getDraggedTile() {
         final DraggedThing thing = GameScreen.getDraggedThing();
-        if (thing == DRAGGED_HIGHLITER) {
+        if (thing instanceof DraggedHighliter) {
             return null;
         }
 

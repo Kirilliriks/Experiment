@@ -210,6 +210,10 @@ public final class Editor implements Core {
     }
 
     public void setMode(Mode mode) {
+        if (this.mode == mode) {
+            return;
+        }
+
         this.mode = mode;
 
         GameScreen.setDraggedThing(null);
