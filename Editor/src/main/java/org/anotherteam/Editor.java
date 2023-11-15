@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.anotherteam.core.Core;
 import org.anotherteam.debug.DebugBatch;
+import org.anotherteam.dragged.DraggedHighliter;
 import org.anotherteam.game.Game;
 import org.anotherteam.game.GameState;
 import org.anotherteam.game.data.AssetData;
@@ -99,6 +100,15 @@ public final class Editor implements Core {
         if (play) {
             game.update(dt);
         }
+
+        if (Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
+            if (Screen.getDraggedObject() instanceof DraggedHighliter) {
+                return;
+            }
+
+            Screen.setDraggedObject(null);
+            Input.blockButton(Input.MOUSE_RIGHT_BUTTON);
+        }
     }
 
     @Override
@@ -129,10 +139,6 @@ public final class Editor implements Core {
     }
 
     public void imgui(float dt) {
-        if (Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
-            Screen.setDraggedObject(null);
-        }
-
         ImGui.dockSpaceOverViewport(ImGui.getMainViewport(), ImGuiDockNodeFlags.PassthruCentralNode);
         ImGui.beginMainMenuBar();
 

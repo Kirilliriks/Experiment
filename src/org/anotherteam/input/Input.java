@@ -63,6 +63,10 @@ public final class Input {
         return lastKey;
     }
 
+    public static void blockButton(MouseButton button) {
+        button.blocked = true;
+    }
+
     public static boolean isKeyDown(Key key) {
         if (key.isLetter()) {
             final int anotherChar = CharUtil.toAnotherCase(key.code);
@@ -90,7 +94,7 @@ public final class Input {
 
     public static boolean isAnyButtonDown() {
         if (lastButton == null) return false;
-        return lastButton.down;
+        return lastButton.down && !lastButton.blocked;
     }
 
     public static boolean isButtonPressed(MouseButton button) {
@@ -98,7 +102,7 @@ public final class Input {
     }
 
     public static boolean isButtonDown(MouseButton button) {
-        return button.down;
+        return button.down && !button.blocked;
     }
 
     public static float getMouseX() {
@@ -219,6 +223,7 @@ public final class Input {
         private boolean down = false;
         private boolean pressed = false;
         private boolean wasDown = false;
+        private boolean blocked = false;
 
         public MouseButton(int code) {
             buttonCode = code;
@@ -232,6 +237,10 @@ public final class Input {
         public void tick() {
             pressed = !wasDown && down;
             wasDown = down;
+
+            if (pressed && this.equals(MOUSE_RIGHT_BUTTON)) {
+                blocked = false;
+            }
         }
 
         public int getButtonCode() {
@@ -294,10 +303,6 @@ public final class Input {
 
         public boolean isDown() {
             return isKeyDown(this);
-        }
-
-        public boolean isWasDown() {
-            return wasDown;
         }
     }
 }
