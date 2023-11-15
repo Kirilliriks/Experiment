@@ -26,8 +26,6 @@ public final class LevelManager extends AbstractManager {
      * Save only on play, not on editor!
      */
     public void saveCurrent() {
-        if (game.getStateManager().getState() == GameState.ON_EDITOR) throw new LifeException("Trying save playable level when state is ON_EDITOR!");
-
         // TODO save
     }
 

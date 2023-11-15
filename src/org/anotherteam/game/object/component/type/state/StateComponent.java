@@ -21,7 +21,7 @@ public final class StateComponent extends Component {
     private State state;
 
     @Override
-    public void init() {
+    public void start() {
         defaultState();
     }
 

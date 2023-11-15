@@ -4,7 +4,6 @@ import imgui.ImGui;
 import imgui.flag.ImGuiDockNodeFlags;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.anotherteam.core.Core;
 import org.anotherteam.game.Game;
 import org.anotherteam.game.GameState;
@@ -12,6 +11,7 @@ import org.anotherteam.input.Input;
 import org.anotherteam.level.EditorCameraController;
 import org.anotherteam.level.PrefabViewer;
 import org.anotherteam.level.TileViewer;
+import org.anotherteam.manager.LevelManager;
 import org.anotherteam.render.ImGuiRender;
 import org.anotherteam.render.frame.RenderFrame;
 import org.anotherteam.render.window.Window;
@@ -24,21 +24,21 @@ import org.anotherteam.widget.Console;
 @Getter
 public final class Editor implements Core {
 
+    public static final String GLSL_VERSION = "#version 430 core";
     @Getter
     private static Editor instance;
 
     public static void switchPlayMode() {
-        final Game game = instance.getGame();
-        final boolean onEditor = game.getStateManager().getState() == GameState.ON_EDITOR;
-
-        Game.DEBUG_MODE = !onEditor;
-
+        reloadLevel();
         resetGameView();
-        game.getLevelManager().load(Game.START_LEVEL_NAME);
 
-        if (onEditor) {
-            game.getStateManager().setState(GameState.ON_LEVEL);
+        instance.play = !instance.play;
+
+        if (instance.play) {
+            instance.getGame().start();
         }
+
+        Game.DEBUG = !instance.play;
     }
 
     private static void resetGameView() {
@@ -54,26 +54,28 @@ public final class Editor implements Core {
         FileUtils.saveLevel(instance.getGame().getLevelManager().getCurrent());
     }
 
+    public static void reloadLevel() {
+        final LevelManager levelManager = instance.getGame().getLevelManager();
+        levelManager.load(levelManager.getCurrent().getName());
+    }
+
     private final Window window;
     private final Game game;
-
     private final ImGuiRender imGui;
-
     private final TileViewer tileViewer;
     private final PrefabViewer prefabViewer;
     private final Console console;
-
     private final EditorCameraController editorCameraController;
 
-    @Setter
     private Mode mode = Mode.VIEW;
+    private boolean play = false;
 
     public Editor(Window window) {
-        instance = this;
         this.window = window;
+        instance = this;
 
         game = new Game(window);
-        imGui = new ImGuiRender(GameScreen.getWindow().getHandler(), "#version 430 core", this);
+        imGui = new ImGuiRender(GameScreen.getWindow().getHandler(), GLSL_VERSION, this);
         tileViewer = new TileViewer(GameScreen.getWindow().getWidth() / 2 - 320, GameScreen.getWindow().getHeight() / 2 - 200, 640, 400);
         prefabViewer = new PrefabViewer(GameScreen.getWindow().getWidth() / 2 - 320, GameScreen.getWindow().getHeight() / 2 - 200, 640, 400);
         console = new Console(GameScreen.getWindow().getWidth() / 2 - 320, GameScreen.getWindow().getHeight() / 2 - 200, 640, 400);
@@ -81,33 +83,35 @@ public final class Editor implements Core {
     }
 
     @Override
-    public void init() {
-        game.init();
+    public void prepare() {
+        game.prepare();
 
-        Game.DEBUG_MODE = true;
-        game.getStateManager().setState(GameState.ON_EDITOR);
+        Game.DEBUG = true;
     }
 
     @Override
     public void update(float dt) {
-        game.update(dt);
+        if (play) {
+            game.update(dt);
+        }
     }
 
     @Override
     public void render(float dt) {
         game.render(dt);
 
-        final RenderFrame windowFrame = GameScreen.getWindowFrame();
-        windowFrame.renderBatch.begin(false);
-        windowFrame.renderBatch.drawText("[TEST]", 320, 200);
-        windowFrame.renderBatch.end();
-
-        if (game.getStateManager().getState() != GameState.ON_EDITOR) {
+        if (play) {
             if (EditorInput.isKeyPressed(Input.KEY_ESCAPE)) {
                 switchPlayMode();
             }
             return;
         }
+
+        final RenderFrame windowFrame = GameScreen.getWindowFrame();
+        windowFrame.renderBatch.begin(false);
+        windowFrame.renderBatch.drawText("[TEST]", 320, 200);
+        windowFrame.renderBatch.end();
+
         editorCameraController.handle(dt);
 
         imGui.render(dt);
@@ -138,7 +142,7 @@ public final class Editor implements Core {
             }
 
             if (ImGui.menuItem("Exit")) {
-                game.getStateManager().setState(GameState.ON_CLOSE_GAME);
+                game.setState(GameState.ON_CLOSE_GAME);
             }
 
             ImGui.endMenu();

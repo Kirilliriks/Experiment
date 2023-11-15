@@ -30,7 +30,7 @@ public abstract class Component {
     protected GameObject ownerObject = null;
     protected boolean serializable = true;
 
-    public void init() { }
+    public void start() { }
 
     public void update(float dt) { }
 

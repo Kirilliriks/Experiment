@@ -25,12 +25,11 @@ public final class Transform extends StaticComponent {
     private SpriteComponent sprite;
 
     private final Vector2i position = new Vector2i();
+    private final Vector2f moveImpulse = new Vector2f();
     private int maxSpeed;
     private int speed;
-    private boolean movable = false;
-
-    private final Vector2f moveImpulse = new Vector2f();
     private boolean moving = false;
+    private boolean movable = false;
 
     public Transform() {
         this(DEFAULT_SPEED);
@@ -42,7 +41,7 @@ public final class Transform extends StaticComponent {
     }
 
     @Override
-    public void init() {
+    public void start() {
         updateFlip();
     }
 

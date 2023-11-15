@@ -2,7 +2,6 @@ package org.anotherteam;
 
 import org.anotherteam.core.Core;
 import org.anotherteam.game.Game;
-import org.anotherteam.game.GameState;
 import org.anotherteam.render.window.Window;
 import org.anotherteam.util.GLUtils;
 import org.anotherteam.util.Time;
@@ -20,7 +19,7 @@ public final class CoreLauncher {
         this.core = core;
         this.window = window;
 
-        core.init();
+        core.prepare();
         run();
     }
 

@@ -45,10 +45,20 @@ public final class GameObject {
         this.room = room;
     }
 
+    /**
+     * When object placed to room
+     */
     public void prepare() {
+
+    }
+
+    /**
+     * When game started
+     */
+    public void start() {
         for (final Component component : components) {
             component.setDependencies();
-            component.init();
+            component.start();
         }
     }
 
@@ -132,7 +142,7 @@ public final class GameObject {
     }
 
     public void debugDraw(RenderBatch renderBatch, boolean inEditor) {
-        if (!Game.DEBUG_MODE) return;
+        if (!Game.DEBUG) return;
 
         final Vector2i pos = transform.getPosition();
         final float x = inEditor ? pos.x : GameScreen.toWindowPosX(pos.x);

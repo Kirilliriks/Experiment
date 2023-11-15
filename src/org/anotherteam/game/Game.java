@@ -14,11 +14,11 @@ public final class Game implements Core {
 
     public static final String GAME_NAME = "Experiment";
     public static final String START_LEVEL_NAME = "StartLevel";
-    public static boolean DEBUG_MODE = false;
+    public static boolean DEBUG = false;
 
     private final GameRender render;
     private final LevelManager levelManager;
-    private final StateManager stateManager;
+    private GameState state = GameState.ON_MENU;
 
     public Game(@NotNull Window window) {
         window.setFullscreen(false);
@@ -28,20 +28,17 @@ public final class Game implements Core {
         render = new GameRender(this);
 
         levelManager = new LevelManager(this);
-        stateManager = new StateManager(this, GameState.ON_MENU);
 
         DebugBatch.GLOBAL = new DebugBatch(GameScreen.WINDOW_CAMERA);
     }
 
     @Override
-    public void init() {
+    public void prepare() {
         levelManager.load(START_LEVEL_NAME);
     }
 
     @Override
     public void update(float dt) {
-        if (stateManager.getState() == GameState.ON_EDITOR) return;
-
         levelManager.update(dt);
     }
 
@@ -56,6 +53,14 @@ public final class Game implements Core {
 
     @Override
     public boolean needClose() {
-        return stateManager.getState() == GameState.ON_CLOSE_GAME;
+        return state == GameState.ON_CLOSE_GAME;
+    }
+
+    public void start() {
+        levelManager.getCurrent().start();
+    }
+
+    public void setState(GameState state) {
+        this.state = state;
     }
 }

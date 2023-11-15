@@ -6,7 +6,7 @@ public record Prefab(GameObject gameObject) {
 
     public GameObject copy() {
         final GameObject result = gameObject.copy();
-        result.prepare();
+        result.start();
         return result;
     }
 }

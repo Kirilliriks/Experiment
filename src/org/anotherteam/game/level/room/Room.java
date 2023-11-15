@@ -31,9 +31,9 @@ public final class Room {
         player = null;
     }
 
-    public void prepare() {
+    public void start() {
         for (final var object : gameObjects) {
-            object.prepare();
+            object.start();
         }
     }
 
@@ -54,7 +54,7 @@ public final class Room {
     }
 
     public void debugDraw(@NotNull RenderBatch renderBatch) {
-        if (!Game.DEBUG_MODE) return;
+        if (!Game.DEBUG) return;
 
         for (final var gameObject : gameObjects) {
             gameObject.debugDraw(renderBatch, false);
@@ -66,7 +66,9 @@ public final class Room {
         if (playerController != null) {
             player = object;
         }
+
         object.setRoom(this);
+
         gameObjects.add(object);
         gameObjects.sort(Comparator.comparingInt(GameObject::getRenderPriority));
     }

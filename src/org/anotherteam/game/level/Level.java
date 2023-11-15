@@ -33,12 +33,12 @@ public final class Level {
         this.name = name;
     }
 
-    public void prepare() {
+    public void start() {
         if (currentRoom == null) {
             throw new IllegalStateException("Prepare level without current room");
         }
 
-        currentRoom.prepare();
+        currentRoom.start();
     }
 
     public void update(float dt) {

@@ -45,7 +45,7 @@ public final class Collider extends AABB {
     }
 
     @Override
-    public void init() {
+    public void start() {
         if (!firstBound.equals(secondBound)) return;
         if (!ownerObject.hasComponent(SpriteComponent.class)) {
             setBounds(Sprite.DEFAULT_SIZE.x, Sprite.DEFAULT_SIZE.y);
