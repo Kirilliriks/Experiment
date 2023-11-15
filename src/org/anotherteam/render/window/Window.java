@@ -138,6 +138,8 @@ public final class Window {
 
         //glEnable(GL_BLEND);
         //glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+
+        Screen.init(this);
     }
 
     public int getAspect() {

@@ -8,12 +8,12 @@ import org.anotherteam.core.Core;
 import org.anotherteam.debug.DebugBatch;
 import org.anotherteam.dragged.DraggedHighliter;
 import org.anotherteam.game.Game;
-import org.anotherteam.game.GameState;
 import org.anotherteam.game.data.AssetData;
 import org.anotherteam.input.Input;
 import org.anotherteam.level.camera.EditorCameraController;
 import org.anotherteam.level.PrefabViewer;
 import org.anotherteam.level.TileViewer;
+import org.anotherteam.logger.GameLogger;
 import org.anotherteam.manager.LevelManager;
 import org.anotherteam.render.ImGuiRender;
 import org.anotherteam.render.frame.RenderFrame;
@@ -39,9 +39,12 @@ public final class Editor implements Core {
         resetGameView();
 
         instance.play = !instance.play;
+        instance.setMode(Mode.VIEW);
 
         if (instance.play) {
             instance.getGame().start();
+        } else {
+            instance.resetGame();
         }
 
         Game.DEBUG = !instance.play;
@@ -64,33 +67,46 @@ public final class Editor implements Core {
     }
 
     private final Window window;
-    private final Game game;
     private final ImGuiRender imGui;
     private final TileViewer tileViewer;
     private final PrefabViewer prefabViewer;
     private final Console console;
     private final EditorCameraController editorCameraController;
 
+    private Game game;
+
     private Mode mode = Mode.VIEW;
     private boolean play = false;
+    private boolean exit = false;
 
     public Editor(Window window) {
         this.window = window;
         instance = this;
 
-        game = new Game(window);
         imGui = new ImGuiRender(Screen.getWindow().getHandler(), GLSL_VERSION, this);
         tileViewer = new TileViewer(Screen.getWindow().getWidth() / 2 - 320, Screen.getWindow().getHeight() / 2 - 200, 640, 400);
         prefabViewer = new PrefabViewer(Screen.getWindow().getWidth() / 2 - 320, Screen.getWindow().getHeight() / 2 - 200, 640, 400);
         console = new Console(Screen.getWindow().getWidth() / 2 - 320, Screen.getWindow().getHeight() / 2 - 200, 640, 400);
         editorCameraController = new EditorCameraController();
 
+        resetGame();
+
         DebugBatch.GLOBAL = new DebugBatch(Screen.WINDOW_CAMERA);
+    }
+
+    private void resetGame() {
+        GameLogger.log("Initialize game");
+
+        game = new Game(window);
+        prepare();
+
+        GameLogger.log("Game initialized");
     }
 
     @Override
     public void prepare() {
         game.prepare();
+        game.demo();
 
         Game.DEBUG = true;
     }
@@ -153,7 +169,7 @@ public final class Editor implements Core {
             }
 
             if (ImGui.menuItem("Exit")) {
-                game.setState(GameState.ON_CLOSE_GAME);
+                exit = true;
             }
 
             ImGui.endMenu();
@@ -217,7 +233,7 @@ public final class Editor implements Core {
 
     @Override
     public boolean needClose() {
-        return game.needClose();
+        return exit;
     }
 
     public void setMode(Mode mode) {

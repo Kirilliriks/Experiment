@@ -26,7 +26,6 @@ public final class Game implements Core {
         instance = this;
 
         window.setFullscreen(false);
-        Screen.init(window);
 
         render = new GameRender(this);
         levelManager = new LevelManager(this);
@@ -57,10 +56,16 @@ public final class Game implements Core {
     }
 
     public void start() {
+        state = GameState.ON_LEVEL;
+
         levelManager.getCurrent().start();
     }
 
-    public void setState(GameState state) {
-        this.state = state;
+    public void demo() {
+        state = GameState.ON_DEMO;
+    }
+
+    public void close() {
+        state = GameState.ON_CLOSE_GAME;
     }
 }
