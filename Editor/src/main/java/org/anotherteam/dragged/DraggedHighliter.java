@@ -1,6 +1,6 @@
 package org.anotherteam.dragged;
 
-import org.anotherteam.game.data.AssetData;
+import org.anotherteam.Editor;
 import org.anotherteam.game.level.room.tile.Tile;
 import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.screen.DraggedObject;
@@ -15,7 +15,7 @@ public final class DraggedHighliter extends DraggedObject {
     public void draw(int x, int y, @NotNull RenderBatch renderBatch) {
         final int xF = (x / Tile.SIZE.x) * Tile.SIZE.x;
         final int yF = (y / Tile.SIZE.y) * Tile.SIZE.y;
-        renderBatch.draw(AssetData.EDITOR_HIGHLITER_TEXTURE, xF, yF, Tile.SIZE.x, Tile.SIZE.y, false, false, color);
+        renderBatch.draw(Editor.EDITOR_HIGHLITER_TEXTURE, xF, yF, Tile.SIZE.x, Tile.SIZE.y, false, false, color);
     }
 
     @Override

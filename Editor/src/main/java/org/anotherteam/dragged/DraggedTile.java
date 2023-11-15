@@ -1,5 +1,6 @@
 package org.anotherteam.dragged;
 
+import org.anotherteam.Editor;
 import org.anotherteam.game.data.AssetData;
 import org.anotherteam.game.level.room.Room;
 import org.anotherteam.game.level.room.tile.Tile;
@@ -33,7 +34,7 @@ public final class DraggedTile extends DraggedSprite {
         final int yF = (y / Tile.SIZE.y) * Tile.SIZE.y;
         renderBatch.draw(sprite, xF, yF, Tile.SIZE.x, Tile.SIZE.y);
 
-        renderBatch.draw(AssetData.EDITOR_HIGHLITER_TEXTURE, xF, yF, Tile.SIZE.x, Tile.SIZE.y);
+        renderBatch.draw(Editor.EDITOR_HIGHLITER_TEXTURE, xF, yF, Tile.SIZE.x, Tile.SIZE.y);
     }
 
     @Override

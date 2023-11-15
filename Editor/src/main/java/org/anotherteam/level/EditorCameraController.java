@@ -27,22 +27,22 @@ public final class EditorCameraController {
         final float mouseWheelVelocity = Input.getMouseWheelVelocity();
         if (mouseWheelVelocity != 0.0F && !ImGuiUtils.imGuiWantMouse()) {
             if (mouseWheelVelocity < 0) {
-                Screen.WIDTH += Screen.getWindow().getAspect() * 2;
-                Screen.HEIGHT += Screen.getWindow().getRatio() * 2;
+                Screen.width += Screen.getWindow().getAspect() * 2;
+                Screen.height += Screen.getWindow().getRatio() * 2;
             } else {
-                Screen.WIDTH -= Screen.getWindow().getAspect() * 2;
-                Screen.HEIGHT -= Screen.getWindow().getRatio() * 2;
+                Screen.width -= Screen.getWindow().getAspect() * 2;
+                Screen.height -= Screen.getWindow().getRatio() * 2;
             }
 
-            if (Screen.WIDTH < Screen.DEFAULT_WIDTH) {
-                Screen.WIDTH = Screen.DEFAULT_WIDTH;
+            if (Screen.width < Screen.DEFAULT_WIDTH) {
+                Screen.width = Screen.DEFAULT_WIDTH;
             }
 
-            if (Screen.HEIGHT < Screen.DEFAULT_HEIGHT) {
-                Screen.HEIGHT = Screen.DEFAULT_HEIGHT;
+            if (Screen.height < Screen.DEFAULT_HEIGHT) {
+                Screen.height = Screen.DEFAULT_HEIGHT;
             }
 
-            Editor.getInstance().getGame().getRender().updateFrames(Screen.WIDTH, Screen.HEIGHT);
+            Editor.getInstance().getGame().getRender().updateFrames(Screen.width, Screen.height);
         }
         
         float speed = 125.0f;
@@ -72,8 +72,8 @@ public final class EditorCameraController {
 
             final float diffX = (float) Math.floor(lastPos.x - Input.getMouseX());
             final float diffY = (float) Math.floor(lastPos.y - Input.getMouseY());
-            impulse.x += Screen.WIDTH * (diffX / (float) Screen.getWindow().getWidth());
-            impulse.y += Screen.HEIGHT * (diffY / (float) Screen.getWindow().getHeight());
+            impulse.x += Screen.width * (diffX / (float) Screen.getWindow().getWidth());
+            impulse.y += Screen.height * (diffY / (float) Screen.getWindow().getHeight());
             lastPos.set(Input.getMousePos());
         } else {
             lastPos.set(0, 0);

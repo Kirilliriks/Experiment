@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.anotherteam.core.Core;
 import org.anotherteam.game.Game;
 import org.anotherteam.game.GameState;
+import org.anotherteam.game.data.AssetData;
 import org.anotherteam.input.Input;
 import org.anotherteam.level.EditorCameraController;
 import org.anotherteam.level.PrefabViewer;
@@ -14,6 +15,7 @@ import org.anotherteam.level.TileViewer;
 import org.anotherteam.manager.LevelManager;
 import org.anotherteam.render.ImGuiRender;
 import org.anotherteam.render.frame.RenderFrame;
+import org.anotherteam.render.texture.Texture;
 import org.anotherteam.render.window.Window;
 import org.anotherteam.screen.Screen;
 import org.anotherteam.util.EditorInput;
@@ -25,6 +27,7 @@ import org.anotherteam.widget.Console;
 public final class Editor implements Core {
 
     public static final String GLSL_VERSION = "#version 430 core";
+    public static final Texture EDITOR_HIGHLITER_TEXTURE = AssetData.getTexture(AssetData.ASSETS_PATH + "editor_highliter_texture.png");
     @Getter
     private static Editor instance;
 
@@ -42,12 +45,12 @@ public final class Editor implements Core {
     }
 
     private static void resetGameView() {
-        Screen.WIDTH = Screen.DEFAULT_WIDTH;
-        Screen.HEIGHT = Screen.DEFAULT_HEIGHT;
-        Screen.RENDER_WIDTH = Screen.getWindow().getWidth();
-        Screen.RENDER_HEIGHT = Screen.getWindow().getHeight();
+        Screen.width = Screen.DEFAULT_WIDTH;
+        Screen.height = Screen.DEFAULT_HEIGHT;
+        Screen.renderWidth = Screen.getWindow().getWidth();
+        Screen.renderHeight = Screen.getWindow().getHeight();
 
-        instance.getGame().getRender().updateFrames(Screen.WIDTH, Screen.HEIGHT);
+        instance.getGame().getRender().updateFrames(Screen.width, Screen.height);
     }
 
     public static void saveLevel() {
@@ -107,7 +110,7 @@ public final class Editor implements Core {
             return;
         }
 
-        final RenderFrame windowFrame = Screen.getWindowFrame();
+        final RenderFrame windowFrame = Screen.getMainFrame();
         windowFrame.renderBatch.begin(false);
         windowFrame.renderBatch.drawText("[TEST]", 320, 200);
         windowFrame.renderBatch.end();

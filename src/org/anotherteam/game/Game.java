@@ -44,7 +44,7 @@ public final class Game implements Core {
 
     @Override
     public void render(float dt) {
-        levelManager.render(Screen.getWindowFrame());
+        levelManager.render(Screen.getMainFrame());
     }
 
     @Override

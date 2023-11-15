@@ -31,7 +31,7 @@ public final class GameRender {
     public GameRender(Game game) {
         this.game = game;
 
-        renderCamera = new Camera(Screen.WIDTH / 2, Screen.HEIGHT / 2, Screen.WIDTH, Screen.HEIGHT);
+        renderCamera = new Camera(Screen.width / 2, Screen.height / 2, Screen.width, Screen.height);
 
         raycastShader = new Shader(AssetData.SHADER_PATH + "vsInvert.glsl", AssetData.SHADER_PATH + "fsInvert.glsl");
 
@@ -88,8 +88,8 @@ public final class GameRender {
         windowFrame.renderBatch.draw(
                 onLevel ? effectFrame.texture : textureFrame.texture,
                 0, 0,
-                Screen.RENDER_WIDTH,
-                Screen.RENDER_HEIGHT,
+                Screen.renderWidth,
+                Screen.renderHeight,
                 false, true);
 
         if (Game.DEBUG) {
@@ -102,8 +102,8 @@ public final class GameRender {
         windowFrame.renderBatch.draw(
                 windowFrame.texture,
                 0, 0,
-                Screen.RENDER_WIDTH,
-                Screen.RENDER_HEIGHT,
+                Screen.renderWidth,
+                Screen.renderHeight,
                 false, true);
         windowFrame.renderBatch.end();
     }

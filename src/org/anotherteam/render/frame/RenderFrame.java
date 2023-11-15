@@ -14,13 +14,12 @@ import static org.lwjgl.opengl.GL11.*;
 public final class RenderFrame {
 
     public final RenderBatch renderBatch;
-
     public final FrameBuffer frameBuffer;
     public final Texture texture;
     public final Pixmap pixmap;
 
     public RenderFrame(@NotNull RenderBatch renderBatch) {
-        this(renderBatch, Screen.WIDTH, Screen.HEIGHT);
+        this(renderBatch, Screen.width, Screen.height);
     }
 
     public RenderFrame(@NotNull RenderBatch renderBatch, int width, int height) {
@@ -52,9 +51,9 @@ public final class RenderFrame {
 
     public void renderBorders() {
         final var v1 = new Vector2f(0, 0);
-        final var v2 = new Vector2f(Screen.RENDER_WIDTH, 0);
-        final var v3 = new Vector2f(Screen.RENDER_WIDTH, Screen.RENDER_HEIGHT);
-        final var v4 = new Vector2f(0, Screen.RENDER_HEIGHT);
+        final var v2 = new Vector2f(Screen.renderWidth, 0);
+        final var v3 = new Vector2f(Screen.renderWidth, Screen.renderHeight);
+        final var v4 = new Vector2f(0, Screen.renderHeight);
         renderBatch.debugBatch.drawLine(v1, v2, Color.RED);
         renderBatch.debugBatch.drawLine(v2, v3, Color.RED);
         renderBatch.debugBatch.drawLine(v3, v4, Color.RED);

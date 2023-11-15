@@ -25,10 +25,6 @@ public final class AssetData {
     public static final Map<String, SpriteAtlas> spriteAtlases = new HashMap<>();
     public static final Map<String, Texture> textures = new HashMap<>();
 
-    // Editor textures
-    public static final Texture EDITOR_HIGHLITER_TEXTURE = getTexture(ASSETS_PATH + "editor_highliter_texture.png");
-    //
-
     public static final Shader DEFAULT_SHADER = new Shader(SHADER_PATH + "defaultVertexShader.glsl", SHADER_PATH + "defaultFragmentShader.glsl");
     public static final Shader DEBUG_SHADER = new Shader(SHADER_PATH + "debugVS.glsl", SHADER_PATH + "debugFS.glsl");
 
