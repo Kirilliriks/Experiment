@@ -9,7 +9,7 @@ import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.frame.RenderFrame;
 import org.anotherteam.render.screen.Camera;
 import org.anotherteam.render.shader.Shader;
-import org.anotherteam.screen.GameScreen;
+import org.anotherteam.screen.Screen;
 import org.jetbrains.annotations.NotNull;
 
 import static org.lwjgl.opengl.GL42.*;
@@ -31,11 +31,11 @@ public final class GameRender {
     public GameRender(Game game) {
         this.game = game;
 
-        renderCamera = new Camera(GameScreen.WIDTH / 2, GameScreen.HEIGHT / 2, GameScreen.WIDTH, GameScreen.HEIGHT);
+        renderCamera = new Camera(Screen.WIDTH / 2, Screen.HEIGHT / 2, Screen.WIDTH, Screen.HEIGHT);
 
         raycastShader = new Shader(AssetData.SHADER_PATH + "vsInvert.glsl", AssetData.SHADER_PATH + "fsInvert.glsl");
 
-        textureBatch = new RenderBatch(AssetData.DEFAULT_SHADER, GameScreen.GAME_CAMERA);
+        textureBatch = new RenderBatch(AssetData.DEFAULT_SHADER, Screen.GAME_CAMERA);
         effectBatch = new RenderBatch(raycastShader, renderCamera);
 
         textureFrame = new RenderFrame(textureBatch);
@@ -49,7 +49,7 @@ public final class GameRender {
         effectFrame.changeBufferSize(width, height);
 
         renderCamera.setProjection(width, height);
-        GameScreen.GAME_CAMERA.setProjection(width, height);
+        Screen.GAME_CAMERA.setProjection(width, height);
     }
 
     public void render(@NotNull RenderFrame windowFrame, @NotNull Room room) {
@@ -66,10 +66,10 @@ public final class GameRender {
 
         effectFrame.begin();
 
-        raycastShader.setUniform("real_view", GameScreen.GAME_CAMERA.getViewMatrix());
+        raycastShader.setUniform("real_view", Screen.GAME_CAMERA.getViewMatrix());
 
-        final int preparedX = GameScreen.GAME_CAMERA.translateX(room.getPlayer().getPosition().x);
-        final int preparedY = GameScreen.GAME_CAMERA.translateY(room.getPlayer().getPosition().y + 15);
+        final int preparedX = Screen.GAME_CAMERA.translateX(room.getPlayer().getPosition().x);
+        final int preparedY = Screen.GAME_CAMERA.translateY(room.getPlayer().getPosition().y + 15);
         raycastShader.setUniform("player_pos",
                 preparedX, preparedY);
 
@@ -88,8 +88,8 @@ public final class GameRender {
         windowFrame.renderBatch.draw(
                 onLevel ? effectFrame.texture : textureFrame.texture,
                 0, 0,
-                GameScreen.RENDER_WIDTH,
-                GameScreen.RENDER_HEIGHT,
+                Screen.RENDER_WIDTH,
+                Screen.RENDER_HEIGHT,
                 false, true);
 
         if (Game.DEBUG) {
@@ -102,8 +102,8 @@ public final class GameRender {
         windowFrame.renderBatch.draw(
                 windowFrame.texture,
                 0, 0,
-                GameScreen.RENDER_WIDTH,
-                GameScreen.RENDER_HEIGHT,
+                Screen.RENDER_WIDTH,
+                Screen.RENDER_HEIGHT,
                 false, true);
         windowFrame.renderBatch.end();
     }
@@ -111,13 +111,13 @@ public final class GameRender {
     private void drawTextures(@NotNull Room room) {
         room.draw(textureBatch, false);
 
-        if (!Game.DEBUG || GameScreen.getDraggedThing() == null) return;
+        if (!Game.DEBUG || Screen.getDraggedObject() == null) return;
 
-        final int x = GameScreen.inGameMouseX();
-        final int y = GameScreen.inGameMouseY();
+        final int x = Screen.inGameMouseX();
+        final int y = Screen.inGameMouseY();
         if (x < 0 || y < 0) return;
 
-        GameScreen.getDraggedThing().draw(x, y, textureBatch);
+        Screen.getDraggedObject().draw(x, y, textureBatch);
     }
 
     private void drawHeightMap(@NotNull Room room) {
@@ -125,16 +125,16 @@ public final class GameRender {
     }
 
     private void debugRender(RenderBatch renderBatch, Room room) {
-        final int x = GameScreen.inGameMouseX();
-        final int y = GameScreen.inGameMouseY();
+        final int x = Screen.inGameMouseX();
+        final int y = Screen.inGameMouseY();
         renderBatch.drawText("Pos: " + x + " " + y,
                 (int) (Input.getMousePos().x + 15), (int) (Input.getMousePos().y - 25));
 
         room.debugDraw(renderBatch);
 
-        if (!Game.DEBUG || GameScreen.getDraggedThing() == null) return;
+        if (!Game.DEBUG || Screen.getDraggedObject() == null) return;
         if (x < 0 || y < 0) return;
 
-        GameScreen.getDraggedThing().debugDraw(x, y, false, renderBatch);
+        Screen.getDraggedObject().debugDraw(x, y, false, renderBatch);
     }
 }

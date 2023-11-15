@@ -11,7 +11,7 @@ import org.anotherteam.logger.GameLogger;
 import org.anotherteam.game.object.component.type.collider.Collider;
 import org.anotherteam.game.object.component.type.sprite.SpriteComponent;
 import org.anotherteam.render.batch.RenderBatch;
-import org.anotherteam.screen.GameScreen;
+import org.anotherteam.screen.Screen;
 import org.anotherteam.util.SerializeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
@@ -145,8 +145,8 @@ public final class GameObject {
         if (!Game.DEBUG) return;
 
         final Vector2i pos = transform.getPosition();
-        final float x = inEditor ? pos.x : GameScreen.toWindowPosX(pos.x);
-        final float y = inEditor ? pos.y : GameScreen.toWindowPosY(pos.y);
+        final float x = inEditor ? pos.x : Screen.toWindowPosX(pos.x);
+        final float y = inEditor ? pos.y : Screen.toWindowPosY(pos.y);
         renderBatch.drawText("Pos: " + pos.x + " : " + pos.y, x, y, false, true, true);
 
         getCollider().debugRender(inEditor, renderBatch.debugBatch);

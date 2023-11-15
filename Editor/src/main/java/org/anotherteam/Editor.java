@@ -15,7 +15,7 @@ import org.anotherteam.manager.LevelManager;
 import org.anotherteam.render.ImGuiRender;
 import org.anotherteam.render.frame.RenderFrame;
 import org.anotherteam.render.window.Window;
-import org.anotherteam.screen.GameScreen;
+import org.anotherteam.screen.Screen;
 import org.anotherteam.util.EditorInput;
 import org.anotherteam.util.FileUtils;
 import org.anotherteam.widget.popup.Popups;
@@ -42,12 +42,12 @@ public final class Editor implements Core {
     }
 
     private static void resetGameView() {
-        GameScreen.WIDTH = GameScreen.DEFAULT_WIDTH;
-        GameScreen.HEIGHT = GameScreen.DEFAULT_HEIGHT;
-        GameScreen.RENDER_WIDTH = GameScreen.getWindow().getWidth();
-        GameScreen.RENDER_HEIGHT = GameScreen.getWindow().getHeight();
+        Screen.WIDTH = Screen.DEFAULT_WIDTH;
+        Screen.HEIGHT = Screen.DEFAULT_HEIGHT;
+        Screen.RENDER_WIDTH = Screen.getWindow().getWidth();
+        Screen.RENDER_HEIGHT = Screen.getWindow().getHeight();
 
-        instance.getGame().getRender().updateFrames(GameScreen.WIDTH, GameScreen.HEIGHT);
+        instance.getGame().getRender().updateFrames(Screen.WIDTH, Screen.HEIGHT);
     }
 
     public static void saveLevel() {
@@ -75,10 +75,10 @@ public final class Editor implements Core {
         instance = this;
 
         game = new Game(window);
-        imGui = new ImGuiRender(GameScreen.getWindow().getHandler(), GLSL_VERSION, this);
-        tileViewer = new TileViewer(GameScreen.getWindow().getWidth() / 2 - 320, GameScreen.getWindow().getHeight() / 2 - 200, 640, 400);
-        prefabViewer = new PrefabViewer(GameScreen.getWindow().getWidth() / 2 - 320, GameScreen.getWindow().getHeight() / 2 - 200, 640, 400);
-        console = new Console(GameScreen.getWindow().getWidth() / 2 - 320, GameScreen.getWindow().getHeight() / 2 - 200, 640, 400);
+        imGui = new ImGuiRender(Screen.getWindow().getHandler(), GLSL_VERSION, this);
+        tileViewer = new TileViewer(Screen.getWindow().getWidth() / 2 - 320, Screen.getWindow().getHeight() / 2 - 200, 640, 400);
+        prefabViewer = new PrefabViewer(Screen.getWindow().getWidth() / 2 - 320, Screen.getWindow().getHeight() / 2 - 200, 640, 400);
+        console = new Console(Screen.getWindow().getWidth() / 2 - 320, Screen.getWindow().getHeight() / 2 - 200, 640, 400);
         editorCameraController = new EditorCameraController();
     }
 
@@ -107,7 +107,7 @@ public final class Editor implements Core {
             return;
         }
 
-        final RenderFrame windowFrame = GameScreen.getWindowFrame();
+        final RenderFrame windowFrame = Screen.getWindowFrame();
         windowFrame.renderBatch.begin(false);
         windowFrame.renderBatch.drawText("[TEST]", 320, 200);
         windowFrame.renderBatch.end();
@@ -125,7 +125,7 @@ public final class Editor implements Core {
 
     public void imgui(float dt) {
         if (Input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON)) {
-            GameScreen.setDraggedThing(null);
+            Screen.setDraggedObject(null);
         }
 
         ImGui.dockSpaceOverViewport(ImGui.getMainViewport(), ImGuiDockNodeFlags.PassthruCentralNode);
@@ -216,7 +216,7 @@ public final class Editor implements Core {
 
         this.mode = mode;
 
-        GameScreen.setDraggedThing(null);
+        Screen.setDraggedObject(null);
     }
 
     @RequiredArgsConstructor

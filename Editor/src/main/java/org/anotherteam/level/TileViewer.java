@@ -7,7 +7,6 @@ import org.anotherteam.input.Input;
 import org.anotherteam.game.data.AssetData;
 import org.anotherteam.dragged.DraggedTile;
 import org.anotherteam.dragged.DraggedTiles;
-import org.anotherteam.logger.GameLogger;
 import org.anotherteam.util.EditorInput;
 import org.anotherteam.widget.Widget;
 import org.anotherteam.game.level.room.Room;
@@ -15,8 +14,8 @@ import org.anotherteam.game.level.room.tile.Tile;
 import org.anotherteam.render.sprite.Sprite;
 import org.anotherteam.render.sprite.SpriteAtlas;
 import org.anotherteam.render.texture.Texture;
-import org.anotherteam.screen.DraggedThing;
-import org.anotherteam.screen.GameScreen;
+import org.anotherteam.screen.DraggedObject;
+import org.anotherteam.screen.Screen;
 import org.anotherteam.util.exception.LifeException;
 
 import java.io.File;
@@ -79,34 +78,34 @@ public final class TileViewer extends Widget {
             return;
         }
 
-        if (GameScreen.getDraggedThing() == null) {
-            GameScreen.setDraggedThing(DRAGGED_HIGHLITER);
+        if (Screen.getDraggedObject() == null) {
+            Screen.setDraggedObject(DRAGGED_HIGHLITER);
         }
 
-        final int tileX = GameScreen.mouseOnTileX();
-        final int tileY = GameScreen.mouseOnTileY();
+        final int tileX = Screen.mouseOnTileX();
+        final int tileY = Screen.mouseOnTileY();
         if (tileX < 0 || tileY < 0) return;
 
-        final DraggedThing thing = getDraggedTile();
+        final DraggedObject draggedObject = getDraggedTile();
         final Room room = Editor.getInstance().getGame().getLevelManager().getCurrentRoom();
-        if (thing == null && EditorInput.isButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
+        if (draggedObject == null && EditorInput.isButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
             room.removeTile(tileX, tileY);
         }
 
         if (EditorInput.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) {
-            if (thing == null && EditorInput.isKeyDown(Input.KEY_SHIFT)) {
+            if (draggedObject == null && EditorInput.isKeyDown(Input.KEY_SHIFT)) {
                 final Tile tile = room.getTile(tileX, tileY);
                 if (tile == null) {
                     return;
                 }
 
-                GameScreen.setDraggedThing(new DraggedTile(tile));
+                Screen.setDraggedObject(new DraggedTile(tile));
                 return;
             }
 
-            if (thing instanceof DraggedTile draggedTile) {
+            if (draggedObject instanceof DraggedTile draggedTile) {
                 draggedTile.placeTile(room, tileX, tileY);
-            } else if (thing instanceof DraggedTiles draggedTiles) {
+            } else if (draggedObject instanceof DraggedTiles draggedTiles) {
                 draggedTiles.placeTiles(room, tileX, tileY);
             }
         }
@@ -139,11 +138,11 @@ public final class TileViewer extends Widget {
                 if (ImGui.isItemHovered()) {
                     if (ImGui.isItemClicked()) {
                         if (Input.isKeyDown(Input.KEY_SHIFT) && getDraggedTile() instanceof DraggedTile dragged) {
-                            GameScreen.setDraggedThing(
+                            Screen.setDraggedObject(
                                     new DraggedTiles(dragged.getFrameX(), dragged.getFrameY(), x, y, selectedAtlas)
                             );
                         } else {
-                            GameScreen.setDraggedThing(new DraggedTile(x, y, selectedAtlas));
+                            Screen.setDraggedObject(new DraggedTile(x, y, selectedAtlas));
                         }
                     }
 
@@ -191,12 +190,12 @@ public final class TileViewer extends Widget {
         }
     }
 
-    private DraggedThing getDraggedTile() {
-        final DraggedThing thing = GameScreen.getDraggedThing();
-        if (thing instanceof DraggedHighliter) {
+    private DraggedObject getDraggedTile() {
+        final DraggedObject draggedObject = Screen.getDraggedObject();
+        if (draggedObject instanceof DraggedHighliter) {
             return null;
         }
 
-        return thing;
+        return draggedObject;
     }
 }

@@ -3,10 +3,10 @@ package org.anotherteam.dragged;
 import lombok.Getter;
 import org.anotherteam.game.object.GameObject;
 import org.anotherteam.render.batch.RenderBatch;
-import org.anotherteam.screen.DraggedThing;
+import org.anotherteam.screen.DraggedObject;
 
 @Getter
-public final class DraggedGameObject extends DraggedThing {
+public final class DraggedGameObject extends DraggedObject {
 
     private final GameObject gameObject;
 

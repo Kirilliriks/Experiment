@@ -11,7 +11,7 @@ import org.anotherteam.game.object.component.Component;
 import org.anotherteam.game.object.component.fieldcontroller.FieldController;
 import org.anotherteam.game.object.component.type.sprite.SpriteComponent;
 import org.anotherteam.render.sprite.Sprite;
-import org.anotherteam.screen.GameScreen;
+import org.anotherteam.screen.Screen;
 import org.anotherteam.util.Color;
 import org.anotherteam.util.SerializeUtil;
 import org.jetbrains.annotations.NotNull;
@@ -129,7 +129,7 @@ public final class Collider extends AABB {
         interactAABB.debugRender(inEditor, debugBatch);
 
         Color color = Color.RED;
-        if (isOnMouse(GameScreen.inGameMouseX(), GameScreen.inGameMouseY())) {
+        if (isOnMouse(Screen.inGameMouseX(), Screen.inGameMouseY())) {
             color = Color.GREEN;
         }
 

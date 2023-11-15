@@ -4,8 +4,7 @@ import org.anotherteam.debug.DebugBatch;
 import org.anotherteam.game.object.GameObject;
 import org.anotherteam.game.object.component.Component;
 import org.anotherteam.game.object.component.type.StaticComponent;
-import org.anotherteam.input.Input;
-import org.anotherteam.screen.GameScreen;
+import org.anotherteam.screen.Screen;
 import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
@@ -97,10 +96,10 @@ public abstract class AABB extends StaticComponent {
         var v4 = new Vector2f(x + secondBound.x, y + firstBound.y);
 
         if (!inEditor) {
-            GameScreen.toWindowPos(v1);
-            GameScreen.toWindowPos(v2);
-            GameScreen.toWindowPos(v3);
-            GameScreen.toWindowPos(v4);
+            Screen.toWindowPos(v1);
+            Screen.toWindowPos(v2);
+            Screen.toWindowPos(v3);
+            Screen.toWindowPos(v4);
         }
 
         debugBatch.drawLine(v1, v2, color);

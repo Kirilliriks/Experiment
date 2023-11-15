@@ -4,7 +4,7 @@ import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.framebuffer.FrameBuffer;
 import org.anotherteam.render.texture.Pixmap;
 import org.anotherteam.render.texture.Texture;
-import org.anotherteam.screen.GameScreen;
+import org.anotherteam.screen.Screen;
 import org.anotherteam.util.Color;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
@@ -20,7 +20,7 @@ public final class RenderFrame {
     public final Pixmap pixmap;
 
     public RenderFrame(@NotNull RenderBatch renderBatch) {
-        this(renderBatch, GameScreen.WIDTH, GameScreen.HEIGHT);
+        this(renderBatch, Screen.WIDTH, Screen.HEIGHT);
     }
 
     public RenderFrame(@NotNull RenderBatch renderBatch, int width, int height) {
@@ -52,9 +52,9 @@ public final class RenderFrame {
 
     public void renderBorders() {
         final var v1 = new Vector2f(0, 0);
-        final var v2 = new Vector2f(GameScreen.RENDER_WIDTH, 0);
-        final var v3 = new Vector2f(GameScreen.RENDER_WIDTH, GameScreen.RENDER_HEIGHT);
-        final var v4 = new Vector2f(0, GameScreen.RENDER_HEIGHT);
+        final var v2 = new Vector2f(Screen.RENDER_WIDTH, 0);
+        final var v3 = new Vector2f(Screen.RENDER_WIDTH, Screen.RENDER_HEIGHT);
+        final var v4 = new Vector2f(0, Screen.RENDER_HEIGHT);
         renderBatch.debugBatch.drawLine(v1, v2, Color.RED);
         renderBatch.debugBatch.drawLine(v2, v3, Color.RED);
         renderBatch.debugBatch.drawLine(v3, v4, Color.RED);

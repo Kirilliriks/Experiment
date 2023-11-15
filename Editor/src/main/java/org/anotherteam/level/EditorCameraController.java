@@ -2,7 +2,7 @@ package org.anotherteam.level;
 
 import org.anotherteam.Editor;
 import org.anotherteam.input.Input;
-import org.anotherteam.screen.GameScreen;
+import org.anotherteam.screen.Screen;
 import org.anotherteam.util.EditorInput;
 import org.anotherteam.util.ImGuiUtils;
 import org.joml.Vector2f;
@@ -13,7 +13,7 @@ public final class EditorCameraController {
     private final Vector2f impulse = new Vector2f(0, 0);
 
     public void handle(float dt) {
-        if (GameScreen.inGameWindowMouseX() == -1 || GameScreen.inGameMouseY() == -1) {
+        if (Screen.inGameWindowMouseX() == -1 || Screen.inGameMouseY() == -1) {
             lastPos.set(0, 0);
             return;
         }
@@ -27,22 +27,22 @@ public final class EditorCameraController {
         final float mouseWheelVelocity = Input.getMouseWheelVelocity();
         if (mouseWheelVelocity != 0.0F && !ImGuiUtils.imGuiWantMouse()) {
             if (mouseWheelVelocity < 0) {
-                GameScreen.WIDTH += GameScreen.getWindow().getAspect() * 2;
-                GameScreen.HEIGHT += GameScreen.getWindow().getRatio() * 2;
+                Screen.WIDTH += Screen.getWindow().getAspect() * 2;
+                Screen.HEIGHT += Screen.getWindow().getRatio() * 2;
             } else {
-                GameScreen.WIDTH -= GameScreen.getWindow().getAspect() * 2;
-                GameScreen.HEIGHT -= GameScreen.getWindow().getRatio() * 2;
+                Screen.WIDTH -= Screen.getWindow().getAspect() * 2;
+                Screen.HEIGHT -= Screen.getWindow().getRatio() * 2;
             }
 
-            if (GameScreen.WIDTH < GameScreen.DEFAULT_WIDTH) {
-                GameScreen.WIDTH = GameScreen.DEFAULT_WIDTH;
+            if (Screen.WIDTH < Screen.DEFAULT_WIDTH) {
+                Screen.WIDTH = Screen.DEFAULT_WIDTH;
             }
 
-            if (GameScreen.HEIGHT < GameScreen.DEFAULT_HEIGHT) {
-                GameScreen.HEIGHT = GameScreen.DEFAULT_HEIGHT;
+            if (Screen.HEIGHT < Screen.DEFAULT_HEIGHT) {
+                Screen.HEIGHT = Screen.DEFAULT_HEIGHT;
             }
 
-            Editor.getInstance().getGame().getRender().updateFrames(GameScreen.WIDTH, GameScreen.HEIGHT);
+            Editor.getInstance().getGame().getRender().updateFrames(Screen.WIDTH, Screen.HEIGHT);
         }
         
         float speed = 125.0f;
@@ -72,14 +72,14 @@ public final class EditorCameraController {
 
             final float diffX = (float) Math.floor(lastPos.x - Input.getMouseX());
             final float diffY = (float) Math.floor(lastPos.y - Input.getMouseY());
-            impulse.x += GameScreen.WIDTH * (diffX / (float) GameScreen.getWindow().getWidth());
-            impulse.y += GameScreen.HEIGHT * (diffY / (float) GameScreen.getWindow().getHeight());
+            impulse.x += Screen.WIDTH * (diffX / (float) Screen.getWindow().getWidth());
+            impulse.y += Screen.HEIGHT * (diffY / (float) Screen.getWindow().getHeight());
             lastPos.set(Input.getMousePos());
         } else {
             lastPos.set(0, 0);
         }
 
-        GameScreen.GAME_CAMERA.addPosition(impulse.x, impulse.y);
+        Screen.GAME_CAMERA.addPosition(impulse.x, impulse.y);
         impulse.zero();
     }
 }

@@ -10,7 +10,7 @@ import org.anotherteam.game.object.component.type.collider.Collider;
 import org.anotherteam.game.object.component.type.transform.Transform;
 import org.anotherteam.input.Input;
 import org.anotherteam.game.object.component.type.state.StateComponent;
-import org.anotherteam.screen.GameScreen;
+import org.anotherteam.screen.Screen;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
 
@@ -58,7 +58,7 @@ public final class PlayerController extends Component {
     }
     @Override
     public void update(float dt) {
-        GameScreen.GAME_CAMERA.setPosition(position.x, GameScreen.HEIGHT / 2.0f);
+        Screen.GAME_CAMERA.setPosition(position.x, Screen.HEIGHT / 2.0f);
 
         float newMove = 0;
 

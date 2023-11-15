@@ -11,7 +11,7 @@ import org.anotherteam.util.exception.LifeException;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
 
-public final class GameScreen {
+public final class Screen {
 
     public static final int DEFAULT_WIDTH = 160;
     public static final int DEFAULT_HEIGHT = 90;
@@ -26,9 +26,9 @@ public final class GameScreen {
 
     private static RenderFrame windowFrame = null;
     private static Window window = null;
-    private static DraggedThing draggedThing = null;
+    private static DraggedObject draggedObject = null;
 
-    private GameScreen() {
+    private Screen() {
         throw new LifeException("Try create GameScreen object");
     }
 
@@ -124,18 +124,18 @@ public final class GameScreen {
     }
 
     public static void setWindow(Window window) {
-        GameScreen.window = window;
+        Screen.window = window;
     }
 
     public static Window getWindow() {
         return window;
     }
 
-    public static void setDraggedThing(DraggedThing draggedThing) {
-        GameScreen.draggedThing = draggedThing;
+    public static void setDraggedObject(DraggedObject draggedObject) {
+        Screen.draggedObject = draggedObject;
     }
 
-    public static DraggedThing getDraggedThing() {
-        return draggedThing;
+    public static DraggedObject getDraggedObject() {
+        return draggedObject;
     }
 }

@@ -5,13 +5,13 @@ import org.anotherteam.game.level.room.Room;
 import org.anotherteam.game.level.room.tile.Tile;
 import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.sprite.SpriteAtlas;
-import org.anotherteam.screen.DraggedThing;
+import org.anotherteam.screen.DraggedObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public final class DraggedTiles extends DraggedThing {
+public final class DraggedTiles extends DraggedObject {
 
     private final SpriteAtlas atlas;
 

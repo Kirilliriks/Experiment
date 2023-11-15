@@ -10,8 +10,8 @@ import org.anotherteam.game.object.component.type.sprite.SpriteComponent;
 import org.anotherteam.game.object.prefab.Prefab;
 import org.anotherteam.input.Input;
 import org.anotherteam.render.sprite.Sprite;
-import org.anotherteam.screen.DraggedThing;
-import org.anotherteam.screen.GameScreen;
+import org.anotherteam.screen.DraggedObject;
+import org.anotherteam.screen.Screen;
 import org.anotherteam.util.EditorInput;
 import org.anotherteam.widget.Widget;
 
@@ -43,7 +43,7 @@ public final class PrefabViewer extends Widget {
                 continue;
             }
 
-            GameScreen.setDraggedThing(new DraggedGameObject(prefab.copy()));
+            Screen.setDraggedObject(new DraggedGameObject(prefab.copy()));
         }
 
         ImGui.end();
@@ -52,28 +52,28 @@ public final class PrefabViewer extends Widget {
             return;
         }
 
-        final DraggedThing thing = GameScreen.getDraggedThing();
+        final DraggedObject draggedObject = Screen.getDraggedObject();
         if (EditorInput.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) {
             final Room room = Editor.getInstance().getGame().getLevelManager().getCurrentRoom();
 
-            if (thing == null) {
+            if (draggedObject == null) {
                 for (final GameObject gameObject : room.getGameObjects()) {
-                    if (gameObject.getCollider().isOnMouse(GameScreen.inGameMouseX(), GameScreen.inGameMouseY())) {
+                    if (gameObject.getCollider().isOnMouse(Screen.inGameMouseX(), Screen.inGameMouseY())) {
                         room.rewoveObject(gameObject);
-                        GameScreen.setDraggedThing(new DraggedGameObject(gameObject));
+                        Screen.setDraggedObject(new DraggedGameObject(gameObject));
                         return;
                     }
                 }
                 return;
             }
 
-            if (!(thing instanceof DraggedGameObject draggedGameObject)) {
+            if (!(draggedObject instanceof DraggedGameObject draggedGameObject)) {
                 return;
             }
 
             room.addObject(draggedGameObject.getGameObject());
 
-            GameScreen.setDraggedThing(null);
+            Screen.setDraggedObject(null);
         }
     }
 }

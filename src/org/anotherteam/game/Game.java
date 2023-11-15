@@ -6,7 +6,7 @@ import org.anotherteam.debug.DebugBatch;
 import org.anotherteam.manager.LevelManager;
 import org.anotherteam.render.GameRender;
 import org.anotherteam.render.window.Window;
-import org.anotherteam.screen.GameScreen;
+import org.anotherteam.screen.Screen;
 import org.jetbrains.annotations.NotNull;
 
 @Getter
@@ -23,13 +23,13 @@ public final class Game implements Core {
     public Game(@NotNull Window window) {
         window.setFullscreen(false);
 
-        GameScreen.init(window);
+        Screen.init(window);
 
         render = new GameRender(this);
 
         levelManager = new LevelManager(this);
 
-        DebugBatch.GLOBAL = new DebugBatch(GameScreen.WINDOW_CAMERA);
+        DebugBatch.GLOBAL = new DebugBatch(Screen.WINDOW_CAMERA);
     }
 
     @Override
@@ -44,7 +44,7 @@ public final class Game implements Core {
 
     @Override
     public void render(float dt) {
-        levelManager.render(GameScreen.getWindowFrame());
+        levelManager.render(Screen.getWindowFrame());
     }
 
     @Override

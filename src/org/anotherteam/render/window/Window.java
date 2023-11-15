@@ -1,9 +1,9 @@
 package org.anotherteam.render.window;
 
+import lombok.Getter;
 import org.anotherteam.input.Input;
-import org.anotherteam.screen.GameScreen;
+import org.anotherteam.screen.Screen;
 import org.anotherteam.util.exception.RenderException;
-import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
 import org.lwjgl.opengl.GL;
 
@@ -12,6 +12,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.opengl.GL42.*;
 
+@Getter
 public final class Window {
 
     private final Input input;
@@ -37,7 +38,7 @@ public final class Window {
         this.height = height;
         this.title = title;
         this.vSync = false;
-        GameScreen.setWindow(this);
+        Screen.setWindow(this);
     }
 
     public void destroy() {
@@ -51,12 +52,9 @@ public final class Window {
         glfwSwapBuffers(handler);
     }
 
-    public boolean isFullscreen() {
-        return fullscreen;
-    }
-
     public void setFullscreen(boolean isFullscreen) {
         this.fullscreen = isFullscreen;
+
         if (isFullscreen) {
             glfwGetWindowPos(handler, windowX, windowY);
             glfwSetWindowMonitor(handler, glfwGetPrimaryMonitor(), 0, 0, width, height, windowFPSRate);
@@ -112,10 +110,6 @@ public final class Window {
         glfwWindowHint(GLFW_GREEN_BITS, videoMode.greenBits());
         glfwWindowHint(GLFW_BLUE_BITS, videoMode.blueBits());
         glfwWindowHint(GLFW_REFRESH_RATE, videoMode.refreshRate());
-        glfwSetWindowSizeCallback(handler, (w, newWidth, newHeight) -> {
-            width = newWidth;
-            height = newHeight;
-        });
 
         windowX[0] = (videoMode.width() - width) / 2;
         windowY[0] = (videoMode.height() - height) / 2;
@@ -140,36 +134,11 @@ public final class Window {
         //glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
     }
 
-    public long getHandler() {
-        return handler;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public int getFpsMax() {
-        return fpsMax;
-    }
-
-    public boolean isFpsLocked() {
-        return fpsLocked;
-    }
-
     public int getAspect() {
         return aspectRatio.x;
     }
 
     public int getRatio() {
         return aspectRatio.y;
-    }
-
-    @NotNull
-    public Vector2i getAspectRatio() {
-        return aspectRatio;
     }
 }

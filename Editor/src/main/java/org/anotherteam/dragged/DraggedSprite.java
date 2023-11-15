@@ -1,9 +1,9 @@
 package org.anotherteam.dragged;
 
 import org.anotherteam.render.sprite.Sprite;
-import org.anotherteam.screen.DraggedThing;
+import org.anotherteam.screen.DraggedObject;
 
-public abstract class DraggedSprite extends DraggedThing {
+public abstract class DraggedSprite extends DraggedObject {
 
     protected final Sprite sprite;
 
