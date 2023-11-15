@@ -1,4 +1,4 @@
-package org.anotherteam.level;
+package org.anotherteam.level.camera;
 
 import org.anotherteam.Editor;
 import org.anotherteam.input.Input;
@@ -37,7 +37,6 @@ public final class EditorCameraController {
             if (Screen.width < Screen.DEFAULT_WIDTH) {
                 Screen.width = Screen.DEFAULT_WIDTH;
             }
-
             if (Screen.height < Screen.DEFAULT_HEIGHT) {
                 Screen.height = Screen.DEFAULT_HEIGHT;
             }

@@ -88,8 +88,8 @@ public final class GameRender {
         windowFrame.renderBatch.draw(
                 onLevel ? effectFrame.texture : textureFrame.texture,
                 0, 0,
-                Screen.renderWidth,
-                Screen.renderHeight,
+                Screen.getRenderWidth(),
+                Screen.getRenderHeight(),
                 false, true);
 
         if (Game.DEBUG) {
@@ -102,8 +102,8 @@ public final class GameRender {
         windowFrame.renderBatch.draw(
                 windowFrame.texture,
                 0, 0,
-                Screen.renderWidth,
-                Screen.renderHeight,
+                Screen.getRenderWidth(),
+                Screen.getRenderHeight(),
                 false, true);
         windowFrame.renderBatch.end();
     }

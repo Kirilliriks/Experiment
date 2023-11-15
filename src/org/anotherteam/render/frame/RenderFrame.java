@@ -51,9 +51,9 @@ public final class RenderFrame {
 
     public void renderBorders() {
         final var v1 = new Vector2f(0, 0);
-        final var v2 = new Vector2f(Screen.renderWidth, 0);
-        final var v3 = new Vector2f(Screen.renderWidth, Screen.renderHeight);
-        final var v4 = new Vector2f(0, Screen.renderHeight);
+        final var v2 = new Vector2f(Screen.getRenderWidth(), 0);
+        final var v3 = new Vector2f(Screen.getRenderWidth(), Screen.getRenderHeight());
+        final var v4 = new Vector2f(0, Screen.getRenderHeight());
         renderBatch.debugBatch.drawLine(v1, v2, Color.RED);
         renderBatch.debugBatch.drawLine(v2, v3, Color.RED);
         renderBatch.debugBatch.drawLine(v3, v4, Color.RED);

@@ -5,11 +5,12 @@ import imgui.flag.ImGuiDockNodeFlags;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.anotherteam.core.Core;
+import org.anotherteam.debug.DebugBatch;
 import org.anotherteam.game.Game;
 import org.anotherteam.game.GameState;
 import org.anotherteam.game.data.AssetData;
 import org.anotherteam.input.Input;
-import org.anotherteam.level.EditorCameraController;
+import org.anotherteam.level.camera.EditorCameraController;
 import org.anotherteam.level.PrefabViewer;
 import org.anotherteam.level.TileViewer;
 import org.anotherteam.manager.LevelManager;
@@ -28,6 +29,7 @@ public final class Editor implements Core {
 
     public static final String GLSL_VERSION = "#version 430 core";
     public static final Texture EDITOR_HIGHLITER_TEXTURE = AssetData.getTexture(AssetData.ASSETS_PATH + "editor_highliter_texture.png");
+
     @Getter
     private static Editor instance;
 
@@ -47,8 +49,6 @@ public final class Editor implements Core {
     private static void resetGameView() {
         Screen.width = Screen.DEFAULT_WIDTH;
         Screen.height = Screen.DEFAULT_HEIGHT;
-        Screen.renderWidth = Screen.getWindow().getWidth();
-        Screen.renderHeight = Screen.getWindow().getHeight();
 
         instance.getGame().getRender().updateFrames(Screen.width, Screen.height);
     }
@@ -83,6 +83,8 @@ public final class Editor implements Core {
         prefabViewer = new PrefabViewer(Screen.getWindow().getWidth() / 2 - 320, Screen.getWindow().getHeight() / 2 - 200, 640, 400);
         console = new Console(Screen.getWindow().getWidth() / 2 - 320, Screen.getWindow().getHeight() / 2 - 200, 640, 400);
         editorCameraController = new EditorCameraController();
+
+        DebugBatch.GLOBAL = new DebugBatch(Screen.WINDOW_CAMERA);
     }
 
     @Override

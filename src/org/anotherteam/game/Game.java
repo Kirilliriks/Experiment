@@ -2,7 +2,6 @@ package org.anotherteam.game;
 
 import lombok.Getter;
 import org.anotherteam.core.Core;
-import org.anotherteam.debug.DebugBatch;
 import org.anotherteam.manager.LevelManager;
 import org.anotherteam.render.GameRender;
 import org.anotherteam.render.window.Window;
@@ -11,6 +10,9 @@ import org.jetbrains.annotations.NotNull;
 
 @Getter
 public final class Game implements Core {
+
+    @Getter
+    private static Game instance;
 
     public static final String GAME_NAME = "Experiment";
     public static final String START_LEVEL_NAME = "StartLevel";
@@ -21,15 +23,13 @@ public final class Game implements Core {
     private GameState state = GameState.ON_MENU;
 
     public Game(@NotNull Window window) {
-        window.setFullscreen(false);
+        instance = this;
 
+        window.setFullscreen(false);
         Screen.init(window);
 
         render = new GameRender(this);
-
         levelManager = new LevelManager(this);
-
-        DebugBatch.GLOBAL = new DebugBatch(Screen.WINDOW_CAMERA);
     }
 
     @Override

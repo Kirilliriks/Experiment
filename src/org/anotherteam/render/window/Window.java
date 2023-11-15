@@ -1,6 +1,7 @@
 package org.anotherteam.render.window;
 
 import lombok.Getter;
+import org.anotherteam.game.Game;
 import org.anotherteam.input.Input;
 import org.anotherteam.screen.Screen;
 import org.anotherteam.util.exception.RenderException;
@@ -38,7 +39,6 @@ public final class Window {
         this.height = height;
         this.title = title;
         this.vSync = false;
-        Screen.setWindow(this);
     }
 
     public void destroy() {
@@ -79,6 +79,12 @@ public final class Window {
         glfwSetWindowSizeCallback(handler, (w, newWidth, newHeight) -> {
             width = newWidth;
             height = newHeight;
+
+            if (Game.getInstance() == null) {
+                return;
+            }
+
+            Screen.resize();
         });
     }
 
