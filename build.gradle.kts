@@ -145,22 +145,14 @@ tasks.withType<Jar> {
     from(configurations.compileClasspath.get().map { if (it.isDirectory()) it else zipTree(it) })
 
     copy {
-        from("src/assets")
-        into("build/libs/assets")
+        from("build/libs/assets/levels")
+        include("*.hgl")
+        into("src/assets/levels")
     }
 
     copy {
-        from("build/libs/assets")
-        into("src/assets")
+        from("src/assets")
+        exclude("**/*.hgl")
+        into("build/libs/assets")
     }
-}
-
-tasks.register<Copy>("copyTo") {
-    from("src/assets")
-    into("build/libs/assets")
-}
-
-tasks.register<Copy>("copyFrom") {
-    from("build/libs/assets")
-    into("src/assets")
 }
