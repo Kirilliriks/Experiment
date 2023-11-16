@@ -27,31 +27,31 @@ public final class Level {
 
     @Setter
     private String name;
-    private Room currentRoom = null;
+    private Room room = null;
 
     public Level(String name) {
         this.name = name;
     }
 
     public void start() {
-        if (currentRoom == null) {
+        if (room == null) {
             throw new IllegalStateException("Prepare level without current room");
         }
 
-        currentRoom.start();
+        room.start();
     }
 
     public void update(float dt) {
-        currentRoom.update(dt);
+        room.update(dt);
     }
 
     public void render(GameRender gameRender, @NotNull RenderFrame windowFrame) {
-        gameRender.render(windowFrame, currentRoom);
+        gameRender.render(windowFrame, room);
     }
 
     public void addRoom(@NotNull Room room) {
-        if (currentRoom == null) {
-            currentRoom = room; // TODO change logic
+        if (this.room == null) {
+            this.room = room; // TODO change logic
         }
 
         rooms.add(room);
@@ -60,13 +60,13 @@ public final class Level {
     public void removeRoom(@NotNull Room room) {
         rooms.remove(room);
 
-        if (currentRoom == room) {
-            currentRoom = rooms.get(0);
+        if (this.room == room) {
+            this.room = rooms.get(0);
         }
     }
 
-    public void setCurrentRoom(String roomName) {
-        this.currentRoom = getRoom(roomName);
+    public void setRoom(String roomName) {
+        this.room = getRoom(roomName);
     }
 
     @Nullable

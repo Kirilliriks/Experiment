@@ -58,7 +58,7 @@ public final class Game implements Core {
     public void start() {
         state = GameState.ON_LEVEL;
 
-        levelManager.getCurrent().start();
+        levelManager.getLevel().start();
     }
 
     public void demo() {

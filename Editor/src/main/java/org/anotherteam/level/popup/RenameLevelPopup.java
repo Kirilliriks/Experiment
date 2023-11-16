@@ -22,10 +22,10 @@ public final class RenameLevelPopup extends Popup {
             ImGui.inputText("Name", name);
 
             if (ImGui.button("Save")) {
-                final Level currentLevel = Editor.getInstance().getGame().getLevelManager().getCurrent();
-                final String lastName = currentLevel.getName();
+                final Level level = Editor.getInstance().getGame().getLevelManager().getLevel();
+                final String lastName = level.getName();
 
-                currentLevel.setName(name.get());
+                level.setName(name.get());
 
                 Editor.saveLevel();
                 try {

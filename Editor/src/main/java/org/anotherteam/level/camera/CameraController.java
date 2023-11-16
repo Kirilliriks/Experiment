@@ -1,16 +1,30 @@
 package org.anotherteam.level.camera;
 
 import org.anotherteam.Editor;
+import org.anotherteam.game.Game;
+import org.anotherteam.game.object.GameObject;
 import org.anotherteam.input.Input;
 import org.anotherteam.screen.Screen;
 import org.anotherteam.util.EditorInput;
 import org.anotherteam.util.ImGuiUtils;
 import org.joml.Vector2f;
+import org.joml.Vector2i;
 
-public final class EditorCameraController {
+public final class CameraController {
 
     private final Vector2f lastPos = new Vector2f(0, 0);
     private final Vector2f impulse = new Vector2f(0, 0);
+
+    public void center() {
+        final Game game = Editor.getInstance().getGame();
+        if (game == null) {
+            return;
+        }
+
+        final GameObject player = game.getLevelManager().getRoom().getPlayer();
+        final Vector2i position = player.getPosition();
+        Screen.GAME_CAMERA.setPosition(position.x, position.y + (player.getCollider().getMax().y / 1.5f));
+    }
 
     public void handle(float dt) {
         if (Screen.inGameWindowMouseX() == -1 || Screen.inGameMouseY() == -1) {

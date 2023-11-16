@@ -10,7 +10,7 @@ import org.anotherteam.dragged.DraggedHighliter;
 import org.anotherteam.game.Game;
 import org.anotherteam.game.data.AssetData;
 import org.anotherteam.input.Input;
-import org.anotherteam.level.camera.EditorCameraController;
+import org.anotherteam.level.camera.CameraController;
 import org.anotherteam.level.PrefabViewer;
 import org.anotherteam.level.TileViewer;
 import org.anotherteam.logger.GameLogger;
@@ -58,12 +58,12 @@ public final class Editor implements Core {
     }
 
     public static void saveLevel() {
-        FileUtils.saveLevel(instance.getGame().getLevelManager().getCurrent());
+        FileUtils.saveLevel(instance.getGame().getLevelManager().getLevel());
     }
 
     public static void reloadLevel() {
         final LevelManager levelManager = instance.getGame().getLevelManager();
-        levelManager.load(levelManager.getCurrent().getName());
+        levelManager.load(levelManager.getLevel().getName());
     }
 
     private final Window window;
@@ -71,7 +71,7 @@ public final class Editor implements Core {
     private final TileViewer tileViewer;
     private final PrefabViewer prefabViewer;
     private final Console console;
-    private final EditorCameraController editorCameraController;
+    private final CameraController cameraController;
 
     private Game game;
 
@@ -87,7 +87,7 @@ public final class Editor implements Core {
         tileViewer = new TileViewer(Screen.getWindow().getWidth() / 2 - 320, Screen.getWindow().getHeight() / 2 - 200, 640, 400);
         prefabViewer = new PrefabViewer(Screen.getWindow().getWidth() / 2 - 320, Screen.getWindow().getHeight() / 2 - 200, 640, 400);
         console = new Console(Screen.getWindow().getWidth() / 2 - 320, Screen.getWindow().getHeight() / 2 - 200, 640, 400);
-        editorCameraController = new EditorCameraController();
+        cameraController = new CameraController();
 
         resetGame();
 
@@ -99,6 +99,8 @@ public final class Editor implements Core {
 
         game = new Game(window);
         prepare();
+
+        cameraController.center();
 
         GameLogger.log("Game initialized");
     }
@@ -143,7 +145,7 @@ public final class Editor implements Core {
         windowFrame.renderBatch.drawText("[TEST]", 320, 200);
         windowFrame.renderBatch.end();
 
-        editorCameraController.handle(dt);
+        cameraController.handle(dt);
 
         imGui.render(dt);
     }
@@ -177,7 +179,7 @@ public final class Editor implements Core {
 
         ImGui.dummy(8.0f, 00.0f);
 
-        if (ImGui.beginMenu("Level [" + game.getLevelManager().getCurrent().getName() + "]")) {
+        if (ImGui.beginMenu("Level [" + game.getLevelManager().getLevel().getName() + "]")) {
 
             if (ImGui.menuItem("New")) {
                 saveLevel();
@@ -198,7 +200,7 @@ public final class Editor implements Core {
             }
 
             if (ImGui.menuItem("Delete")) {
-                final String levelName = instance.getGame().getLevelManager().getCurrent().getName();
+                final String levelName = instance.getGame().getLevelManager().getLevel().getName();
                 game.getLevelManager().setEmpty();
                 FileUtils.deleteLevel(levelName);
             }

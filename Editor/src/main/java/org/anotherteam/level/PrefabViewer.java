@@ -54,7 +54,7 @@ public final class PrefabViewer extends Widget {
 
         final DraggedObject draggedObject = Screen.getDraggedObject();
         if (EditorInput.isButtonPressed(Input.MOUSE_LEFT_BUTTON)) {
-            final Room room = Editor.getInstance().getGame().getLevelManager().getCurrentRoom();
+            final Room room = Editor.getInstance().getGame().getLevelManager().getRoom();
 
             if (draggedObject == null) {
                 for (final GameObject gameObject : room.getGameObjects()) {
