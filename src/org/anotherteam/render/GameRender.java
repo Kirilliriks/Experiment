@@ -69,7 +69,7 @@ public final class GameRender {
         raycastShader.setUniform("real_view", Screen.GAME_CAMERA.getViewMatrix());
 
         final int preparedX = Screen.GAME_CAMERA.translateX(room.getPlayer().getPosition().x);
-        final int preparedY = Screen.GAME_CAMERA.translateY(room.getPlayer().getPosition().y + 15);
+        final int preparedY = Screen.GAME_CAMERA.translateY(room.getPlayer().getPosition().y);
         raycastShader.setUniform("player_pos",
                 preparedX, preparedY);
 

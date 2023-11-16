@@ -144,13 +144,23 @@ tasks.withType<Jar> {
 
     from(configurations.compileClasspath.get().map { if (it.isDirectory()) it else zipTree(it) })
 
-    tasks.register<Copy>("copyTo") {
+    copy {
         from("src/assets")
         into("build/libs/assets")
     }
 
-    tasks.register<Copy>("copyFrom") {
+    copy {
         from("build/libs/assets")
         into("src/assets")
     }
+}
+
+tasks.register<Copy>("copyTo") {
+    from("src/assets")
+    into("build/libs/assets")
+}
+
+tasks.register<Copy>("copyFrom") {
+    from("build/libs/assets")
+    into("src/assets")
 }

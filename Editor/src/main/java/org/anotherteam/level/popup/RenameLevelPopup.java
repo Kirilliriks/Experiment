@@ -28,7 +28,9 @@ public final class RenameLevelPopup extends Popup {
                 currentLevel.setName(name.get());
 
                 Editor.saveLevel();
-                FileUtils.deleteLevel(lastName);
+                try {
+                    FileUtils.deleteLevel(lastName);
+                } catch (Throwable ignore) { }
 
                 close();
             }

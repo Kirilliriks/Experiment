@@ -46,7 +46,7 @@ public final class Collider extends AABB {
 
     @Override
     public void start() {
-        if (!firstBound.equals(secondBound)) return;
+        if (!min.equals(max)) return;
         if (!ownerObject.hasComponent(SpriteComponent.class)) {
             setBounds(Sprite.DEFAULT_SIZE.x, Sprite.DEFAULT_SIZE.y);
             return;
@@ -72,8 +72,8 @@ public final class Collider extends AABB {
         ownerObject.addComponent(interactAABB);
     }
 
-    public void setInteractBounds(int firstX, int firstY, int secondX, int secondY) {
-        interactAABB.setBounds(firstX, firstY, secondX, secondY);
+    public void setInteractBounds(int minX, int minY, int maxX, int maxY) {
+        interactAABB.setBounds(minX, minY, maxX, maxY);
     }
 
     public boolean isCollide(@NotNull Collider aabb, @NotNull Vector2f moveVector) {
@@ -82,19 +82,19 @@ public final class Collider extends AABB {
 
     public boolean isCollide(@NotNull Collider aabb, float x, float y) {
         if (!aabb.isSolid()) return false;
-        final var collisionX = objectPosition.x + secondBound.x + x >= aabb.getPosition().x + aabb.getFirstBound().x &&
-                objectPosition.x + firstBound.x + x <= aabb.getPosition().x + aabb.getSecondBound().x;
+        final var collisionX = objectPosition.x + max.x + x >= aabb.getPosition().x + aabb.getMin().x &&
+                objectPosition.x + min.x + x <= aabb.getPosition().x + aabb.getMax().x;
 
-        final var collisionY = objectPosition.y + secondBound.y + y >= aabb.getPosition().y + aabb.getFirstBound().y &&
-                objectPosition.y + firstBound.y + y <= aabb.getPosition().y + aabb.getSecondBound().y;
+        final var collisionY = objectPosition.y + max.y + y >= aabb.getPosition().y + aabb.getMin().y &&
+                objectPosition.y + min.y + y <= aabb.getPosition().y + aabb.getMax().y;
         return collisionX && collisionY;
     }
 
     public boolean isOnMouse(float x, float y) {
         if (x < 0 || y < 0) return false;
 
-        return objectPosition.x + firstBound.x <= x && x < objectPosition.x + secondBound.x &&
-                objectPosition.y + firstBound.y <= y && y < objectPosition.y + secondBound.y;
+        return objectPosition.x + min.x <= x && x < objectPosition.x + max.x &&
+                objectPosition.y + min.y <= y && y < objectPosition.y + max.y;
     }
 
     public boolean isCanInteract(@NotNull Collider collider) {
@@ -138,25 +138,25 @@ public final class Collider extends AABB {
 
     @Override
     public @NotNull JsonElement serialize(JsonObject result) {
-        result.add("firstBound", SerializeUtil.serialize(firstBound));
-        result.add("secondBound", SerializeUtil.serialize(secondBound));
+        result.add("min", SerializeUtil.serialize(min));
+        result.add("max", SerializeUtil.serialize(max));
         result.add("solid", new JsonPrimitive(solid));
         result.add("interactive", new JsonPrimitive(interactive));
 
-        result.add("interactFirstBound", SerializeUtil.serialize(interactAABB.getFirstBound()));
-        result.add("interactSecondBound", SerializeUtil.serialize(interactAABB.getSecondBound()));
+        result.add("interactMin", SerializeUtil.serialize(interactAABB.getMin()));
+        result.add("interactMax", SerializeUtil.serialize(interactAABB.getMax()));
         return result;
     }
 
     public static Collider deserialize(JsonObject object) {
-        final var firstBound = SerializeUtil.deserialize(object.get("firstBound").getAsJsonObject());
-        final var secondBound = SerializeUtil.deserialize(object.get("secondBound").getAsJsonObject());
-        final var interactFirstBound = SerializeUtil.deserialize(object.get("interactFirstBound").getAsJsonObject());
-        final var interactSecondBound = SerializeUtil.deserialize(object.get("interactSecondBound").getAsJsonObject());
+        final var min = SerializeUtil.deserialize(object.get("min").getAsJsonObject());
+        final var max = SerializeUtil.deserialize(object.get("max").getAsJsonObject());
+        final var interactMin = SerializeUtil.deserialize(object.get("interactMin").getAsJsonObject());
+        final var interactMax = SerializeUtil.deserialize(object.get("interactMax").getAsJsonObject());
 
         final var collider = new Collider();
-        collider.setBounds(firstBound.x, firstBound.y, secondBound.x, secondBound.y);
-        collider.setInteractBounds(interactFirstBound.x, interactFirstBound.y, interactSecondBound.x, interactSecondBound.y);
+        collider.setBounds(min.x, min.y, max.x, max.y);
+        collider.setInteractBounds(interactMin.x, interactMin.y, interactMax.x, interactMax.y);
         collider.setSolid(object.get("solid").getAsBoolean());
         collider.setInteractive(object.get("interactive").getAsBoolean());
         return collider;
@@ -169,21 +169,21 @@ public final class Collider extends AABB {
         public InteractAABB(@NotNull Collider ownerCollider) {
             super();
             this.ownerCollider = ownerCollider;
-            setBounds(ownerCollider.firstBound.x, ownerCollider.firstBound.y, ownerCollider.secondBound.x, ownerCollider.secondBound.y);
+            setBounds(ownerCollider.min.x, ownerCollider.min.y, ownerCollider.max.x, ownerCollider.max.y);
             serializable = false;
         }
 
         public boolean isInteract(@NotNull Collider otherCollider) {
             final var otherInteractAABB = otherCollider.interactAABB;
-            return (!((otherCollider.objectPosition.x + otherCollider.secondBound.x) < otherInteractAABB.objectPosition.x + otherInteractAABB.offSet.x + firstBound.x ||
-                    (otherInteractAABB.objectPosition.x + otherInteractAABB.offSet.x + otherInteractAABB.secondBound.x) < otherCollider.objectPosition.x + otherCollider.firstBound.x));
+            return (!((otherCollider.objectPosition.x + otherCollider.max.x) < otherInteractAABB.objectPosition.x + otherInteractAABB.offSet.x + min.x ||
+                    (otherInteractAABB.objectPosition.x + otherInteractAABB.offSet.x + otherInteractAABB.max.x) < otherCollider.objectPosition.x + otherCollider.min.x));
         }
 
         public void flip(boolean flip) {
             if (flip) {
-                setOffSet(ownerCollider.getFirstBound().x - getSecondBound().x, 0);
+                setOffSet(ownerCollider.getMin().x - getMax().x, 0);
             } else {
-                setOffSet(ownerCollider.getSecondBound().x, 0);
+                setOffSet(ownerCollider.getMax().x, 0);
             }
         }
 

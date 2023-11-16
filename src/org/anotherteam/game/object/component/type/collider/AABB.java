@@ -12,15 +12,15 @@ import org.joml.Vector2i;
 
 public abstract class AABB extends StaticComponent {
 
-    protected final Vector2i firstBound;
-    protected final Vector2i secondBound;
+    protected final Vector2i min;
+    protected final Vector2i max;
     protected final Vector2i offSet;
 
     protected Vector2i objectPosition;
 
     public AABB() {
-        this.firstBound = new Vector2i();
-        this.secondBound = new Vector2i();
+        this.min = new Vector2i();
+        this.max = new Vector2i();
         this.offSet = new Vector2i();
         objectPosition = null;
     }
@@ -29,8 +29,8 @@ public abstract class AABB extends StaticComponent {
     public void init(Component component) {
         if (component instanceof AABB aabb) {
             setBounds(
-                    aabb.firstBound.x, aabb.firstBound.y,
-                    aabb.secondBound.x, aabb.secondBound.y
+                    aabb.min.x, aabb.min.y,
+                    aabb.max.x, aabb.max.y
             );
         }
     }
@@ -46,17 +46,17 @@ public abstract class AABB extends StaticComponent {
         setBounds(-width / 2, 0, width / 2 + (plusX ? 1 : 0), height);
     }
 
-    public void setBounds(int firstX, int firstY, int secondX, int secondY) {
-        setFirstBound(firstX, firstY);
-        setSecondBound(secondX, secondY);
+    public void setBounds(int minX, int minY, int maxX, int maxY) {
+        setMin(minX, minY);
+        setMaxB(maxX, maxY);
     }
 
-    public void setFirstBound(int x, int y) {
-        firstBound.set(x, y);
+    public void setMin(int x, int y) {
+        min.set(x, y);
     }
 
-    public void setSecondBound(int x, int y) {
-        secondBound.set(x, y);
+    public void setMaxB(int x, int y) {
+        max.set(x, y);
     }
 
     public void setOffSet(int x, int y) {
@@ -69,18 +69,18 @@ public abstract class AABB extends StaticComponent {
     }
 
     @NotNull
-    public Vector2i getFirstBound() {
-        return firstBound;
+    public Vector2i getMin() {
+        return min;
     }
 
     @NotNull
-    public Vector2i getSecondBound() {
-        return secondBound;
+    public Vector2i getMax() {
+        return max;
     }
 
     public boolean isIntersect(@NotNull Collider aabb){
-        return  (!((aabb.getPosition().x + aabb.getSecondBound().x) < objectPosition.x + firstBound.x ||
-                (objectPosition.x + secondBound.x) < aabb.getPosition().x  + aabb.getFirstBound().x));
+        return  (!((aabb.getPosition().x + aabb.getMax().x) < objectPosition.x + min.x ||
+                (objectPosition.x + max.x) < aabb.getPosition().x  + aabb.getMin().x));
     }
 
     // Debug
@@ -90,10 +90,10 @@ public abstract class AABB extends StaticComponent {
         final int x = objectPosition.x + offSet.x;
         final int y = objectPosition.y + offSet.y;
 
-        var v1 = new Vector2f(x + firstBound.x, y + firstBound.y);
-        var v2 = new Vector2f(x + firstBound.x, y + secondBound.y);
-        var v3 = new Vector2f(x + secondBound.x, y + secondBound.y);
-        var v4 = new Vector2f(x + secondBound.x, y + firstBound.y);
+        var v1 = new Vector2f(x + min.x, y + min.y);
+        var v2 = new Vector2f(x + min.x, y + max.y);
+        var v3 = new Vector2f(x + max.x, y + max.y);
+        var v4 = new Vector2f(x + max.x, y + min.y);
 
         if (!inEditor) {
             Screen.toWindowPos(v1);
