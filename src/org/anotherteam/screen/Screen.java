@@ -16,7 +16,6 @@ public final class Screen {
     public static final int DEFAULT_WIDTH = 160;
     public static final int DEFAULT_HEIGHT = 90;
     public static final Camera camera = new Camera(DEFAULT_WIDTH / 2, DEFAULT_HEIGHT / 2, DEFAULT_WIDTH, DEFAULT_HEIGHT);
-    public static final Camera windowCamera = new Camera();
 
     public static int width = DEFAULT_WIDTH;
     public static int height = DEFAULT_HEIGHT;
@@ -31,7 +30,7 @@ public final class Screen {
 
     public static void init(@NotNull Window window) {
         Screen.window = window;
-        mainFrame = new RenderFrame(new RenderBatch(AssetData.DEFAULT_SHADER, windowCamera), width, height);
+        mainFrame = new RenderFrame(new RenderBatch(AssetData.DEFAULT_SHADER), width, height);
 
         resize();
     }
@@ -39,8 +38,8 @@ public final class Screen {
     public static void resize() {
         final int width = getRenderWidth();
         final int height = getRenderHeight();
-        windowCamera.setPosition(width/ 2.0f, height / 2.0f);
-        windowCamera.setProjection(width, height);
+        mainFrame.getRenderBatch().getCamera().setPosition(width / 2.0f, height / 2.0f);
+        mainFrame.getRenderBatch().getCamera().setProjection(width, height);
 
         mainFrame.changeBufferSize(width, height);
     }

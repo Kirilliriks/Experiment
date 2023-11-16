@@ -1,12 +1,14 @@
 package org.anotherteam.render.batch;
 import static org.lwjgl.opengl.GL42.*;
 
+import lombok.Getter;
 import org.anotherteam.debug.DebugBatch;
 import org.anotherteam.render.screen.Camera;
 import org.anotherteam.render.shader.Shader;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
 
+@Getter
 public abstract class Batch {
 
     public static final int DEFAULT_SIZE = 1000;

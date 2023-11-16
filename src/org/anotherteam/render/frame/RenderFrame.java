@@ -1,5 +1,6 @@
 package org.anotherteam.render.frame;
 
+import lombok.Getter;
 import org.anotherteam.render.batch.RenderBatch;
 import org.anotherteam.render.framebuffer.FrameBuffer;
 import org.anotherteam.render.texture.Pixmap;
@@ -11,6 +12,7 @@ import org.joml.Vector2f;
 
 import static org.lwjgl.opengl.GL11.*;
 
+@Getter
 public final class RenderFrame {
 
     public final RenderBatch renderBatch;

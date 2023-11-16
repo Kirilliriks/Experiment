@@ -15,14 +15,18 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 
-public class RenderBatch extends Batch {
+public final class RenderBatch extends Batch {
 
     private static final short TEX_COORDS_OFFSET = POS_OFFSET + POS_SIZE * Float.BYTES;
     private static final short COLOR_COORDS_OFFSET = TEX_COORDS_OFFSET + TEX_COORDS_SIZE * Float.BYTES;
     private static final short VERTEX_SIZE = 7;
 
-    protected Texture lastTexture = null;
-    public boolean blend = true;
+    private Texture lastTexture = null;
+    private boolean blend = true;
+
+    public RenderBatch(@NotNull Shader shader) {
+        this(shader, new Camera());
+    }
 
     public RenderBatch(@NotNull Shader shader, @NotNull Camera camera) {
         super(shader, camera, VERTEX_SIZE);

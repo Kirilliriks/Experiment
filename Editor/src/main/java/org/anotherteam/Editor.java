@@ -91,7 +91,7 @@ public final class Editor implements Core {
 
         resetGame();
 
-        DebugBatch.GLOBAL = new DebugBatch(Screen.windowCamera);
+        DebugBatch.GLOBAL = new DebugBatch(Screen.getMainFrame().getRenderBatch().getCamera());
     }
 
     private void resetGame() {
