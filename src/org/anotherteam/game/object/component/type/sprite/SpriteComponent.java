@@ -20,7 +20,6 @@ import java.util.List;
 
 public final class SpriteComponent extends Component {
 
-    private int drawPriority;
 
     // Info for texture
     private String atlasPath;
@@ -32,26 +31,14 @@ public final class SpriteComponent extends Component {
     private AnimationData animation;
     private AnimationTimer animationTimer;
 
+    private int drawPriority;
     private int frameX, frameY;
     private boolean flipX;
 
     /**
      * Draw object from center of sprite or edge
      */
-    private boolean center;
-
-    public SpriteComponent() {
-        drawPriority = 0;
-
-        atlasPath = null;
-        spriteAtlas = null;
-        textureSprite = null;
-        heightSprite = null;
-        animation = null;
-        animationTimer = null;
-
-        center = true;
-    }
+    private boolean center = true;
 
     @Override
     public List<FieldController> getFields() {
@@ -147,6 +134,7 @@ public final class SpriteComponent extends Component {
         result.add("atlasPath", new JsonPrimitive(atlasPath));
         result.add("width", new JsonPrimitive(frameWidth));
         result.add("height", new JsonPrimitive(frameHeight));
+        result.add("priority", new JsonPrimitive(drawPriority));
         return result;
     }
 
@@ -154,8 +142,10 @@ public final class SpriteComponent extends Component {
         final var atlasPath = object.get("atlasPath").getAsString();
         final var width = object.get("width").getAsInt();
         final var height = object.get("height").getAsInt();
+        final var priority = object.get("priority").getAsInt();
 
         final var spriteComponent = new SpriteComponent();
+        spriteComponent.setDrawPriority(priority);
         spriteComponent.setSpriteAtlas(atlasPath, width, height);
         return spriteComponent;
     }
