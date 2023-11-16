@@ -23,7 +23,7 @@ public final class CameraController {
 
         final GameObject player = game.getLevelManager().getRoom().getPlayer();
         final Vector2i position = player.getPosition();
-        Screen.GAME_CAMERA.setPosition(position.x, position.y + (player.getCollider().getMax().y / 1.5f));
+        Screen.camera.setPosition(position.x, position.y + (player.getCollider().getMax().y / 1.5f));
     }
 
     public void handle(float dt) {
@@ -92,7 +92,7 @@ public final class CameraController {
             lastPos.set(0, 0);
         }
 
-        Screen.GAME_CAMERA.addPosition(impulse.x, impulse.y);
+        Screen.camera.addPosition(impulse.x, impulse.y);
         impulse.zero();
     }
 }

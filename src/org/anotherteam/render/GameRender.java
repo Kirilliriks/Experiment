@@ -35,7 +35,7 @@ public final class GameRender {
 
         raycastShader = new Shader(AssetData.SHADER_PATH + "vsInvert.glsl", AssetData.SHADER_PATH + "fsInvert.glsl");
 
-        textureBatch = new RenderBatch(AssetData.DEFAULT_SHADER, Screen.GAME_CAMERA);
+        textureBatch = new RenderBatch(AssetData.DEFAULT_SHADER, Screen.camera);
         effectBatch = new RenderBatch(raycastShader, renderCamera);
 
         textureFrame = new RenderFrame(textureBatch);
@@ -49,7 +49,7 @@ public final class GameRender {
         effectFrame.changeBufferSize(width, height);
 
         renderCamera.setProjection(width, height);
-        Screen.GAME_CAMERA.setProjection(width, height);
+        Screen.camera.setProjection(width, height);
     }
 
     public void render(@NotNull RenderFrame windowFrame, @NotNull Room room) {
@@ -66,10 +66,10 @@ public final class GameRender {
 
         effectFrame.begin();
 
-        raycastShader.setUniform("real_view", Screen.GAME_CAMERA.getViewMatrix());
+        raycastShader.setUniform("real_view", Screen.camera.getViewMatrix());
 
-        final int preparedX = Screen.GAME_CAMERA.translateX(room.getPlayer().getPosition().x);
-        final int preparedY = Screen.GAME_CAMERA.translateY(room.getPlayer().getPosition().y);
+        final int preparedX = Screen.camera.translateX(room.getPlayer().getPosition().x);
+        final int preparedY = Screen.camera.translateY(room.getPlayer().getPosition().y);
         raycastShader.setUniform("player_pos",
                 preparedX, preparedY);
 

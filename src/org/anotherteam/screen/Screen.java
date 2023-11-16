@@ -15,8 +15,8 @@ public final class Screen {
 
     public static final int DEFAULT_WIDTH = 160;
     public static final int DEFAULT_HEIGHT = 90;
-    public static final Camera GAME_CAMERA = new Camera(DEFAULT_WIDTH / 2, DEFAULT_HEIGHT / 2, DEFAULT_WIDTH, DEFAULT_HEIGHT);
-    public static final Camera WINDOW_CAMERA = new Camera();
+    public static final Camera camera = new Camera(DEFAULT_WIDTH / 2, DEFAULT_HEIGHT / 2, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+    public static final Camera windowCamera = new Camera();
 
     public static int width = DEFAULT_WIDTH;
     public static int height = DEFAULT_HEIGHT;
@@ -31,7 +31,7 @@ public final class Screen {
 
     public static void init(@NotNull Window window) {
         Screen.window = window;
-        mainFrame = new RenderFrame(new RenderBatch(AssetData.DEFAULT_SHADER, WINDOW_CAMERA), width, height);
+        mainFrame = new RenderFrame(new RenderBatch(AssetData.DEFAULT_SHADER, windowCamera), width, height);
 
         resize();
     }
@@ -39,8 +39,8 @@ public final class Screen {
     public static void resize() {
         final int width = getRenderWidth();
         final int height = getRenderHeight();
-        WINDOW_CAMERA.setPosition(width/ 2.0f, height / 2.0f);
-        WINDOW_CAMERA.setProjection(width, height);
+        windowCamera.setPosition(width/ 2.0f, height / 2.0f);
+        windowCamera.setProjection(width, height);
 
         mainFrame.changeBufferSize(width, height);
     }
@@ -53,7 +53,7 @@ public final class Screen {
     public static int inGameMouseX() {
         final var x = inGameWindowMouseX();
         if (x < 0) return -1;
-        return (int) (GAME_CAMERA.getPositionX() + x - width / 2.0f);
+        return (int) (camera.getPositionX() + x - width / 2.0f);
     }
 
     /**
@@ -64,7 +64,7 @@ public final class Screen {
     public static int inGameMouseY() {
         final var y = inGameWindowMouseY();
         if (y < 0) return -1;
-        return (int) (GAME_CAMERA.getPositionY() + y - height / 2.0f);
+        return (int) (camera.getPositionY() + y - height / 2.0f);
     }
 
     public static boolean isMouseOnGameWindow() {
@@ -108,11 +108,11 @@ public final class Screen {
     }
 
     public static float toWindowPosX(float x) {
-        return (((x - GAME_CAMERA.getPositionX()) * window.getWidth()) / width + window.getWidth() / 2.0f);
+        return (((x - camera.getPositionX()) * window.getWidth()) / width + window.getWidth() / 2.0f);
     }
 
     public static float toWindowPosY(int y) {
-        return (((y - GAME_CAMERA.getPositionY()) * window.getHeight()) / height + window.getHeight() / 2.0f);
+        return (((y - camera.getPositionY()) * window.getHeight()) / height + window.getHeight() / 2.0f);
     }
 
     public static Vector2f toWindowPos(Vector2f vector) {
