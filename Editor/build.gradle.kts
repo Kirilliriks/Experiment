@@ -32,7 +32,7 @@ tasks.withType<ShadowJar> {
         attributes["Main-Class"] = "org.anotherteam.EditorLauncher"
     }
 
-    archiveFileName.set("game.jar")
+    archiveFileName.set("Editor.jar")
 }
 
 tasks.test {
