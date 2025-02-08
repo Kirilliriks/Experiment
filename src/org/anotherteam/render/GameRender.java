@@ -68,10 +68,10 @@ public final class GameRender {
 
         raycastShader.setUniform("real_view", Screen.camera.getViewMatrix());
 
-        final int preparedX = Screen.camera.translateX(room.getPlayer().getPosition().x);
-        final int preparedY = Screen.camera.translateY(room.getPlayer().getPosition().y);
+        //final int preparedX = Screen.camera.translateX(room.getPlayer().getPosition().x);
+        //final int preparedY = Screen.camera.translateY(room.getPlayer().getPosition().y);
         raycastShader.setUniform("player_pos",
-                preparedX, preparedY);
+                Screen.inGameWindowMouseX(), Screen.inGameWindowMouseY());
 
         glBindImageTexture(1, heightFrame.texture.getId(), 0, false, 0, GL_READ_ONLY, GL_RGBA8);
         raycastShader.setUniform("u_texture", 0);
